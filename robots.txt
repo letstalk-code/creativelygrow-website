@@ -1,0 +1,6 @@
+# Robots.txt for Creatively Grow
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://creativelygrow.com/sitemap.xml
