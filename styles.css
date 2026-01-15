@@ -790,6 +790,52 @@ h1, h2, h3 {
 }
 
 /* =========================================
+   LOGO SCROLLER SECTION
+   ========================================= */
+.logo-scroller {
+    background-color: var(--cream);
+    padding: 2rem 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(78, 90, 78, 0.1);
+}
+
+.logo-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-logos 20s linear infinite;
+}
+
+.logo-slide {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    padding: 0 2rem;
+}
+
+.logo-slide img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: var(--transition);
+}
+
+.logo-slide img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+@keyframes scroll-logos {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* =========================================
    TESTIMONIALS SECTION
    ========================================= */
 .testimonials {
