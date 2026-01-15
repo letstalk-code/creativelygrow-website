@@ -802,19 +802,20 @@ h1, h2, h3 {
 .logo-track {
     display: flex;
     width: max-content;
-    animation: scroll-logos 20s linear infinite;
+    animation: scroll-logos 30s linear infinite;
 }
 
 .logo-slide {
     display: flex;
     align-items: center;
-    gap: 4rem;
-    padding: 0 2rem;
+    gap: 3rem;
+    padding: 0 1.5rem;
 }
 
 .logo-slide img {
-    height: 40px;
+    height: 50px;
     width: auto;
+    max-width: 120px;
     object-fit: contain;
     filter: grayscale(100%);
     opacity: 0.6;
