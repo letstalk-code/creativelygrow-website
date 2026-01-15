@@ -952,9 +952,8 @@ h1, h2, h3 {
 }
 
 .contact-form {
-    background-color: var(--white);
-    padding: 3rem;
-    box-shadow: var(--shadow-xl);
+    background-color: transparent;
+    padding: 0;
 }
 
 .form-row {
