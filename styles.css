@@ -31,6 +31,13 @@
     --shadow-xl: 0 16px 48px rgba(0,0,0,0.25);
 
     --transition: all 0.3s ease;
+
+    /* Glass Effect Variables */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-bg-dark: rgba(78, 90, 78, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --glass-blur: blur(20px);
 }
 
 html {
@@ -137,7 +144,10 @@ h1, h2, h3 {
     left: 0;
     right: 0;
     z-index: 1000;
-    background-color: var(--sage);
+    background: var(--glass-bg-dark);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 0.5rem 0;
     transition: var(--transition);
 }
@@ -378,22 +388,28 @@ h1, h2, h3 {
 }
 
 .service-card {
-    background-color: var(--white);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
     position: relative;
     transition: var(--transition);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--glass-shadow);
     overflow: hidden;
 }
 
 .service-card:hover {
     transform: translateY(-10px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .service-image {
     width: 100%;
     height: 200px;
     overflow: hidden;
+    border-radius: 16px 16px 0 0;
 }
 
 .service-image img {
@@ -658,15 +674,21 @@ h1, h2, h3 {
 }
 
 .plan-card {
-    background-color: var(--white);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
     padding: 2.5rem;
     position: relative;
     transition: var(--transition);
+    box-shadow: var(--glass-shadow);
 }
 
 .plan-card:hover {
     transform: translateY(-10px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .plan-card.featured {
@@ -877,9 +899,13 @@ h1, h2, h3 {
 }
 
 .testimonial-content {
-    background-color: var(--white);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
     padding: 3rem;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--glass-shadow);
     margin-bottom: 2rem;
     position: relative;
 }
@@ -1202,12 +1228,15 @@ h1, h2, h3 {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: var(--sage);
+    background: var(--glass-bg-dark);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1rem 2rem;
     z-index: 998;
     transform: translateY(100%);
     transition: transform 0.4s ease;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 -4px 30px rgba(0,0,0,0.15);
 }
 
 .sticky-cta-bar.visible {
