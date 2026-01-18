@@ -33,11 +33,11 @@
     --transition: all 0.3s ease;
 
     /* Glass Effect Variables */
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-bg-dark: rgba(78, 90, 78, 0.85);
-    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-bg-dark: rgba(78, 90, 78, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.4);
     --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    --glass-blur: blur(20px);
+    --glass-blur: blur(30px);
 }
 
 html {
@@ -674,21 +674,15 @@ h1, h2, h3 {
 }
 
 .plan-card {
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
+    background-color: var(--white);
     padding: 2.5rem;
     position: relative;
     transition: var(--transition);
-    box-shadow: var(--glass-shadow);
 }
 
 .plan-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: var(--shadow-xl);
 }
 
 .plan-card.featured {
