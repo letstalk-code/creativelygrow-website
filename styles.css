@@ -1691,14 +1691,58 @@ h1, h2, h3 {
         grid-template-columns: 1fr;
     }
 
+    .footer {
+        padding: 1.25rem 1.5rem 0.75rem;
+    }
+
     .footer-main {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1rem;
         text-align: center;
+        padding-bottom: 1rem;
+    }
+
+    .footer-logo {
+        width: 140px;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-tagline {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-links {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-links a {
+        font-size: 0.85rem;
     }
 
     .footer-social {
         justify-content: center;
+    }
+
+    .footer-social a {
+        width: 32px;
+        height: 32px;
+    }
+
+    .footer-social svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .footer-bottom {
+        padding-top: 0.75rem;
+    }
+
+    .footer-copyright {
+        font-size: 0.75rem;
     }
 
     .plans-benefits {
