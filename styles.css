@@ -652,12 +652,8 @@ h1, h2, h3 {
    PRICING PLANS SECTION
    ========================================= */
 .plans {
-    background: rgba(78, 90, 78, 0.85);
-    backdrop-filter: blur(60px) saturate(180%);
-    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    background-color: var(--sage);
     padding: 6rem 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .plans-container {
