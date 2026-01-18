@@ -1796,14 +1796,8 @@ h1, h2, h3 {
     }
 
     /* Sticky CTA mobile */
-    .sticky-cta-content {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
-
-    .sticky-cta-text {
-        font-size: 0.9rem;
+    .sticky-cta-bar {
+        display: none !important;
     }
 
     /* Chat widget mobile */
