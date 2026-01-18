@@ -354,8 +354,11 @@ h1, h2, h3 {
    SERVICES SECTION
    ========================================= */
 .services {
-    background-color: var(--cream);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 6rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .services-container {
@@ -478,8 +481,12 @@ h1, h2, h3 {
    ADDITIONAL SERVICES
    ========================================= */
 .additional-services {
-    background-color: var(--sage);
+    background: rgba(78, 90, 78, 0.85);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 6rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .additional-container {
@@ -500,15 +507,20 @@ h1, h2, h3 {
 }
 
 .additional-card {
-    background-color: rgba(255,255,255,0.05);
-    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-left: 3px solid var(--orange);
+    border-radius: 12px;
+    padding: 2rem;
     transition: var(--transition);
 }
 
 .additional-card:hover {
-    background-color: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.2);
     transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .additional-icon {
@@ -541,9 +553,13 @@ h1, h2, h3 {
    CONTENT SHOWCASE (PHONE MOCKUPS)
    ========================================= */
 .content-showcase {
-    background-color: var(--cream);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 6rem 2rem;
     overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .content-showcase-container {
@@ -599,10 +615,12 @@ h1, h2, h3 {
    STATS SECTION
    ========================================= */
 .stats {
-    background-color: var(--cream);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 4rem 2rem;
-    border-top: 1px solid rgba(78, 90, 78, 0.1);
-    border-bottom: 1px solid rgba(78, 90, 78, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .stats-container {
@@ -645,8 +663,12 @@ h1, h2, h3 {
    PRICING PLANS SECTION
    ========================================= */
 .plans {
-    background-color: var(--sage);
+    background: rgba(78, 90, 78, 0.85);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 6rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .plans-container {
@@ -810,10 +832,12 @@ h1, h2, h3 {
    LOGO SCROLLER SECTION
    ========================================= */
 .logo-scroller {
-    background-color: var(--cream);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 2rem 0;
     overflow: hidden;
-    border-bottom: 1px solid rgba(78, 90, 78, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .logo-track {
@@ -857,8 +881,12 @@ h1, h2, h3 {
    TESTIMONIALS SECTION
    ========================================= */
 .testimonials {
-    background-color: var(--cream);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 6rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .testimonials-container {
@@ -988,8 +1016,11 @@ h1, h2, h3 {
    CONTACT SECTION
    ========================================= */
 .contact {
-    background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
+    background: linear-gradient(135deg, rgba(78, 90, 78, 0.85) 0%, rgba(61, 71, 61, 0.85) 100%);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 6rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .contact-container {
@@ -1079,8 +1110,11 @@ h1, h2, h3 {
    FOOTER
    ========================================= */
 .footer {
-    background-color: var(--sage-dark);
+    background: rgba(61, 71, 61, 0.9);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 2rem 2rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-container {
@@ -1160,9 +1194,13 @@ h1, h2, h3 {
    FREE OFFER BANNER
    ========================================= */
 .free-offer-banner {
-    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
+    background: linear-gradient(135deg, rgba(239, 121, 56, 0.85) 0%, rgba(217, 106, 45, 0.85) 100%);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
     padding: 4rem 2rem;
     text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .free-offer-container {
