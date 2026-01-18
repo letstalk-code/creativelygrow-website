@@ -33,11 +33,12 @@
     --transition: all 0.3s ease;
 
     /* Glass Effect Variables */
-    --glass-bg: rgba(255, 255, 255, 0.6);
-    --glass-bg-dark: rgba(78, 90, 78, 0.75);
-    --glass-border: rgba(255, 255, 255, 0.4);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    --glass-blur: blur(30px);
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-bg-dark: rgba(78, 90, 78, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --glass-blur: blur(50px);
+    --glass-blur-heavy: blur(80px);
 }
 
 html {
@@ -144,10 +145,10 @@ h1, h2, h3 {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: var(--glass-bg-dark);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(78, 90, 78, 0.5);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 0.5rem 0;
     transition: var(--transition);
 }
@@ -388,14 +389,14 @@ h1, h2, h3 {
 }
 
 .service-card {
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 16px;
     position: relative;
     transition: var(--transition);
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
@@ -893,13 +894,13 @@ h1, h2, h3 {
 }
 
 .testimonial-content {
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 16px;
     padding: 3rem;
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
     position: relative;
 }
@@ -1222,10 +1223,10 @@ h1, h2, h3 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--glass-bg-dark);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(78, 90, 78, 0.5);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
     padding: 1rem 2rem;
     z-index: 998;
     transform: translateY(100%);
