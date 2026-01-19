@@ -705,7 +705,9 @@ h1, h2, h3 {
 }
 
 .plan-badge {
-    display: inline-block;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
     background-color: rgba(78, 90, 78, 0.1);
     color: var(--sage);
     font-family: var(--font-body);
@@ -715,7 +717,6 @@ h1, h2, h3 {
     letter-spacing: 0.05em;
     padding: 0.4rem 0.8rem;
     border-radius: 50px;
-    margin-bottom: 1rem;
 }
 
 .plan-badge.popular {
@@ -734,6 +735,7 @@ h1, h2, h3 {
     font-weight: 600;
     color: var(--sage);
     margin-bottom: 0.25rem;
+    margin-top: 2rem;
     text-transform: none;
 }
 
