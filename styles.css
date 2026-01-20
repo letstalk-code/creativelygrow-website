@@ -1923,9 +1923,22 @@ h1, h2, h3 {
         margin-top: 0;
     }
 
-    /* Sticky CTA mobile */
+    /* Sticky CTA mobile - thin version */
     .sticky-cta-bar {
-        display: none !important;
+        padding: 0.5rem 1rem;
+    }
+
+    .sticky-cta-content {
+        gap: 1rem;
+    }
+
+    .sticky-cta-text {
+        display: none;
+    }
+
+    .sticky-cta-bar .btn {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.85rem;
     }
 
     /* Chat widget mobile */
