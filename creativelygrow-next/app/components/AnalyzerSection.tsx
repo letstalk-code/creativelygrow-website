@@ -297,24 +297,34 @@ export default function AnalyzerSection() {
                     </div>
 
                     {/* Business Phone CTA */}
-                    <div className="analyzer-card">
-                        <h3 className="analyzer-card-title">Talk to Our AI Assistant</h3>
-                        <p style={{ color: 'var(--gray)', marginBottom: '1.5rem' }}>
-                            Call our business line to experience how AI answers calls and handles real inquiries.
+                    <div className="analyzer-card" style={{ background: 'linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%)', color: 'white' }}>
+                        <h3 className="analyzer-card-title" style={{ color: 'var(--cream)' }}>Talk to Our AI Assistant</h3>
+                        <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: '1rem', fontSize: '0.95rem' }}>
+                            Experience how AI handles real business calls - answering questions, qualifying leads, and booking appointments.
                         </p>
 
-                        <a href={`tel:${BUSINESS_PHONE}`} className="analyzer-phone-cta">
-                            <div className="analyzer-phone-icon">
-                                <Phone size={24} />
-                            </div>
-                            <div>
-                                <p style={{ fontSize: '0.875rem', color: 'var(--gray)' }}>Call Now</p>
-                                <p style={{ fontSize: '1.25rem', fontFamily: 'var(--font-heading)', color: 'var(--sage)' }}>{BUSINESS_PHONE}</p>
-                            </div>
+                        <a
+                            href={`tel:${BUSINESS_PHONE}`}
+                            className="btn"
+                            style={{
+                                backgroundColor: 'var(--orange)',
+                                color: 'white',
+                                width: '100%',
+                                padding: '1rem',
+                                marginBottom: '1rem',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '0.5rem',
+                                fontSize: '1.1rem'
+                            }}
+                        >
+                            <Phone size={20} />
+                            {BUSINESS_PHONE}
                         </a>
 
-                        <p style={{ fontSize: '0.75rem', color: '#999', textAlign: 'center' }}>
-                            For businesses evaluating AI-powered websites and automation.
+                        <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', textAlign: 'center' }}>
+                            Try it now - see AI in action
                         </p>
                     </div>
                 </div>
