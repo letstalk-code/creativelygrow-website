@@ -19,11 +19,11 @@ export default function Home() {
             <Navbar />
             <Hero />
             <FreeOffer />
+            <Services />
 
-            {/* AI Analyzer Section - right after free offer */}
+            {/* AI Analyzer Section */}
             <AnalyzerSection />
 
-            <Services />
             <ExperienceAI />
             <AdditionalServices />
             <ContentShowcase />
