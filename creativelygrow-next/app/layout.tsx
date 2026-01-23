@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-body" });
@@ -19,9 +20,19 @@ export default function RootLayout({
     return (
         <html lang="en" className="scroll-smooth">
             <head>
-                <link rel="icon" type="image/png" href="/assets/favicon.png" />
+                <link rel="icon" type="image/png" href="/favicon.png" />
             </head>
-            <body className={`${inter.variable} ${oswald.variable}`}>{children}</body>
+            <body className={`${inter.variable} ${oswald.variable}`}>
+                {children}
+
+                {/* GHL Chat Widget */}
+                <Script
+                    src="https://widgets.leadconnectorhq.com/loader.js"
+                    data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+                    data-widget-id="696e7962639c14e449f511fd"
+                    strategy="lazyOnload"
+                />
+            </body>
         </html>
     );
 }
