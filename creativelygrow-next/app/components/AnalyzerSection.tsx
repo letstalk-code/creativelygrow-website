@@ -266,9 +266,9 @@ export default function AnalyzerSection() {
 
                         <form onSubmit={handleAnalyze} className="analyzer-form">
                             <input
-                                type="url"
+                                type="text"
                                 required
-                                placeholder="Website URL"
+                                placeholder="www.yourwebsite.com"
                                 className="analyzer-input"
                                 value={url}
                                 onChange={(e) => setUrl(e.target.value)}

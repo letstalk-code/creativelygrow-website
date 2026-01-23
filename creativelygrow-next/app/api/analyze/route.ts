@@ -7,10 +7,15 @@ const anthropic = new Anthropic({
 
 export async function POST(req: NextRequest) {
     try {
-        const { url, name, email, phone } = await req.json();
+        let { url, name, email, phone } = await req.json();
 
         if (!url || !name || !email) {
             return NextResponse.json({ error: 'URL, name, and email are required' }, { status: 400 });
+        }
+
+        // Auto-add https:// if missing
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://' + url;
         }
 
         // 1. Fetch HTML for heuristics
