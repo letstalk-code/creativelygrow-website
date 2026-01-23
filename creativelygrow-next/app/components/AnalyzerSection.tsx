@@ -297,9 +297,9 @@ export default function AnalyzerSection() {
                     </div>
 
                     {/* Business Phone CTA */}
-                    <div className="analyzer-card" style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div className="analyzer-card">
                         <h3 className="analyzer-card-title">Talk to Our AI Assistant</h3>
-                        <p style={{ color: 'var(--gray)', marginBottom: '1.5rem', flexGrow: 1 }}>
+                        <p style={{ color: 'var(--gray)', marginBottom: '1.5rem' }}>
                             Call our business line to experience how AI answers calls and handles real inquiries.
                         </p>
 
