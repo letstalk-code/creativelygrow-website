@@ -1,0 +1,279 @@
+/* =========================================
+   SERVICES SECTION
+   ========================================= */
+.services {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    padding: 6rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.services-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-label {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+}
+
+.section-title {
+    font-family: var(--font-body);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 600;
+    text-transform: none;
+    color: var(--sage);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    border-radius: 24px;
+    position: relative;
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.service-card:hover {
+    transform: scale(1.02);
+}
+
+.service-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 24px 24px 0 0;
+}
+
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.service-card:hover .service-image img {
+    transform: scale(1.1);
+}
+
+.service-content {
+    padding: 1.5rem;
+}
+
+.service-number {
+    display: none;
+}
+
+.service-title {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sage);
+    margin-bottom: 0.5rem;
+    text-transform: none;
+}
+
+.service-description {
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--orange);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.service-link:hover {
+    gap: 0.5rem;
+}
+
+.service-link span {
+    transition: transform 0.2s ease;
+}
+
+.service-link:hover span {
+    transform: translateX(3px);
+}
+
+/* =========================================
+   ADDITIONAL SERVICES
+   ========================================= */
+.additional-services {
+    background: rgba(78, 90, 78, 0.85);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    padding: 6rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.additional-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.additional-services .section-title {
+    color: var(--cream);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.additional-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.additional-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 3px solid var(--orange);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: var(--transition);
+}
+
+.additional-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.additional-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+}
+
+.additional-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--orange);
+}
+
+.additional-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+}
+
+.additional-card p {
+    color: var(--cream);
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   CONTENT SHOWCASE (PHONE MOCKUPS)
+   ========================================= */
+.content-showcase {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(60px) saturate(180%);
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    padding: 6rem 2rem;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.content-showcase-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.content-showcase-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.content-subtitle {
+    font-size: 1.125rem;
+    color: var(--gray);
+    max-width: 600px;
+    margin: 1rem auto 0;
+}
+
+.phone-mockups {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.phone-mockup {
+    flex: 0 0 auto;
+    width: 280px;
+    overflow: hidden;
+    position: relative;
+}
+
+.phone-mockup:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.phone-mockup:nth-child(2) {
+    transition-delay: 0.15s;
+}
+
+.phone-mockup:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
+.phone-mockup:nth-child(4) {
+    transition-delay: 0.25s;
+}
+
+.phone-mockup img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Staggered heights for visual interest */
+.phone-mockup:nth-child(1) {
+    margin-top: 2rem;
+}
+
+.phone-mockup:nth-child(2) {
+    margin-top: 0;
+}
+
+.phone-mockup:nth-child(3) {
+    margin-top: 3rem;
+}
+
+.phone-mockup:nth-child(4) {
+    margin-top: 1rem;
+}

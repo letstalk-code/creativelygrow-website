@@ -1,0 +1,292 @@
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 1024px) {
+    .plans-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .plan-card.featured {
+        transform: none;
+    }
+
+    .plan-card.featured:hover {
+        transform: translateY(-10px);
+    }
+
+    .additional-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: var(--sage);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+    }
+
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .hero {
+        padding: 6rem 1.5rem 3rem;
+    }
+
+    .hero-headline {
+        font-size: 2.25rem;
+    }
+
+    .hero-subtext {
+        font-size: 1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .additional-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .experience-ai {
+        padding: 4rem 1.5rem;
+    }
+
+    .experience-ai-cta {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .experience-ai-cta .btn {
+        width: 100%;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        padding: 0.75rem 1rem 0.5rem;
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        text-align: center;
+        padding-bottom: 0.5rem;
+        border-bottom: none;
+    }
+
+    .footer-brand {
+        margin-bottom: 0.25rem;
+    }
+
+    .footer-logo {
+        width: 100px;
+        margin-bottom: 0.25rem;
+    }
+
+    .footer-tagline {
+        display: none;
+    }
+
+    .footer-links {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .footer-links a {
+        font-size: 0.75rem;
+    }
+
+    .footer-social {
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .footer-social a {
+        width: 28px;
+        height: 28px;
+    }
+
+    .footer-social svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .footer-bottom {
+        padding-top: 0.5rem;
+    }
+
+    .footer-copyright {
+        font-size: 0.65rem;
+    }
+
+    .plans-benefits {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .testimonial-slider {
+        min-height: auto;
+    }
+
+    .testimonial-content {
+        padding: 1.5rem;
+    }
+
+    .testimonial-content::before {
+        font-size: 4rem;
+    }
+
+    .testimonial-content p {
+        font-size: 1rem;
+    }
+
+    .testimonial-author {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .testimonial-author div {
+        text-align: center;
+    }
+
+    /* Phone mockups mobile */
+    .phone-mockups {
+        gap: 1rem;
+    }
+
+    .phone-mockup {
+        width: 200px;
+    }
+
+    .phone-mockup:nth-child(1),
+    .phone-mockup:nth-child(2),
+    .phone-mockup:nth-child(3),
+    .phone-mockup:nth-child(4) {
+        margin-top: 0;
+    }
+
+    /* Sticky CTA mobile - thin version */
+    .sticky-cta-bar {
+        padding: 0.5rem 1rem;
+    }
+
+    .sticky-cta-content {
+        gap: 1rem;
+    }
+
+    .sticky-cta-text {
+        display: none;
+    }
+
+    .sticky-cta-bar .btn {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.85rem;
+    }
+
+    /* Chat widget mobile */
+    .chat-widget {
+        bottom: 80px;
+        right: 1rem;
+    }
+
+    .chat-widget-popup {
+        width: 280px;
+        right: -1rem;
+    }
+
+    /* Exit popup mobile */
+    .exit-popup {
+        padding: 2rem;
+    }
+
+    .exit-popup h3 {
+        font-size: 1.5rem;
+    }
+
+    /* Free offer banner mobile */
+    .free-offer-banner {
+        padding: 3rem 1.5rem;
+    }
+
+    .free-offer-headline {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .phone-mockup {
+        width: 160px;
+    }
+
+    .hero-headline {
+        font-size: 1.75rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .service-card {
+        margin: 0 -0.5rem;
+    }
+
+    .service-content {
+        padding: 1.5rem;
+    }
+
+    .service-number {
+        font-size: 2rem;
+    }
+
+    .btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.875rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .stat-suffix {
+        font-size: 1.5rem;
+    }
+
+    .plan-card {
+        padding: 1.5rem;
+    }
+}
