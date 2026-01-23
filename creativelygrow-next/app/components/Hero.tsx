@@ -19,9 +19,6 @@ export default function Hero() {
                     <a href="#plans" className="btn btn-primary">
                         VIEW PLANS
                     </a>
-                    <a href="tel:+18135821526" className="btn btn-call">
-                        TRY OUR VOICE AI
-                    </a>
                 </div>
             </div>
             <div className="scroll-indicator">
