@@ -164,7 +164,60 @@ Hard limits:
             };
         }
 
-        // TODO: Store lead data (name, email, phone, url, score, report)
+        // Send lead to GoHighLevel
+        try {
+            const ghlApiKey = process.env.GHL_API_KEY;
+            const ghlLocationId = process.env.GHL_LOCATION_ID;
+
+            if (ghlApiKey && ghlLocationId) {
+                // Create contact in GHL
+                const ghlResponse = await fetch('https://services.leadconnectorhq.com/contacts/', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${ghlApiKey}`,
+                        'Content-Type': 'application/json',
+                        'Version': '2021-07-28'
+                    },
+                    body: JSON.stringify({
+                        locationId: ghlLocationId,
+                        name: name,
+                        email: email,
+                        phone: phone || undefined,
+                        tags: ['Website Analyzer Lead'],
+                        source: 'Website Analyzer',
+                        customFields: [
+                            { key: 'website_url', value: url },
+                            { key: 'analyzer_score', value: String(overallScore) }
+                        ]
+                    })
+                });
+
+                if (ghlResponse.ok) {
+                    const contactData = await ghlResponse.json();
+                    console.log('Lead sent to GHL:', contactData.contact?.id);
+
+                    // Add note with analysis summary
+                    if (contactData.contact?.id) {
+                        await fetch(`https://services.leadconnectorhq.com/contacts/${contactData.contact.id}/notes`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${ghlApiKey}`,
+                                'Content-Type': 'application/json',
+                                'Version': '2021-07-28'
+                            },
+                            body: JSON.stringify({
+                                body: `Website Analyzer Results:\n\nURL: ${url}\nOverall Score: ${overallScore}/100\n\nPerformance: ${metrics.performance}\nSEO: ${metrics.seo}\nAccessibility: ${metrics.accessibility}\nBest Practices: ${metrics.bestPractices}\nConversion Readiness: ${conversionScore}\n\nHeadline: ${report.headline}\n\nRecommended: ${report.recommendedNextStep}`
+                            })
+                        });
+                    }
+                } else {
+                    console.error('GHL API error:', await ghlResponse.text());
+                }
+            }
+        } catch (ghlError) {
+            console.error('GHL integration error:', ghlError);
+        }
+
         console.log('Lead captured:', { name, email, phone, url, score: overallScore });
 
         return NextResponse.json({
