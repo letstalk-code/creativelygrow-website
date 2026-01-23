@@ -224,7 +224,37 @@ export default function AnalyzerSection() {
                     </p>
                 </div>
 
-                <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+                <div style={{ maxWidth: '500px', margin: '0 auto', position: 'relative' }}>
+                    {/* Attention arrows */}
+                    <div style={{
+                        position: 'absolute',
+                        left: '-80px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '8px',
+                        animation: 'bounceRight 1s ease-in-out infinite'
+                    }}>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                    <div style={{
+                        position: 'absolute',
+                        right: '-80px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '8px',
+                        animation: 'bounceLeft 1s ease-in-out infinite'
+                    }}>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                    </div>
+
                     <div className="analyzer-card" style={{ position: 'relative' }}>
                         {loading && (
                             <div className="analyzer-loading-overlay">
@@ -287,6 +317,14 @@ export default function AnalyzerSection() {
                 @keyframes spin {
                     from { transform: rotate(0deg); }
                     to { transform: rotate(360deg); }
+                }
+                @keyframes bounceRight {
+                    0%, 100% { transform: translateY(-50%) translateX(0); }
+                    50% { transform: translateY(-50%) translateX(10px); }
+                }
+                @keyframes bounceLeft {
+                    0%, 100% { transform: translateY(-50%) translateX(0); }
+                    50% { transform: translateY(-50%) translateX(-10px); }
                 }
             `}</style>
         </section>
