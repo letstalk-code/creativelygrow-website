@@ -5,6 +5,7 @@ import Services from './components/Services';
 import AnalyzerSection from './components/AnalyzerSection';
 import ExperienceAI from './components/ExperienceAI';
 import Stats from './components/Stats';
+import Logos from './components/Logos';
 import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
@@ -23,6 +24,7 @@ export default function Home() {
 
             <ExperienceAI />
             <Stats />
+            <Logos />
             <Pricing />
             <Testimonials />
             <Contact />

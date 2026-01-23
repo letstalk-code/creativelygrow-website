@@ -19,7 +19,7 @@ export default function Navbar() {
         <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
             <div className="nav-container">
                 <Link href="/" className="logo">
-                    <img src="/assets/logo.png" alt="Creatively Grow" />
+                    <img src="/logo.png" alt="Creatively Grow" />
                 </Link>
                 <button
                     className="mobile-menu-btn"

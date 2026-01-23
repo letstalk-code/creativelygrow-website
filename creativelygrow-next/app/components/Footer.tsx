@@ -5,7 +5,7 @@ export default function Footer() {
                 <div className="footer-main">
                     <div className="footer-brand">
                         <img
-                            src="/assets/logo.png"
+                            src="/logo.png"
                             alt="Creatively Grow"
                             className="footer-logo"
                         />
