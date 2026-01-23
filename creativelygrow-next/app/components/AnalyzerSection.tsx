@@ -224,23 +224,8 @@ export default function AnalyzerSection() {
                     </p>
                 </div>
 
-                <div className="analyzer-grid">
-                    {/* AI Website Analyzer */}
-                    <div className="analyzer-card">
-                        <h3 className="analyzer-card-title">Instant AI Website Analysis</h3>
-                        <p className="analyzer-card-subtitle">
-                            Enter your website and our AI will analyze:
-                        </p>
-                        <ul className="analyzer-list">
-                            <li>• Performance & mobile experience</li>
-                            <li>• SEO & technical gaps</li>
-                            <li>• Conversion & lead capture issues</li>
-                            <li>• Missing automation & AI opportunities</li>
-                        </ul>
-                        <p className="analyzer-note">
-                            This is the same framework used before building Smart AI Websites.
-                        </p>
-
+                <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+                    <div className="analyzer-card" style={{ position: 'relative' }}>
                         {loading && (
                             <div className="analyzer-loading-overlay">
                                 <Loader2 style={{ width: '2.5rem', height: '2.5rem', color: 'var(--orange)', animation: 'spin 1s linear infinite' }} />
@@ -294,38 +279,6 @@ export default function AnalyzerSection() {
                                 No install. No commitment. Results load instantly.
                             </p>
                         </form>
-                    </div>
-
-                    {/* Business Phone CTA */}
-                    <div className="analyzer-card" style={{ background: 'linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%)', color: 'white' }}>
-                        <h3 className="analyzer-card-title" style={{ color: 'var(--cream)' }}>Talk to Our AI Assistant</h3>
-                        <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: '1rem', fontSize: '0.95rem' }}>
-                            Experience how AI handles real business calls - answering questions, qualifying leads, and booking appointments.
-                        </p>
-
-                        <a
-                            href={`tel:${BUSINESS_PHONE}`}
-                            className="btn"
-                            style={{
-                                backgroundColor: 'var(--orange)',
-                                color: 'white',
-                                width: '100%',
-                                padding: '1rem',
-                                marginBottom: '1rem',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '0.5rem',
-                                fontSize: '1.1rem'
-                            }}
-                        >
-                            <Phone size={20} />
-                            {BUSINESS_PHONE}
-                        </a>
-
-                        <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', textAlign: 'center' }}>
-                            Try it now - see AI in action
-                        </p>
                     </div>
                 </div>
             </div>
