@@ -4,8 +4,6 @@ import FreeOffer from './components/FreeOffer';
 import Services from './components/Services';
 import AnalyzerSection from './components/AnalyzerSection';
 import ExperienceAI from './components/ExperienceAI';
-import AdditionalServices from './components/AdditionalServices';
-import ContentShowcase from './components/ContentShowcase';
 import Stats from './components/Stats';
 import Logos from './components/Logos';
 import Pricing from './components/Pricing';
@@ -25,8 +23,6 @@ export default function Home() {
             <AnalyzerSection />
 
             <ExperienceAI />
-            <AdditionalServices />
-            <ContentShowcase />
             <Stats />
             <Logos />
             <Pricing />
