@@ -2462,16 +2462,24 @@ h1, h2, h3 {
 }
 
 @media (max-width: 640px) {
+    .analyzer-section {
+        overflow: visible;
+    }
+
+    .analyzer-form-wrapper {
+        padding: 0 35px;
+    }
+
     .analyzer-arrow {
         display: block;
     }
 
     .analyzer-arrow-left {
-        left: 5px;
+        left: 0;
     }
 
     .analyzer-arrow-right {
-        right: 5px;
+        right: 0;
     }
 
     .analyzer-arrow svg {
