@@ -187,6 +187,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Back to top link in sticky bar
+    const backToTopLink = document.querySelector('.back-to-top-link');
+    if (backToTopLink) {
+        backToTopLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
     // =========================================
     // SMOOTH SCROLL FOR ANCHOR LINKS
     // =========================================
