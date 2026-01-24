@@ -2463,6 +2463,38 @@ h1, h2, h3 {
 
 @media (max-width: 640px) {
     .analyzer-arrow {
-        display: none;
+        display: block;
+        top: auto;
+        bottom: -50px;
+        transform: rotate(90deg);
+    }
+
+    .analyzer-arrow-left {
+        left: 20%;
+        animation: bounceMobileLeft 1s ease-in-out infinite;
+    }
+
+    .analyzer-arrow-right {
+        right: 20%;
+        animation: bounceMobileRight 1s ease-in-out infinite;
+    }
+
+    .analyzer-arrow svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    @keyframes bounceMobileLeft {
+        0%, 100% { transform: rotate(90deg) translateX(0); }
+        50% { transform: rotate(90deg) translateX(5px); }
+    }
+
+    @keyframes bounceMobileRight {
+        0%, 100% { transform: rotate(-90deg) translateX(0); }
+        50% { transform: rotate(-90deg) translateX(5px); }
+    }
+
+    .analyzer-arrow-right {
+        transform: rotate(-90deg);
     }
 }
