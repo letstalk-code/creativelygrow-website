@@ -1977,6 +1977,11 @@ h1, h2, h3 {
         padding: 0 0.25rem;
     }
 
+    /* Hide original back-to-top button on mobile (using the one in sticky bar instead) */
+    .back-to-top {
+        display: none !important;
+    }
+
     /* Chat widget mobile */
     .chat-widget {
         bottom: 80px;
