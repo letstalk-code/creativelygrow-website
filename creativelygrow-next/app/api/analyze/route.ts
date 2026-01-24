@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
-const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
-});
+// Initialize Anthropic client lazily
+let anthropic: Anthropic | null = null;
+
+function getAnthropicClient() {
+    if (!anthropic) {
+        anthropic = new Anthropic({
+            apiKey: process.env.ANTHROPIC_API_KEY,
+        });
+    }
+    return anthropic;
+}
 
 // CORS headers
 const corsHeaders = {
@@ -150,44 +158,87 @@ Hard limits:
 - No markdown
 - No commentary`;
 
-        const msg = await anthropic.messages.create({
-            model: "claude-3-haiku-20240307",
-            max_tokens: 800,
-            temperature: 0.5,
-            system: systemPrompt,
-            messages: [{ role: "user", content: userPrompt }]
-        });
-
-        const textContent = msg.content[0].type === 'text' ? msg.content[0].text : '';
+        // Try to generate AI report, fallback to template if fails
         let report;
         try {
+            const client = getAnthropicClient();
+            const msg = await client.messages.create({
+                model: "claude-3-haiku-20240307",
+                max_tokens: 800,
+                temperature: 0.5,
+                system: systemPrompt,
+                messages: [{ role: "user", content: userPrompt }]
+            });
+
+            const textContent = msg.content[0].type === 'text' ? msg.content[0].text : '';
             report = JSON.parse(textContent);
-        } catch {
+        } catch (aiError) {
+            console.error('AI report generation failed:', aiError);
+            // Use intelligent fallback based on heuristics
+            const issues = [];
+            const wins = [];
+
+            if (!heuristics.hasClearCTA) {
+                issues.push({ title: "No clear call-to-action", whyItMatters: "Visitors don't know what to do next" });
+                wins.push({ title: "Add prominent CTA buttons", impact: "High", whatToDo: "Add 'Get Started' or 'Contact Us' buttons above the fold" });
+            }
+            if (!heuristics.hasPhone) {
+                issues.push({ title: "Phone number not visible", whyItMatters: "Mobile users can't call you with one tap" });
+                wins.push({ title: "Add clickable phone number", impact: "High", whatToDo: "Place phone in header with tel: link" });
+            }
+            if (!heuristics.hasContactForm) {
+                issues.push({ title: "No contact form found", whyItMatters: "You're losing leads who prefer to message" });
+                wins.push({ title: "Add a contact form", impact: "High", whatToDo: "Add a simple form with name, email, and message" });
+            }
+            if (!heuristics.hasTrustIndicators) {
+                issues.push({ title: "Missing trust signals", whyItMatters: "Visitors hesitate without social proof" });
+                wins.push({ title: "Add testimonials or reviews", impact: "Medium", whatToDo: "Display customer reviews or trust badges" });
+            }
+
+            if (issues.length === 0) {
+                issues.push({ title: "Missing 24/7 engagement", whyItMatters: "Leads slip away after business hours" });
+            }
+
             report = {
-                headline: "Your website has opportunities to capture more leads.",
-                topIssues: [
-                    { title: "Missing conversion paths", whyItMatters: "Visitors leave without a clear next step" },
-                    { title: "No 24/7 engagement", whyItMatters: "Leads slip away after hours" }
-                ],
-                quickWins: [
-                    { title: "Add visible phone number", impact: "High", whatToDo: "Place phone in header" },
-                    { title: "Add clear CTA", impact: "High", whatToDo: "Add booking or contact button above fold" }
-                ],
+                headline: `Your website scores ${overallScore}/100 — there's room for improvement.`,
+                topIssues: issues.slice(0, 3),
+                quickWins: wins.slice(0, 3),
                 smartWebsiteUpgrades: [
                     { title: "AI Chat Assistant", whatChanges: "Answer questions and capture leads 24/7" },
-                    { title: "Automated Follow-up", whatChanges: "Never lose a lead to slow response" }
+                    { title: "Automated Follow-up", whatChanges: "Respond to leads in seconds, not hours" },
+                    { title: "Smart Booking System", whatChanges: "Let visitors book appointments instantly" }
                 ],
-                recommendedNextStep: "Book a demo to see how Smart AI Websites capture more leads"
+                recommendedNextStep: "Book a free demo to see how a Smart AI Website can capture more leads"
             };
         }
 
         // Send lead to GoHighLevel
+        let ghlStatus = { success: false, error: null as string | null, contactId: null as string | null };
+
         try {
             const ghlApiKey = process.env.GHL_API_KEY;
             const ghlLocationId = process.env.GHL_LOCATION_ID;
 
+            console.log('GHL Config:', {
+                hasApiKey: !!ghlApiKey,
+                apiKeyPrefix: ghlApiKey?.substring(0, 10),
+                hasLocationId: !!ghlLocationId,
+                locationId: ghlLocationId
+            });
+
             if (ghlApiKey && ghlLocationId) {
-                // Create contact in GHL
+                // Create contact in GHL - simplified payload without custom fields
+                const ghlPayload = {
+                    locationId: ghlLocationId,
+                    name: name,
+                    email: email,
+                    phone: phone || undefined,
+                    tags: ['Website Analyzer Lead'],
+                    source: 'Website Analyzer'
+                };
+
+                console.log('GHL Payload:', JSON.stringify(ghlPayload));
+
                 const ghlResponse = await fetch('https://services.leadconnectorhq.com/contacts/', {
                     method: 'POST',
                     headers: {
@@ -195,27 +246,21 @@ Hard limits:
                         'Content-Type': 'application/json',
                         'Version': '2021-07-28'
                     },
-                    body: JSON.stringify({
-                        locationId: ghlLocationId,
-                        name: name,
-                        email: email,
-                        phone: phone || undefined,
-                        tags: ['Website Analyzer Lead'],
-                        source: 'Website Analyzer',
-                        customFields: [
-                            { key: 'website_url', value: url },
-                            { key: 'analyzer_score', value: String(overallScore) }
-                        ]
-                    })
+                    body: JSON.stringify(ghlPayload)
                 });
 
+                const ghlResponseText = await ghlResponse.text();
+                console.log('GHL Response:', ghlResponse.status, ghlResponseText);
+
                 if (ghlResponse.ok) {
-                    const contactData = await ghlResponse.json();
+                    const contactData = JSON.parse(ghlResponseText);
+                    ghlStatus.success = true;
+                    ghlStatus.contactId = contactData.contact?.id;
                     console.log('Lead sent to GHL:', contactData.contact?.id);
 
                     // Add note with analysis summary
                     if (contactData.contact?.id) {
-                        await fetch(`https://services.leadconnectorhq.com/contacts/${contactData.contact.id}/notes`, {
+                        const noteResponse = await fetch(`https://services.leadconnectorhq.com/contacts/${contactData.contact.id}/notes`, {
                             method: 'POST',
                             headers: {
                                 'Authorization': `Bearer ${ghlApiKey}`,
@@ -226,16 +271,21 @@ Hard limits:
                                 body: `Website Analyzer Results:\n\nURL: ${url}\nOverall Score: ${overallScore}/100\n\nPerformance: ${metrics.performance}\nSEO: ${metrics.seo}\nAccessibility: ${metrics.accessibility}\nBest Practices: ${metrics.bestPractices}\nConversion Readiness: ${conversionScore}\n\nHeadline: ${report.headline}\n\nRecommended: ${report.recommendedNextStep}`
                             })
                         });
+                        console.log('Note response:', noteResponse.status);
                     }
                 } else {
-                    console.error('GHL API error:', await ghlResponse.text());
+                    ghlStatus.error = `GHL API error ${ghlResponse.status}: ${ghlResponseText}`;
+                    console.error('GHL API error:', ghlResponse.status, ghlResponseText);
                 }
+            } else {
+                ghlStatus.error = 'Missing GHL API key or location ID';
             }
-        } catch (ghlError) {
+        } catch (ghlError: any) {
+            ghlStatus.error = ghlError?.message || 'Unknown GHL error';
             console.error('GHL integration error:', ghlError);
         }
 
-        console.log('Lead captured:', { name, email, phone, url, score: overallScore });
+        console.log('Lead captured:', { name, email, phone, url, score: overallScore, ghlStatus });
 
         return NextResponse.json({
             score: overallScore,
@@ -247,11 +297,15 @@ Hard limits:
                 conversionReadiness: conversionScore
             },
             heuristics,
-            report
+            report,
+            ghlStatus
         }, { headers: corsHeaders });
 
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ error: 'Analysis failed' }, { status: 500, headers: corsHeaders });
+    } catch (error: any) {
+        console.error('Analysis error:', error?.message || error);
+        return NextResponse.json({
+            error: 'Analysis failed',
+            details: error?.message || 'Unknown error'
+        }, { status: 500, headers: corsHeaders });
     }
 }

@@ -1,0 +1,6 @@
+.vercel
+.env*.local
+node_modules/
+.next/
+creativelygrow-next/node_modules/
+creativelygrow-next/.next/
