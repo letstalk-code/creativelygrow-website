@@ -802,3 +802,78 @@
 .analyzer-back-link:hover {
     color: var(--orange);
 }
+
+/* =========================================
+   STICKY FOOTER BAR
+   ========================================= */
+.sticky-footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--sage);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 999;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.sticky-footer-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sticky-footer-content p {
+    color: var(--cream);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.sticky-footer-content strong {
+    color: var(--orange);
+}
+
+.scroll-to-top-btn {
+    position: absolute;
+    left: 1rem;
+    background-color: var(--sage-dark);
+    color: var(--cream);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.scroll-to-top-btn:hover {
+    background-color: var(--orange);
+}
+
+@media (max-width: 768px) {
+    .sticky-footer-bar {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+    .sticky-footer-content {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+    }
+
+    .scroll-to-top-btn {
+        position: static;
+        order: -1;
+    }
+}

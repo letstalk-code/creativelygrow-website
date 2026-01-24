@@ -10,6 +10,7 @@ import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import StickyFooterBar from './components/StickyFooterBar';
 
 export default function Home() {
     return (
@@ -29,6 +30,7 @@ export default function Home() {
             <Testimonials />
             <Contact />
             <Footer />
+            <StickyFooterBar />
         </main>
     );
 }
