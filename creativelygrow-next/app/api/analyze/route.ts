@@ -5,12 +5,24 @@ const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+// CORS headers
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+// Handle OPTIONS request for CORS preflight
+export async function OPTIONS() {
+    return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function POST(req: NextRequest) {
     try {
         let { url, name, email, phone } = await req.json();
 
         if (!url || !name || !email) {
-            return NextResponse.json({ error: 'URL, name, and email are required' }, { status: 400 });
+            return NextResponse.json({ error: 'URL, name, and email are required' }, { status: 400, headers: corsHeaders });
         }
 
         // Auto-add https:// if missing
@@ -236,10 +248,10 @@ Hard limits:
             },
             heuristics,
             report
-        });
+        }, { headers: corsHeaders });
 
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: 'Analysis failed' }, { status: 500 });
+        return NextResponse.json({ error: 'Analysis failed' }, { status: 500, headers: corsHeaders });
     }
 }
