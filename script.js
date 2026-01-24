@@ -512,4 +512,195 @@ if (exitPopupOverlay) {
             closeExitPopup();
         }
     });
+
+    // =========================================
+    // WEBSITE ANALYZER
+    // =========================================
+    const analyzerForm = document.getElementById('analyzer-form');
+    const analyzerLoading = document.getElementById('analyzer-loading');
+    const analyzerError = document.getElementById('analyzer-error');
+    const analyzerFormCard = document.getElementById('analyzer-form-card');
+    const analyzerResults = document.getElementById('analyzer-results');
+    const analyzerSection = document.querySelector('.analyzer-section');
+
+    // API endpoint - using the Next.js backend
+    const ANALYZER_API = 'https://creativelygrow-next.vercel.app/api/analyze';
+
+    if (analyzerForm) {
+        analyzerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const url = document.getElementById('analyzer-url').value;
+            const name = document.getElementById('analyzer-name').value;
+            const email = document.getElementById('analyzer-email').value;
+            const phone = document.getElementById('analyzer-phone').value;
+
+            // Show loading
+            analyzerLoading.style.display = 'flex';
+            analyzerError.style.display = 'none';
+
+            try {
+                const response = await fetch(ANALYZER_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url, name, email, phone })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    analyzerError.textContent = data.error;
+                    analyzerError.style.display = 'block';
+                    analyzerLoading.style.display = 'none';
+                    return;
+                }
+
+                // Hide form, show results
+                displayAnalyzerResults(data, url);
+
+            } catch (err) {
+                analyzerError.textContent = 'Analysis failed. Please try again.';
+                analyzerError.style.display = 'block';
+                analyzerLoading.style.display = 'none';
+            }
+        });
+    }
+
+    function displayAnalyzerResults(data, url) {
+        // Hide form section content
+        document.querySelector('.analyzer-container').style.display = 'none';
+        analyzerResults.style.display = 'block';
+
+        // Set URL
+        document.getElementById('results-url').textContent = url;
+
+        // Set headline
+        document.getElementById('results-headline').textContent = data.report.headline;
+
+        // Animate score circle
+        const score = data.score;
+        const scoreColor = score >= 70 ? '#22c55e' : score >= 50 ? '#ef7938' : '#ef4444';
+        const scoreCircle = document.getElementById('score-circle');
+        const strokeDashoffset = 440 - (440 * score) / 100;
+
+        scoreCircle.style.stroke = scoreColor;
+        scoreCircle.style.transition = 'stroke-dashoffset 1s ease-out';
+        setTimeout(() => {
+            scoreCircle.style.strokeDashoffset = strokeDashoffset;
+        }, 100);
+
+        // Animate score number
+        const scoreNumber = document.getElementById('score-number');
+        animateNumber(scoreNumber, 0, score, 1000);
+
+        // Set recommended next step
+        document.getElementById('results-next-step').textContent = data.report.recommendedNextStep;
+
+        // Metrics grid
+        const metricsGrid = document.getElementById('metrics-grid');
+        metricsGrid.innerHTML = '';
+        const metrics = [
+            { label: 'Performance', value: data.metrics.performance, weight: '30%' },
+            { label: 'SEO', value: data.metrics.seo, weight: '20%' },
+            { label: 'Accessibility', value: data.metrics.accessibility, weight: '15%' },
+            { label: 'Best Practices', value: data.metrics.bestPractices, weight: '10%' },
+            { label: 'Conversion', value: data.metrics.conversionReadiness, weight: '25%' }
+        ];
+        metrics.forEach(m => {
+            const div = document.createElement('div');
+            div.className = 'analyzer-metric-item';
+            div.innerHTML = `
+                <div class="analyzer-metric-value">${m.value}</div>
+                <div class="analyzer-metric-label">${m.label}</div>
+                <div class="analyzer-metric-weight">${m.weight}</div>
+            `;
+            metricsGrid.appendChild(div);
+        });
+
+        // Issues
+        const issuesSection = document.getElementById('issues-section');
+        issuesSection.innerHTML = '';
+        if (data.report.topIssues && data.report.topIssues.length > 0) {
+            issuesSection.innerHTML = '<h4 class="analyzer-section-title">⚠️ Top Issues</h4>';
+            data.report.topIssues.slice(0, 3).forEach(issue => {
+                const div = document.createElement('div');
+                div.className = 'analyzer-issue-card';
+                div.innerHTML = `<h5>${issue.title}</h5><p>${issue.whyItMatters}</p>`;
+                issuesSection.appendChild(div);
+            });
+        }
+
+        // Quick wins
+        const winsSection = document.getElementById('wins-section');
+        winsSection.innerHTML = '';
+        if (data.report.quickWins && data.report.quickWins.length > 0) {
+            winsSection.innerHTML = '<h4 class="analyzer-section-title">✓ Quick Wins</h4>';
+            data.report.quickWins.slice(0, 3).forEach(win => {
+                const div = document.createElement('div');
+                div.className = 'analyzer-win-card';
+                const impactClass = win.impact === 'High' ? 'analyzer-impact-high' :
+                                    win.impact === 'Medium' ? 'analyzer-impact-medium' : 'analyzer-impact-low';
+                div.innerHTML = `
+                    <span class="analyzer-impact-badge ${impactClass}">${win.impact}</span>
+                    <h5>${win.title}</h5>
+                    <p>${win.whatToDo}</p>
+                `;
+                winsSection.appendChild(div);
+            });
+        }
+
+        // Upgrades
+        const upgradesSection = document.getElementById('upgrades-section');
+        upgradesSection.innerHTML = '';
+        if (data.report.smartWebsiteUpgrades && data.report.smartWebsiteUpgrades.length > 0) {
+            upgradesSection.innerHTML = `
+                <h4 class="analyzer-section-title">⚡ Smart Website Upgrades</h4>
+                <div class="analyzer-upgrades-box">
+                    <p>Your website isn't broken — it's outdated. Smart AI Websites engage visitors, answer questions, capture leads, and follow up automatically.</p>
+                    <div id="upgrades-list"></div>
+                </div>
+            `;
+            const upgradesList = document.getElementById('upgrades-list');
+            data.report.smartWebsiteUpgrades.forEach(upgrade => {
+                const div = document.createElement('div');
+                div.className = 'analyzer-upgrade-item';
+                div.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <div><strong style="color: var(--sage)">${upgrade.title}:</strong> <span>${upgrade.whatChanges}</span></div>
+                `;
+                upgradesList.appendChild(div);
+            });
+        }
+
+        // Scroll to results
+        analyzerSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function animateNumber(element, start, end, duration) {
+        const range = end - start;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const value = Math.round(start + range * progress);
+            element.textContent = value;
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+
+        requestAnimationFrame(update);
+    }
+}
+
+// Reset analyzer (global function)
+function resetAnalyzer() {
+    document.querySelector('.analyzer-container').style.display = 'block';
+    document.getElementById('analyzer-results').style.display = 'none';
+    document.getElementById('analyzer-form').reset();
+    document.getElementById('analyzer-loading').style.display = 'none';
+    document.getElementById('score-circle').style.strokeDashoffset = '440';
+    document.querySelector('.analyzer-section').scrollIntoView({ behavior: 'smooth' });
 }

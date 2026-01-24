@@ -112,16 +112,15 @@
         <div class="hero-bg-image"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content fade-in">
-            <p class="hero-tagline">A company created to help grow your business creatively</p>
+            <p class="hero-tagline">Smart Websites That Capture Leads 24/7</p>
             <h1 class="hero-headline">
-                STOP TREATING YOUR WEBSITE LIKE A <span class="highlight">DIGITAL BUSINESS CARD</span>
+                YOUR WEBSITE SHOULD <span class="highlight">BOOK APPOINTMENTS WHILE YOU SLEEP</span>
             </h1>
             <p class="hero-subtext">
-                Turn it into a sales machine that works 24/7 to capture leads, book appointments, and follow up automatically.
+                Turn it into a lead-generating machine that books appointments automatically. Every missed call is a lost customer.
             </p>
             <div class="hero-buttons">
                 <a href="#plans" class="btn btn-primary">VIEW PLANS</a>
-                <a href="tel:+18135821526" class="btn btn-call">TRY OUR VOICE AI</a>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -134,9 +133,93 @@
     <section class="free-offer-banner">
         <div class="free-offer-container">
             <div class="free-offer-content">
-                <h2 class="free-offer-headline">Get Your Smart Website Designed <span class="highlight">100% FREE</span></h2>
-                <p class="free-offer-text">That's right — receive a custom Smart Website design for your business at absolutely no charge. No hidden fees. No obligations. Just a beautifully designed website ready to grow your business.</p>
-                <a href="#contact" class="btn btn-primary">Claim Your Free Design</a>
+                <h2 class="free-offer-headline">Get a Free Smart Website That <span class="highlight">Captures Leads 24/7</span></h2>
+                <p class="free-offer-text">No cost. No catch. Get a professionally designed website that responds to visitors instantly, books appointments automatically, and never lets a lead slip away.</p>
+                <a href="#contact" class="btn btn-primary">Get My Free Smart Website</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Website Analyzer Section -->
+    <section class="analyzer-section" id="analyzer">
+        <div class="analyzer-container">
+            <div class="analyzer-header">
+                <h2 class="section-title">See Why Most Websites <span class="highlight">Don't Convert</span></h2>
+                <p class="analyzer-subtitle">Most websites look fine — but quietly lose leads every day.</p>
+                <p class="analyzer-subtext">We built AI tools that show you exactly what's broken and how to fix it.</p>
+            </div>
+
+            <div class="analyzer-form-wrapper">
+                <!-- Attention arrows -->
+                <div class="analyzer-arrow analyzer-arrow-left">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </div>
+                <div class="analyzer-arrow analyzer-arrow-right">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                </div>
+
+                <div class="analyzer-card" id="analyzer-form-card">
+                    <div class="analyzer-loading" id="analyzer-loading" style="display: none;">
+                        <div class="analyzer-spinner"></div>
+                        <p class="analyzer-loading-text">Analyzing...</p>
+                        <p class="analyzer-loading-subtext">Checking performance & conversion</p>
+                    </div>
+
+                    <form id="analyzer-form" class="analyzer-form">
+                        <input type="text" id="analyzer-url" required placeholder="www.yourwebsite.com" class="analyzer-input">
+                        <input type="text" id="analyzer-name" required placeholder="Full Name" class="analyzer-input">
+                        <input type="email" id="analyzer-email" required placeholder="Email" class="analyzer-input">
+                        <input type="tel" id="analyzer-phone" placeholder="Phone (optional)" class="analyzer-input">
+                        <p class="analyzer-error" id="analyzer-error" style="display: none;"></p>
+                        <button type="submit" class="btn btn-primary btn-full">Analyze My Website</button>
+                        <p class="analyzer-disclaimer">No install. No commitment. Results load instantly.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section (hidden by default) -->
+        <div class="analyzer-results" id="analyzer-results" style="display: none;">
+            <div class="analyzer-results-card">
+                <div class="analyzer-results-header">
+                    <h2>Website Analysis Report</h2>
+                    <p id="results-url"></p>
+                </div>
+                <div class="analyzer-results-body">
+                    <p class="analyzer-headline" id="results-headline"></p>
+
+                    <div class="analyzer-score-circle">
+                        <svg viewBox="0 0 160 160">
+                            <circle cx="80" cy="80" r="70" stroke="#e5e7eb" stroke-width="12" fill="none" />
+                            <circle id="score-circle" cx="80" cy="80" r="70" stroke="var(--orange)" stroke-width="12" fill="none" stroke-dasharray="440" stroke-dashoffset="440" stroke-linecap="round" />
+                        </svg>
+                        <div class="analyzer-score-value">
+                            <span id="score-number">0</span>
+                            <span>Overall</span>
+                        </div>
+                    </div>
+
+                    <div class="analyzer-metrics-grid" id="metrics-grid"></div>
+                    <div class="analyzer-issues" id="issues-section"></div>
+                    <div class="analyzer-wins" id="wins-section"></div>
+                    <div class="analyzer-upgrades" id="upgrades-section"></div>
+
+                    <div class="analyzer-cta-box">
+                        <p id="results-next-step"></p>
+                        <div class="analyzer-cta-buttons">
+                            <a href="#contact" class="btn btn-primary">Book a Smart Website Demo</a>
+                            <a href="tel:+18135821526" class="btn btn-outline">Call Our Business Line</a>
+                        </div>
+                        <p class="analyzer-cta-disclaimer">Automated analysis of public pages. Final recommendations may vary after review.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="analyzer-back">
+                <button onclick="resetAnalyzer()" class="analyzer-back-link">Analyze another website</button>
             </div>
         </div>
     </section>
@@ -157,9 +240,9 @@
                     </div>
                     <div class="service-content">
                         <div class="service-number">01</div>
-                        <h3 class="service-title">BEAUTIFUL DESIGN</h3>
+                        <h3 class="service-title">CONVERSION-FOCUSED DESIGN</h3>
                         <p class="service-description">
-                            Stand out from your competitors with stunning, modern design that captures attention and builds trust instantly.
+                            Built to turn visitors into leads. Modern design that captures attention and guides them to take action.
                         </p>
                         <a href="#contact" class="service-link">Learn more <span>&rarr;</span></a>
                     </div>
@@ -172,9 +255,9 @@
                     </div>
                     <div class="service-content">
                         <div class="service-number">02</div>
-                        <h3 class="service-title">SEO OPTIMIZATION</h3>
+                        <h3 class="service-title">LOCAL SEO DOMINANCE</h3>
                         <p class="service-description">
-                            Actually rank on Google above your competition. We build websites that search engines love.
+                            Show up when customers search for you. Rank above your competition on Google and get found first.
                         </p>
                         <a href="#contact" class="service-link">Learn more <span>&rarr;</span></a>
                     </div>
@@ -187,9 +270,9 @@
                     </div>
                     <div class="service-content">
                         <div class="service-number">03</div>
-                        <h3 class="service-title">LEAD CAPTURE SYSTEMS</h3>
+                        <h3 class="service-title">AUTOMATIC LEAD CAPTURE</h3>
                         <p class="service-description">
-                            Forms, chat widgets, booking calendars - multiple ways for visitors to become leads.
+                            Forms, chat, and booking that work while you sleep. Never miss a lead again.
                         </p>
                         <a href="#contact" class="service-link">Learn more <span>&rarr;</span></a>
                     </div>
@@ -202,9 +285,9 @@
                     </div>
                     <div class="service-content">
                         <div class="service-number">04</div>
-                        <h3 class="service-title">AI & AUTOMATION</h3>
+                        <h3 class="service-title">AI THAT CLOSES LEADS</h3>
                         <p class="service-description">
-                            Works 24/7 to capture leads, book appointments, and follow up automatically. Never miss an opportunity.
+                            Responds in seconds, books appointments, and follows up automatically. Your AI sales assistant that never sleeps.
                         </p>
                         <a href="#contact" class="service-link">Learn more <span>&rarr;</span></a>
                     </div>
@@ -253,82 +336,6 @@
         </div>
     </section>
 
-    <!-- Additional Services -->
-    <section class="additional-services">
-        <div class="additional-container">
-            <h2 class="section-title animate-on-scroll">WE ALSO OFFER</h2>
-            <div class="additional-grid">
-                <div class="additional-card animate-on-scroll">
-                    <div class="additional-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="2" width="20" height="20" rx="5"/>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                        </svg>
-                    </div>
-                    <h3>Social Media Content Creation</h3>
-                    <p>Engaging content that grows your audience and drives traffic to your site.</p>
-                </div>
-                <div class="additional-card animate-on-scroll">
-                    <div class="additional-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="23 7 16 12 23 17 23 7"/>
-                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-                        </svg>
-                    </div>
-                    <h3>Video Shorts</h3>
-                    <p>Short-form video content optimized for social platforms.</p>
-                </div>
-                <div class="additional-card animate-on-scroll">
-                    <div class="additional-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-                            <line x1="9" y1="9" x2="9.01" y2="9"/>
-                            <line x1="15" y1="9" x2="15.01" y2="9"/>
-                        </svg>
-                    </div>
-                    <h3>Brand Strategy</h3>
-                    <p>Cohesive branding that tells your story and connects with your audience.</p>
-                </div>
-                <div class="additional-card animate-on-scroll">
-                    <div class="additional-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                        </svg>
-                    </div>
-                    <h3>Marketing Automation</h3>
-                    <p>Set it and forget it systems that nurture leads while you sleep.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Content That Works Section -->
-    <section class="content-showcase">
-        <div class="content-showcase-container">
-            <div class="content-showcase-header">
-                <p class="section-label animate-on-scroll">SEE IT IN ACTION</p>
-                <h2 class="section-title animate-on-scroll">CONTENT THAT <span class="highlight">WORKS</span></h2>
-                <p class="content-subtitle animate-on-scroll">Real results from real clients. See how we help businesses grow with engaging social content.</p>
-            </div>
-            <div class="phone-mockups">
-                <div class="phone-mockup animate-on-scroll">
-                    <img src="https://static.showit.co/file/OaTCU09gTu-kpV__IjMOXw/229363/new_back_2.gif" alt="Social media content creation example - engaging video content for business growth">
-                </div>
-                <div class="phone-mockup animate-on-scroll">
-                    <img src="https://static.showit.co/file/2oP7-aWBRa6bXkon-8VOpg/229363/new_back_1.gif" alt="Social media content creation example - engaging video content for business growth">
-                </div>
-                <div class="phone-mockup animate-on-scroll">
-                    <img src="https://static.showit.co/file/1OEYQMVmQZ-EoOvekmQm3g/229363/new_back.gif" alt="Social media content creation example - engaging video content for business growth">
-                </div>
-                <div class="phone-mockup animate-on-scroll">
-                    <img src="https://static.showit.co/file/VYCBzXSIQDeMXZZ86K6tLQ/229363/new_back_3.gif" alt="Social media content creation example - engaging video content for business growth">
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Stats Counter Section -->
     <section class="stats">
         <div class="stats-container">
@@ -355,42 +362,13 @@
         </div>
     </section>
 
-    <!-- Client Logos Scroller -->
-    <section class="logo-scroller">
-        <div class="logo-track">
-            <div class="logo-slide">
-                <img src="assets/charmin.png" alt="Charmin">
-                <img src="assets/publix.png" alt="Publix">
-                <img src="assets/cornerstone.png" alt="Cornerstone">
-                <img src="assets/samsung.png" alt="Samsung">
-                <img src="assets/cerave.png" alt="CeraVe">
-                <img src="assets/charmin.png" alt="Charmin">
-                <img src="assets/publix.png" alt="Publix">
-                <img src="assets/cornerstone.png" alt="Cornerstone">
-                <img src="assets/samsung.png" alt="Samsung">
-                <img src="assets/cerave.png" alt="CeraVe">
-            </div>
-            <div class="logo-slide">
-                <img src="assets/charmin.png" alt="Charmin">
-                <img src="assets/publix.png" alt="Publix">
-                <img src="assets/cornerstone.png" alt="Cornerstone">
-                <img src="assets/samsung.png" alt="Samsung">
-                <img src="assets/cerave.png" alt="CeraVe">
-                <img src="assets/charmin.png" alt="Charmin">
-                <img src="assets/publix.png" alt="Publix">
-                <img src="assets/cornerstone.png" alt="Cornerstone">
-                <img src="assets/samsung.png" alt="Samsung">
-                <img src="assets/cerave.png" alt="CeraVe">
-            </div>
-        </div>
-    </section>
-
     <!-- Pricing Plans Section -->
     <section class="plans" id="plans">
         <div class="plans-container">
             <div class="plans-header">
                 <p class="section-label animate-on-scroll">SMART WEBSITE SOLUTIONS</p>
                 <h2 class="section-title animate-on-scroll">CHOOSE YOUR <span class="highlight">PLAN</span></h2>
+                <p class="plans-pain-point animate-on-scroll">Most businesses lose 50% of leads to slow follow-up. Our AI responds in seconds.</p>
             </div>
 
             <div class="plans-grid">
@@ -613,9 +591,9 @@
     <div class="sticky-cta-bar">
         <div class="sticky-cta-content">
             <span class="sticky-cta-text">
-                <strong>FREE Smart Website Design</strong> — No Hidden Fees, No Obligations
+                <strong>FREE Smart Website</strong> — Captures Leads 24/7
             </span>
-            <a href="#contact" class="btn btn-primary sticky-cta-btn">Claim Your Free Design</a>
+            <a href="#contact" class="btn btn-primary sticky-cta-btn">Get My Free Smart Website</a>
         </div>
         <button class="sticky-cta-close" aria-label="Close">&times;</button>
     </div>
@@ -641,7 +619,7 @@
                     <li>✓ SEO-ready structure</li>
                     <li>✓ Yours to keep — no strings attached</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary btn-full exit-popup-cta">Claim My Free Website</a>
+                <a href="#contact" class="btn btn-primary btn-full exit-popup-cta">Get My Free Smart Website</a>
                 <p class="exit-popup-disclaimer">Available with our Starter Plan. No strings attached.</p>
             </div>
         </div>
