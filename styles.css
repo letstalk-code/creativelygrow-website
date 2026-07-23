@@ -3069,8 +3069,8 @@ body.rb {
 }
 
 .rb-nav-logo {
-    height: 44px;
-    border-radius: 6px;
+    height: 60px;
+    border-radius: 8px;
 }
 
 .rb-nav-cta { font-size: 0.9rem; padding: 0.65rem 1.25rem; }
@@ -3562,7 +3562,7 @@ body.rb {
 }
 
 .rb-footer-brand { display: flex; align-items: center; gap: 1rem; }
-.rb-footer-logo { height: 40px; border-radius: 6px; }
+.rb-footer-logo { height: 54px; border-radius: 8px; }
 .rb-footer-tagline { color: var(--cream-dim); font-size: 0.9rem; }
 
 .rb-footer-social { display: flex; gap: 0.75rem; }
