@@ -1,0 +1,201 @@
+/* Niche landing pages — shares brand vars with styles.css */
+.lp {
+    background: var(--forest-dark, #0d140d);
+    color: var(--cream, #f9f8eb);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    padding-bottom: 76px; /* room for sticky call bar */
+}
+
+.lp * { box-sizing: border-box; }
+
+.lp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.25rem;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.lp-logo { height: 44px; border-radius: 6px; }
+
+.lp-header-call {
+    color: var(--orange, #ef7938);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.lp section { padding: 3rem 1.25rem; }
+.lp-inner { max-width: 680px; margin: 0 auto; }
+
+.lp-eyebrow {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange, #ef7938);
+    margin-bottom: 1rem;
+}
+
+.lp-hero { padding-top: 1.5rem; text-align: left; }
+
+.lp-hero h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.7rem, 6.5vw, 2.6rem);
+    line-height: 1.1;
+    margin: 0 0 1.25rem;
+}
+
+.lp-hero h1 .accent { color: var(--orange, #ef7938); }
+
+.lp-hero p { color: rgba(249, 248, 235, 0.82); margin: 0 0 1.5rem; }
+
+.lp-btn {
+    display: inline-block;
+    background: var(--orange, #ef7938);
+    color: #14100c;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 1rem 1.75rem;
+    border: none;
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.lp-btn:hover { background: var(--orange-hover, #d96a2d); }
+
+.lp-micro {
+    font-size: 0.85rem;
+    color: rgba(249, 248, 235, 0.6);
+    margin-top: 0.75rem;
+    text-align: center;
+}
+
+.lp-trust {
+    border-top: 1px solid rgba(249, 248, 235, 0.1);
+    border-bottom: 1px solid rgba(249, 248, 235, 0.1);
+    background: var(--forest, #1a2a1a);
+    font-size: 0.95rem;
+    color: rgba(249, 248, 235, 0.85);
+    padding: 1.5rem 1.25rem !important;
+}
+
+.lp-trust strong { color: var(--cream, #f9f8eb); }
+
+.lp h2 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    line-height: 1.15;
+    margin: 0 0 1.25rem;
+}
+
+.lp-scene p { margin: 0 0 1rem; color: rgba(249, 248, 235, 0.85); }
+.lp-scene .punch { color: var(--cream, #f9f8eb); font-weight: 600; }
+
+.lp-alt { background: var(--forest, #1a2a1a); }
+
+.lp-step { margin-bottom: 1.75rem; }
+.lp-step h3 {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.05rem;
+    color: var(--orange, #ef7938);
+    margin: 0 0 0.4rem;
+}
+.lp-step p { margin: 0; color: rgba(249, 248, 235, 0.82); font-size: 0.97rem; }
+
+.lp-objection { margin-bottom: 2rem; }
+.lp-objection h3 {
+    font-size: 1.1rem;
+    color: var(--cream, #f9f8eb);
+    margin: 0 0 0.5rem;
+    font-style: italic;
+}
+.lp-objection p { margin: 0 0 0.75rem; color: rgba(249, 248, 235, 0.82); font-size: 0.97rem; }
+
+.lp-quote {
+    border-left: 3px solid var(--orange, #ef7938);
+    padding-left: 1rem;
+    color: rgba(249, 248, 235, 0.85);
+    font-size: 0.97rem;
+}
+
+.lp-form-card {
+    background: var(--forest, #1a2a1a);
+    border: 1px solid rgba(239, 121, 56, 0.35);
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+}
+
+.lp-form-card label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 1rem 0 0.35rem;
+    color: rgba(249, 248, 235, 0.85);
+}
+
+.lp-form-card input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(249, 248, 235, 0.2);
+    background: var(--forest-dark, #0d140d);
+    color: var(--cream, #f9f8eb);
+    font-size: 1rem;
+}
+
+.lp-form-card input:focus { outline: 2px solid var(--orange, #ef7938); border-color: transparent; }
+
+.lp-form-card .lp-btn { margin-top: 1.5rem; }
+
+.lp-form-success { display: none; text-align: center; padding: 1rem 0; }
+.lp-form-success h3 { font-family: 'Oswald', sans-serif; text-transform: uppercase; color: var(--orange, #ef7938); }
+
+.lp-checks { list-style: none; padding: 0; margin: 1.25rem 0 0; font-size: 0.88rem; color: rgba(249, 248, 235, 0.7); }
+.lp-checks li { margin-bottom: 0.35rem; }
+.lp-checks li::before { content: "✓ "; color: var(--orange, #ef7938); }
+
+.lp-founder { font-size: 0.97rem; color: rgba(249, 248, 235, 0.85); }
+.lp-founder strong { color: var(--cream, #f9f8eb); }
+
+.lp-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(249, 248, 235, 0.45);
+    padding: 2rem 1.25rem 3rem;
+}
+.lp-footer a { color: rgba(249, 248, 235, 0.6); }
+
+.lp-callbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--orange, #ef7938);
+    color: #14100c;
+    text-align: center;
+    padding: 1rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+    z-index: 50;
+    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.4);
+}
+
+@media (min-width: 768px) {
+    .lp section { padding: 4rem 2rem; }
+    .lp-btn { width: auto; }
+    .lp-hero { padding-top: 2.5rem; }
+}
