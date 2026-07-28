@@ -45,24 +45,46 @@ module.exports = async (req, res) => {
       return res.status(502).json({ error: 'could not save request' });
     }
 
-    // Attach "what they do" as a contact note so Devon sees it when recording
-    if (cleanTrade) {
-      try {
-        const data = await resp.json();
-        const contactId = data && data.contact && data.contact.id;
-        if (contactId) {
+    const data = await resp.json();
+    const contactId = data && data.contact && data.contact.id;
+    const ghlHeaders = {
+      Authorization: `Bearer ${process.env.GHL_PIT}`,
+      Version: '2021-07-28',
+      'Content-Type': 'application/json',
+    };
+
+    if (contactId) {
+      // Attach "what they do" so Devon has context before he replies
+      if (cleanTrade) {
+        try {
           await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
             method: 'POST',
-            headers: {
-              Authorization: `Bearer ${process.env.GHL_PIT}`,
-              Version: '2021-07-28',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ body: isContact ? `Website contact: ${cleanTrade}` : `Leak check request, what they do: ${cleanTrade}` }),
+            headers: ghlHeaders,
+            body: JSON.stringify({
+              body: isContact ? `Website contact: ${cleanTrade}` : `Leak check request, what they do: ${cleanTrade}`,
+            }),
           });
+        } catch (noteErr) {
+          console.error('note attach failed (lead still saved)', noteErr);
         }
-      } catch (noteErr) {
-        console.error('note attach failed (lead still saved)', noteErr);
+      }
+
+      // Instant acknowledgement text. The site promises a fast response, so this is the product demonstrating itself.
+      try {
+        const name = cleanFirst || 'there';
+        const message = isContact
+          ? `Hi ${name}, Devon here from Creatively Grow. Got your message about ${cleanBusiness}. I'll take a look at your setup and get back to you personally. You can reply right here.`
+          : `Hi ${name}, Devon here from Creatively Grow. Got your request for ${cleanBusiness}. I record these video reviews myself, so yours lands within 48 hours. Reply here if you need anything sooner.`;
+        const smsResp = await fetch('https://services.leadconnectorhq.com/conversations/messages', {
+          method: 'POST',
+          headers: ghlHeaders,
+          body: JSON.stringify({ type: 'SMS', contactId, message }),
+        });
+        if (!smsResp.ok) {
+          console.error('auto-reply SMS failed', smsResp.status, await smsResp.text());
+        }
+      } catch (smsErr) {
+        console.error('auto-reply SMS error (lead still saved)', smsErr);
       }
     }
 
