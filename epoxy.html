@@ -291,14 +291,14 @@
                         if (el) el.classList.remove('is-shown');
                     });
                     i = 0;
-                    setTimeout(tick, 900);
-                }, 3400);
+                    setTimeout(tick, 350);
+                }, 6000);
                 return;
             }
             var el = document.getElementById(steps[i]);
             if (el) el.classList.add('is-shown');
             i++;
-            setTimeout(tick, i === 1 ? 1100 : 1500);
+            setTimeout(tick, i === 1 ? 900 : 1200);
         }
         if (document.getElementById('tbMissed')) setTimeout(tick, 700);
     })();
