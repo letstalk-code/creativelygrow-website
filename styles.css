@@ -4628,3 +4628,29 @@ body.rb {
     .cg-reel, .cg-flow-section, .cg-testit, .cg-twoway { padding: 4rem 1.25rem; }
     .cg-twoway-grid { grid-template-columns: 1fr; }
 }
+
+/* ===== Brand story layering ===== */
+.cg-pages { padding: 5rem 2rem 3rem; background: var(--forest-dark); }
+
+.cg-have-site {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 2.5rem;
+}
+
+.cg-have-site p {
+    background: rgba(239, 121, 56, 0.06);
+    border: 1px solid rgba(239, 121, 56, 0.25);
+    border-radius: var(--rb-radius);
+    padding: 1.25rem 1.5rem;
+    color: var(--cream-dim);
+    font-size: 0.97rem;
+    line-height: 1.65;
+    margin: 0;
+}
+
+.cg-have-site strong { color: var(--cream); }
+
+@media (max-width: 640px) {
+    .cg-pages { padding: 4rem 1.25rem 2rem; }
+}
