@@ -10,7 +10,8 @@ module.exports = async (req, res) => {
   const { business, phone, niche } = req.body || {};
   const cleanBusiness = String(business || '').trim().slice(0, 120);
   const cleanPhone = String(phone || '').replace(/[^\d+() -]/g, '').trim().slice(0, 25);
-  const cleanNiche = niche === 'pool-cage' ? 'pool-cage' : 'epoxy';
+  const allowedNiches = ['epoxy', 'pool-cage', 'general'];
+  const cleanNiche = allowedNiches.includes(niche) ? niche : 'general';
 
   if (!cleanBusiness || cleanPhone.replace(/\D/g, '').length < 10) {
     return res.status(400).json({ error: 'business name and a valid phone are required' });
