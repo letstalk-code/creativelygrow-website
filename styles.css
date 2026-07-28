@@ -4846,3 +4846,96 @@ body.rb {
     line-height: 1.6;
     opacity: 0.9;
 }
+
+/* ===== The package ===== */
+.cg-package { padding: 6rem 2rem; background: var(--forest-dark); }
+
+.cg-package-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 940px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+.cg-package-card {
+    background: var(--forest);
+    border: 1px solid var(--forest-light);
+    border-radius: var(--rb-radius-lg, 16px);
+    padding: 2rem 1.75rem;
+}
+
+.cg-package-launch {
+    border-color: rgba(239, 121, 56, 0.45);
+    box-shadow: 0 0 28px rgba(239, 121, 56, 0.12);
+}
+
+.cg-package-tag {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #14100c;
+    background: var(--orange);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.cg-package-tag-alt {
+    background: transparent;
+    color: var(--cream-dim);
+    border: 1px solid var(--forest-light);
+}
+
+.cg-package-card h3 {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    color: var(--cream);
+    margin: 0 0 1.1rem;
+}
+
+.cg-package-card ul { list-style: none; padding: 0; margin: 0; }
+
+.cg-package-card li {
+    position: relative;
+    padding-left: 1.6rem;
+    margin-bottom: 0.75rem;
+    color: var(--cream-dim);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.cg-package-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 7px;
+    height: 12px;
+    border-right: 2px solid var(--orange);
+    border-bottom: 2px solid var(--orange);
+    transform: rotate(45deg);
+}
+
+.cg-package-note {
+    max-width: 720px;
+    margin: 2.5rem auto 0;
+    text-align: center;
+    color: var(--cream-dim);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.cg-package-note a { color: var(--orange); font-weight: 600; }
+
+@media (max-width: 760px) {
+    .cg-package-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+    .cg-package { padding: 4rem 1.25rem; }
+}
