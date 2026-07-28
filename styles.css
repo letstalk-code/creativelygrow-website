@@ -4836,3 +4836,13 @@ body.rb {
 @media (max-width: 640px) {
     .cg-textback, .cg-seo { padding: 4rem 1.25rem; }
 }
+
+/* Hero offer-clarity line */
+.cg-hero-clarity {
+    max-width: 620px;
+    margin: 1.5rem auto 0.75rem;
+    color: var(--cream);
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
