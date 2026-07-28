@@ -74,7 +74,7 @@
                 <a href="/our-work" class="rb-nav-link">Our Work</a>
             </div>
             <div class="rb-nav-right">
-                <a href="#leak-check" class="rb-btn rb-btn-primary rb-nav-cta">Get Started</a>
+                <a href="#contact" class="rb-btn rb-btn-primary rb-nav-cta">Get Started</a>
                 <button class="rb-nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
@@ -97,7 +97,7 @@
             <h1>Content gets you noticed.<br><span class="cg-h1-accent">The system gets you booked.</span></h1>
             <p>We shoot the video that makes people choose you. Real, on location, or AI-made so you don't need a crew every month. And we build the system that catches every customer it brings in.</p>
             <div class="rb-hero-actions">
-                <a href="#leak-check" class="rb-btn rb-btn-primary rb-btn-lg">Tell My Brand Story &nbsp;→</a>
+                <a href="#contact" class="rb-btn rb-btn-primary rb-btn-lg">Tell My Brand Story &nbsp;→</a>
             </div>
             <p class="rb-hero-footnote">Video + growth systems &nbsp;·&nbsp; Tampa Bay, FL</p>
         </div>
@@ -203,7 +203,7 @@
             </div>
         </div>
         <div class="cg-mid-cta animate-on-scroll">
-            <a href="#leak-check" class="rb-btn rb-btn-primary rb-btn-lg">Fix My System &nbsp;→</a>
+            <a href="#contact" class="rb-btn rb-btn-primary rb-btn-lg">Fix My System &nbsp;→</a>
         </div>
     </section>
 
@@ -450,15 +450,14 @@
     </section>
 
     <!-- ============================
-         LEAK CHECK
+         CONTACT
     ============================= -->
-    <section class="cg-leak" id="leak-check">
+    <section class="cg-leak" id="contact">
         <div class="cg-narrow">
             <div class="animate-on-scroll">
-                <span class="rb-eyebrow">Start Here, Free</span>
-                <h2 class="rb-h2 cg-sentence">Get your free video review.</h2>
-                <p>Give us your business name and three minutes. Inside 48 hours we text you a short video: us on your screen, walking through exactly what happens when somebody tries to hire you. Where they hesitate. Where they go call somebody else. What we'd build first, and in what order.</p>
-                <p>The last minute shows a real client's system running live: the text that goes out when they miss a call, the replies coming back, the follow-up firing. You'll have seen it work before you've spoken to anybody.</p>
+                <span class="rb-eyebrow">Let's Talk</span>
+                <h2 class="rb-h2 cg-sentence">Tell us about your business.</h2>
+                <p>Three minutes. Tell us what you do and what you're looking for, and we'll come back with what we'd build first. No pitch, no pressure. If we're not the right fit, we'll say so.</p>
             </div>
             <div class="cg-leak-card animate-on-scroll">
                 <form id="leakForm">
@@ -466,28 +465,18 @@
                     <input type="text" id="lf-business" name="business" required autocomplete="organization" placeholder="Your business name">
                     <label for="lf-name">Your first name</label>
                     <input type="text" id="lf-name" name="firstName" required autocomplete="given-name" placeholder="First name">
-                    <label for="lf-trade">What do you do?</label>
-                    <input type="text" id="lf-trade" name="trade" required placeholder='One line, whatever you&#39;d tell a neighbor'>
-                    <label for="lf-phone">Mobile number (we text the video here)</label>
+                    <label for="lf-trade">What do you do, and what do you need?</label>
+                    <input type="text" id="lf-trade" name="trade" required placeholder='One line is plenty'>
+                    <label for="lf-phone">Mobile number</label>
                     <input type="tel" id="lf-phone" name="phone" required autocomplete="tel" placeholder="(727) 555-0134">
-                    <button type="submit" class="rb-btn rb-btn-primary rb-btn-lg cg-leak-btn">Send Me My Video Review</button>
+                    <button type="submit" class="rb-btn rb-btn-primary rb-btn-lg cg-leak-btn">Let's Talk</button>
                 </form>
                 <div class="cg-leak-success" id="leakSuccess">
                     <h3>Got it. Watch your texts.</h3>
-                    <p>Your video lands inside 48 hours. No call, no chasing. The video comes either way.</p>
+                    <p>We'll reach out shortly. No spam, no endless follow-up. Just a real reply.</p>
                 </div>
-                <p class="cg-leak-scarcity">I record these myself, so they go out in the order they come in. If this week's are spoken for, you'll get a text telling you which day yours lands. An actual day, not a form letter.</p>
-                <ul class="cg-checks">
-                    <li>Free. No card, no obligation, no call required</li>
-                    <li>If we don't find anything worth fixing, we'll tell you straight</li>
-                    <li>Prefer email? Say so in the "what do you do" line and we'll send it there</li>
-                </ul>
             </div>
-            <div class="cg-leak-after animate-on-scroll">
-                <h3>What happens after the video</h3>
-                <p>If something's worth building, we'll tell you what we'd start with, what it costs, and how long it takes. In writing, in the same text thread. If you want it, say the word. If you don't, keep the video and use it however you like, including handing it to whoever built your site.</p>
-            </div>
-            <p class="cg-leak-alt animate-on-scroll">For Tampa Bay businesses that already have customers coming in. If that's not you, this won't be much use, and we'd rather say so now.</p>
+            <p class="cg-leak-alt animate-on-scroll">Rather just call? <a href="tel:+17272708422">(727) 270-8422</a>. And if we happen to miss you, watch what happens next.</p>
         </div>
     </section>
 
@@ -635,7 +624,7 @@
                         firstName: document.getElementById('lf-name').value,
                         trade: document.getElementById('lf-trade').value,
                         phone: document.getElementById('lf-phone').value,
-                        niche: 'general'
+                        niche: 'contact'
                     })
                 });
                 if (!resp.ok) throw new Error('bad response');
@@ -643,7 +632,7 @@
                 document.getElementById('leakSuccess').style.display = 'block';
             } catch (err) {
                 btn.disabled = false;
-                btn.textContent = 'Send Me My Video Review';
+                btn.textContent = "Let's Talk";
                 alert('Something hiccuped. Call or text us instead: (727) 270-8422');
             }
         });

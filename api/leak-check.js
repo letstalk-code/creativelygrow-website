@@ -12,8 +12,11 @@ module.exports = async (req, res) => {
   const cleanPhone = String(phone || '').replace(/[^\d+() -]/g, '').trim().slice(0, 25);
   const cleanFirst = String(firstName || '').trim().slice(0, 60);
   const cleanTrade = String(trade || '').trim().slice(0, 160);
-  const allowedNiches = ['epoxy', 'pool-cage', 'general'];
+  const allowedNiches = ['epoxy', 'pool-cage', 'general', 'contact'];
   const cleanNiche = allowedNiches.includes(niche) ? niche : 'general';
+  const isContact = cleanNiche === 'contact';
+  const tagList = isContact ? ['website-contact'] : ['leak-check', cleanNiche];
+  const sourceLabel = isContact ? 'website-contact' : `leak-check-${cleanNiche}`;
 
   if (!cleanBusiness || cleanPhone.replace(/\D/g, '').length < 10) {
     return res.status(400).json({ error: 'business name and a valid phone are required' });
@@ -33,8 +36,8 @@ module.exports = async (req, res) => {
         lastName: cleanFirst ? `(${cleanBusiness})` : '',
         companyName: cleanBusiness,
         phone: cleanPhone,
-        tags: ['leak-check', cleanNiche],
-        source: `leak-check-${cleanNiche}`,
+        tags: tagList,
+        source: sourceLabel,
       }),
     });
     if (!resp.ok) {
@@ -55,7 +58,7 @@ module.exports = async (req, res) => {
               Version: '2021-07-28',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ body: `Leak check request — what they do: ${cleanTrade}` }),
+            body: JSON.stringify({ body: isContact ? `Website contact: ${cleanTrade}` : `Leak check request, what they do: ${cleanTrade}` }),
           });
         }
       } catch (noteErr) {
