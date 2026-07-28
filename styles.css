@@ -4082,3 +4082,22 @@ body.rb {
     .rb-measure-grid { grid-template-columns: 1fr; }
     .rb-measure, .rb-positioning { padding: 4rem 1.25rem; }
 }
+
+/* ===== Content & Video section ===== */
+.rb-content { padding: 6rem 2rem; background: var(--forest); }
+.rb-content-grid { grid-template-columns: repeat(2, 1fr); max-width: 1000px; }
+.rb-content .rb-feature { background: var(--forest-dark); }
+
+.rb-content-note {
+    max-width: 720px;
+    margin: 2.5rem auto 0;
+    text-align: center;
+    color: var(--cream-dim);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+    .rb-content { padding: 4rem 1.25rem; }
+    .rb-content-grid { grid-template-columns: 1fr; }
+}
