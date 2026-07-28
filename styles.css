@@ -4101,3 +4101,53 @@ body.rb {
     .rb-content { padding: 4rem 1.25rem; }
     .rb-content-grid { grid-template-columns: 1fr; }
 }
+
+/* ===== Recent Work video grid ===== */
+.rb-work { max-width: 1000px; margin: 3.5rem auto 0; }
+
+.rb-work-label {
+    display: block;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.75rem;
+}
+
+.rb-work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.rb-work-item { margin: 0; }
+
+.rb-work-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--forest-dark);
+    border: 1px solid var(--forest-light);
+    border-radius: var(--rb-radius);
+    overflow: hidden;
+}
+
+.rb-work-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.rb-work-item figcaption {
+    margin-top: 0.75rem;
+    text-align: center;
+    color: var(--cream-dim);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+    .rb-work-grid { grid-template-columns: 1fr; }
+}
