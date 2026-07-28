@@ -7,9 +7,11 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
-  const { business, phone, niche } = req.body || {};
+  const { business, phone, niche, firstName, trade } = req.body || {};
   const cleanBusiness = String(business || '').trim().slice(0, 120);
   const cleanPhone = String(phone || '').replace(/[^\d+() -]/g, '').trim().slice(0, 25);
+  const cleanFirst = String(firstName || '').trim().slice(0, 60);
+  const cleanTrade = String(trade || '').trim().slice(0, 160);
   const allowedNiches = ['epoxy', 'pool-cage', 'general'];
   const cleanNiche = allowedNiches.includes(niche) ? niche : 'general';
 
@@ -27,7 +29,8 @@ module.exports = async (req, res) => {
       },
       body: JSON.stringify({
         locationId: process.env.GHL_LOCATION_ID,
-        name: cleanBusiness,
+        firstName: cleanFirst || cleanBusiness,
+        lastName: cleanFirst ? `(${cleanBusiness})` : '',
         companyName: cleanBusiness,
         phone: cleanPhone,
         tags: ['leak-check', cleanNiche],
@@ -38,6 +41,28 @@ module.exports = async (req, res) => {
       console.error('GHL upsert failed', resp.status, await resp.text());
       return res.status(502).json({ error: 'could not save request' });
     }
+
+    // Attach "what they do" as a contact note so Devon sees it when recording
+    if (cleanTrade) {
+      try {
+        const data = await resp.json();
+        const contactId = data && data.contact && data.contact.id;
+        if (contactId) {
+          await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${process.env.GHL_PIT}`,
+              Version: '2021-07-28',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ body: `Leak check request — what they do: ${cleanTrade}` }),
+          });
+        }
+      } catch (noteErr) {
+        console.error('note attach failed (lead still saved)', noteErr);
+      }
+    }
+
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('leak-check error', err);
