@@ -199,3 +199,19 @@
     .lp-btn { width: auto; }
     .lp-hero { padding-top: 2.5rem; }
 }
+
+/* Hero background image */
+.lp-hero-bg {
+    position: relative;
+    background-image:
+        linear-gradient(to bottom, rgba(13, 20, 13, 0.82) 0%, rgba(13, 20, 13, 0.88) 55%, rgba(13, 20, 13, 0.97) 100%),
+        var(--lp-hero-img);
+    background-size: cover;
+    background-position: center;
+    padding-top: 2.5rem;
+    padding-bottom: 3.5rem;
+}
+
+@media (min-width: 768px) {
+    .lp-hero-bg { padding-top: 4rem; padding-bottom: 5rem; }
+}
