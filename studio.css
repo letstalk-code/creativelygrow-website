@@ -172,6 +172,25 @@ body.st {
 }
 .st-remove:hover { color: #e57373; }
 
+/* Photos */
+.st-photos {
+    margin-top: 1.5rem;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;
+}
+.st-photo {
+    position: relative; aspect-ratio: 4/3;
+    background: var(--forest); border: 1px solid var(--forest-light);
+    border-radius: 12px; overflow: hidden;
+}
+.st-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.st-photo-x {
+    position: absolute; top: 0.4rem; right: 0.4rem;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(5,8,5,0.75); border: none; color: var(--cream);
+    font-size: 1.15rem; line-height: 1; cursor: pointer;
+}
+.st-photo-x:hover { background: #e57373; }
+
 /* Modal */
 .st-modal {
     position: fixed; inset: 0; background: rgba(5,8,5,0.88);
@@ -202,4 +221,5 @@ body.st {
 
 @media (min-width: 760px) {
     .st-videos { grid-template-columns: 1fr 1fr; }
+    .st-photos { grid-template-columns: repeat(4, 1fr); }
 }

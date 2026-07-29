@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="studio.css?v=1">
+    <link rel="stylesheet" href="studio.css?v=2">
     <style>
         .cg-g-hero { text-align: center; padding: 3.5rem 1.25rem 2rem; }
         .cg-g-hero img { height: 56px; border-radius: 10px; margin-bottom: 1.25rem; }
@@ -30,6 +30,19 @@
             font-family: var(--head); text-transform: uppercase;
             font-size: 0.95rem; letter-spacing: 0.05em;
             margin: 0.85rem 0 0; text-align: center; color: var(--cream);
+        }
+        .cg-g-photos {
+            display: grid; grid-template-columns: 1fr; gap: 0.9rem;
+            margin-top: 1rem;
+        }
+        .cg-g-photos a {
+            display: block; border-radius: 12px; overflow: hidden;
+            border: 1px solid var(--forest-light);
+            box-shadow: 0 14px 34px rgba(0,0,0,0.35);
+        }
+        .cg-g-photos img { width: 100%; height: 100%; display: block; }
+        @media (min-width: 640px) {
+            .cg-g-photos { grid-template-columns: 1fr 1fr; }
         }
         .cg-g-foot {
             text-align: center; padding: 2rem 1.25rem 3rem;
@@ -69,6 +82,11 @@
                 ${v.title ? `<p class="cg-g-title">${esc(v.title)}</p>` : ''}
             </div>`).join('');
 
+        const photos = (g.photos || []).map((p) => `
+            <a href="${g.photoBase}${p.storage_path}" target="_blank" rel="noopener">
+                <img src="${g.photoBase}${p.storage_path}" alt="${esc(p.title || '')}" loading="lazy">
+            </a>`).join('');
+
         root.innerHTML = `
             <div class="cg-g-hero">
                 <img src="assets/logo.png?v=5" alt="Creatively Grow">
@@ -76,7 +94,9 @@
                 ${g.note ? `<p>${esc(g.note)}</p>` : ''}
             </div>
             <div class="cg-g-wrap">
-                ${videos || '<p class="cg-g-msg">Your films are being uploaded. Check back shortly.</p>'}
+                ${videos}
+                ${photos ? `<div class="cg-g-photos">${photos}</div>` : ''}
+                ${(videos || photos) ? '' : '<p class="cg-g-msg">Your files are being uploaded. Check back shortly.</p>'}
             </div>
             <div class="cg-g-foot">
                 Made by <a href="https://creativelygrow.com">Creatively Grow</a> &middot; Tampa Bay

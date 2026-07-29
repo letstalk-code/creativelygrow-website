@@ -10,6 +10,7 @@ const BUNNY_LIB = process.env.BUNNY_CG_LIBRARY_ID;
 const BUNNY_KEY = process.env.BUNNY_CG_API_KEY;
 const BUNNY_CDN = process.env.BUNNY_CG_CDN_HOSTNAME;
 const PASSWORD = process.env.STUDIO_PASSWORD;
+const PHOTO_BUCKET = 'gallery-photos';
 
 function sb(path, opts = {}) {
   return fetch(`${SB_URL}/rest/v1/${path}`, {
@@ -59,13 +60,17 @@ module.exports = async (req, res) => {
       const g = rows[0];
       const vRes = await sb(`gallery_videos?gallery_id=eq.${g.id}&order=sort_order.asc&select=bunny_guid,title`);
       const videos = await vRes.json();
+      const pRes = await sb(`gallery_photos?gallery_id=eq.${g.id}&order=sort_order.asc&select=storage_path,title`);
+      const photos = await pRes.json();
       return res.status(200).json({
         clientName: g.client_name,
         title: g.title,
         note: g.note,
         libraryId: BUNNY_LIB,
         cdn: BUNNY_CDN,
+        photoBase: `${SB_URL}/storage/v1/object/public/${PHOTO_BUCKET}/`,
         videos: Array.isArray(videos) ? videos : [],
+        photos: Array.isArray(photos) ? photos : [],
       });
     }
 
@@ -78,9 +83,17 @@ module.exports = async (req, res) => {
       const r = await sb('galleries?select=id,slug,client_name,title,created_at&order=created_at.desc');
       const galleries = await r.json();
       const withCounts = await Promise.all((galleries || []).map(async (g) => {
-        const c = await sb(`gallery_videos?gallery_id=eq.${g.id}&select=id`);
+        const [c, p] = await Promise.all([
+          sb(`gallery_videos?gallery_id=eq.${g.id}&select=id`),
+          sb(`gallery_photos?gallery_id=eq.${g.id}&select=id`),
+        ]);
         const vids = await c.json();
-        return { ...g, videoCount: Array.isArray(vids) ? vids.length : 0 };
+        const pics = await p.json();
+        return {
+          ...g,
+          videoCount: Array.isArray(vids) ? vids.length : 0,
+          photoCount: Array.isArray(pics) ? pics.length : 0,
+        };
       }));
       return res.status(200).json({ galleries: withCounts });
     }
@@ -152,6 +165,59 @@ module.exports = async (req, res) => {
       const { id } = req.body || {};
       if (!id) return res.status(400).json({ error: 'id required' });
       await sb(`gallery_videos?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE', prefer: 'return=minimal' });
+      return res.status(200).json({ ok: true });
+    }
+
+    // Signed URL so the browser uploads the image straight to Supabase Storage
+    if (action === 'photo-upload-init' && req.method === 'POST') {
+      const { filename, galleryId } = req.body || {};
+      if (!galleryId) return res.status(400).json({ error: 'galleryId required' });
+      const ext = String(filename || '').split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+      const path = `${galleryId}/${crypto.randomUUID()}.${ext}`;
+      const r = await fetch(`${SB_URL}/storage/v1/object/upload/sign/${PHOTO_BUCKET}/${path}`, {
+        method: 'POST',
+        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expiresIn: 3600 }),
+      });
+      if (!r.ok) return res.status(502).json({ error: 'could not sign upload' });
+      const { url } = await r.json();
+      return res.status(200).json({ path, uploadUrl: `${SB_URL}/storage/v1${url}` });
+    }
+
+    if (action === 'attach-photo' && req.method === 'POST') {
+      const { galleryId, path, title, sortOrder } = req.body || {};
+      if (!galleryId || !path) return res.status(400).json({ error: 'galleryId and path required' });
+      const r = await sb('gallery_photos', {
+        method: 'POST',
+        body: JSON.stringify({
+          gallery_id: galleryId, storage_path: path,
+          title: title || null, sort_order: sortOrder || 0,
+        }),
+      });
+      if (!r.ok) return res.status(502).json({ error: await r.text() });
+      return res.status(200).json({ ok: true });
+    }
+
+    if (action === 'photos') {
+      const galleryId = String((req.query && req.query.galleryId) || '');
+      if (!galleryId) return res.status(400).json({ error: 'galleryId required' });
+      const r = await sb(`gallery_photos?gallery_id=eq.${encodeURIComponent(galleryId)}&order=sort_order.asc&select=id,storage_path,title`);
+      return res.status(200).json({
+        photos: await r.json(),
+        photoBase: `${SB_URL}/storage/v1/object/public/${PHOTO_BUCKET}/`,
+      });
+    }
+
+    if (action === 'remove-photo' && req.method === 'POST') {
+      const { id, path } = req.body || {};
+      if (!id) return res.status(400).json({ error: 'id required' });
+      await sb(`gallery_photos?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE', prefer: 'return=minimal' });
+      if (path) {
+        await fetch(`${SB_URL}/storage/v1/object/${PHOTO_BUCKET}/${path}`, {
+          method: 'DELETE',
+          headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
+        }).catch(() => {});
+      }
       return res.status(200).json({ ok: true });
     }
 

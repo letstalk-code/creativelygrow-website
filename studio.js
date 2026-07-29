@@ -60,7 +60,7 @@ async function loadGalleries() {
     row.innerHTML = `
       <div>
         <strong>${escapeHtml(g.client_name)}</strong>
-        <span>${g.title ? escapeHtml(g.title) + ' · ' : ''}${g.videoCount} video${g.videoCount === 1 ? '' : 's'}</span>
+        <span>${g.title ? escapeHtml(g.title) + ' · ' : ''}${countLabel(g)}</span>
       </div>
       <span class="st-row-go">&rarr;</span>`;
     row.addEventListener('click', () => openGallery(g));
@@ -76,6 +76,7 @@ function openGallery(g) {
   $('shareLink').value = `${location.origin}/g?c=${g.slug}`;
   $('uploads').innerHTML = '';
   loadVideos();
+  loadPhotos();
 }
 
 $('backBtn').addEventListener('click', () => {
@@ -108,7 +109,7 @@ $('createBtn').addEventListener('click', async () => {
     if (error) throw new Error(error);
     $('newModal').classList.remove('is-open');
     $('clientName').value = $('galTitle').value = $('galNote').value = '';
-    openGallery({ ...gallery, videoCount: 0 });
+    openGallery({ ...gallery, videoCount: 0, photoCount: 0 });
   } catch (e) {
     $('createError').textContent = 'Could not create that gallery.';
   } finally {
@@ -155,7 +156,77 @@ dz.addEventListener('drop', (e) => handleFiles(e.dataTransfer.files));
 $('fileInput').addEventListener('change', (e) => handleFiles(e.target.files));
 
 function handleFiles(files) {
-  [...files].filter((f) => f.type.startsWith('video/')).forEach(uploadOne);
+  [...files].forEach((f) => {
+    if (f.type.startsWith('video/')) uploadOne(f);
+    else if (f.type.startsWith('image/')) uploadPhoto(f);
+  });
+}
+
+async function uploadPhoto(file) {
+  const row = document.createElement('div');
+  row.className = 'st-upload';
+  row.innerHTML = `<span class="st-upload-name">${escapeHtml(file.name)}</span>
+    <div class="st-bar"><div class="st-bar-fill"></div></div>
+    <span class="st-upload-pct">0%</span>`;
+  $('uploads').appendChild(row);
+  const fill = row.querySelector('.st-bar-fill');
+  const pct = row.querySelector('.st-upload-pct');
+
+  try {
+    const title = file.name.replace(/\.[^.]+$/, '');
+    const init = await api('photo-upload-init', { method: 'POST', body: {
+      filename: file.name, galleryId: CURRENT.id,
+    }});
+    if (!init || !init.uploadUrl) throw new Error('init failed');
+
+    await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', init.uploadUrl);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.upload.onprogress = (e) => {
+        if (!e.lengthComputable) return;
+        const p = Math.round((e.loaded / e.total) * 100);
+        fill.style.width = p + '%';
+        pct.textContent = p + '%';
+      };
+      xhr.onload = () => (xhr.status >= 200 && xhr.status < 300) ? resolve() : reject(new Error('upload ' + xhr.status));
+      xhr.onerror = () => reject(new Error('network'));
+      xhr.send(file);
+    });
+
+    await api('attach-photo', { method: 'POST', body: {
+      galleryId: CURRENT.id, path: init.path, title, sortOrder: Date.now() % 100000,
+    }});
+    pct.textContent = 'Done';
+    row.classList.add('is-done');
+    setTimeout(() => { row.remove(); loadPhotos(); }, 1000);
+  } catch (err) {
+    console.error(err);
+    pct.textContent = 'Failed';
+    row.classList.add('is-failed');
+  }
+}
+
+async function loadPhotos() {
+  if (!CURRENT) return;
+  const { photos, photoBase } = await api('photos', { query: `&galleryId=${CURRENT.id}` });
+  const wrap = $('photoList');
+  wrap.innerHTML = '';
+  (photos || []).forEach((p) => {
+    const card = document.createElement('div');
+    card.className = 'st-photo';
+    card.innerHTML = `
+      <img src="${photoBase}${p.storage_path}" alt="${escapeHtml(p.title || '')}" loading="lazy">
+      <button data-id="${p.id}" data-path="${p.storage_path}" class="st-photo-x" title="Remove">&times;</button>`;
+    card.querySelector('.st-photo-x').addEventListener('click', async (e) => {
+      if (!confirm('Remove this photo?')) return;
+      await api('remove-photo', { method: 'POST', body: {
+        id: e.target.dataset.id, path: e.target.dataset.path,
+      }});
+      loadPhotos();
+    });
+    wrap.appendChild(card);
+  });
 }
 
 async function uploadOne(file) {
@@ -207,6 +278,13 @@ async function uploadOne(file) {
     pct.textContent = 'Failed';
     row.classList.add('is-failed');
   }
+}
+
+function countLabel(g) {
+  const parts = [];
+  if (g.videoCount) parts.push(`${g.videoCount} video${g.videoCount === 1 ? '' : 's'}`);
+  if (g.photoCount) parts.push(`${g.photoCount} photo${g.photoCount === 1 ? '' : 's'}`);
+  return parts.length ? parts.join(' · ') : 'Empty';
 }
 
 function escapeHtml(s) {

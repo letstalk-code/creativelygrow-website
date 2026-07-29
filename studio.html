@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="studio.css?v=1">
+    <link rel="stylesheet" href="studio.css?v=2">
     <script src="https://cdn.jsdelivr.net/npm/tus-js-client@4.1.0/dist/tus.min.js"></script>
 </head>
 <body class="st">
@@ -58,13 +58,14 @@
             </div>
 
             <div class="st-drop" id="dropzone">
-                <p><strong>Drop videos here</strong></p>
-                <p class="st-drop-sub">or <label class="st-file-label">choose files<input type="file" id="fileInput" accept="video/*" multiple hidden></label></p>
-                <p class="st-drop-note">Uploads go straight to Bunny. Large files are fine.</p>
+                <p><strong>Drop videos or photos here</strong></p>
+                <p class="st-drop-sub">or <label class="st-file-label">choose files<input type="file" id="fileInput" accept="video/*,image/*" multiple hidden></label></p>
+                <p class="st-drop-note">Videos go to Bunny, photos to secure storage. Large files are fine.</p>
             </div>
 
             <div id="uploads" class="st-uploads"></div>
             <div id="videoList" class="st-videos"></div>
+            <div id="photoList" class="st-photos"></div>
         </section>
     </main>
 </div>
@@ -85,6 +86,6 @@
     </div>
 </div>
 
-<script src="studio.js?v=1"></script>
+<script src="studio.js?v=2"></script>
 </body>
 </html>
