@@ -38,3 +38,23 @@ Scope: creativelygrow.com only. Landing pages (/epoxy, /pool-cage) PAUSED — no
 - Google Ads setup
 - GHL leak-check auto-responder workflow
 - Repo → private (still recommended, awaiting OK)
+
+---
+
+## Studio (client galleries) — done 2026-07-28
+
+Backend at `/studio` (password), client link at `/g?c=<slug>`.
+
+- [x] Supabase project + `galleries`, `gallery_videos`, `gallery_photos` tables (RLS on)
+- [x] `api/studio.js` — auth, gallery CRUD, Bunny TUS init, Supabase signed photo uploads
+- [x] `studio.html` / `studio.js` / `studio.css` — login, gallery list, dropzone, progress bars, video + photo grids
+- [x] `g.html` — branded client page, videos then photos, photos open full size
+- [x] Photo chain verified end to end on production (sign → upload → attach → both pages → delete removes row *and* file)
+
+Both media types drop into the same zone; videos go to Bunny library 715384, photos to the
+`gallery-photos` bucket. Neither passes through the serverless function, so file size is not a limit.
+
+### Still open on the studio
+- [ ] Upload a real video to prove the Bunny TUS path with actual bytes (only the photo path has been tested)
+- [ ] Change `STUDIO_PASSWORD` from `pp98n-a7yl5` to something memorable
+- [ ] One leftover gallery named "Coca Cola" is sitting in the list — delete it if it was a test
