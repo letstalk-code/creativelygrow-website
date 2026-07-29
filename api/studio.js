@@ -1,7 +1,7 @@
 // Creatively Grow studio API.
 // Galleries live in Supabase; video files live in Bunny Stream.
-// The browser uploads straight to Bunny via TUS so large files never
-// pass through this function (Vercel caps request bodies at ~4.5MB).
+// The browser uploads straight to storage so large files never pass
+// through this function (Vercel caps request bodies at ~4.5MB).
 const crypto = require('crypto');
 
 const SB_URL = process.env.CG_SUPABASE_URL;
@@ -11,6 +11,125 @@ const BUNNY_KEY = process.env.BUNNY_CG_API_KEY;
 const BUNNY_CDN = process.env.BUNNY_CG_CDN_HOSTNAME;
 const PASSWORD = process.env.STUDIO_PASSWORD;
 const PHOTO_BUCKET = 'gallery-photos';
+
+// ---------------------------------------------------------------------------
+// Photo storage: Bunny Storage when configured, Supabase Storage otherwise.
+//
+// Bunny's S3-compatible API supports presigned PUTs, so the browser still
+// uploads directly and storage secrets never reach it. The zone must be
+// created with S3 compatibility ticked; Bunny cannot enable it afterwards.
+// ---------------------------------------------------------------------------
+const B_REGION = process.env.BUNNY_S3_REGION;
+const B_BUCKET = process.env.BUNNY_S3_BUCKET;
+const B_ACCESS = process.env.BUNNY_S3_ACCESS_KEY;
+const B_SECRET = process.env.BUNNY_S3_SECRET_KEY;
+const B_PHOTO_CDN = process.env.BUNNY_S3_CDN_HOSTNAME;
+
+function photoBackend() {
+  return (B_REGION && B_BUCKET && B_ACCESS && B_SECRET && B_PHOTO_CDN) ? 'bunny' : 'supabase';
+}
+
+function photoBase() {
+  return photoBackend() === 'bunny'
+    ? `https://${B_PHOTO_CDN}/`
+    : `${SB_URL}/storage/v1/object/public/${PHOTO_BUCKET}/`;
+}
+
+// RFC 3986 escaping. encodeURIComponent leaves !'()* alone; AWS does not.
+function rfc3986(s) {
+  return encodeURIComponent(s).replace(/[!'()*]/g, (c) =>
+    '%' + c.charCodeAt(0).toString(16).toUpperCase());
+}
+
+function hmac(key, data) {
+  return crypto.createHmac('sha256', key).update(data, 'utf8').digest();
+}
+
+function sha256hex(data) {
+  return crypto.createHash('sha256').update(data, 'utf8').digest('hex');
+}
+
+/**
+ * Presigned S3 PUT for one object, SigV4 query-string form.
+ *
+ * Only `host` is signed. Content-Type is deliberately left unsigned so the
+ * browser can send whatever the File carries without breaking the signature;
+ * Bunny still records the header it receives.
+ */
+function presignBunnyPut(key, expiresIn = 3600) {
+  const host = `${B_REGION}-s3.storage.bunnycdn.com`;
+  const amzDate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
+  const dateStamp = amzDate.slice(0, 8);
+  const scope = `${dateStamp}/${B_REGION}/s3/aws4_request`;
+
+  // Path-style: Bunny does not support virtual-hosted (bucket.host) addressing.
+  const canonicalUri = '/' + [B_BUCKET, ...key.split('/')].map(rfc3986).join('/');
+
+  // Sorted by key, as SigV4 requires. X-Amz-Content-Sha256 is carried in the
+  // query (not as a signed header) so the payload hash is UNSIGNED-PAYLOAD:
+  // the body is chosen by the browser after signing, so it cannot be hashed here.
+  const query = [
+    ['X-Amz-Algorithm', 'AWS4-HMAC-SHA256'],
+    ['X-Amz-Content-Sha256', 'UNSIGNED-PAYLOAD'],
+    ['X-Amz-Credential', `${B_ACCESS}/${scope}`],
+    ['X-Amz-Date', amzDate],
+    ['X-Amz-Expires', String(expiresIn)],
+    ['X-Amz-SignedHeaders', 'host'],
+  ].map(([k, v]) => `${rfc3986(k)}=${rfc3986(v)}`).join('&');
+
+  const canonicalRequest = [
+    'PUT', canonicalUri, query,
+    `host:${host}`, '', 'host', 'UNSIGNED-PAYLOAD',
+  ].join('\n');
+
+  const stringToSign = [
+    'AWS4-HMAC-SHA256', amzDate, scope, sha256hex(canonicalRequest),
+  ].join('\n');
+
+  let signing = hmac('AWS4' + B_SECRET, dateStamp);
+  signing = hmac(signing, B_REGION);
+  signing = hmac(signing, 's3');
+  signing = hmac(signing, 'aws4_request');
+  const signature = crypto.createHmac('sha256', signing).update(stringToSign, 'utf8').digest('hex');
+
+  return `https://${host}${canonicalUri}?${query}&X-Amz-Signature=${signature}`;
+}
+
+/** Signed AWS4 header auth for a server-side DELETE (no body). */
+async function bunnyDelete(key) {
+  const host = `${B_REGION}-s3.storage.bunnycdn.com`;
+  const amzDate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
+  const dateStamp = amzDate.slice(0, 8);
+  const scope = `${dateStamp}/${B_REGION}/s3/aws4_request`;
+  const canonicalUri = '/' + [B_BUCKET, ...key.split('/')].map(rfc3986).join('/');
+  const emptyHash = sha256hex('');
+
+  const canonicalRequest = [
+    'DELETE', canonicalUri, '',
+    `host:${host}`, `x-amz-content-sha256:${emptyHash}`, `x-amz-date:${amzDate}`, '',
+    'host;x-amz-content-sha256;x-amz-date', emptyHash,
+  ].join('\n');
+
+  const stringToSign = [
+    'AWS4-HMAC-SHA256', amzDate, scope, sha256hex(canonicalRequest),
+  ].join('\n');
+
+  let signing = hmac('AWS4' + B_SECRET, dateStamp);
+  signing = hmac(signing, B_REGION);
+  signing = hmac(signing, 's3');
+  signing = hmac(signing, 'aws4_request');
+  const signature = crypto.createHmac('sha256', signing).update(stringToSign, 'utf8').digest('hex');
+
+  return fetch(`https://${host}${canonicalUri}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `AWS4-HMAC-SHA256 Credential=${B_ACCESS}/${scope}, `
+        + `SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=${signature}`,
+      'x-amz-content-sha256': emptyHash,
+      'x-amz-date': amzDate,
+    },
+  });
+}
 
 function sb(path, opts = {}) {
   return fetch(`${SB_URL}/rest/v1/${path}`, {
@@ -68,7 +187,7 @@ module.exports = async (req, res) => {
         note: g.note,
         libraryId: BUNNY_LIB,
         cdn: BUNNY_CDN,
-        photoBase: `${SB_URL}/storage/v1/object/public/${PHOTO_BUCKET}/`,
+        photoBase: photoBase(),
         videos: Array.isArray(videos) ? videos : [],
         photos: Array.isArray(photos) ? photos : [],
       });
@@ -168,12 +287,18 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: true });
     }
 
-    // Signed URL so the browser uploads the image straight to Supabase Storage
+    // Short-lived credential scoped to one object, so the browser uploads
+    // the image straight to storage and the secrets stay on the server.
     if (action === 'photo-upload-init' && req.method === 'POST') {
       const { filename, galleryId } = req.body || {};
       if (!galleryId) return res.status(400).json({ error: 'galleryId required' });
       const ext = String(filename || '').split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
       const path = `${galleryId}/${crypto.randomUUID()}.${ext}`;
+
+      if (photoBackend() === 'bunny') {
+        return res.status(200).json({ path, uploadUrl: presignBunnyPut(path) });
+      }
+
       const r = await fetch(`${SB_URL}/storage/v1/object/upload/sign/${PHOTO_BUCKET}/${path}`, {
         method: 'POST',
         headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
@@ -204,7 +329,7 @@ module.exports = async (req, res) => {
       const r = await sb(`gallery_photos?gallery_id=eq.${encodeURIComponent(galleryId)}&order=sort_order.asc&select=id,storage_path,title`);
       return res.status(200).json({
         photos: await r.json(),
-        photoBase: `${SB_URL}/storage/v1/object/public/${PHOTO_BUCKET}/`,
+        photoBase: photoBase(),
       });
     }
 
@@ -212,11 +337,16 @@ module.exports = async (req, res) => {
       const { id, path } = req.body || {};
       if (!id) return res.status(400).json({ error: 'id required' });
       await sb(`gallery_photos?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE', prefer: 'return=minimal' });
+      // Best-effort: the row is already gone, so a storage hiccup must not
+      // surface as a failed delete and leave a photo the studio can't remove.
       if (path) {
-        await fetch(`${SB_URL}/storage/v1/object/${PHOTO_BUCKET}/${path}`, {
-          method: 'DELETE',
-          headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
-        }).catch(() => {});
+        const gone = photoBackend() === 'bunny'
+          ? bunnyDelete(path)
+          : fetch(`${SB_URL}/storage/v1/object/${PHOTO_BUCKET}/${path}`, {
+              method: 'DELETE',
+              headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
+            });
+        await gone.catch(() => {});
       }
       return res.status(200).json({ ok: true });
     }
