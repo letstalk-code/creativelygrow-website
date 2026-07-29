@@ -58,3 +58,70 @@ Both media types drop into the same zone; videos go to Bunny library 715384, pho
 - [ ] Upload a real video to prove the Bunny TUS path with actual bytes (only the photo path has been tested)
 - [ ] Change `STUDIO_PASSWORD` from `pp98n-a7yl5` to something memorable
 - [ ] One leftover gallery named "Coca Cola" is sitting in the list — delete it if it was a test
+
+## Google Business Profile — created 2026-07-28, verification pending
+
+Live state: name "Creatively Grow", primary category Marketing agency, phone (727) 270-8422,
+website creativelygrow.com. Status NOT PUBLICLY VISIBLE, video verification in review (up to 5 days).
+
+Deliberately NOT on the profile: "Video production service" category. Labif Filmhouse holds that
+category and likely shares an address, so overlapping categories risk a duplicate suspension.
+
+### Safe to do while verification is pending
+- [ ] Paste the 750-char description (drafted, 676 chars, in session notes)
+- [ ] Fill out Edit Services with what CG actually sells
+- [ ] Add photos + logo (Devon doing later)
+
+### Wait until verified (these can restart the review clock)
+- [ ] Replace "Florida, USA" service area with real cities: Tampa, St. Pete, Clearwater,
+      Brandon, Largo, Riverview, Palm Harbor, Wesley Chapel. Statewide is too broad and
+      service area is not a ranking signal anyway.
+- [ ] Grab the review short link once live, wire it into review-funnel.html + GHL review requests
+
+### Open question
+- [ ] Hours mismatch. Site schema says Mo-Fr 09:00-17:00 (index.html:53), GBP says 10:00-18:00.
+      Devon to confirm real times AND real days, then update the site to match.
+
+## Studio photos — Bunny Storage backend shipped 2026-07-28
+
+`api/studio.js` now picks its photo backend from config: all five `BUNNY_S3_*` vars
+present means Bunny, anything missing falls back to Supabase. Code is deployed and
+inert until the vars exist, so nothing changed on the live site yet.
+
+SigV4 is hand-rolled on node `crypto` (this repo has no dependencies, and the AWS SDK
+is ~20MB for one signing call). Verified byte-identical to the reference signer for
+both the presigned PUT and the header-signed DELETE, across keys with spaces, plus
+signs, AWS reserved characters, and unicode.
+
+- [ ] Create a Bunny Storage zone with **S3 compatibility ticked at creation**
+      (Bunny cannot enable it afterwards) plus a linked pull zone
+- [ ] Set BUNNY_S3_REGION / _BUCKET / _ACCESS_KEY / _SECRET_KEY / _CDN_HOSTNAME
+      in .env and Vercel
+- [ ] Re-run the end-to-end photo test against Bunny
+- Use a zone separate from Labif's: the CDN hostname is visible in every photo URL a
+  Creatively Grow client sees, so sharing Labif's zone leaks the other brand.
+- No migration needed. Production currently holds zero photos.
+
+## Studio preview + client downloads — done 2026-07-29
+
+- [x] Studio: "Preview" next to Copy opens `/g?c=<slug>` in a new tab
+- [x] Client gallery: per-file Download on every video and photo, plus "Download everything"
+      when a gallery holds more than one item
+- [x] Verified on production with a real 10.2MB video and a real photo
+
+Why downloads fetch a blob instead of using a plain link: the `download` attribute is
+ignored cross-origin, so a link would open the file rather than save it, and the client
+would get `play_720p.mp4` instead of the film's title. Fetching lets us set the real
+filename and show progress. Falls back to opening the file if a fetch is ever blocked.
+
+Videos resolve their best encoded MP4 on demand via `action=download`, because Bunny
+only knows the resolution ladder after encoding finishes. That action checks the guid
+belongs to the requested published gallery — verified a video from the same Bunny
+library but a different gallery returns 404.
+
+Two things worth knowing:
+- The Stream pull zone gates files by referrer. Downloads work from creativelygrow.com
+  and will 403 anywhere else, so the buttons only function on the real gallery page.
+- Supabase serves public photo URLs through a CDN, so a removed photo can stay
+  reachable by direct URL for a while after the row and file are gone. The gallery stops
+  listing it immediately. Worth confirming Bunny's cache behaviour after the switch.
