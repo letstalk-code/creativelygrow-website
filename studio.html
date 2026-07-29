@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio — Creatively Grow</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="studio.css?v=1">
+    <script src="https://cdn.jsdelivr.net/npm/tus-js-client@4.1.0/dist/tus.min.js"></script>
+</head>
+<body class="st">
+
+<!-- LOGIN -->
+<div class="st-login" id="login">
+    <div class="st-login-box">
+        <img src="assets/logo.png?v=5" alt="Creatively Grow" class="st-login-logo">
+        <h1>Studio</h1>
+        <p>Client galleries</p>
+        <input type="password" id="pw" placeholder="Password" autocomplete="current-password">
+        <button class="st-btn" id="loginBtn">Enter</button>
+        <p class="st-error" id="loginError"></p>
+    </div>
+</div>
+
+<!-- APP -->
+<div class="st-app" id="app" hidden>
+    <header class="st-header">
+        <div class="st-header-in">
+            <div class="st-brand">
+                <img src="assets/logo.png?v=5" alt="Creatively Grow">
+                <span>Studio</span>
+            </div>
+            <button class="st-btn st-btn-sm" id="newBtn">+ New gallery</button>
+        </div>
+    </header>
+
+    <main class="st-main">
+        <!-- LIST -->
+        <section id="listView">
+            <h2>Client galleries</h2>
+            <div id="galleryList" class="st-list"></div>
+            <p class="st-empty" id="emptyMsg" hidden>No galleries yet. Create one to start uploading.</p>
+        </section>
+
+        <!-- DETAIL -->
+        <section id="detailView" hidden>
+            <button class="st-back" id="backBtn">&larr; All galleries</button>
+            <h2 id="detailName"></h2>
+            <div class="st-share">
+                <label>Client link</label>
+                <div class="st-share-row">
+                    <input type="text" id="shareLink" readonly>
+                    <button class="st-btn st-btn-sm" id="copyBtn">Copy</button>
+                </div>
+            </div>
+
+            <div class="st-drop" id="dropzone">
+                <p><strong>Drop videos here</strong></p>
+                <p class="st-drop-sub">or <label class="st-file-label">choose files<input type="file" id="fileInput" accept="video/*" multiple hidden></label></p>
+                <p class="st-drop-note">Uploads go straight to Bunny. Large files are fine.</p>
+            </div>
+
+            <div id="uploads" class="st-uploads"></div>
+            <div id="videoList" class="st-videos"></div>
+        </section>
+    </main>
+</div>
+
+<!-- NEW GALLERY MODAL -->
+<div class="st-modal" id="newModal">
+    <div class="st-modal-box">
+        <button class="st-modal-close" id="newClose">&times;</button>
+        <h3>New gallery</h3>
+        <label for="clientName">Client name</label>
+        <input type="text" id="clientName" placeholder="Cornerstone Air">
+        <label for="galTitle">Title (optional)</label>
+        <input type="text" id="galTitle" placeholder="Brand story film">
+        <label for="galNote">Note to client (optional)</label>
+        <input type="text" id="galNote" placeholder="Here's your first cut. Let me know your thoughts.">
+        <button class="st-btn" id="createBtn">Create gallery</button>
+        <p class="st-error" id="createError"></p>
+    </div>
+</div>
+
+<script src="studio.js?v=1"></script>
+</body>
+</html>

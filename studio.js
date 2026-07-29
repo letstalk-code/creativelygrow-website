@@ -1,0 +1,222 @@
+// Creatively Grow studio: gallery admin.
+// The password is kept in sessionStorage and sent as a header; every
+// privileged call is checked server-side.
+const API = '/api/studio';
+let KEY = sessionStorage.getItem('cg_studio_key') || '';
+let CURRENT = null;
+
+const $ = (id) => document.getElementById(id);
+
+async function api(action, { method = 'GET', body, query = '' } = {}) {
+  const res = await fetch(`${API}?action=${action}${query}`, {
+    method,
+    headers: { 'Content-Type': 'application/json', 'X-Studio-Key': KEY },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (res.status === 401) { logout(); throw new Error('unauthorized'); }
+  return res.json();
+}
+
+function logout() {
+  sessionStorage.removeItem('cg_studio_key');
+  KEY = '';
+  $('app').hidden = true;
+  $('login').style.display = 'flex';
+}
+
+// ---------- auth ----------
+async function tryLogin(pw) {
+  KEY = pw;
+  const res = await fetch(`${API}?action=check`, { headers: { 'X-Studio-Key': pw } });
+  if (!res.ok) { KEY = ''; return false; }
+  sessionStorage.setItem('cg_studio_key', pw);
+  return true;
+}
+
+$('loginBtn').addEventListener('click', async () => {
+  const pw = $('pw').value.trim();
+  if (!pw) return;
+  $('loginError').textContent = '';
+  if (await tryLogin(pw)) { showApp(); }
+  else { $('loginError').textContent = 'Wrong password.'; }
+});
+$('pw').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('loginBtn').click(); });
+
+function showApp() {
+  $('login').style.display = 'none';
+  $('app').hidden = false;
+  loadGalleries();
+}
+
+// ---------- galleries ----------
+async function loadGalleries() {
+  const { galleries } = await api('list');
+  const list = $('galleryList');
+  list.innerHTML = '';
+  $('emptyMsg').hidden = galleries && galleries.length;
+  (galleries || []).forEach((g) => {
+    const row = document.createElement('button');
+    row.className = 'st-row';
+    row.innerHTML = `
+      <div>
+        <strong>${escapeHtml(g.client_name)}</strong>
+        <span>${g.title ? escapeHtml(g.title) + ' · ' : ''}${g.videoCount} video${g.videoCount === 1 ? '' : 's'}</span>
+      </div>
+      <span class="st-row-go">&rarr;</span>`;
+    row.addEventListener('click', () => openGallery(g));
+    list.appendChild(row);
+  });
+}
+
+function openGallery(g) {
+  CURRENT = g;
+  $('listView').hidden = true;
+  $('detailView').hidden = false;
+  $('detailName').textContent = g.client_name;
+  $('shareLink').value = `${location.origin}/g?c=${g.slug}`;
+  $('uploads').innerHTML = '';
+  loadVideos();
+}
+
+$('backBtn').addEventListener('click', () => {
+  $('detailView').hidden = true;
+  $('listView').hidden = false;
+  CURRENT = null;
+  loadGalleries();
+});
+
+$('copyBtn').addEventListener('click', () => {
+  $('shareLink').select();
+  navigator.clipboard.writeText($('shareLink').value);
+  $('copyBtn').textContent = 'Copied';
+  setTimeout(() => ($('copyBtn').textContent = 'Copy'), 1600);
+});
+
+// ---------- new gallery ----------
+$('newBtn').addEventListener('click', () => $('newModal').classList.add('is-open'));
+$('newClose').addEventListener('click', () => $('newModal').classList.remove('is-open'));
+$('newModal').addEventListener('click', (e) => { if (e.target === $('newModal')) $('newModal').classList.remove('is-open'); });
+
+$('createBtn').addEventListener('click', async () => {
+  const clientName = $('clientName').value.trim();
+  if (!clientName) { $('createError').textContent = 'Client name is required.'; return; }
+  $('createBtn').disabled = true;
+  try {
+    const { gallery, error } = await api('create', { method: 'POST', body: {
+      clientName, title: $('galTitle').value.trim(), note: $('galNote').value.trim(),
+    }});
+    if (error) throw new Error(error);
+    $('newModal').classList.remove('is-open');
+    $('clientName').value = $('galTitle').value = $('galNote').value = '';
+    openGallery({ ...gallery, videoCount: 0 });
+  } catch (e) {
+    $('createError').textContent = 'Could not create that gallery.';
+  } finally {
+    $('createBtn').disabled = false;
+  }
+});
+
+// ---------- videos ----------
+async function loadVideos() {
+  if (!CURRENT) return;
+  const { videos, libraryId } = await api('videos', { query: `&galleryId=${CURRENT.id}` });
+  const wrap = $('videoList');
+  wrap.innerHTML = '';
+  (videos || []).forEach((v) => {
+    const card = document.createElement('div');
+    card.className = 'st-video';
+    card.innerHTML = `
+      <div class="st-video-frame">
+        <iframe src="https://iframe.mediadelivery.net/embed/${libraryId}/${v.bunny_guid}?autoplay=false&preload=false"
+          loading="lazy" allow="encrypted-media;picture-in-picture;fullscreen" allowfullscreen></iframe>
+      </div>
+      <div class="st-video-meta">
+        <span>${escapeHtml(v.title || 'Untitled')}</span>
+        <button data-id="${v.id}" class="st-remove">Remove</button>
+      </div>`;
+    card.querySelector('.st-remove').addEventListener('click', async (e) => {
+      if (!confirm('Remove this video from the gallery?')) return;
+      await api('remove-video', { method: 'POST', body: { id: e.target.dataset.id } });
+      loadVideos();
+    });
+    wrap.appendChild(card);
+  });
+}
+
+// ---------- upload ----------
+const dz = $('dropzone');
+['dragenter', 'dragover'].forEach((ev) => dz.addEventListener(ev, (e) => {
+  e.preventDefault(); dz.classList.add('is-over');
+}));
+['dragleave', 'drop'].forEach((ev) => dz.addEventListener(ev, (e) => {
+  e.preventDefault(); dz.classList.remove('is-over');
+}));
+dz.addEventListener('drop', (e) => handleFiles(e.dataTransfer.files));
+$('fileInput').addEventListener('change', (e) => handleFiles(e.target.files));
+
+function handleFiles(files) {
+  [...files].filter((f) => f.type.startsWith('video/')).forEach(uploadOne);
+}
+
+async function uploadOne(file) {
+  const row = document.createElement('div');
+  row.className = 'st-upload';
+  row.innerHTML = `<span class="st-upload-name">${escapeHtml(file.name)}</span>
+    <div class="st-bar"><div class="st-bar-fill"></div></div>
+    <span class="st-upload-pct">0%</span>`;
+  $('uploads').appendChild(row);
+  const fill = row.querySelector('.st-bar-fill');
+  const pct = row.querySelector('.st-upload-pct');
+
+  try {
+    const title = file.name.replace(/\.[^.]+$/, '');
+    const auth = await api('upload-init', { method: 'POST', body: { title } });
+    if (!auth || !auth.guid) throw new Error('init failed');
+
+    await new Promise((resolve, reject) => {
+      const upload = new tus.Upload(file, {
+        endpoint: auth.endpoint,
+        retryDelays: [0, 3000, 6000, 12000, 24000],
+        headers: {
+          AuthorizationSignature: auth.signature,
+          AuthorizationExpire: String(auth.expiration),
+          VideoId: auth.guid,
+          LibraryId: String(auth.libraryId),
+        },
+        metadata: { filetype: file.type, title },
+        onError: reject,
+        onProgress: (sent, total) => {
+          const p = Math.round((sent / total) * 100);
+          fill.style.width = p + '%';
+          pct.textContent = p + '%';
+        },
+        onSuccess: resolve,
+      });
+      upload.start();
+    });
+
+    await api('attach', { method: 'POST', body: {
+      galleryId: CURRENT.id, guid: auth.guid, title,
+      sortOrder: Date.now() % 100000,
+    }});
+    pct.textContent = 'Done';
+    row.classList.add('is-done');
+    setTimeout(() => { row.remove(); loadVideos(); }, 1200);
+  } catch (err) {
+    console.error(err);
+    pct.textContent = 'Failed';
+    row.classList.add('is-failed');
+  }
+}
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
+
+// ---------- boot ----------
+(async () => {
+  if (KEY && await tryLogin(KEY)) showApp();
+  else $('login').style.display = 'flex';
+})();

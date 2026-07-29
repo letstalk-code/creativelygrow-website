@@ -1,6 +1,10 @@
 {
   "cleanUrls": true,
   "redirects": [
-    { "source": "/what-we-do", "destination": "/#package", "permanent": true }
+    {
+      "source": "/what-we-do",
+      "destination": "/#package",
+      "permanent": true
+    }
   ]
 }

@@ -3,6 +3,8 @@ User-agent: *
 Allow: /
 Disallow: /epoxy
 Disallow: /pool-cage
+Disallow: /studio
+Disallow: /g
 
 # Sitemap
 Sitemap: https://creativelygrow.com/sitemap.xml

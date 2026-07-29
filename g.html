@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Films — Creatively Grow</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="studio.css?v=1">
+    <style>
+        .cg-g-hero { text-align: center; padding: 3.5rem 1.25rem 2rem; }
+        .cg-g-hero img { height: 56px; border-radius: 10px; margin-bottom: 1.25rem; }
+        .cg-g-hero h1 {
+            font-family: var(--head); text-transform: uppercase;
+            font-size: clamp(1.6rem, 5vw, 2.4rem); margin: 0 0 0.5rem;
+        }
+        .cg-g-hero p { color: var(--cream-dim); max-width: 520px; margin: 0 auto; }
+        .cg-g-wrap { max-width: 900px; margin: 0 auto; padding: 0 1.25rem 5rem; }
+        .cg-g-video { margin-bottom: 2.5rem; }
+        .cg-g-frame {
+            position: relative; aspect-ratio: 16/9;
+            background: var(--forest); border: 1px solid var(--forest-light);
+            border-radius: 14px; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+        }
+        .cg-g-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+        .cg-g-title {
+            font-family: var(--head); text-transform: uppercase;
+            font-size: 0.95rem; letter-spacing: 0.05em;
+            margin: 0.85rem 0 0; text-align: center; color: var(--cream);
+        }
+        .cg-g-foot {
+            text-align: center; padding: 2rem 1.25rem 3rem;
+            color: var(--cream-dim); font-size: 0.85rem;
+            border-top: 1px solid var(--forest-light);
+        }
+        .cg-g-foot a { color: var(--orange); text-decoration: none; }
+        .cg-g-msg { text-align: center; padding: 5rem 1.5rem; color: var(--cream-dim); }
+    </style>
+</head>
+<body class="st">
+    <div id="gallery">
+        <p class="cg-g-msg">Loading…</p>
+    </div>
+
+<script>
+(async function () {
+    const slug = new URLSearchParams(location.search).get('c');
+    const root = document.getElementById('gallery');
+    if (!slug) { root.innerHTML = '<p class="cg-g-msg">This link is missing its gallery code.</p>'; return; }
+
+    const esc = (s) => String(s || '').replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    try {
+        const res = await fetch('/api/studio?action=view&slug=' + encodeURIComponent(slug));
+        if (!res.ok) throw new Error('not found');
+        const g = await res.json();
+        document.title = (g.clientName ? g.clientName + ' — ' : '') + 'Creatively Grow';
+
+        const videos = (g.videos || []).map((v) => `
+            <div class="cg-g-video">
+                <div class="cg-g-frame">
+                    <iframe src="https://iframe.mediadelivery.net/embed/${g.libraryId}/${v.bunny_guid}?autoplay=false&preload=false"
+                        loading="lazy" allow="accelerometer;gyroscope;encrypted-media;picture-in-picture;fullscreen" allowfullscreen></iframe>
+                </div>
+                ${v.title ? `<p class="cg-g-title">${esc(v.title)}</p>` : ''}
+            </div>`).join('');
+
+        root.innerHTML = `
+            <div class="cg-g-hero">
+                <img src="assets/logo.png?v=5" alt="Creatively Grow">
+                <h1>${esc(g.title || g.clientName)}</h1>
+                ${g.note ? `<p>${esc(g.note)}</p>` : ''}
+            </div>
+            <div class="cg-g-wrap">
+                ${videos || '<p class="cg-g-msg">Your films are being uploaded. Check back shortly.</p>'}
+            </div>
+            <div class="cg-g-foot">
+                Made by <a href="https://creativelygrow.com">Creatively Grow</a> &middot; Tampa Bay
+            </div>`;
+    } catch (e) {
+        root.innerHTML = '<p class="cg-g-msg">We couldn\'t find that gallery. Double-check the link, or reach out and we\'ll send a fresh one.</p>';
+    }
+})();
+</script>
+</body>
+</html>
