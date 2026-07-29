@@ -555,3 +555,11 @@
 @media (min-width: 768px) {
     .lp-pkg-grid { grid-template-columns: 1fr 1fr; max-width: 820px; }
 }
+
+/* Form buttons span the card so they read as centered */
+.lp-form-card .lp-btn,
+.lp-modal-box .lp-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
