@@ -34,6 +34,11 @@ body.st {
 .st-btn:hover { background: var(--orange-hover); }
 .st-btn:disabled { opacity: 0.55; cursor: default; }
 .st-btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
+.st-btn-ghost {
+    background: none; border: 1px solid var(--forest-light);
+    color: var(--cream);
+}
+.st-btn-ghost:hover { background: var(--forest); border-color: var(--orange); }
 
 .st-error { color: #e57373; font-size: 0.88rem; min-height: 1.2em; margin: 0.5rem 0 0; }
 

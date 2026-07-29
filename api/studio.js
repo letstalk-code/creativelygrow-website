@@ -193,6 +193,44 @@ module.exports = async (req, res) => {
       });
     }
 
+    // ---- Public: resolve the best downloadable MP4 for one of a gallery's videos ----
+    // Resolutions are only known once Bunny finishes encoding, so this is looked up
+    // on demand rather than stored at upload time. The guid is checked against the
+    // gallery so this cannot be used to reach videos the client was not sent.
+    if (action === 'download') {
+      const slug = String((req.query && req.query.slug) || '').slice(0, 64);
+      const guid = String((req.query && req.query.guid) || '').slice(0, 64);
+      if (!slug || !guid) return res.status(400).json({ error: 'slug and guid required' });
+
+      const gRes = await sb(`galleries?slug=eq.${encodeURIComponent(slug)}&published=eq.true&select=id`);
+      const rows = await gRes.json();
+      if (!Array.isArray(rows) || !rows.length) return res.status(404).json({ error: 'not found' });
+
+      const vRes = await sb(`gallery_videos?gallery_id=eq.${rows[0].id}`
+        + `&bunny_guid=eq.${encodeURIComponent(guid)}&select=bunny_guid,title`);
+      const owned = await vRes.json();
+      if (!Array.isArray(owned) || !owned.length) return res.status(404).json({ error: 'not found' });
+
+      const metaRes = await fetch(`https://video.bunnycdn.com/library/${BUNNY_LIB}/videos/${guid}`, {
+        headers: { AccessKey: BUNNY_KEY },
+      });
+      if (!metaRes.ok) return res.status(502).json({ error: 'could not read video' });
+      const meta = await metaRes.json();
+
+      // Highest first; Bunny returns whatever it managed to encode.
+      const ladder = ['2160p', '1440p', '1080p', '720p', '480p', '360p', '240p'];
+      const have = String(meta.availableResolutions || '').split(',').map((s) => s.trim());
+      const best = ladder.find((r) => have.includes(r));
+      if (!best) return res.status(409).json({ error: 'still encoding' });
+
+      const title = owned[0].title || meta.title || 'video';
+      return res.status(200).json({
+        url: `https://${BUNNY_CDN}/${guid}/play_${best}.mp4`,
+        filename: `${title.replace(/[\\/:*?"<>|]+/g, '-').slice(0, 100)}.mp4`,
+        resolution: best,
+      });
+    }
+
     // ---- Everything below requires the studio password ----
     if (!authed(req)) return res.status(401).json({ error: 'unauthorized' });
 

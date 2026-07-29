@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="studio.css?v=2">
+    <link rel="stylesheet" href="studio.css?v=3">
     <style>
         .cg-g-hero { text-align: center; padding: 3.5rem 1.25rem 2rem; }
         .cg-g-hero img { height: 56px; border-radius: 10px; margin-bottom: 1.25rem; }
@@ -31,16 +31,49 @@
             font-size: 0.95rem; letter-spacing: 0.05em;
             margin: 0.85rem 0 0; text-align: center; color: var(--cream);
         }
+
+        /* Downloads */
+        .cg-g-row {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.9rem; margin-top: 0.85rem; flex-wrap: wrap;
+        }
+        .cg-g-row .cg-g-title { margin: 0; }
+        .cg-dl {
+            background: none; border: 1px solid var(--forest-light);
+            color: var(--cream); font-family: inherit; font-size: 0.82rem;
+            padding: 0.4rem 0.9rem; border-radius: 999px; cursor: pointer;
+            transition: border-color 0.2s, color 0.2s; white-space: nowrap;
+        }
+        .cg-dl:hover:not(:disabled) { border-color: var(--orange); color: var(--orange); }
+        .cg-dl:disabled { opacity: 0.65; cursor: default; }
+        .cg-dl-all {
+            background: var(--orange); color: #14100c; border: none;
+            font-weight: 700; font-size: 0.9rem; padding: 0.75rem 1.5rem;
+            border-radius: 999px; cursor: pointer; font-family: inherit;
+            margin-top: 1.5rem;
+        }
+        .cg-dl-all:hover:not(:disabled) { background: var(--orange-hover); }
+        .cg-dl-all:disabled { opacity: 0.65; cursor: default; }
+        .cg-dl-note {
+            color: var(--cream-dim); font-size: 0.8rem;
+            margin: 0.6rem 0 0; min-height: 1.2em;
+        }
+
         .cg-g-photos {
             display: grid; grid-template-columns: 1fr; gap: 0.9rem;
             margin-top: 1rem;
         }
-        .cg-g-photos a {
+        .cg-g-photo { position: relative; }
+        .cg-g-photo > a {
             display: block; border-radius: 12px; overflow: hidden;
             border: 1px solid var(--forest-light);
             box-shadow: 0 14px 34px rgba(0,0,0,0.35);
         }
-        .cg-g-photos img { width: 100%; height: 100%; display: block; }
+        .cg-g-photo img { width: 100%; height: 100%; display: block; }
+        .cg-g-photo .cg-dl {
+            position: absolute; bottom: 0.6rem; right: 0.6rem;
+            background: rgba(5,8,5,0.78); backdrop-filter: blur(4px);
+        }
         @media (min-width: 640px) {
             .cg-g-photos { grid-template-columns: 1fr 1fr; }
         }
@@ -67,40 +100,170 @@
     const esc = (s) => String(s || '').replace(/[&<>"']/g, (c) => (
         { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+    /** Strip characters that are illegal in filenames on Windows and macOS. */
+    const safeName = (s, fallback) => (String(s || '').replace(/[\\/:*?"<>|]+/g, '-').trim() || fallback);
+
+    /**
+     * Pull the file down and hand the browser a real Save dialog with a proper
+     * filename. A plain link cannot do this: the download attribute is ignored
+     * cross-origin, so the browser would just open the file instead.
+     * If the fetch is blocked, fall back to opening it so the client is never stuck.
+     */
+    async function saveFile(url, filename, onProgress) {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('http ' + res.status);
+
+        let blob;
+        if (res.body && window.ReadableStream) {
+            const total = Number(res.headers.get('content-length')) || 0;
+            const reader = res.body.getReader();
+            const chunks = [];
+            let got = 0;
+            for (;;) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                got += value.length;
+                if (total && onProgress) onProgress(got / total);
+            }
+            blob = new Blob(chunks);
+        } else {
+            blob = await res.blob();
+        }
+
+        const href = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = href;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(href), 30000);
+    }
+
     try {
         const res = await fetch('/api/studio?action=view&slug=' + encodeURIComponent(slug));
         if (!res.ok) throw new Error('not found');
         const g = await res.json();
         document.title = (g.clientName ? g.clientName + ' — ' : '') + 'Creatively Grow';
 
-        const videos = (g.videos || []).map((v) => `
+        const videos = (g.videos || []).map((v, i) => `
             <div class="cg-g-video">
                 <div class="cg-g-frame">
                     <iframe src="https://iframe.mediadelivery.net/embed/${g.libraryId}/${v.bunny_guid}?autoplay=false&preload=false"
                         loading="lazy" allow="accelerometer;gyroscope;encrypted-media;picture-in-picture;fullscreen" allowfullscreen></iframe>
                 </div>
-                ${v.title ? `<p class="cg-g-title">${esc(v.title)}</p>` : ''}
+                <div class="cg-g-row">
+                    ${v.title ? `<p class="cg-g-title">${esc(v.title)}</p>` : ''}
+                    <button class="cg-dl" data-video="${esc(v.bunny_guid)}" data-i="${i}">Download</button>
+                </div>
             </div>`).join('');
 
-        const photos = (g.photos || []).map((p) => `
-            <a href="${g.photoBase}${p.storage_path}" target="_blank" rel="noopener">
-                <img src="${g.photoBase}${p.storage_path}" alt="${esc(p.title || '')}" loading="lazy">
-            </a>`).join('');
+        const photos = (g.photos || []).map((p, i) => `
+            <div class="cg-g-photo">
+                <a href="${g.photoBase}${p.storage_path}" target="_blank" rel="noopener">
+                    <img src="${g.photoBase}${p.storage_path}" alt="${esc(p.title || '')}" loading="lazy">
+                </a>
+                <button class="cg-dl" data-photo="${esc(p.storage_path)}" data-title="${esc(p.title || '')}" data-i="${i}">Download</button>
+            </div>`).join('');
+
+        const hasAny = Boolean(videos || photos);
+        const count = (g.videos || []).length + (g.photos || []).length;
 
         root.innerHTML = `
             <div class="cg-g-hero">
                 <img src="assets/logo.png?v=5" alt="Creatively Grow">
                 <h1>${esc(g.title || g.clientName)}</h1>
                 ${g.note ? `<p>${esc(g.note)}</p>` : ''}
+                ${hasAny && count > 1 ? `<button class="cg-dl-all" id="dlAll">Download everything</button>` : ''}
+                <p class="cg-dl-note" id="dlNote"></p>
             </div>
             <div class="cg-g-wrap">
                 ${videos}
                 ${photos ? `<div class="cg-g-photos">${photos}</div>` : ''}
-                ${(videos || photos) ? '' : '<p class="cg-g-msg">Your files are being uploaded. Check back shortly.</p>'}
+                ${hasAny ? '' : '<p class="cg-g-msg">Your files are being uploaded. Check back shortly.</p>'}
             </div>
             <div class="cg-g-foot">
                 Made by <a href="https://creativelygrow.com">Creatively Grow</a> &middot; Tampa Bay
             </div>`;
+
+        const note = document.getElementById('dlNote');
+        const say = (msg) => { note.textContent = msg || ''; };
+
+        // ---- one video ----
+        async function grabVideo(btn) {
+            const guid = btn.dataset.video;
+            const label = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Preparing…';
+            try {
+                const r = await fetch(`/api/studio?action=download&slug=${encodeURIComponent(slug)}&guid=${encodeURIComponent(guid)}`);
+                const info = await r.json();
+                if (!r.ok) throw new Error(info.error || 'failed');
+                await saveFile(info.url, info.filename, (frac) => {
+                    btn.textContent = Math.round(frac * 100) + '%';
+                });
+                btn.textContent = 'Saved';
+                setTimeout(() => { btn.textContent = label; btn.disabled = false; }, 2500);
+            } catch (err) {
+                console.error(err);
+                if (String(err.message).includes('still encoding')) {
+                    say('That film is still processing. Try again in a few minutes.');
+                    btn.textContent = label;
+                    btn.disabled = false;
+                    return;
+                }
+                // Last resort: open it so the client can still save it manually.
+                try {
+                    const r = await fetch(`/api/studio?action=download&slug=${encodeURIComponent(slug)}&guid=${encodeURIComponent(guid)}`);
+                    const info = await r.json();
+                    if (info.url) window.open(info.url, '_blank', 'noopener');
+                } catch (_) { say('That download would not start. Reach out and we will send the file directly.'); }
+                btn.textContent = label;
+                btn.disabled = false;
+            }
+        }
+
+        // ---- one photo ----
+        async function grabPhoto(btn) {
+            const path = btn.dataset.photo;
+            const url = g.photoBase + path;
+            const ext = (path.split('.').pop() || 'jpg').toLowerCase();
+            const filename = safeName(btn.dataset.title, 'photo') + '.' + ext;
+            const label = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Saving…';
+            try {
+                await saveFile(url, filename, (frac) => {
+                    btn.textContent = Math.round(frac * 100) + '%';
+                });
+                btn.textContent = 'Saved';
+                setTimeout(() => { btn.textContent = label; btn.disabled = false; }, 2000);
+            } catch (err) {
+                console.error(err);
+                window.open(url, '_blank', 'noopener');
+                btn.textContent = label;
+                btn.disabled = false;
+            }
+        }
+
+        root.querySelectorAll('[data-video]').forEach((b) =>
+            b.addEventListener('click', () => grabVideo(b)));
+        root.querySelectorAll('[data-photo]').forEach((b) =>
+            b.addEventListener('click', () => grabPhoto(b)));
+
+        // ---- everything, one at a time so the connection is not swamped ----
+        const all = document.getElementById('dlAll');
+        if (all) all.addEventListener('click', async () => {
+            const items = [...root.querySelectorAll('[data-video], [data-photo]')];
+            all.disabled = true;
+            for (let i = 0; i < items.length; i++) {
+                say(`Downloading ${i + 1} of ${items.length}…`);
+                await (items[i].dataset.video ? grabVideo(items[i]) : grabPhoto(items[i]));
+            }
+            say('All done. Check your downloads folder.');
+            all.disabled = false;
+        });
     } catch (e) {
         root.innerHTML = '<p class="cg-g-msg">We couldn\'t find that gallery. Double-check the link, or reach out and we\'ll send a fresh one.</p>';
     }

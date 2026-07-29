@@ -93,6 +93,11 @@ $('copyBtn').addEventListener('click', () => {
   setTimeout(() => ($('copyBtn').textContent = 'Copy'), 1600);
 });
 
+// Open the client link exactly as the client sees it.
+$('previewBtn').addEventListener('click', () => {
+  if (CURRENT) window.open(`/g?c=${encodeURIComponent(CURRENT.slug)}`, '_blank', 'noopener');
+});
+
 // ---------- new gallery ----------
 $('newBtn').addEventListener('click', () => $('newModal').classList.add('is-open'));
 $('newClose').addEventListener('click', () => $('newModal').classList.remove('is-open'));
