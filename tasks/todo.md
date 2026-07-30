@@ -183,9 +183,13 @@ because another session held 4321.
 - [x] `noindex, follow` and deliberately left out of `sitemap.xml` so it never
       competes with `/book`
 - [x] New GHL calendar "Client Call — Creatively Grow" (`FgDHJ1yzjAVdNLmUV0ib`)
-- [ ] **BLOCKED — Devon must do this in the GHL UI:** the calendar has no team
-      member and no open hours, so it offers zero slots. `get_free_slots` returns
-      empty and the page renders "No slot available this month."
+- [x] **RESOLVED.** Devon duplicated the Strategy Call calendar in the GHL UI.
+      The working client calendar is `BjHdsMbfp7j8BPPa3LUR` — round robin, Devon
+      attached, Google Meet, and availability running later than the sales
+      calendar (to 7:30 PM). `/call` now points at it and renders real slots.
+      Its description was still the sales copy, so I updated it to match the page.
+- [ ] The empty API-made calendar `FgDHJ1yzjAVdNLmUV0ib` is still in GHL, unused.
+      Delete it once Devon confirms.
 
 The MCP `create_calendar` tool has no `teamMembers` parameter, so it refused to make
 a `round_robin` calendar ("No team member found") and fell back to type `event`.
