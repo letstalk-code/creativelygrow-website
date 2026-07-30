@@ -198,6 +198,33 @@ no availability. So this cannot be finished from here. Fix: GHL → Calendars �
 Client Call → add Devon and set hours. Alternative: duplicate the Strategy Call
 calendar in the UI (it copies availability) and give me the new id to swap in.
 
+### SERP check — why no knowledge panel (2026-07-30)
+
+Ran one `organic_serp` credit on "Creatively Grow" from Holiday, FL. Result:
+
+- `knowledge_panel: null`, `local_pack: []` — confirmed, no panel for a neutral
+  searcher. Devon's incognito observation was right.
+- `creativelygrow.com` ranks #2 organically, so the site itself is findable.
+- The indexed title is still the OLD one, hours after the deploy. Google has not
+  recrawled. Request Indexing is still the gating step.
+- The rest of page 1 is generic: Grow Creative, Grow Creativity, Grow Creative
+  Studio (Pensacola), Creative Growth Art Center (Oakland), Bloom and Grow
+  Creative, and Creatively Grown at #10.
+
+That last point is the diagnosis. Google is treating "Creatively Grow" as the
+generic phrase grow + creative and serving semantic matches from across the
+country, not as a brand. It is an entity-recognition problem, NOT a verification
+problem — the profile is verified ("You manage this Business Profile" + green
+profile strength). Contrast "Labif Filmhouse", a unique string that resolves to
+one entity instantly, which is why that panel fires and this one doesn't.
+
+Fixes, in order of directness: GBP URL into `sameAs`, recrawl, more reviews,
+consistent NAP citations on third-party directories.
+
+Note: `facebook.com/creativelygrow` returned 400 to a scripted request. Probably
+just bot-blocking rather than a dead page, but worth Devon confirming — a
+`sameAs` pointing at a page that does not exist weakens the entity signal.
+
 ### Review
 
 Verified against the live site rather than assumed:
