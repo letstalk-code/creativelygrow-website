@@ -4939,3 +4939,108 @@ body.rb {
 @media (max-width: 640px) {
     .cg-package { padding: 4rem 1.25rem; }
 }
+
+/* ============================
+   BOOKING PAGE
+============================= */
+
+.cg-book-hero { padding-bottom: 2rem; }
+.cg-book-hero .rb-hero-eyebrow { display: inline-block; margin-bottom: 1.25rem; }
+
+.cg-book {
+    background: var(--forest-dark);
+    padding: 0 2rem 4rem;
+}
+
+/* The GHL widget renders on white, so the card is the seam between it and the
+   dark page. Overflow hidden keeps the widget's corners inside the radius. */
+.cg-book-card {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: var(--rb-radius-lg);
+    box-shadow: var(--rb-shadow-card);
+    border: 1px solid rgba(249, 248, 235, 0.08);
+    overflow: hidden;
+    min-height: 640px;
+}
+
+.cg-book-frame {
+    display: block;
+    width: 100%;
+    min-height: 640px;
+    border: none;
+}
+
+.cg-book-alt {
+    text-align: center;
+    color: var(--cream-dim);
+    font-size: 0.95rem;
+    margin: 1.5rem auto 0;
+}
+
+.cg-book-alt a { color: var(--orange); font-weight: 600; }
+
+.cg-book-what {
+    background: var(--forest);
+    border-top: 1px solid rgba(249, 248, 235, 0.08);
+    padding: 5rem 2rem;
+}
+
+.cg-book-points {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+
+.cg-book-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+.cg-book-num {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--orange);
+    color: var(--white);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.cg-book-point h3 {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+}
+
+.cg-book-point p {
+    color: var(--cream-dim);
+    line-height: 1.7;
+    font-size: 0.98rem;
+}
+
+/* The GHL widget stops being responsive below ~375px and clips its own calendar
+   columns, so on phones the card goes edge to edge and gives the iframe the full
+   viewport width instead of losing 32px to page padding. */
+@media (max-width: 640px) {
+    .cg-book { padding: 0 0 3rem; }
+    .cg-book-card {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+    .cg-book-alt { padding: 0 1.25rem; }
+    .cg-book-what { padding: 4rem 1.25rem; }
+    .cg-book-point { gap: 1rem; }
+}

@@ -125,3 +125,85 @@ Two things worth knowing:
 - Supabase serves public photo URLs through a CDN, so a removed photo can stay
   reachable by direct URL for a while after the row and file are gone. The gallery stops
   listing it immediately. Worth confirming Bunny's cache behaviour after the switch.
+
+---
+
+## Google search presence: stale snippet, missing favicon, profile visibility (2026-07-30)
+
+### What I checked (facts, not guesses)
+- Live https://creativelygrow.com/ serves the NEW title/description. Google is showing
+  the OLD ones. `index.html` title last changed 2026-07-28 (commit 4ef6f296) — Google
+  simply has not recrawled in two days. Nothing is broken on the site.
+- Favicon files are all present and return 200 to a Googlebot user-agent:
+  `/favicon.ico` (contains 16/32/48/64px), `/assets/favicon.png` (64x64),
+  `/assets/apple-touch-icon.png` (180x180). robots.txt does not block them.
+  The links carry a `?v=5` cache-buster, which makes the favicon URL unstable —
+  Google asks for a stable icon URL and re-verifies slowly after it changes.
+- `sitemap.xml` has no `<lastmod>` on any URL, so it gives Google no freshness signal.
+- The "creative" query is a generic head term. A business panel only appears for queries
+  Google resolves to the entity. This is a profile-strength / authority issue, not a bug.
+
+### Plan — site changes (small, low risk)
+- [ ] Drop the `?v=5` cache-buster from the three icon links in `index.html` so the
+      favicon URL is stable; do the same on `how-it-works.html` / `our-work.html` if present
+- [ ] Add a 96x96 (and 192x192) PNG icon declaration — Google prefers a 48px multiple
+- [ ] Add `<lastmod>` dates to `sitemap.xml`
+- [ ] Strengthen the LocalBusiness schema in `index.html`: add `image`, `address`,
+      `priceRange`, and the real GBP profile URL under `sameAs`, so Google ties the
+      website and the Business Profile to the same entity
+
+### Plan — things only Devon can do (outside the repo)
+- [ ] Search Console → URL Inspection → Request Indexing for `/`, `/how-it-works`,
+      `/our-work`. This is what actually replaces the stale headline, usually 1-7 days
+- [ ] Google Business Profile: finish "Complete your profile", add social profiles,
+      confirm primary + secondary categories, set service area beyond Holiday
+- [ ] Reviews. The profile is showing "Get reviews" — review count and velocity are the
+      single biggest lever for showing up on non-brand searches
+
+### Booking page — DONE (not yet deployed)
+- [x] `book.html` — branded booking page at `/book`, embedding GHL calendar
+      `NLaBtJ1Axz8OPBhJmp7Y` ("Strategy Call — Creatively Grow", 30 min, auto-confirm)
+- [x] `.cg-book-*` styles appended to `styles.css`
+- [x] `/book` added to `sitemap.xml`
+- [x] Verified locally: calendar loads with live availability, desktop + mobile
+
+The GHL widget stops being responsive below ~375px — at 341px it clipped its own
+calendar columns and the event title. Fixed by taking the card edge to edge under
+640px so the iframe gets the full viewport width. Confirmed all seven day columns
+render and the page has no horizontal overflow.
+
+`form_embed.js` auto-resizes the iframe by matching the calendar id inside the
+element id, so `id="NLaBtJ1Axz8OPBhJmp7Y_booking"` has to keep that prefix.
+
+Added a second `creativelygrow-alt` entry (port 4322) to `.claude/launch.json`
+because another session held 4321.
+
+### Client scheduling page — DONE (needs one manual GHL step)
+- [x] `call.html` — plain, non-sales scheduling page at `/call` for existing clients
+- [x] `noindex, follow` and deliberately left out of `sitemap.xml` so it never
+      competes with `/book`
+- [x] New GHL calendar "Client Call — Creatively Grow" (`FgDHJ1yzjAVdNLmUV0ib`)
+- [ ] **BLOCKED — Devon must do this in the GHL UI:** the calendar has no team
+      member and no open hours, so it offers zero slots. `get_free_slots` returns
+      empty and the page renders "No slot available this month."
+
+The MCP `create_calendar` tool has no `teamMembers` parameter, so it refused to make
+a `round_robin` calendar ("No team member found") and fell back to type `event`.
+`update_calendar` can only set name/description/duration/flags — no team members and
+no availability. So this cannot be finished from here. Fix: GHL → Calendars →
+Client Call → add Devon and set hours. Alternative: duplicate the Strategy Call
+calendar in the UI (it copies availability) and give me the new id to swap in.
+
+### Review
+
+Verified against the live site rather than assumed:
+- The stale Google headline is not a site bug. Live HTML already serves the new
+  title; the copy changed 2026-07-28 and Google has not recrawled.
+- Favicons were never missing or malformed — `/favicon.ico` returns 200 to a
+  Googlebot UA and contains a 48x48 entry, which is what Google requires. The
+  `?v=5` cache-buster was the real problem, since it resets Google's verification.
+
+Not done, and why: `priceRange` was left out of the schema because I don't know the
+real number and guessing it would publish a false claim. `sameAs` still lacks the
+Google Business Profile URL — send me the GBP link and I'll add it, which is the
+piece that most directly ties the site and the profile to one entity.
