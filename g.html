@@ -59,23 +59,26 @@
             margin: 0.6rem 0 0; min-height: 1.2em;
         }
 
-        .cg-g-photos {
-            display: grid; grid-template-columns: 1fr; gap: 0.9rem;
-            margin-top: 1rem;
+        /* Masonry columns, not a grid: every tile is exactly as tall as its own
+           photo, so a short frame next to a tall one leaves no dead space and
+           the Download button always lands on the image. */
+        .cg-g-photos { column-count: 1; column-gap: 0.9rem; margin-top: 1rem; }
+        .cg-g-photo {
+            position: relative; margin: 0 0 0.9rem;
+            break-inside: avoid; -webkit-column-break-inside: avoid;
         }
-        .cg-g-photo { position: relative; }
         .cg-g-photo > a {
             display: block; border-radius: 12px; overflow: hidden;
             border: 1px solid var(--forest-light);
             box-shadow: 0 14px 34px rgba(0,0,0,0.35);
         }
-        .cg-g-photo img { width: 100%; height: 100%; display: block; }
+        .cg-g-photo img { width: 100%; height: auto; display: block; }
         .cg-g-photo .cg-dl {
             position: absolute; bottom: 0.6rem; right: 0.6rem;
             background: rgba(5,8,5,0.78); backdrop-filter: blur(4px);
         }
         @media (min-width: 640px) {
-            .cg-g-photos { grid-template-columns: 1fr 1fr; }
+            .cg-g-photos { column-count: 2; }
         }
         .cg-g-foot {
             text-align: center; padding: 2rem 1.25rem 3rem;
