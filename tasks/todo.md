@@ -238,3 +238,117 @@ Not done, and why: `priceRange` was left out of the schema because I don't know 
 real number and guessing it would publish a false claim. `sameAs` still lacks the
 Google Business Profile URL — send me the GBP link and I'll add it, which is the
 piece that most directly ties the site and the profile to one entity.
+
+---
+
+## Email signature — rebuilt on the new logo (2026-08-01)
+
+The old signature used the retired horizontal "CREATIVELY GROW" wordmark
+(`assets/old_logo.png`). The live mark is the square C/G tile (`assets/logo.png`),
+already served at https://creativelygrow.com/assets/logo.png (verified 200).
+
+### Decisions (confirmed with Devon)
+- Layout: square C/G mark on the LEFT, divider, text block on the right.
+- Drop the Meta/Coursera + Mailchimp badges — no longer relevant.
+- Replace with credentials people actually care about: Claude AI, CRM builds,
+  landing pages, Meta Ads.
+
+### Todo
+- [x] Confirm the current logo file (`assets/logo.png` = C/G mark)
+- [x] Pull brand tokens from `styles.css` (forest #1a2a1a, cream #f9f8eb, orange #ef7938)
+- [x] Verify the hosted logo URL returns 200
+- [x] Build `email-signature.html` — table layout, inline styles, email-client safe
+- [x] Render and visually verify at desktop and phone width
+
+### Constraints that shaped the build
+- Tables only. Gmail and Outlook strip flexbox and grid.
+- Inline styles only — Gmail drops `<style>` blocks and classes when you paste.
+- No web fonts. Gmail strips `@font-face`, so Oswald/Inter fall back anyway;
+  used a system sans stack so it renders the same everywhere.
+- Logo referenced by absolute https URL. A local path breaks the moment it is sent.
+- Credentials are typeset, not borrowed logos — see Review.
+
+### Logo marks added on request (2026-08-01, second pass)
+Devon asked again for the Claude and Meta marks after I raised the trademark
+concern, so they are in. Framing chosen to keep the authority without the
+exposure: the row is labelled **"BUILDS WITH"**, which states the tools he works
+in — true and defensible — rather than showing bare logos, which read as
+certification or partnership. That distinction is the whole risk.
+
+Marks rendered locally rather than hotlinked from a third-party CDN, because a
+hotlink can break, change, or be pulled and would take the strip down inside
+already-sent mail. Generator kept at `scratchpad/gen_marks.py`:
+- `assets/sig-claude-mark.png` — 54x54 (3x of 18), terracotta #D97757 burst
+- `assets/sig-meta-mark.png` — 90x54 (3x), blue gradient loop
+Both `alt=""`, so a client blocking images degrades to the wordmarks beside them
+instead of printing each name twice.
+
+Text pills reduced to Devon's own claims (CRM Builder, Landing Pages That Sell);
+Claude and Meta moved into the logo row so nothing is stated twice. Logo tile
+went 84px → 100px to balance the now-180px text block.
+
+Label later changed "BUILDS WITH" → **"EXPERT IN"** at Devon's request. Still a
+claim about his own skill rather than a credential issued by Meta or Anthropic,
+so the distinction that matters holds.
+
+Generator copied to `tasks/gen_marks.py` so the marks can be re-rendered at a
+different size without reverse-engineering the paths.
+
+### Copy rewritten (2026-08-01, third pass)
+Both lines were flagged in the previous review as off-position; Devon picked the
+recommended replacement for each.
+- Title: "Senior Content Strategist" → **"Founder & Growth Systems Builder"**.
+  The signature now claims CRM, landing pages and ads, so "content" undersold it.
+  "Systems" is the word that separates him from one-off freelancers.
+- Green pill: "A Content Creation Company" → **"We Make The Phone Ring"**.
+  Lifted from his own site copy. Names the result the client wants rather than
+  the service sold.
+
+### Google Ads added (2026-08-01, fourth pass)
+Third mark rendered the same way: `assets/sig-gads-mark.png`, the yellow/blue "A"
+monogram with the green foot. Row now reads EXPERT IN · Claude · Meta Ads ·
+Google Ads. Measured after the change: 473px wide, 127px of headroom to the 600px
+email limit, height unchanged at 180px. Three marks still read as a capability
+strip rather than a badge farm because they are small and the label is muted.
+
+Two things Devon should weigh, neither of them blocking:
+- **Google Partners is a real badge program**, unlike the Meta case. The Google
+  Ads product logo sitting under "EXPERT IN" reads close to a Partner claim.
+  The badge is earnable (certifications + spend + performance) and is verifiable,
+  so it is worth materially more than the logo. Worth pursuing rather than
+  approximating.
+- `Google Ads setup` is still sitting under "Paused / later" in this same file
+  (line ~38). That is about CG's own account, not client work — but if Devon is
+  not actively running Google Ads for clients today, this line gets caught on a
+  discovery call and costs more trust than it buys. Confirm before sending.
+
+### Tagline bar promoted (2026-08-01, fifth pass)
+Green pill → full-width bar spanning the text block, uppercase and centred, so it
+reads as a statement rather than a caption. Contact line was briefly enlarged too,
+then reverted at Devon's request — website and phone are back to 13px exactly as
+before.
+
+Bar sizing was tuned across three passes: 11px/6px padding (original chip),
+16px/14px (too loud), settled at **12px, 9px 14px padding, 1.2px letter-spacing**.
+Reasoning for the smaller end: a signature is seen repeatedly by the same
+recipient across a thread, so the bar must not outweigh Devon's own name (19px).
+At 16px on a full-width dark fill it did. Bigger would only win if this were
+purely first-touch cold outreach.
+
+- [ ] **Deploy gate:** the three mark PNGs are NOT live yet. Until `assets/sig-*.png`
+      are pushed, the strip renders as broken boxes in real mail. Commit and
+      push, confirm all three return 200, then paste the signature.
+
+### Review
+Built `email-signature.html`. Once the marks are live: open it in a browser,
+select from the logo through the tagline, copy, paste into Gmail Settings →
+Signature.
+
+Verified rather than assumed: hosted logo URL returns 200; the divider cell
+measures full-height (144px, then 180px) rather than collapsing; total width
+546px, under the 600px email safe width; pills render as `<td>`s so Outlook keeps
+their padding, which it would drop on inline-block spans.
+
+Kept as-is because they weren't in scope: the title "Senior Content Strategist"
+and the tagline "A Content Creation Company". Both now sit off from the
+CRM/AI/landing-page positioning the rest of the signature states. Worth a look.
