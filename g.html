@@ -71,6 +71,10 @@
             display: block; border-radius: 12px; overflow: hidden;
             border: 1px solid var(--forest-light);
             box-shadow: 0 14px 34px rgba(0,0,0,0.35);
+            /* These are full-resolution originals with no stored dimensions, so
+               an unloaded tile has no height and the page reads as empty. Hold
+               a visible slot until the photo arrives. */
+            min-height: 180px; background: var(--forest);
         }
         .cg-g-photo img { width: 100%; height: auto; display: block; }
         .cg-g-photo .cg-dl {
@@ -144,10 +148,42 @@
         setTimeout(() => URL.revokeObjectURL(href), 30000);
     }
 
-    try {
-        const res = await fetch('/api/studio?action=view&slug=' + encodeURIComponent(slug));
-        if (!res.ok) throw new Error('not found');
-        const g = await res.json();
+    /**
+     * Load the gallery. A stalled connection is the one way this page could sit
+     * on "Loading…" forever, so the request gets a hard deadline and always
+     * settles into either data or a thrown error.
+     */
+    async function loadGallery() {
+        const ctl = new AbortController();
+        const timer = setTimeout(() => ctl.abort(), 15000);
+        try {
+            const res = await fetch(
+                '/api/studio?action=view&slug=' + encodeURIComponent(slug),
+                { signal: ctl.signal });
+            if (res.status === 404) {
+                const missing = new Error('not found');
+                missing.notFound = true;
+                throw missing;
+            }
+            if (!res.ok) throw new Error('http ' + res.status);
+            return await res.json();
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    /** Any ending that is not a gallery. Never leaves the page on "Loading…". */
+    function showMessage(text, retry) {
+        root.innerHTML = `
+            <div class="cg-g-msg">
+                <p>${esc(text)}</p>
+                ${retry ? '<button class="cg-dl-all" id="cgRetry">Try again</button>' : ''}
+            </div>`;
+        const again = document.getElementById('cgRetry');
+        if (again) again.addEventListener('click', start);
+    }
+
+    function render(g) {
         document.title = (g.clientName ? g.clientName + ' — ' : '') + 'Creatively Grow';
 
         const videos = (g.videos || []).map((v, i) => `
@@ -267,9 +303,39 @@
             say('All done. Check your downloads folder.');
             all.disabled = false;
         });
-    } catch (e) {
-        root.innerHTML = '<p class="cg-g-msg">We couldn\'t find that gallery. Double-check the link, or reach out and we\'ll send a fresh one.</p>';
     }
+
+    async function start() {
+        root.innerHTML = '<p class="cg-g-msg">Loading…</p>';
+        let g;
+        try {
+            g = await loadGallery();
+        } catch (err) {
+            console.error('gallery load failed', err);
+            if (err.notFound) {
+                showMessage('We couldn\'t find that gallery. Double-check the link, '
+                    + 'or reach out and we\'ll send a fresh one.', false);
+            } else if (err.name === 'AbortError') {
+                showMessage('That took too long to load. Check your connection '
+                    + 'and try again.', true);
+            } else {
+                showMessage('Your gallery didn\'t load. That one is on us — '
+                    + 'give it another go.', true);
+            }
+            return;
+        }
+        // Past this point the gallery exists, so a failure is a rendering bug.
+        // It must not tell the client their link is bad.
+        try {
+            render(g);
+        } catch (err) {
+            console.error('gallery render failed', err);
+            showMessage('Your gallery loaded but wouldn\'t display. Reach out and '
+                + 'we\'ll send your files directly.', true);
+        }
+    }
+
+    start();
 })();
 </script>
 </body>

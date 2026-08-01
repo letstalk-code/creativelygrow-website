@@ -181,6 +181,11 @@ module.exports = async (req, res) => {
       const videos = await vRes.json();
       const pRes = await sb(`gallery_photos?gallery_id=eq.${g.id}&order=sort_order.asc&select=storage_path,title`);
       const photos = await pRes.json();
+      // A failed lookup used to fall through to [] below, so the client saw an
+      // empty gallery and no error. Fail loudly instead: a client missing their
+      // films should get a retry, not silence.
+      if (!vRes.ok || !Array.isArray(videos)) throw new Error(`videos lookup failed for ${slug}`);
+      if (!pRes.ok || !Array.isArray(photos)) throw new Error(`photos lookup failed for ${slug}`);
       return res.status(200).json({
         clientName: g.client_name,
         title: g.title,
