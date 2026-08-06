@@ -1,5 +1,11 @@
 // Receives leak-check requests from landing pages and upserts a tagged
 // contact into the Creatively Grow GHL location.
+
+// The lead's own words end up inside the notification email, so they get escaped
+// before they are dropped into markup.
+const escapeHtml = (value) =>
+  String(value).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://creativelygrow.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -85,6 +91,43 @@ module.exports = async (req, res) => {
         }
       } catch (smsErr) {
         console.error('auto-reply SMS error (lead still saved)', smsErr);
+      }
+
+      // Tell Devon a lead came in. Without this the lead lands silently in the CRM
+      // and the fast follow-up this site sells depends on someone happening to look.
+      const notifyId = process.env.GHL_NOTIFY_CONTACT_ID;
+      if (notifyId) {
+        const label = isContact ? 'Website contact' : `Leak check (${cleanNiche})`;
+        const summary = [
+          cleanBusiness,
+          cleanFirst,
+          cleanPhone,
+          cleanTrade && `"${cleanTrade}"`,
+        ].filter(Boolean).join(' — ');
+        const alerts = [
+          { type: 'SMS', contactId: notifyId, message: `${label}: ${summary}` },
+          {
+            type: 'Email',
+            contactId: notifyId,
+            subject: `${label}: ${cleanBusiness}`,
+            html: `<p>${escapeHtml(summary)}</p>`,
+          },
+        ];
+        // Sent independently so a failure on one channel still leaves the other.
+        for (const alert of alerts) {
+          try {
+            const alertResp = await fetch('https://services.leadconnectorhq.com/conversations/messages', {
+              method: 'POST',
+              headers: ghlHeaders,
+              body: JSON.stringify(alert),
+            });
+            if (!alertResp.ok) {
+              console.error(`${alert.type} notification failed`, alertResp.status, await alertResp.text());
+            }
+          } catch (alertErr) {
+            console.error(`${alert.type} notification error (lead still saved)`, alertErr);
+          }
+        }
       }
     }
 

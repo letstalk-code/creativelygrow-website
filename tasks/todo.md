@@ -335,9 +335,96 @@ recipient across a thread, so the bar must not outweigh Devon's own name (19px).
 At 16px on a full-width dark fill it did. Bigger would only win if this were
 purely first-touch cold outreach.
 
-- [ ] **Deploy gate:** the three mark PNGs are NOT live yet. Until `assets/sig-*.png`
-      are pushed, the strip renders as broken boxes in real mail. Commit and
-      push, confirm all three return 200, then paste the signature.
+- [x] **Deploy gate cleared 2026-08-01.** Pushed to `main` as `ba438b4d` (six files
+      only — the repo has a lot of unrelated untracked images, left alone). Pushed
+      to `main` rather than a branch deliberately: Vercel deploys from `main`, so a
+      branch would not have made the marks reachable, which was the whole point.
+      Vercel served all three ~20s later. Verified by sha256 that the live bytes
+      are identical to the local files, not a 200-with-error-page, and re-rendered
+      `email-signature.html` against production — all four images resolve, natural
+      dimensions 512/54/90/54 against 100/17/28/17 display, so they stay crisp on
+      retina.
+
+### Bar text went black in a real send — fixed 2026-08-01 (sixth pass)
+Devon sent a live test: the green bar rendered with near-black text, unreadable
+on the dark fill. Correct in Gmail's compose view, broken in the received message.
+
+Root cause: the cream was declared only on the `<td>`, so the text inherited it.
+Apple Mail (and some webmail) run a contrast pass that rewrites `color` on
+whichever element directly holds the text while leaving `background-color`
+alone — it assumes a white page behind the text and does not account for the
+cell's dark fill. Compose looks right because Gmail's editor never runs that
+pass; only the rendered message does.
+
+Fix: carry the colour on three layers, since sanitisers drop different ones.
+1. inner `<span style="color:#f9f8eb !important">` — beats the client stylesheet
+2. legacy `<font color="#f9f8eb">` — survives sanitisers that strip CSS
+3. the `<td>` colour retained as final fallback
+Verified all three present and the computed colour is rgb(249,248,235).
+
+**No deploy needed for this.** The HTML is pasted into Gmail directly; only the
+images are fetched over the network and those are already live. Devon must
+re-copy from the file and replace the signature in Gmail.
+
+### The !important fix did NOT solve it — real cause found (seventh pass)
+Second live test still rendered dark, on BOTH iPhone and Mac, both in light mode.
+That rules out dark mode, and it rules out the sanitiser theory the three-layer
+fix was built for. `!important` cannot win here: Apple Mail's transform runs at
+the rendering layer, below the CSS cascade.
+
+The evidence was sitting in Devon's own screenshot the whole time. Apple Mail
+rendered `#ef7938` on the contact line correctly, and the orange-brown pill
+correctly. It honoured every colour in the signature EXCEPT the near-white one.
+So it is not dropping colour declarations — it specifically darkens text it reads
+as too light for the background it assumes is behind it, and ignores the cell's
+actual background-color.
+
+Fix: bar text cream `#f9f8eb` → orange `#ef7938`. A saturated mid-tone passes the
+contrast pass untouched, proven by that same orange already surviving elsewhere in
+the same send. Contrast on `#1a2a1a` is 5.37:1, above WCAG AA for normal text, and
+it is bold uppercase on top of that. Keeps the dark green block Devon likes.
+
+The three-layer declaration (span + font + td) is retained — it guards a genuinely
+different failure, sanitisers that strip styles. Two problems, two guards; the
+mistake earlier was assuming one fix covered both.
+
+### Orange did NOT fix it either — the client is Canary Mail (eighth pass)
+Third live test: orange came through black too. That kills the contrast-transform
+theory outright — a lightness-based pass would have left a saturated mid-tone
+alone. Since cream and orange both land on black, Canary is forcing its own
+default foreground onto text in this cell, and NO colour value can win that.
+
+Also a misread on my part worth recording: Devon said "black and canary" two
+passes ago and I took it for a dictation slip, then assumed Apple Mail from the
+screenshot. The client was **Canary Mail** (macOS + iOS) the whole time. The two
+earlier fixes were aimed at the wrong renderer.
+
+Reverted to cream `#f9f8eb`. Rationale: no colour fixes Canary, so there is
+nothing to buy by compromising the design for it, and cream is correct in Gmail.
+
+The three-layer declaration (span + font + td) stays. It guards a genuinely
+separate failure — sanitisers that strip styles — and costs nothing.
+
+### What actually matters here
+Canary is DEVON'S client, not his recipients'. Its market share is negligible;
+prospects are on Gmail, Apple Mail, Outlook, and Gmail is already confirmed
+correct. Optimising the design around Canary would be backwards.
+
+- [ ] **The test that matters:** send to an address read in a MAINSTREAM client —
+      Gmail mobile app, Apple Mail, or Outlook. If the bar is fine there, this is
+      a Canary quirk and should simply be ignored.
+- [ ] Only if a mainstream client also fails: drop the dark fill so that
+      forced-black text stays readable. That is structural, not another colour
+      guess. Costs the green block.
+
+### Still open for Devon
+- [ ] **Confirm the Google Ads claim is true today.** `Google Ads setup` is still
+      under "Paused / later" (line ~38 of this file). If he is not actively running
+      Google Ads for clients, delete the last two `<td>` blocks in the EXPERT IN row.
+- [ ] Consider earning the Google Partner badge — the only independently verifiable
+      credential in that row, and worth more than the drawn logo.
+- [ ] Decide whether pushing straight to `main` on this repo is the standing
+      preference, or whether to branch by default in future.
 
 ### Review
 Built `email-signature.html`. Once the marks are live: open it in a browser,
@@ -352,3 +439,53 @@ their padding, which it would drop on inline-block spans.
 Kept as-is because they weren't in scope: the title "Senior Content Strategist"
 and the tagline "A Content Creation Company". Both now sit off from the
 CRM/AI/landing-page positioning the rest of the signature states. Worth a look.
+
+---
+
+## Website contact form — lead notification (2026-08-05)
+
+### Background (verified, not assumed)
+- The contact form at `index.html:526` posts to `/api/leak-check` with `niche: 'contact'`.
+  It is NOT a GHL form — no GHL form is ever submitted.
+- `api/leak-check.js` calls the GHL v2 REST API directly: upserts the contact
+  (tag + source `website-contact`), attaches a note, and sends the lead an SMS.
+- A live test submission on 2026-08-06 03:41:39 UTC produced exactly ONE outbound
+  message (the code's SMS, `source: "app"`, no `userId`) and the contact record
+  carries only the single `website-contact` tag. Confirms the GHL workflow
+  "01. Smart Website New Leads Website Contact Form" does NOT fire on this form.
+- Gap: nothing notifies Devon. Leads land silently.
+- Workflow triggers cannot be edited via the GHL API, and the GHL automation
+  module will not render in the automated browser. That route is manual-only.
+
+### Plan
+1. [x] Add `GHL_NOTIFY_CONTACT_ID` to Vercel env (Devon's GHL contact
+       `FOB1WDgpORfTsc3PdzTa` / +1 813 999 0012). Env var, not hardcoded, so a
+       deleted or merged contact is a config change rather than a code change.
+2. [x] In `api/leak-check.js`, after the lead auto-reply, send Devon a
+       notification via `POST /conversations/messages` with that contact id.
+       Body: business name, first name, phone, and what they wrote.
+3. [x] Wrap it in its own try/catch and skip cleanly when the env var is unset —
+       a failed notification must never fail the lead capture. Same pattern the
+       note and auto-reply already use.
+4. [ ] Deploy, submit a real test through the live form, and verify from the API
+       that two outbound messages now exist: the lead's and Devon's.
+
+### Resolved
+- Channel: both. SMS and email, both addressed to GHL contact
+  `FOB1WDgpORfTsc3PdzTa`, which carries +1 813 999 0012 and
+  letstalk@creativelygrow.com — one id drives both channels.
+
+### Not doing (and why)
+- Repointing the "01. Smart Website…" workflow trigger. Its 20 versions of
+  actions have never been inspected; pointing it at the `website-contact` tag
+  could double-text every lead or drop them into a drip written for a different
+  funnel.
+
+### Cleanup
+- [x] Restored contact `TT3BWc4mYwQXgHNRvSF8` (+1 212 390 1416), which the test
+      submission had overwritten. Cleared the injected `firstName` "Thomas",
+      `lastName` "(Route Care)", `companyName` "Route Care", `source`
+      "website-contact", and the `website-contact` tag. Empty strings are ignored
+      by both the MCP tool and the REST API — explicit `null` is what clears a
+      field. Their message history is untouched; the test auto-reply is still in
+      the thread and cannot be unsent.
