@@ -535,5 +535,24 @@ fiction-reserved number that reaches no one. Result:
 - [x] Deploy and verify (closes the open item from the previous section)
 
 ### Left behind
-- [ ] Dummy contact `kdHe1eR12kJKJSkcx9DA` ("Test (Dummy Test Co)") is still in
-      the CRM. Delete once the result has been seen.
+- [x] Dummy contacts `kdHe1eR12kJKJSkcx9DA` and `3dzExx2iCpzpzusPuYWK` deleted
+      after the results were confirmed.
+
+## Lead-alert email sender (2026-08-06)
+
+Devon's alert arrived from `talktous@labiffilmhouse.com`. Cause was not the code:
+sub-account `xwdd…` has that address as its **business profile email**, and a
+send without an explicit sender inherits it.
+
+- [x] Pinned `emailFrom: 'Creatively Grow <letstalk@creativelygrow.com>'` on the
+      notification send. Verified on the sent record: `from` now reads
+      `Creatively Grow <letstalk@creativelygrow.com>`, provider mailgun.
+
+### Still open — needs an agency-scoped token
+- [ ] Sub-account `xwdd…` business profile still reads
+      `talktous@labiffilmhouse.com` / `labiffilmhouse.com`. Should be
+      `letstalk@creativelygrow.com` / `creativelygrow.com`. **Every** email this
+      location sends without an explicit sender still inherits the Labif brand —
+      workflow emails, campaigns, manual sends from Conversations.
+      `PUT /locations/{id}` with the location PIT returns 401 (not authorized for
+      this scope). Fix in the UI: Settings → Business Profile.
