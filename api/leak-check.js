@@ -28,23 +28,47 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'business name and a valid phone are required' });
   }
 
+  const ghlHeaders = {
+    Authorization: `Bearer ${process.env.GHL_PIT}`,
+    Version: '2021-07-28',
+    'Content-Type': 'application/json',
+  };
+
   try {
+    // The upsert matches on phone and overwrites whatever it is handed, so a lead who
+    // is already in the CRM would lose their name, company and source to a web form.
+    // Look them up first and treat what we already know as the better record.
+    let existing = null;
+    try {
+      const dupUrl = `https://services.leadconnectorhq.com/contacts/search/duplicate?locationId=${encodeURIComponent(process.env.GHL_LOCATION_ID)}&number=${encodeURIComponent(cleanPhone)}`;
+      const dupResp = await fetch(dupUrl, { headers: ghlHeaders });
+      if (dupResp.ok) {
+        const dup = await dupResp.json();
+        existing = (dup && dup.contact) || null;
+      } else {
+        console.error('duplicate lookup failed', dupResp.status, await dupResp.text());
+      }
+    } catch (dupErr) {
+      console.error('duplicate lookup error', dupErr);
+    }
+
+    // Tags are additive in GHL, so the submission is still recorded on a known contact.
+    const payload = {
+      locationId: process.env.GHL_LOCATION_ID,
+      phone: cleanPhone,
+      tags: tagList,
+    };
+    // On a known contact, only fill what is blank. On a new one, everything is blank.
+    if (!existing || !existing.firstName) payload.firstName = cleanFirst || cleanBusiness;
+    if (cleanFirst && (!existing || !existing.lastName)) payload.lastName = `(${cleanBusiness})`;
+    if (!existing || !existing.companyName) payload.companyName = cleanBusiness;
+    // Never restate where a known contact came from. That history is not ours to rewrite.
+    if (!existing || !existing.source) payload.source = sourceLabel;
+
     const resp = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.GHL_PIT}`,
-        Version: '2021-07-28',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        locationId: process.env.GHL_LOCATION_ID,
-        firstName: cleanFirst || cleanBusiness,
-        lastName: cleanFirst ? `(${cleanBusiness})` : '',
-        companyName: cleanBusiness,
-        phone: cleanPhone,
-        tags: tagList,
-        source: sourceLabel,
-      }),
+      headers: ghlHeaders,
+      body: JSON.stringify(payload),
     });
     if (!resp.ok) {
       console.error('GHL upsert failed', resp.status, await resp.text());
@@ -53,26 +77,23 @@ module.exports = async (req, res) => {
 
     const data = await resp.json();
     const contactId = data && data.contact && data.contact.id;
-    const ghlHeaders = {
-      Authorization: `Bearer ${process.env.GHL_PIT}`,
-      Version: '2021-07-28',
-      'Content-Type': 'application/json',
-    };
 
     if (contactId) {
-      // Attach "what they do" so Devon has context before he replies
-      if (cleanTrade) {
-        try {
-          await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
-            method: 'POST',
-            headers: ghlHeaders,
-            body: JSON.stringify({
-              body: isContact ? `Website contact: ${cleanTrade}` : `Leak check request, what they do: ${cleanTrade}`,
-            }),
-          });
-        } catch (noteErr) {
-          console.error('note attach failed (lead still saved)', noteErr);
-        }
+      // Attach what they told us so Devon has context before he replies. This is also
+      // where the business name survives on a known contact, whose own company name we
+      // leave alone — the note keeps the submission whole even when the record wins.
+      try {
+        const heading = isContact ? 'Website contact' : `Leak check request (${cleanNiche})`;
+        const lines = [`${heading}: ${cleanBusiness}`];
+        if (cleanFirst) lines.push(`Name given: ${cleanFirst}`);
+        if (cleanTrade) lines.push(`What they do and need: ${cleanTrade}`);
+        await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
+          method: 'POST',
+          headers: ghlHeaders,
+          body: JSON.stringify({ body: lines.join('\n') }),
+        });
+      } catch (noteErr) {
+        console.error('note attach failed (lead still saved)', noteErr);
       }
 
       // Instant acknowledgement text. The site promises a fast response, so this is the product demonstrating itself.
