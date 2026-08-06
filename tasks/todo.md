@@ -512,3 +512,28 @@ real lead who was previously a prospect. It also means there is no safe way to
 test the form: a made-up number texts a stranger, and a known number damages a
 record. Worth fixing before the next test — read the contact first and only
 write fields that are empty, or stop sending `source` on an existing match.
+
+## Upsert no longer overwrites known contacts (2026-08-06)
+
+Shipped `/contacts/search/duplicate` lookup before the upsert. Existing record
+wins: only blank fields are filled, `source` is never restated, tags stay
+additive. Verified against the live API that the lookup matches `+1...`,
+`(212) 390-1416` and bare digits alike — GHL normalises the number, so the guard
+holds however a visitor types it.
+
+Note now carries the full submission (business, name, need) on every submission,
+since the business name no longer always reaches `companyName`.
+
+### Verified end to end 2026-08-06 04:43 UTC
+Dummy submission via the live endpoint using `(727) 555-0134`, a NANP
+fiction-reserved number that reaches no one. Result:
+- Notification SMS to +1 813 999 0012 — **delivered**
+- Notification email "Website contact: Dummy Test Co" — sent
+- Contact created with correct name, company, source, tag
+- Note written with all three fields
+
+- [x] Deploy and verify (closes the open item from the previous section)
+
+### Left behind
+- [ ] Dummy contact `kdHe1eR12kJKJSkcx9DA` ("Test (Dummy Test Co)") is still in
+      the CRM. Delete once the result has been seen.
