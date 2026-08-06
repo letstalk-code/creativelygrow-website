@@ -548,11 +548,11 @@ send without an explicit sender inherits it.
       notification send. Verified on the sent record: `from` now reads
       `Creatively Grow <letstalk@creativelygrow.com>`, provider mailgun.
 
-### Still open — needs an agency-scoped token
-- [ ] Sub-account `xwdd…` business profile still reads
-      `talktous@labiffilmhouse.com` / `labiffilmhouse.com`. Should be
-      `letstalk@creativelygrow.com` / `creativelygrow.com`. **Every** email this
-      location sends without an explicit sender still inherits the Labif brand —
-      workflow emails, campaigns, manual sends from Conversations.
-      `PUT /locations/{id}` with the location PIT returns 401 (not authorized for
-      this scope). Fix in the UI: Settings → Business Profile.
+### Closed
+- [x] Sub-account `xwdd…` business profile corrected by Devon in the UI on
+      2026-08-06 — now `letstalk@creativelygrow.com` / `Creativelygrow.com`,
+      verified via the API. The Labif values were left over from A2P
+      verification. Every email this location sends without an explicit sender
+      now carries the Creatively Grow brand, not just the lead alert.
+      Note for future work: `PUT /locations/{id}` with the location PIT returns
+      401 — sub-account profile edits need an agency-scoped token or the UI.
