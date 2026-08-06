@@ -130,6 +130,9 @@ module.exports = async (req, res) => {
           {
             type: 'Email',
             contactId: notifyId,
+            // Pinned, because without it GHL falls back to the sub-account's business
+            // email. A Creatively Grow lead must never arrive from the Labif brand.
+            emailFrom: 'Creatively Grow <letstalk@creativelygrow.com>',
             subject: `${label}: ${cleanBusiness}`,
             html: `<p>${escapeHtml(summary)}</p>`,
           },
