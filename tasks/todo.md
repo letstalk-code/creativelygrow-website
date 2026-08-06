@@ -489,3 +489,26 @@ CRM/AI/landing-page positioning the rest of the signature states. Worth a look.
       by both the MCP tool and the REST API — explicit `null` is what clears a
       field. Their message history is untouched; the test auto-reply is still in
       the thread and cannot be unsent.
+
+### Review
+Shipped as `902831bb`, deployed to production (Ready, 12s). `/api/leak-check`
+answers on the live domain and still returns 400 to an empty body, so validation
+is intact.
+
+What changed: `api/leak-check.js` now sends Devon an SMS and an email after the
+lead's auto-reply, both addressed to `GHL_NOTIFY_CONTACT_ID`. Each send is
+independently wrapped and the block is skipped when the env var is unset, so a
+notification failure cannot cost a lead. Lead input is HTML-escaped before it
+enters the email body.
+
+Not verified end to end. Every live test needs a phone number, and each option
+has a real cost — see below.
+
+### Open — the form clobbers existing contacts
+`/contacts/upsert` matches on phone, so a submission from anyone already in the
+CRM overwrites their `firstName`, `lastName`, `companyName`, and `source`. That
+is what happened to +1 212 390 1416 during testing, and it will happen to any
+real lead who was previously a prospect. It also means there is no safe way to
+test the form: a made-up number texts a stranger, and a known number damages a
+record. Worth fixing before the next test — read the contact first and only
+write fields that are empty, or stop sending `source` on an existing match.
