@@ -116,9 +116,12 @@
     var panel = box.querySelector('.cg-modal-box');
     var lastFocus = null;
 
-    function open(e) {
+    function open(e, trigger) {
       if (e) e.preventDefault();
-      lastFocus = document.activeElement;
+      // Take the trigger we were handed rather than reading activeElement:
+      // Safari does not focus a link on click, so that would lose the return
+      // point and dump focus at the top of the page on close.
+      lastFocus = trigger || document.activeElement;
       box.hidden = false;
       document.body.classList.add('cg-modal-open');
       var first = box.querySelector('input');
@@ -137,7 +140,7 @@
     // including the cross-page links on How It Works and Brand Films.
     document.addEventListener('click', function (e) {
       var trigger = e.target.closest('a[href="#contact"], a[href="/#contact"]');
-      if (trigger) { open(e); return; }
+      if (trigger) { open(e, trigger); return; }
       if (e.target.closest('[data-modal-close]')) { e.preventDefault(); close(); }
     });
 
