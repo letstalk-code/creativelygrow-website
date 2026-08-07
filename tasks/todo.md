@@ -588,8 +588,12 @@ homepage is untouched — `index-editorial.html` is the staged replacement.
 
 ### Open
 - [ ] Decide whether to swap `index-editorial.html` in as the live homepage
-- [ ] The design gives the header no nav — only the footer links to the other
-      two pages. Worth deciding if that is enough wayfinding.
+- [x] Header nav added (Home / How It Works / Brand Films, current page in
+      orange). The handoff had footer-only links, which hid the other pages.
+- [x] The two client screenshots in the How It Works fan were never committed,
+      so production 404'd them and two of the three frames rendered empty.
+- [x] Cutout sprite retimed: 7s with a 30% opening hold and ~280ms per frame
+      read as a slideshow. Now 4s, movement starts at 18%, ~96ms per frame.
 - [ ] Contact form on the new homepage is still the handoff's non-functional
       divs; wire to `api/leak-check.js` before it goes live
 - [ ] Handoff asks for the logo as vector before shipping
