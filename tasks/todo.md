@@ -759,3 +759,27 @@ is now in the stylesheet.
       to smaller minimums)
 - [ ] Second intentional horizontal scroller in the condensed variant
 - [ ] Copy diff, character by character, against the reference files
+
+## Contact modal — 2026-08-07
+
+Every CTA now opens a dialog in place instead of scrolling the page to the form.
+On How It Works and Brand Films those links previously left the page entirely
+and dropped you at the bottom of the homepage; they now stay put.
+
+Triggers are matched by destination (`a[href="#contact"]`, `a[href="/#contact"]`),
+so any CTA added later is covered without touching the JS. The in-page contact
+band stays for anyone who scrolls to it.
+
+Verified on production, homepage and Brand Films: opens without moving the
+scroll position, focus lands on the first field, Tab is trapped, Escape and the
+scrim both close it, the page behind is locked, focus returns to the trigger,
+and a submission from the modal reached GHL with all four fields (test contact
+deleted).
+
+Trap worth remembering: reading `document.activeElement` to remember where focus
+came from is unreliable — Safari does not focus a link on click, so closing
+dumped focus at the top of the page. The click handler hands the trigger over
+explicitly instead.
+
+Three forms now share one submit handler: the homepage band, the condensed
+mobile band, and the modal.
