@@ -179,7 +179,7 @@ body.cg-ed .cg-bar { display: none; }
 --------------------------------------------------------------------------- */
 .cg-fan {
     position: relative;
-    aspect-ratio: 960 / 768;
+    aspect-ratio: 1200 / 656;
     /* No cap: the film fills its column. The 620px cap left it floating in
        nearly 500px of empty space and reading small. */
     width: 100%;
@@ -212,11 +212,18 @@ body.cg-ed .cg-bar { display: none; }
 }
 
 /* On a phone the film goes edge to edge - the gutter was the only thing left
-   making it small once the band had stacked. */
+   making it small once the band had stacked. The band's own gap is trimmed too,
+   so the copy sits close to the film rather than across a field of cream. */
 @media (max-width: 900px) {
+    body.cg-ed .cg-page-band {
+        gap: 14px !important;
+        padding-top: 34px !important;
+        padding-bottom: 34px !important;
+    }
     body.cg-ed .cg-page-band .cg-fan {
         margin-left: calc(-1 * clamp(18px, 2.8vw, 40px));
         margin-right: calc(-1 * clamp(18px, 2.8vw, 40px));
+        margin-bottom: -6px;
         width: auto;
     }
 }
