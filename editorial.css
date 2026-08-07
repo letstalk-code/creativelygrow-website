@@ -114,69 +114,31 @@ body.cg-ed .cg-nav-drop::before {
 /* ---------------------------------------------------------------------------
    The paper-cutout loop.
 
-   Ten frames is not many, so hard-cutting between them reads as a slideshow no
-   matter how fast it runs. Instead two stacked layers cross-fade: while one is
-   visible the other jumps forward two frames behind it at zero opacity, so the
-   cut is never seen and the eye reads one continuous movement. Opacity animates
-   smoothly; position is a separate stepped animation, because a sliding
-   background would splice two half-figures together mid-frame.
+   Deliberately hard cuts, one frame to the next, because that is what makes it
+   read as stop motion. Cross-fading the frames was tried and reverted: blending
+   two frames shows both at once, which looks like flashing rather than movement.
+
+   steps(1) on every keyframe is what produces the hold. A single steps(10)
+   across the whole animation gives even timing and the smile flashes past. With
+   percentage background-position, plain steps(n) lands between frames and
+   splices two half-figures together, hence the explicit per-frame keyframes.
 
    Frame 0 holds briefly, the reaction runs, then the smile is held.
 --------------------------------------------------------------------------- */
-.cg-cutout { position: relative; max-width: 384px; margin-left: auto; margin-right: auto; }
-.cg-cutout > i {
-    position: absolute; inset: 0; display: block;
-    background-image: var(--sprite);
-    background-size: 1000% 100%;
-    background-repeat: no-repeat;
-}
-.cg-fA { animation: cg-opA 4s linear infinite, cg-posA 4s steps(1) infinite; }
-.cg-fB { animation: cg-opB 4s linear infinite, cg-posB 4s steps(1) infinite; }
-.cg-cutout--delay > i { animation-delay: 0.8s, 0.8s; }
+.cg-cutout { max-width: 384px; margin-left: auto; margin-right: auto; }
 
-@keyframes cg-opA {
-  0% { opacity: 1; }
-  15% { opacity: 1; }
-  18.8889% { opacity: 0; }
-  22.7778% { opacity: 1; }
-  26.6667% { opacity: 0; }
-  30.5556% { opacity: 1; }
-  34.4444% { opacity: 0; }
-  38.3333% { opacity: 1; }
-  42.2222% { opacity: 0; }
-  46.1111% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 0; }
-}
-@keyframes cg-opB {
-  0% { opacity: 0; }
-  15% { opacity: 0; }
-  18.8889% { opacity: 1; }
-  22.7778% { opacity: 0; }
-  26.6667% { opacity: 1; }
-  30.5556% { opacity: 0; }
-  34.4444% { opacity: 1; }
-  38.3333% { opacity: 0; }
-  42.2222% { opacity: 1; }
-  46.1111% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 1; }
-}
-@keyframes cg-posA {
-  0% { background-position-x: 0%; }
-  18.8889% { background-position-x: 22.2222%; }
-  26.6667% { background-position-x: 44.4444%; }
-  34.4444% { background-position-x: 66.6667%; }
-  42.2222% { background-position-x: 88.8889%; }
-  100% { background-position-x: 88.8889%; }
-}
-@keyframes cg-posB {
-  0% { background-position-x: 11.1111%; }
-  22.7778% { background-position-x: 33.3333%; }
-  30.5556% { background-position-x: 55.5556%; }
-  38.3333% { background-position-x: 77.7778%; }
-  46.1111% { background-position-x: 100%; }
-  100% { background-position-x: 100%; }
+@keyframes cg-flip {
+    0%    { background-position-x: 0%;       animation-timing-function: steps(1); }
+    18%   { background-position-x: 11.1111%; animation-timing-function: steps(1); }
+    20.4% { background-position-x: 22.2222%; animation-timing-function: steps(1); }
+    22.8% { background-position-x: 33.3333%; animation-timing-function: steps(1); }
+    25.2% { background-position-x: 44.4444%; animation-timing-function: steps(1); }
+    27.6% { background-position-x: 55.5556%; animation-timing-function: steps(1); }
+    30%   { background-position-x: 66.6667%; animation-timing-function: steps(1); }
+    32.4% { background-position-x: 77.7778%; animation-timing-function: steps(1); }
+    34.8% { background-position-x: 88.8889%; animation-timing-function: steps(1); }
+    37.2% { background-position-x: 100%;     animation-timing-function: steps(1); }
+    100%  { background-position-x: 100%; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -204,15 +166,7 @@ body.cg-ed .cg-nav-drop::before {
 .cg-fan.is-in:hover .cg-fan-a { transform: rotate(-9deg) translateX(-2%); }
 .cg-fan.is-in:hover .cg-fan-c { transform: rotate(8deg) translateX(2%); }
 .cg-fan.is-in:hover .cg-fan-b { transform: translateX(-50%) translateY(-6px); }
-/* The showcase film was composited on the old site's dark green backdrop, which
-   fights the cream ground. Desaturating drops the green to a neutral dark that
-   reads as the ink used elsewhere, and matches the handoff's own art direction
-   ("no colour anywhere in the image so orange stays the only voice"). This is a
-   holding fix: the real answer is a re-render without the background. */
-.cg-fan-video {
-    background: var(--ink);
-    filter: saturate(0.12) contrast(1.06) brightness(0.94);
-}
+.cg-fan-video { background: var(--ink); }
 
 /* Contact form. Focus state is the brand standard from the handoff: the
    border is replaced by a 2px orange outline. */
@@ -311,8 +265,7 @@ body.cg-ed .cg-success { padding: 8px 0; }
         animation: none !important;
         transition: none !important;
     }
-    .cg-fA { opacity: 0 !important; }
-    .cg-fB { opacity: 1 !important; background-position-x: 100% !important; }
+    .cg-cutout { background-position-x: 100% !important; }
     .cg-fan-a, .cg-fan-b, .cg-fan-c, .cg-rise { opacity: 1 !important; }
     .cg-fan-a { transform: rotate(-7deg) !important; }
     .cg-fan-c { transform: rotate(6deg) !important; }
