@@ -104,9 +104,13 @@
     var form = document.getElementById('leakForm');
     if (!form) return;
     var success = document.getElementById('leakSuccess');
+    var sending = false;
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      // A disabled button stops a second click, but not a second submit event
+      // from an Enter-key race. One lead should never write two notes.
+      if (sending) return;
       var btn = form.querySelector('button[type="submit"]');
       var label = btn.textContent;
 
@@ -128,6 +132,7 @@
         return;
       }
 
+      sending = true;
       btn.disabled = true;
       btn.textContent = 'Sending…';
 
@@ -140,6 +145,7 @@
         form.hidden = true;
         if (success) success.hidden = false;
       }).catch(function () {
+        sending = false;
         btn.disabled = false;
         btn.textContent = label;
         window.alert('Something hiccuped. Call or text us instead: (727) 270-8422');
