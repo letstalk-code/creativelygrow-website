@@ -730,14 +730,29 @@ Done and verified live at 360px:
 - Bottom bar clears `env(safe-area-inset-bottom)`, root reserves 76px, tap
   targets >=44px, `:active` states added since touch has no hover.
 
-### Not done — needs a decision
-The prototype's remaining condensations use SHORTER COPY, not just tighter CSS.
-The customer-path rows collapse to one line each ("They search — Google, the
-map, social.") where the desktop DOM has a full h3 plus paragraph. Matching that
-means mobile-only markup carrying the short strings with the desktop version
-hidden, which puts both copies in the DOM. Worth Devon's call before doing it.
-Page is 10,051px tall on a phone; the hero change took roughly 690px off it, and
-the rest of the length is in these copy-level sections.
+### Whole homepage done 2026-08-07
+Bands 5-13 are forked: the condensed markup lives in a `.cg-m` block shown only
+below 900px, and the desktop bands it replaces carry `.cg-d` and are hidden
+there. This was unavoidable - the condensed variant genuinely uses shorter copy.
+
+NOT duplicated: header, nav, hero, chips, bottom bar. Those stay one set of
+markup restyled by the mobile rules, so the page still has exactly one h1 and
+one header. Verified live: h1 count 1.
+
+The four controls the condensed design uses to shorten the page are wired and
+verified on production: crew/AI monthly copy, launch/monthly package lists, the
+map expander, and the objections accordion (one row open at a time).
+
+Mobile contact form is real and posts to the same endpoint. The submit handler
+is shared by both forms rather than duplicated. Verified end to end: contact
+created in GHL with all four fields, then deleted.
+
+**Phone page height: 10,051px -> 5,079px.**
+
+Trap worth remembering: several prototype blocks set `display` inline, which
+outranks the `[hidden]` attribute, so collapsed panels rendered open (both
+package lists showed at once). `body.cg-ed [hidden] { display: none !important }`
+is now in the stylesheet.
 
 ### Checklist items still to audit against the new spec
 - [ ] Brand Films h1 82px on mobile, How It Works "90" 104px (currently clamped
