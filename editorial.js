@@ -101,9 +101,14 @@
   // Same endpoint and payload the previous homepage used, so leads keep
   // landing in GHL exactly as before.
   function contactForm() {
-    var form = document.getElementById('leakForm');
+    wireForm('leakForm', 'leakSuccess', 'lf-');
+    wireForm('leakFormM', 'leakSuccessM', 'm-lf-');
+  }
+
+  function wireForm(formId, successId, prefix) {
+    var form = document.getElementById(formId);
     if (!form) return;
-    var success = document.getElementById('leakSuccess');
+    var success = document.getElementById(successId);
     var sending = false;
 
     form.addEventListener('submit', function (e) {
@@ -115,10 +120,10 @@
       var label = btn.textContent;
 
       var payload = {
-        business: document.getElementById('lf-business').value.trim(),
-        firstName: document.getElementById('lf-name').value.trim(),
-        trade: document.getElementById('lf-trade').value.trim(),
-        phone: document.getElementById('lf-phone').value.trim(),
+        business: document.getElementById(prefix + 'business').value.trim(),
+        firstName: document.getElementById(prefix + 'name').value.trim(),
+        trade: document.getElementById(prefix + 'trade').value.trim(),
+        phone: document.getElementById(prefix + 'phone').value.trim(),
         niche: 'contact'
       };
 
@@ -181,7 +186,78 @@
     });
   }
 
-  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); }
+  // ---- condensed mobile controls -----------------------------------------
+  // The condensed bands collapse long content behind toggles. Each control
+  // shows one of a pair, or opens one accordion row at a time.
+  function condensed() {
+    var root = document.querySelector('.cg-m');
+    if (!root) return;
+
+    function swap(showSel, hideSel, onBtn, offBtn) {
+      var show = root.querySelector(showSel), hide = root.querySelector(hideSel);
+      if (show) show.hidden = false;
+      if (hide) hide.hidden = true;
+      if (onBtn) onBtn.style.background = 'rgba(20,16,12,0.14)';
+      if (offBtn) offBtn.style.background = 'transparent';
+    }
+
+    root.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-act], [data-obj]');
+      if (!btn || !root.contains(btn)) return;
+      var act = btn.getAttribute('data-act');
+
+      if (act === 'pickCrew' || act === 'pickAi') {
+        var crew = root.querySelector('[data-act="pickCrew"]');
+        var ai = root.querySelector('[data-act="pickAi"]');
+        var toCrew = act === 'pickCrew';
+        swap(toCrew ? '.cg-m-crew' : '.cg-m-ai',
+             toCrew ? '.cg-m-ai' : '.cg-m-crew',
+             toCrew ? crew : ai, toCrew ? ai : crew);
+        return;
+      }
+
+      if (act === 'pickLaunch' || act === 'pickMonthly') {
+        var toLaunch = act === 'pickLaunch';
+        var l = root.querySelector('.cg-m-pkg-launch');
+        var m = root.querySelector('.cg-m-pkg-monthly');
+        if (l) l.hidden = !toLaunch;
+        if (m) m.hidden = toLaunch;
+        var lb = root.querySelector('[data-act="pickLaunch"]');
+        var mb = root.querySelector('[data-act="pickMonthly"]');
+        if (lb) lb.style.background = toLaunch ? 'rgba(239,121,56,0.16)' : '#f9f8eb';
+        if (mb) mb.style.background = toLaunch ? '#f9f8eb' : 'rgba(239,121,56,0.16)';
+        return;
+      }
+
+      if (act === 'toggleSeo') {
+        var panel = root.querySelector('.cg-m-seo');
+        if (!panel) return;
+        panel.hidden = !panel.hidden;
+        var sign = btn.querySelector('span:last-child') || btn;
+        sign.textContent = panel.hidden ? '+' : '\u2212';
+        return;
+      }
+
+      if (btn.hasAttribute('data-obj')) {
+        var rows = root.querySelectorAll('[data-obj]');
+        var answers = root.querySelectorAll('.cg-m-a');
+        var idx = Number(btn.getAttribute('data-obj'));
+        var wasOpen = answers[idx] && !answers[idx].hidden;
+        Array.prototype.forEach.call(answers, function (a, i) {
+          a.hidden = true;
+          var s = rows[i] && rows[i].querySelector('span:last-child');
+          if (s) s.textContent = '+';
+        });
+        if (!wasOpen && answers[idx]) {
+          answers[idx].hidden = false;
+          var s2 = btn.querySelector('span:last-child');
+          if (s2) s2.textContent = '\u2212';
+        }
+      }
+    });
+  }
+
+  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); condensed(); }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

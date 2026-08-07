@@ -16,6 +16,10 @@
 
 * { box-sizing: border-box; }
 
+/* The prototype sets display inline on several blocks, which outranks the
+   [hidden] attribute's UA rule and left collapsed panels visible. */
+body.cg-ed [hidden] { display: none !important; }
+
 body.cg-ed {
     margin: 0;
     background: var(--cream);
@@ -110,6 +114,13 @@ body.cg-ed .cg-nav-item:focus-within .cg-nav-drop {
 body.cg-ed .cg-nav-drop::before {
     content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px;
 }
+
+/* The condensed mobile bands. Hidden on desktop; below 900px they replace the
+   desktop bands, which carry .cg-d. The header, hero, chips and bottom bar are
+   NOT duplicated - those are the same markup restyled by the rules below. Only
+   the bands whose copy is genuinely shorter in the condensed variant are
+   forked, because no amount of CSS shortens a sentence. */
+body.cg-ed .cg-m { display: none; }
 
 /* Hamburger + sticky action bar — phone only, per the mobile designs.
    Both are hidden on desktop, where the centred menu does the job. */
@@ -352,6 +363,9 @@ body.cg-ed .cg-success { padding: 8px 0; }
         align-items: flex-start !important;
         gap: 6px !important;
     }
+
+    body.cg-ed .cg-m { display: block; }
+    body.cg-ed .cg-d { display: none !important; }
 
     /* Hero, condensed variant. One 500px stage instead of a 1,100px stack:
        the headline sits over the orange block, the figure behind it, and the
