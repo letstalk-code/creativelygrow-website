@@ -286,8 +286,8 @@ body.cg-ed .cg-success { padding: 8px 0; }
        to the bottom, so a cutout taller than the column does not clip - it
        escapes upwards over the copy above. Cap the figure and give the columns
        room for it rather than letting it climb into the button. */
-    body.cg-ed .cg-cutout { max-width: 260px; }
-    body.cg-ed .cg-hero-figure { min-height: 430px !important; }
+    body.cg-ed .cg-cutout { max-width: 270px; }
+    body.cg-ed .cg-hero-figure { min-height: 620px !important; }
     body.cg-ed [style*="min-height:420px"] { min-height: 470px !important; }
 
 
@@ -335,14 +335,18 @@ body.cg-ed .cg-success { padding: 8px 0; }
 }
 
 @media (max-width: 620px) {
-    body.cg-ed .cg-cutout { max-width: 218px; }
-    body.cg-ed .cg-hero-figure { min-height: 380px !important; }
+    body.cg-ed .cg-cutout { max-width: 245px; }
+    body.cg-ed .cg-hero-figure { min-height: 560px !important; }
     body.cg-ed [style*="min-height:420px"] { min-height: 420px !important; }
     /* The reel stays two-up; one-up made the page endless. */
     body.cg-ed .cg-cols4 { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
-    /* The chips strip wraps rather than scrolling off the edge. */
+    /* Wrapped, the chips need a horizontal rule too or the rows read as loose
+       text. Right plus bottom on each gives the boxed grid in the design. */
     body.cg-ed .cg-chips { flex-wrap: wrap !important; }
-    body.cg-ed .cg-chips > span { border-right: 0 !important; }
+    body.cg-ed .cg-chips > span {
+        border-right: 1px solid rgba(20, 16, 12, 0.15);
+        border-bottom: 1px solid rgba(20, 16, 12, 0.15);
+    }
 }
 
 /* Respect the system setting: hold the last frame, drop every motion. */
