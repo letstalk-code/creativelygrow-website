@@ -611,3 +611,36 @@ homepage is untouched — `index-editorial.html` is the staged replacement.
       divs; wire to `api/leak-check.js` before it goes live
 - [ ] Handoff asks for the logo as vector before shipping
 - [ ] Landing pages (/epoxy, /pool-cage) still use the old dark styling
+
+## Editorial polish pass — 2026-07-29 (second round)
+
+- [x] Logo links home on all three pages
+- [x] Menu lists only pages you are not on. Home → How It Works + Brand Films;
+      How It Works → Home + Brand Films; Brand Films → Home + How It Works
+- [x] Header given a stacking order; the hero block had been painting over the
+      dropdown and swallowing it
+- [x] Hero figure capped (was 731px tall, colliding with the header). It was
+      never distorted — the box matches the sprite ratio 344/576 exactly — just
+      far too large
+- [x] Cutout smoothness, third pass: two cross-fading layers instead of one
+      stepped layer. Ten frames hard-cut reads as a slideshow at any speed
+
+### The showcase film's green background — open decision
+It was composited on the old site's dark green backdrop with glow and bokeh.
+For now it is desaturated to a neutral dark, which kills the green and matches
+the handoff's own art direction ("no colour anywhere in the image so orange
+stays the only voice"). Options for a real fix, best first:
+
+1. Re-render from the source project without the backdrop, exported with alpha.
+   H.264 MP4 cannot carry alpha, so it ships as WebM/VP9 for Chrome, Firefox
+   and Edge plus HEVC-with-alpha MOV for Safari, as two <source> tags.
+2. Replace it with a plain screen recording of one site scrolling on white or
+   on the cream ground. The frame already sits in a fan of three, so the film's
+   own fan of three is redundant anyway.
+3. Shoot a third static screenshot and drop the video from this slot entirely,
+   matching the two frames beside it.
+
+Rejected: cropping to the centre panel. Tried it — the composition animates and
+the green returns at 3 of 4 sample points. Also rejected: browser chroma key.
+The backdrop is textured with bokeh and glow, not a flat key colour, so it
+would leave halos and eat the dark parts of the screenshots.
