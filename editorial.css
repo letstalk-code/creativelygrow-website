@@ -142,31 +142,34 @@ body.cg-ed .cg-nav-drop::before {
 }
 
 /* ---------------------------------------------------------------------------
-   "Step Two: The Page" — the fanned landing pages on How It Works.
+   "Step Two: The Page" — the showcase film.
 
-   The three frames start stacked square and settle into their fan when the
-   band scrolls into view, so the composition assembles itself rather than
-   arriving pre-built. Rotations match the handoff exactly once settled.
+   The film is generated on the same cream as the page, so it has no edge of its
+   own; it simply sits on the paper. The mask feathers the outermost few percent
+   so the small tone difference between the render and the page never draws a
+   rectangle. No frame, border or shadow here on purpose - the handoff's fan of
+   three static screenshots was replaced because the film already is a fan of
+   three, and stacking one inside the other read as clutter.
 --------------------------------------------------------------------------- */
-.cg-js .cg-fan-a, .cg-js .cg-fan-b, .cg-js .cg-fan-c {
-    opacity: 0;
-    transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform, opacity;
+.cg-fan {
+    position: relative;
+    aspect-ratio: 960 / 768;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
 }
-.cg-js .cg-fan-a { transform: rotate(0deg) translate(14%, 6%) scale(0.94); }
-.cg-js .cg-fan-c { transform: rotate(0deg) translate(-14%, 6%) scale(0.94); }
-.cg-js .cg-fan-b { transform: translateX(-50%) translateY(22px) scale(0.96); }
-
-.cg-fan.is-in .cg-fan-a { opacity: 1; transform: rotate(-7deg); transition-delay: 0.12s; }
-.cg-fan.is-in .cg-fan-c { opacity: 1; transform: rotate(6deg); transition-delay: 0.2s; }
-.cg-fan.is-in .cg-fan-b { opacity: 1; transform: translateX(-50%); }
-
-/* The centre frame is the live one; lift the whole stack a touch on hover. */
-.cg-fan-a, .cg-fan-c { cursor: default; }
-.cg-fan.is-in:hover .cg-fan-a { transform: rotate(-9deg) translateX(-2%); }
-.cg-fan.is-in:hover .cg-fan-c { transform: rotate(8deg) translateX(2%); }
-.cg-fan.is-in:hover .cg-fan-b { transform: translateX(-50%) translateY(-6px); }
-.cg-fan-video { background: var(--ink); }
+.cg-fan-video {
+    width: 100%; height: 100%; display: block;
+    object-fit: contain;
+    -webkit-mask-image:
+        linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
+        linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+        linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
+        linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+    mask-composite: intersect;
+}
 
 /* Contact form. Focus state is the brand standard from the handoff: the
    border is replaced by a 2px orange outline. */
@@ -230,15 +233,14 @@ body.cg-ed .cg-success { padding: 8px 0; }
     /* Hairlines that divided columns now divide rows. */
     body.cg-ed .cg-cols > div[style*="border-right"] { border-right: 0 !important; }
 
-    /* The hero figure sits under the headline instead of beside it. */
-    body.cg-ed .cg-hero-figure { min-height: 460px !important; }
+    /* Stacked, the figure sits under the headline. Its column aligns children
+       to the bottom, so a cutout taller than the column does not clip - it
+       escapes upwards over the copy above. Cap the figure and give the columns
+       room for it rather than letting it climb into the button. */
+    body.cg-ed .cg-cutout { max-width: 260px; }
+    body.cg-ed .cg-hero-figure { min-height: 500px !important; }
+    body.cg-ed [style*="min-height:420px"] { min-height: 470px !important; }
 
-    /* The fan becomes the single live frame; the flanking stills would be
-       unreadable at this width. */
-    .cg-fan { height: 300px !important; }
-    .cg-fan-a, .cg-fan-c { display: none; }
-    .cg-fan-b { width: 92% !important; }
-    .cg-fan.is-in .cg-fan-b { transform: translateX(-50%); }
 
     /* Vertical spine labels cost too much width on a phone. */
     body.cg-ed [style*="writing-mode:vertical-rl"] {
@@ -253,6 +255,9 @@ body.cg-ed .cg-success { padding: 8px 0; }
 }
 
 @media (max-width: 620px) {
+    body.cg-ed .cg-cutout { max-width: 230px; }
+    body.cg-ed .cg-hero-figure { min-height: 440px !important; }
+    body.cg-ed [style*="min-height:420px"] { min-height: 420px !important; }
     body.cg-ed .cg-cols4 { grid-template-columns: 1fr !important; }
     /* The chips strip wraps rather than scrolling off the edge. */
     body.cg-ed .cg-chips { flex-wrap: wrap !important; }
@@ -266,9 +271,6 @@ body.cg-ed .cg-success { padding: 8px 0; }
         transition: none !important;
     }
     .cg-cutout { background-position-x: 100% !important; }
-    .cg-fan-a, .cg-fan-b, .cg-fan-c, .cg-rise { opacity: 1 !important; }
-    .cg-fan-a { transform: rotate(-7deg) !important; }
-    .cg-fan-c { transform: rotate(6deg) !important; }
-    .cg-fan-b { transform: translateX(-50%) !important; }
+    .cg-rise { opacity: 1 !important; }
     .cg-rise { transform: none !important; }
 }
