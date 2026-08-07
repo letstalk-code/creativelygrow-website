@@ -287,16 +287,47 @@ body.cg-ed .cg-success { padding: 8px 0; }
        escapes upwards over the copy above. Cap the figure and give the columns
        room for it rather than letting it climb into the button. */
     body.cg-ed .cg-cutout { max-width: 260px; }
-    body.cg-ed .cg-hero-figure { min-height: 500px !important; }
+    body.cg-ed .cg-hero-figure { min-height: 430px !important; }
     body.cg-ed [style*="min-height:420px"] { min-height: 470px !important; }
 
 
-    /* Vertical spine labels cost too much width on a phone. */
+    /* The vertical spine becomes a full-width orange bar above its band, as
+       drawn. Turning the label horizontal is not enough on its own - the band
+       is a flex row, so the spine has to stop being a column first. */
     body.cg-ed [style*="writing-mode:vertical-rl"] {
         writing-mode: horizontal-tb !important;
         transform: none !important;
     }
-    body.cg-ed [style*="display:flex"][style*="background:#14100c"] { flex-wrap: wrap; }
+    body.cg-ed .cg-spine-band { flex-direction: column; }
+    body.cg-ed .cg-spine {
+        justify-content: flex-start !important;
+        padding: 13px clamp(18px, 2.8vw, 40px) !important;
+    }
+    body.cg-ed .cg-spine-band > div:last-child { padding: 26px clamp(18px, 2.8vw, 40px) !important; }
+
+    /* Under the player: the counter sits above the title, both left aligned. */
+    body.cg-ed .cg-nowcap {
+        flex-direction: column-reverse;
+        align-items: flex-start !important;
+        gap: 6px !important;
+    }
+
+    /* Hero: the figure belongs directly under the headline, ahead of the body
+       copy. display:contents lets the left column's children reorder against
+       the figure; they carry their own gutters once the column stops boxing
+       them. */
+    body.cg-ed .cg-hero-band { display: flex !important; flex-direction: column; }
+    /* !important: the column carries display:flex inline, which would win. */
+    body.cg-ed .cg-hero-left { display: contents !important; }
+    body.cg-ed .cg-hero-left > h1 {
+        order: 1;
+        padding: 40px clamp(18px, 2.8vw, 40px) 26px;
+    }
+    body.cg-ed .cg-hero-figure { order: 2; }
+    body.cg-ed .cg-hero-left > div {
+        order: 3;
+        padding: 30px clamp(18px, 2.8vw, 40px) 40px;
+    }
 
     /* Decorative corner triangles overflow small panels. */
     body.cg-ed [style*="border-bottom:120px solid"],
@@ -304,8 +335,8 @@ body.cg-ed .cg-success { padding: 8px 0; }
 }
 
 @media (max-width: 620px) {
-    body.cg-ed .cg-cutout { max-width: 230px; }
-    body.cg-ed .cg-hero-figure { min-height: 440px !important; }
+    body.cg-ed .cg-cutout { max-width: 218px; }
+    body.cg-ed .cg-hero-figure { min-height: 380px !important; }
     body.cg-ed [style*="min-height:420px"] { min-height: 420px !important; }
     /* The reel stays two-up; one-up made the page endless. */
     body.cg-ed .cg-cols4 { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
