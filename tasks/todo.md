@@ -651,3 +651,40 @@ Rejected: cropping to the centre panel. Tried it — the composition animates an
 the green returns at 3 of 4 sample points. Also rejected: browser chroma key.
 The backdrop is textured with bokeh and glow, not a flat key colour, so it
 would leave halos and eat the dark parts of the screenshots.
+
+## New showcase film + mobile pass — 2026-08-07
+
+The green is solved at the source. Devon regenerated the film on cream, so it
+needs no filter and no frame — it sits directly on the paper, the same way the
+green one sat on the old dark page.
+
+Two fixes to the delivered file, both baked into `assets/showcase-cream.mp4`:
+- Cropped the bottom quarter. The model invented a dark reflective floor that
+  would have drawn a black band across the cream. It starts at y=772 in every
+  frame, so it cropped cleanly to 960x768.
+- Lifted each channel so the generated cream (#f1efdd) lands on the page's
+  #f9f8eb. A CSS mask feathers the outer few percent so no rectangle shows.
+- 7.2MB -> 0.5MB.
+
+The handoff's fan of three static screenshots is gone from that slot: the film
+is already a fan of three, and one inside the other read as clutter.
+
+### Mobile
+Real bug found and fixed: the hero figure column aligns children to the bottom,
+so a cutout taller than the column did not clip — it climbed 147px up and sat
+on top of the primary CTA. Cutouts are now capped per breakpoint with room in
+the columns. Verified no horizontal overflow on any page at 375px.
+
+### Tooling note, to save the next session an hour
+The in-app browser pane does not run intersection logic when hidden. That means
+IntersectionObserver never fires, `loading="lazy"` images never load, video
+never advances, and screenshots come back blank or stale. All of it looks like
+broken code and is not. Headless Chrome renders correctly — verify there.
+Conversely headless at a phone width lays out at desktop width and crops, so
+text looks cut off when it is not. Use the pane's JS for measurements, headless
+for pictures, and trust neither on its own.
+
+### Open
+- [ ] `our-work.html` is an orphan from the old site, still crawlable and still
+      referencing the old green `portfolio-showcase.mp4`. Decide: delete, or
+      redirect to /brand-films.
