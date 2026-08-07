@@ -50,6 +50,19 @@ body.cg-ed a[href="#contact"][style*="border:2px solid"]:hover {
     box-shadow: none !important;
 }
 
+/* Header navigation. Not in the handoff, which linked the other pages from the
+   footer only; that leaves a first-time visitor no way across. Same micro-label
+   treatment as the rest of the bar, with the current page marked in orange. */
+body.cg-ed .cg-nav { display: flex; align-items: center; gap: clamp(14px, 1.7vw, 28px); }
+body.cg-ed .cg-nav a {
+    font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.16em; font-size: 11px; color: var(--ink); white-space: nowrap;
+    padding-bottom: 3px; border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+body.cg-ed .cg-nav a:hover { color: var(--orange); border-bottom-color: var(--orange); }
+body.cg-ed .cg-nav a[aria-current="page"] { color: var(--orange); border-bottom-color: var(--orange); }
+
 /* ---------------------------------------------------------------------------
    The paper-cutout loop.
 
@@ -60,17 +73,18 @@ body.cg-ed a[href="#contact"][style*="border:2px solid"]:hover {
    and every frame stretches.
 --------------------------------------------------------------------------- */
 @keyframes cg-flip {
-    0%   { background-position-x: 0%;        animation-timing-function: steps(1); }
-    30%  { background-position-x: 11.1111%;  animation-timing-function: steps(1); }
-    34%  { background-position-x: 22.2222%;  animation-timing-function: steps(1); }
-    38%  { background-position-x: 33.3333%;  animation-timing-function: steps(1); }
-    42%  { background-position-x: 44.4444%;  animation-timing-function: steps(1); }
-    46%  { background-position-x: 55.5555%;  animation-timing-function: steps(1); }
-    50%  { background-position-x: 66.6666%;  animation-timing-function: steps(1); }
-    54%  { background-position-x: 77.7777%;  animation-timing-function: steps(1); }
-    58%  { background-position-x: 88.8888%;  animation-timing-function: steps(1); }
-    63%  { background-position-x: 100%;      animation-timing-function: steps(1); }
-    100% { background-position-x: 100%; }
+    0%    { background-position-x: 0%;       animation-timing-function: steps(1); }
+    18% { background-position-x: 11.1111%; animation-timing-function: steps(1); }
+    20.4% { background-position-x: 22.2222%; animation-timing-function: steps(1); }
+    22.8% { background-position-x: 33.3333%; animation-timing-function: steps(1); }
+    25.2% { background-position-x: 44.4444%; animation-timing-function: steps(1); }
+    27.6% { background-position-x: 55.5556%; animation-timing-function: steps(1); }
+    30% { background-position-x: 66.6667%; animation-timing-function: steps(1); }
+    32.4% { background-position-x: 77.7778%; animation-timing-function: steps(1); }
+    34.8% { background-position-x: 88.8889%; animation-timing-function: steps(1); }
+    37.2% { background-position-x: 100.0000%; animation-timing-function: steps(1); }
+    100%  { background-position-x: 100%; }
+}
 }
 
 /* ---------------------------------------------------------------------------
@@ -121,6 +135,10 @@ body.cg-ed a[href="#contact"][style*="border:2px solid"]:hover {
    the multi-column bands and unwinding the pieces that assume side-by-side.
 --------------------------------------------------------------------------- */
 @media (max-width: 900px) {
+    body.cg-ed .cg-head { flex-wrap: wrap; row-gap: 14px; justify-content: flex-start; }
+    body.cg-ed .cg-head-loc { display: none; }
+    body.cg-ed .cg-nav { order: 3; width: 100%; gap: 20px; }
+
     body.cg-ed .cg-cols { grid-template-columns: 1fr !important; }
     body.cg-ed .cg-cols4 { grid-template-columns: 1fr 1fr !important; }
 
