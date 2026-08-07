@@ -103,6 +103,55 @@
   function contactForm() {
     wireForm('leakForm', 'leakSuccess', 'lf-');
     wireForm('leakFormM', 'leakSuccessM', 'm-lf-');
+    wireForm('leakFormX', 'leakSuccessX', 'x-lf-');
+  }
+
+  // ---- contact modal ------------------------------------------------------
+  // Every CTA opens this rather than scrolling the page to the form. Sending
+  // someone thousands of pixels down the page to answer four questions is the
+  // thing this replaces.
+  function modal() {
+    var box = document.getElementById('cgModal');
+    if (!box) return;
+    var panel = box.querySelector('.cg-modal-box');
+    var lastFocus = null;
+
+    function open(e) {
+      if (e) e.preventDefault();
+      lastFocus = document.activeElement;
+      box.hidden = false;
+      document.body.classList.add('cg-modal-open');
+      var first = box.querySelector('input');
+      if (first) first.focus();
+    }
+
+    function close() {
+      if (box.hidden) return;
+      box.hidden = true;
+      document.body.classList.remove('cg-modal-open');
+      // Send focus back where it came from, or it lands at the top of the page.
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    // Any control pointing at the contact form opens the dialog instead,
+    // including the cross-page links on How It Works and Brand Films.
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest('a[href="#contact"], a[href="/#contact"]');
+      if (trigger) { open(e); return; }
+      if (e.target.closest('[data-modal-close]')) { e.preventDefault(); close(); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (box.hidden) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key !== 'Tab') return;
+      // Keep tabbing inside the dialog while it is open.
+      var focusable = panel.querySelectorAll('button, input, a[href], textarea, select');
+      if (!focusable.length) return;
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
   }
 
   function wireForm(formId, successId, prefix) {
@@ -280,7 +329,7 @@
     strip.appendChild(track);
   }
 
-  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); condensed(); marquee(); }
+  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); condensed(); marquee(); modal(); }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

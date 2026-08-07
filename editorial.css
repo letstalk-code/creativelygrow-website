@@ -221,6 +221,49 @@ body.cg-ed .cg-bar { display: none; }
     }
 }
 
+/* Contact modal. Structure keeps radius 0 per the design; only the button and
+   the inputs are allowed their pill and 8px. */
+body.cg-ed .cg-modal[hidden] { display: none !important; }
+body.cg-ed .cg-modal {
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+}
+body.cg-ed .cg-modal-scrim {
+    position: absolute; inset: 0;
+    background: rgba(20, 16, 12, 0.72);
+    backdrop-filter: blur(3px);
+    animation: cg-fade 0.18s ease;
+}
+body.cg-ed .cg-modal-box {
+    position: relative;
+    width: 100%; max-width: 460px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background: var(--ink);
+    border: 2px solid var(--orange);
+    padding: 26px 24px 24px;
+    animation: cg-pop 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+body.cg-ed .cg-modal-x {
+    position: absolute; top: 6px; right: 8px;
+    width: 44px; height: 44px;
+    background: none; border: 0; cursor: pointer;
+    color: var(--cream-dim); font-size: 30px; line-height: 1;
+}
+body.cg-ed .cg-modal-x:hover { color: var(--orange); }
+@keyframes cg-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cg-pop {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+}
+/* The page must not scroll behind the dialog. */
+body.cg-ed.cg-modal-open { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+    body.cg-ed .cg-modal-scrim, body.cg-ed .cg-modal-box { animation: none !important; }
+}
+
 /* Contact form. Focus state is the brand standard from the handoff: the
    border is replaced by a 2px orange outline. */
 body.cg-ed .cg-field {

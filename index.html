@@ -57,7 +57,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="editorial.css?v=13">
+<link rel="stylesheet" href="editorial.css?v=14">
 </head>
 <body class="cg-ed">
 <div style="background:#f9f8eb; max-width:1440px; margin:0 auto; border-left:1px solid rgba(20,16,12,0.1); border-right:1px solid rgba(20,16,12,0.1); overflow:hidden">
@@ -589,6 +589,30 @@
 
 </div>
 <div class="cg-bar"><a class="cg-bar-call" href="tel:+17272708422">Call Now</a><a class="cg-bar-cta" href="#contact">Tell My Story &nbsp;&rarr;</a></div>
-<script src="editorial.js?v=5"></script>
+<!-- Contact modal. Every CTA opens this instead of scrolling the page to the
+     form; the in-page contact band stays for anyone who scrolls there anyway. -->
+<div class="cg-modal" id="cgModal" hidden>
+  <div class="cg-modal-scrim" data-modal-close></div>
+  <div class="cg-modal-box" role="dialog" aria-modal="true" aria-labelledby="cgModalTitle">
+    <button type="button" class="cg-modal-x" data-modal-close aria-label="Close">&times;</button>
+    <span style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; font-size:11px; color:#ef7938">Let&#x27;s Talk</span>
+    <h2 id="cgModalTitle" style="margin-top:10px; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(26px,5.4vw,34px); line-height:0.95; color:#ef7938">Let&#x27;s build your growth system.</h2>
+    <p style="margin-top:12px; font-size:14px; line-height:1.6; color:#b8b8a8">Tell us what you do. We&#x27;ll show you where a brand story, campaign, and follow-up system could create the most momentum first. No pitch, no pressure. If we&#x27;re not the right fit, we&#x27;ll say so.</p>
+    <form id="leakFormX" novalidate style="margin-top:18px; display:flex; flex-direction:column; gap:11px">
+      <div style="display:flex; flex-direction:column; gap:5px"><label for="x-lf-business" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:10px; color:#b8b8a8">Business name</label><input class="cg-field" type="text" id="x-lf-business" name="business" required autocomplete="organization" placeholder="Your business name" style="height:46px; border:1px solid #2d3a2d; border-radius:8px; background:#0d140d"></div><div style="display:flex; flex-direction:column; gap:5px"><label for="x-lf-name" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:10px; color:#b8b8a8">First name</label><input class="cg-field" type="text" id="x-lf-name" name="firstName" required autocomplete="given-name" placeholder="First name" style="height:46px; border:1px solid #2d3a2d; border-radius:8px; background:#0d140d"></div><div style="display:flex; flex-direction:column; gap:5px"><label for="x-lf-trade" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:10px; color:#b8b8a8">What do you do, and what do you need?</label><input class="cg-field" type="text" id="x-lf-trade" name="trade" required autocomplete="off" placeholder="One line is plenty" style="height:64px; border:1px solid #2d3a2d; border-radius:8px; background:#0d140d"></div><div style="display:flex; flex-direction:column; gap:5px"><label for="x-lf-phone" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:10px; color:#b8b8a8">Mobile number</label><input class="cg-field" type="tel" id="x-lf-phone" name="phone" required autocomplete="tel" placeholder="(727) 555-0134" style="height:46px; border:1px solid #2d3a2d; border-radius:8px; background:#0d140d"></div>
+      <button type="submit" class="cg-submit" style="border:0; cursor:pointer; width:100%; text-align:center; background:#ef7938; color:#14100c; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:17px; padding:15px; border-radius:999px">Let&#x27;s Talk</button>
+      <div style="display:flex; flex-wrap:wrap; gap:6px 16px">
+        <span style="display:flex; gap:7px; font-size:12px; color:#b8b8a8"><span style="color:#ef7938">&#10003;</span>No spam, no endless follow-up</span>
+        <span style="display:flex; gap:7px; font-size:12px; color:#b8b8a8"><span style="color:#ef7938">&#10003;</span>A real reply from a real person</span>
+      </div>
+    </form>
+    <div id="leakSuccessX" class="cg-success" hidden style="margin-top:18px">
+      <h3 style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; font-size:22px; color:#ef7938; margin-bottom:8px">Got it. Watch your texts.</h3>
+      <p style="font-size:14px; color:#b8b8a8">We&#x27;ll reach out shortly. No spam, no endless follow-up. Just a real reply.</p>
+    </div>
+    <p style="margin-top:16px; font-size:13px; color:#b8b8a8">Rather just call? <a href="tel:+17272708422" style="color:#ef7938; font-weight:600">(727) 270-8422</a></p>
+  </div>
+</div>
+<script src="editorial.js?v=6"></script>
 </body>
 </html>
