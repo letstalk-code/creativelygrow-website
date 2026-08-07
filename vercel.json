@@ -5,6 +5,11 @@
       "source": "/what-we-do",
       "destination": "/#package",
       "permanent": true
+    },
+    {
+      "source": "/our-work",
+      "destination": "/brand-films",
+      "permanent": true
     }
   ]
 }
