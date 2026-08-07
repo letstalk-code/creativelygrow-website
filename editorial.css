@@ -242,7 +242,13 @@ body.cg-ed .cg-success { padding: 8px 0; }
 @media (max-width: 900px) {
     /* Hover cannot open a dropdown on touch, so the menu becomes a panel
        behind a hamburger, matching the mobile designs. */
-    body.cg-ed .cg-head { justify-content: space-between; }
+    body.cg-ed .cg-head {
+        position: sticky; top: 0; justify-content: space-between;
+        padding: 10px clamp(18px, 2.8vw, 40px) !important;
+        background: rgba(249, 248, 235, 0.94);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(20, 16, 12, 0.15);
+    }
 
     body.cg-ed .cg-burger {
         display: flex; flex-direction: column; justify-content: center; gap: 5px;
@@ -253,6 +259,8 @@ body.cg-ed .cg-success { padding: 8px 0; }
         display: block; height: 2px; width: 100%; background: var(--ink);
         transition: transform 0.25s ease, opacity 0.2s ease;
     }
+    /* Third bar is the accent, per the design. */
+    body.cg-ed .cg-burger > span:nth-child(3) { background: var(--orange); }
     body.cg-ed .cg-head.is-open .cg-burger > span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     body.cg-ed .cg-head.is-open .cg-burger > span:nth-child(2) { opacity: 0; }
     body.cg-ed .cg-head.is-open .cg-burger > span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -260,8 +268,8 @@ body.cg-ed .cg-success { padding: 8px 0; }
     body.cg-ed .cg-nav {
         position: absolute; left: 0; right: 0; top: 100%;
         transform: none; display: block;
-        background: var(--cream);
-        border-bottom: 2px solid var(--ink);
+        background: var(--ink);
+        border-bottom: 2px solid var(--orange);
         padding: 0 clamp(18px, 2.8vw, 40px);
         max-height: 0; overflow: hidden;
         transition: max-height 0.28s ease, padding 0.28s ease;
@@ -271,9 +279,11 @@ body.cg-ed .cg-success { padding: 8px 0; }
     body.cg-ed .cg-nav-item { display: block; }
     body.cg-ed .cg-caret { display: none; }
     body.cg-ed .cg-nav a {
-        padding: 16px 0; font-size: 13px; letter-spacing: 0.18em;
-        border-bottom: 1px solid rgba(20, 16, 12, 0.12);
+        padding: 13px 0; font-size: 13px; letter-spacing: 0.14em;
+        color: var(--cream);
+        border-bottom: 1px solid var(--forest-light);
     }
+    body.cg-ed .cg-nav a:hover, body.cg-ed .cg-nav a[aria-current="page"] { color: var(--orange); }
     body.cg-ed .cg-nav-drop {
         position: static; transform: none; opacity: 1; visibility: visible;
         pointer-events: auto; margin: 0; padding: 0;
@@ -291,14 +301,23 @@ body.cg-ed .cg-success { padding: 8px 0; }
     }
     body.cg-ed .cg-bar a {
         display: flex; align-items: center; justify-content: center;
-        padding: 15px 10px; text-align: center;
+        min-height: 44px;
+        padding: 15px 10px calc(15px + env(safe-area-inset-bottom));
+        text-align: center;
         font-family: 'Oswald', sans-serif; font-weight: 700;
         text-transform: uppercase; letter-spacing: 0.1em; font-size: 13px;
     }
     body.cg-ed .cg-bar-call { background: var(--ink); color: var(--cream); }
     body.cg-ed .cg-bar-cta { background: var(--orange); color: var(--ink); }
     /* Clear the bar so it never covers the last line of the footer. */
-    body.cg-ed { padding-bottom: 54px; }
+    body.cg-ed { padding-bottom: 76px; }
+
+    /* Touch has no hover, so presses need their own feedback. */
+    body.cg-ed a[href="#contact"]:active,
+    body.cg-ed .cg-bar a:active,
+    body.cg-ed .cg-submit:active,
+    body.cg-ed .cg-dl:active { opacity: 0.9; transform: scale(1.02); }
+    body.cg-ed a, body.cg-ed button { -webkit-tap-highlight-color: transparent; }
 
     body.cg-ed .cg-cols { grid-template-columns: 1fr !important; }
     body.cg-ed .cg-cols4 { grid-template-columns: 1fr 1fr !important; }
@@ -310,8 +329,6 @@ body.cg-ed .cg-success { padding: 8px 0; }
        to the bottom, so a cutout taller than the column does not clip - it
        escapes upwards over the copy above. Cap the figure and give the columns
        room for it rather than letting it climb into the button. */
-    body.cg-ed .cg-cutout { max-width: 270px; }
-    body.cg-ed .cg-hero-figure { min-height: 620px !important; }
     body.cg-ed [style*="min-height:420px"] { min-height: 470px !important; }
 
 
@@ -336,21 +353,65 @@ body.cg-ed .cg-success { padding: 8px 0; }
         gap: 6px !important;
     }
 
-    /* Hero: the figure belongs directly under the headline, ahead of the body
-       copy. display:contents lets the left column's children reorder against
-       the figure; they carry their own gutters once the column stops boxing
-       them. */
-    body.cg-ed .cg-hero-band { display: flex !important; flex-direction: column; }
+    /* Hero, condensed variant. One 500px stage instead of a 1,100px stack:
+       the headline sits over the orange block, the figure behind it, and the
+       lede and CTA ride a dark overlay across the bottom. Same DOM as desktop -
+       display:contents frees the left column's children to be placed. */
+    body.cg-ed .cg-hero-band {
+        display: block !important;
+        position: relative;
+        height: 500px;
+        overflow: hidden;
+    }
     /* !important: the column carries display:flex inline, which would win. */
     body.cg-ed .cg-hero-left { display: contents !important; }
+
     body.cg-ed .cg-hero-left > h1 {
-        order: 1;
-        padding: 40px clamp(18px, 2.8vw, 40px) 26px;
+        position: absolute; left: 20px; right: 20px; top: 30px; z-index: 2;
+        font-size: 50px !important; line-height: 0.86; padding: 0 !important;
+        /* The headline crosses both cream and orange; the glow keeps it legible
+           over the join without introducing a second type colour. */
+        text-shadow: 0 2px 12px rgba(249, 248, 235, 0.55);
     }
-    body.cg-ed .cg-hero-figure { order: 2; }
+    /* All three lines are ink here - the accent line is a desktop treatment. */
+    body.cg-ed .cg-hero-left > h1 span { color: var(--ink) !important; }
+    /* Desktop breaks "Get more / calls." across two lines; the condensed hero
+       keeps it on one, so the inner break is suppressed rather than the copy
+       being changed. */
+    body.cg-ed .cg-hero-left > h1 span br { display: none; }
+
+    body.cg-ed .cg-hero-figure {
+        position: absolute !important; inset: 0;
+        min-height: 0 !important;
+    }
+    body.cg-ed .cg-hero-figure > div:nth-child(1) { width: 66% !important; height: 50% !important; }
+    body.cg-ed .cg-hero-figure > div:nth-child(2) {
+        left: 4% !important; right: 4% !important;
+        top: 140px !important; bottom: 126px !important;
+    }
+    /* The nameplate is not in the condensed hero. */
+    body.cg-ed .cg-hero-figure > div:nth-child(3) { display: none !important; }
+    /* Height-driven here, so the figure fits the stage exactly. */
+    body.cg-ed .cg-cutout {
+        height: 100% !important; width: auto !important; max-width: none !important;
+    }
+
     body.cg-ed .cg-hero-left > div {
-        order: 3;
-        padding: 30px clamp(18px, 2.8vw, 40px) 40px;
+        position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+        background: rgba(20, 16, 12, 0.92);
+        backdrop-filter: blur(6px);
+        padding: 18px 20px 20px !important;
+        gap: 14px !important;
+    }
+    body.cg-ed .cg-hero-left > div > span:first-child { display: none !important; }
+    body.cg-ed .cg-hero-left > div > p:first-of-type {
+        font-size: 14px !important; line-height: 1.55 !important;
+        color: var(--cream) !important; max-width: none !important;
+    }
+    body.cg-ed .cg-hero-left > div > p:last-of-type { display: none !important; }
+    body.cg-ed .cg-hero-left > div > a[href="#contact"] {
+        align-self: stretch !important; text-align: center;
+        font-size: 16px !important; padding: 15px !important;
     }
 
     /* Decorative corner triangles overflow small panels. */
@@ -359,17 +420,23 @@ body.cg-ed .cg-success { padding: 8px 0; }
 }
 
 @media (max-width: 620px) {
-    body.cg-ed .cg-cutout { max-width: 245px; }
-    body.cg-ed .cg-hero-figure { min-height: 560px !important; }
     body.cg-ed [style*="min-height:420px"] { min-height: 420px !important; }
     /* The reel stays two-up; one-up made the page endless. */
     body.cg-ed .cg-cols4 { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
-    /* Wrapped, the chips need a horizontal rule too or the rows read as loose
-       text. Right plus bottom on each gives the boxed grid in the design. */
-    body.cg-ed .cg-chips { flex-wrap: wrap !important; }
+    /* One of the two intentional scrollers: the chips run off the edge rather
+       than wrapping to three rows. */
+    body.cg-ed .cg-chips {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    body.cg-ed .cg-chips::-webkit-scrollbar { display: none; }
     body.cg-ed .cg-chips > span {
+        flex: none; white-space: nowrap;
+        font-size: 10px !important; padding: 10px 14px !important;
         border-right: 1px solid rgba(20, 16, 12, 0.15);
-        border-bottom: 1px solid rgba(20, 16, 12, 0.15);
+        border-bottom: 0;
     }
 }
 
