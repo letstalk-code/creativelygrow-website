@@ -159,7 +159,9 @@ body.cg-ed .cg-bar { display: none; }
 .cg-fan {
     position: relative;
     aspect-ratio: 960 / 768;
-    max-width: 620px;
+    /* No cap: the film fills its column. The 620px cap left it floating in
+       nearly 500px of empty space and reading small. */
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -174,6 +176,13 @@ body.cg-ed .cg-bar { display: none; }
         linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
         linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
     mask-composite: intersect;
+}
+
+/* Give the film more of the band than the handoff's 1fr 1.15fr split, so it
+   carries the section rather than sitting beside it. Copy still has a
+   comfortable measure at this ratio. */
+@media (min-width: 901px) {
+    body.cg-ed .cg-page-band { grid-template-columns: 1fr 1.45fr !important; }
 }
 
 /* Contact form. Focus state is the brand standard from the handoff: the
