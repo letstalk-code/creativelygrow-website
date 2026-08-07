@@ -688,3 +688,26 @@ for pictures, and trust neither on its own.
 - [ ] `our-work.html` is an orphan from the old site, still crawlable and still
       referencing the old green `portfolio-showcase.mp4`. Decide: delete, or
       redirect to /brand-films.
+
+## Mobile design built + new film — 2026-08-07 (second)
+
+Built to the Claude Design mobile screenshots:
+- [x] Hamburger replaces the centred menu below 900px. Opens a panel under the
+      header, closes on link tap, outside tap, or Escape. Burger animates to an X.
+- [x] Sticky bottom bar: Call Now plus each page's own primary CTA. Body carries
+      matching bottom padding so it never covers the footer.
+- [x] Reel stays two-up on phones; one-up made that page endless.
+- [x] New showcase film. Same treatment as the last one, since the render again
+      carried an invented dark floor — cropped at y=1159, channels lifted to meet
+      #f9f8eb, scaled to 1200x960. 387KB.
+
+Found while wiring the bar: the primary CTAs on How It Works and Brand Films
+pointed at "/" rather than the form. Both pages' main call to action dropped
+people at the top of the homepage with nothing to do. Now /#contact.
+
+### Still open
+- [ ] `our-work.html` — orphan from the old site, crawlable, still references the
+      old green film. Delete or redirect to /brand-films.
+- [ ] Bunny Storage secret key, to finish the studio photo migration
+- [ ] /epoxy and /pool-cage still use the old dark styling and now look like a
+      different company than the rest of the site
