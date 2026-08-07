@@ -257,7 +257,30 @@
     });
   }
 
-  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); condensed(); }
+  // ---- services marquee (mobile only) -------------------------------------
+  // A seamless loop needs two copies of the strip: the track slides exactly one
+  // copy's width and restarts, so the join is never visible. The clones are
+  // hidden from assistive tech and from desktop, where the strip is static.
+  function marquee() {
+    var strip = document.querySelector('.cg-chips');
+    if (!strip || strip.querySelector('.cg-chips-track')) return;
+
+    var chips = Array.prototype.slice.call(strip.children);
+    if (!chips.length) return;
+
+    var track = document.createElement('div');
+    track.className = 'cg-chips-track';
+    chips.forEach(function (c) { track.appendChild(c); });
+    chips.forEach(function (c) {
+      var clone = c.cloneNode(true);
+      clone.classList.add('cg-chip-clone');
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+    strip.appendChild(track);
+  }
+
+  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); condensed(); marquee(); }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

@@ -122,6 +122,16 @@ body.cg-ed .cg-nav-drop::before {
    forked, because no amount of CSS shortens a sentence. */
 body.cg-ed .cg-m { display: none; }
 
+/* Services strip. The track exists on every width so the markup is identical;
+   only the phone animates it, and the duplicate set only renders there. */
+body.cg-ed .cg-chips-track { display: flex; flex-wrap: wrap; }
+body.cg-ed .cg-chip-clone { display: none; }
+
+@keyframes cg-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
 /* Hamburger + sticky action bar — phone only, per the mobile designs.
    Both are hidden on desktop, where the centred menu does the job. */
 body.cg-ed .cg-burger { display: none; }
@@ -446,6 +456,18 @@ body.cg-ed .cg-success { padding: 8px 0; }
         -webkit-overflow-scrolling: touch;
     }
     body.cg-ed .cg-chips::-webkit-scrollbar { display: none; }
+    /* Auto-scrolling, so the strip is no longer a manual scroller. */
+    body.cg-ed .cg-chips { overflow-x: hidden; }
+    body.cg-ed .cg-chips-track {
+        flex-wrap: nowrap;
+        flex: none;
+        animation: cg-marquee 45s linear infinite;
+        will-change: transform;
+    }
+    body.cg-ed .cg-chip-clone { display: block; }
+    /* Hold it still while it is being read or touched. */
+    body.cg-ed .cg-chips:hover .cg-chips-track,
+    body.cg-ed .cg-chips:active .cg-chips-track { animation-play-state: paused; }
     body.cg-ed .cg-chips > span {
         flex: none; white-space: nowrap;
         font-size: 10px !important; padding: 10px 14px !important;
@@ -461,6 +483,10 @@ body.cg-ed .cg-success { padding: 8px 0; }
         transition: none !important;
     }
     .cg-cutout { background-position-x: 100% !important; }
+    /* No drift; the strip goes back to being swipeable instead. */
+    .cg-chips-track { animation: none !important; transform: none !important; }
+    .cg-chip-clone { display: none !important; }
+    body.cg-ed .cg-chips { overflow-x: auto !important; }
     .cg-rise { opacity: 1 !important; }
     .cg-rise { transform: none !important; }
 }
