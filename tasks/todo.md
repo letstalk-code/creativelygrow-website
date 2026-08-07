@@ -622,14 +622,21 @@ homepage is untouched — `index-editorial.html` is the staged replacement.
 - [x] Hero figure capped (was 731px tall, colliding with the header). It was
       never distorted — the box matches the sprite ratio 344/576 exactly — just
       far too large
-- [x] Cutout smoothness, third pass: two cross-fading layers instead of one
-      stepped layer. Ten frames hard-cut reads as a slideshow at any speed
+- [x] Cutout smoothness: cross-fading layers were tried and REVERTED. Blending
+      shows two frames at once, which reads as flashing. The hard cut is what
+      makes it stop motion. Back to one stepped layer at 4s. Do not try this
+      again — if it needs to be smoother, the answer is more frames in the
+      sprite sheet, not blending between the ten we have.
 
 ### The showcase film's green background — open decision
 It was composited on the old site's dark green backdrop with glow and bokeh.
-For now it is desaturated to a neutral dark, which kills the green and matches
-the handoff's own art direction ("no colour anywhere in the image so orange
-stays the only voice"). Options for a real fix, best first:
+Desaturating it was tried and REVERTED — it looked worse than the old site did.
+
+The thing to understand: on the old site this film was never cut out. The page
+was dark green and so was the film's backdrop, so it simply disappeared. That
+was camouflage, not transparency, which is why no filter reproduces it on cream.
+
+Options, best first:
 
 1. Re-render from the source project without the backdrop, exported with alpha.
    H.264 MP4 cannot carry alpha, so it ships as WebM/VP9 for Chrome, Firefox
