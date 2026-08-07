@@ -586,8 +586,21 @@ homepage is untouched — `index-editorial.html` is the staged replacement.
 - Reveal styles are gated behind `.cg-js` plus a 2.5s timeout backstop, so a
   page whose JS fails is fully visible rather than blank.
 
+### Done 2026-07-29 — the editorial design IS the live homepage
+- [x] Contact form wired to `/api/leak-check` (same payload and niche the old
+      homepage sent). Verified end to end on production: contact created in
+      GHL location xwddXAWgoJtFg4qpBO3u, tagged website-contact, note carrying
+      business + name + what-they-do, and the auto-reply SMS fired (rejected
+      only because the test number was a 555). Test contacts deleted.
+- [x] Guarded against double submit — a disabled button stops a second click
+      but not a second submit event, and one lead must not write two notes.
+- [x] Old homepage removed rather than left in the tree; a second copy would
+      be crawlable and compete. Recoverable from git history.
+- [x] All three pages off noindex, canonicals added, sitemap now lists the
+      three routes that exist (/our-work and /book were listed and never
+      existed).
+
 ### Open
-- [ ] Decide whether to swap `index-editorial.html` in as the live homepage
 - [x] Header nav added (Home / How It Works / Brand Films, current page in
       orange). The handoff had footer-only links, which hid the other pages.
 - [x] The two client screenshots in the How It Works fan were never committed,
