@@ -51,17 +51,65 @@ body.cg-ed a[href="#contact"][style*="border:2px solid"]:hover {
 }
 
 /* Header navigation. Not in the handoff, which linked the other pages from the
-   footer only; that leaves a first-time visitor no way across. Same micro-label
-   treatment as the rest of the bar, with the current page marked in orange. */
-body.cg-ed .cg-nav { display: flex; align-items: center; gap: clamp(14px, 1.7vw, 28px); }
+   footer only, leaving a first-time visitor no way across. Centred absolutely
+   so it sits dead centre of the bar no matter how wide the logo or phone
+   blocks are - space-between would only centre it if both sides matched. */
+body.cg-ed .cg-head { position: relative; }
+body.cg-ed .cg-nav {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; align-items: center;
+}
+body.cg-ed .cg-nav-item { position: relative; }
+
 body.cg-ed .cg-nav a {
+    display: block;
     font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.16em; font-size: 11px; color: var(--ink); white-space: nowrap;
-    padding-bottom: 3px; border-bottom: 2px solid transparent;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
-body.cg-ed .cg-nav a:hover { color: var(--orange); border-bottom-color: var(--orange); }
-body.cg-ed .cg-nav a[aria-current="page"] { color: var(--orange); border-bottom-color: var(--orange); }
+body.cg-ed .cg-nav-trigger {
+    padding-bottom: 3px; border-bottom: 2px solid transparent;
+}
+body.cg-ed .cg-nav a:hover,
+body.cg-ed .cg-nav a[aria-current="page"] { color: var(--orange); }
+body.cg-ed .cg-nav-trigger:hover,
+body.cg-ed .cg-nav-trigger[aria-current="page"] { border-bottom-color: var(--orange); }
+
+/* The caret is drawn rather than typed so it inherits colour and sits on the
+   type baseline instead of riding above it like a glyph would. */
+body.cg-ed .cg-caret {
+    display: inline-block; width: 0; height: 0; margin-left: 7px;
+    vertical-align: middle; position: relative; top: -1px;
+    border-left: 4px solid transparent; border-right: 4px solid transparent;
+    border-top: 4px solid currentColor;
+    transition: transform 0.2s ease;
+}
+body.cg-ed .cg-nav-item:hover .cg-caret,
+body.cg-ed .cg-nav-item:focus-within .cg-caret { transform: rotate(180deg); }
+
+/* Opens on hover and on keyboard focus. The trigger is a real link, so the
+   dropdown is additive: it can never trap someone who cannot open it. */
+body.cg-ed .cg-nav-drop {
+    position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    margin-top: 10px; padding: 12px 18px;
+    background: var(--cream); border: 1px solid var(--ink);
+    box-shadow: 0 14px 30px rgba(20, 16, 12, 0.16);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 40;
+}
+body.cg-ed .cg-nav-item:hover .cg-nav-drop,
+body.cg-ed .cg-nav-item:focus-within .cg-nav-drop {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+/* Bridges the gap between trigger and panel so the pointer can cross without
+   the menu closing under it. */
+body.cg-ed .cg-nav-drop::before {
+    content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px;
+}
 
 /* ---------------------------------------------------------------------------
    The paper-cutout loop.
@@ -135,9 +183,21 @@ body.cg-ed .cg-nav a[aria-current="page"] { color: var(--orange); border-bottom-
    the multi-column bands and unwinding the pieces that assume side-by-side.
 --------------------------------------------------------------------------- */
 @media (max-width: 900px) {
-    body.cg-ed .cg-head { flex-wrap: wrap; row-gap: 14px; justify-content: flex-start; }
-    body.cg-ed .cg-head-loc { display: none; }
-    body.cg-ed .cg-nav { order: 3; width: 100%; gap: 20px; }
+    body.cg-ed .cg-head { flex-wrap: wrap; row-gap: 14px; justify-content: space-between; }
+    /* Hover cannot open anything on touch, so the dropdown flattens into two
+       plain links on its own row. */
+    body.cg-ed .cg-nav {
+        position: static; transform: none;
+        order: 3; width: 100%; gap: 22px;
+    }
+    body.cg-ed .cg-nav-item { display: flex; align-items: center; gap: 22px; }
+    body.cg-ed .cg-caret { display: none; }
+    body.cg-ed .cg-nav-drop {
+        position: static; transform: none; opacity: 1; visibility: visible;
+        pointer-events: auto; margin: 0; padding: 0;
+        background: none; border: 0; box-shadow: none;
+    }
+    body.cg-ed .cg-nav-drop::before { display: none; }
 
     body.cg-ed .cg-cols { grid-template-columns: 1fr !important; }
     body.cg-ed .cg-cols4 { grid-template-columns: 1fr 1fr !important; }
