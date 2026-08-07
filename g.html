@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="studio.css?v=3">
+    <link rel="stylesheet" href="studio.css?v=4">
     <style>
         .cg-g-hero { text-align: center; padding: 3.5rem 1.25rem 2rem; }
         .cg-g-hero img { height: 56px; border-radius: 10px; margin-bottom: 1.25rem; }
@@ -21,8 +21,8 @@
         .cg-g-video { margin-bottom: 2.5rem; }
         .cg-g-frame {
             position: relative; aspect-ratio: 16/9;
-            background: var(--forest); border: 1px solid var(--forest-light);
-            border-radius: 14px; overflow: hidden;
+            background: var(--ink); border: 1px solid var(--forest-light);
+            border-radius: 0; overflow: hidden;
             box-shadow: 0 20px 50px rgba(0,0,0,0.45);
         }
         .cg-g-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
@@ -68,18 +68,18 @@
             break-inside: avoid; -webkit-column-break-inside: avoid;
         }
         .cg-g-photo > a {
-            display: block; border-radius: 12px; overflow: hidden;
+            display: block; border-radius: 0; overflow: hidden;
             border: 1px solid var(--forest-light);
             box-shadow: 0 14px 34px rgba(0,0,0,0.35);
             /* These are full-resolution originals with no stored dimensions, so
                an unloaded tile has no height and the page reads as empty. Hold
                a visible slot until the photo arrives. */
-            min-height: 180px; background: var(--forest);
+            min-height: 180px; background: var(--ink);
         }
         .cg-g-photo img { width: 100%; height: auto; display: block; }
         .cg-g-photo .cg-dl {
             position: absolute; bottom: 0.6rem; right: 0.6rem;
-            background: rgba(5,8,5,0.78); backdrop-filter: blur(4px);
+            background: rgba(20,16,12,0.78); backdrop-filter: blur(4px);
         }
         @media (min-width: 640px) {
             .cg-g-photos { column-count: 2; }

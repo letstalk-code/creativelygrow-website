@@ -1,9 +1,9 @@
 :root {
     --forest-dark: #0d140d;
-    --forest: #1a2a1a;
+    --ink: #14100c;
     --forest-light: #2d3a2d;
     --cream: #f9f8eb;
-    --cream-dim: rgba(249, 248, 235, 0.72);
+    --cream-dim: #b8b8a8;
     --orange: #ef7938;
     --orange-hover: #d96a2d;
     --head: 'Oswald', sans-serif;
@@ -13,7 +13,7 @@
 
 body.st {
     margin: 0;
-    background: var(--forest-dark);
+    background: var(--ink);
     color: var(--cream);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
@@ -38,7 +38,7 @@ body.st {
     background: none; border: 1px solid var(--forest-light);
     color: var(--cream);
 }
-.st-btn-ghost:hover { background: var(--forest); border-color: var(--orange); }
+.st-btn-ghost:hover { background: var(--ink); border-color: var(--orange); }
 
 .st-error { color: #e57373; font-size: 0.88rem; min-height: 1.2em; margin: 0.5rem 0 0; }
 
@@ -46,16 +46,16 @@ body.st {
 .st-login {
     position: fixed; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    padding: 1.5rem; background: var(--forest-dark); z-index: 50;
+    padding: 1.5rem; background: var(--ink); z-index: 50;
 }
 .st-login-box {
-    background: var(--forest);
+    background: var(--ink);
     border: 1px solid var(--forest-light);
-    border-radius: 18px;
+    border-radius: 0;
     padding: 2.25rem 2rem;
     width: 100%; max-width: 360px; text-align: center;
 }
-.st-login-logo { width: 64px; border-radius: 10px; margin-bottom: 1rem; }
+.st-login-logo { width: 64px; border-radius: 0; margin-bottom: 1rem; }
 .st-login-box h1 {
     font-family: var(--head); text-transform: uppercase;
     font-size: 1.6rem; margin: 0 0 0.15rem;
@@ -63,7 +63,7 @@ body.st {
 .st-login-box p { color: var(--cream-dim); font-size: 0.9rem; margin: 0 0 1.5rem; }
 .st-login-box input, .st-modal-box input, .st-share-row input {
     width: 100%; padding: 0.85rem 1rem;
-    border-radius: 10px; border: 1px solid rgba(249,248,235,0.2);
+    border-radius: 8px; border: 1px solid rgba(249,248,235,0.2);
     background: var(--forest-dark); color: var(--cream);
     font-size: 1rem; font-family: inherit; margin-bottom: 0.85rem;
 }
@@ -73,7 +73,7 @@ body.st {
 /* Header */
 .st-header {
     position: sticky; top: 0; z-index: 20;
-    background: rgba(13,20,13,0.92);
+    background: rgba(20,16,12,0.92);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--forest-light);
 }
@@ -83,7 +83,7 @@ body.st {
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
 }
 .st-brand { display: flex; align-items: center; gap: 0.7rem; }
-.st-brand img { height: 38px; border-radius: 8px; }
+.st-brand img { height: 38px; }
 .st-brand span {
     font-family: var(--head); text-transform: uppercase;
     letter-spacing: 0.12em; font-size: 0.95rem;
@@ -100,8 +100,8 @@ body.st {
 .st-row {
     display: flex; align-items: center; justify-content: space-between;
     width: 100%; text-align: left;
-    background: var(--forest); border: 1px solid var(--forest-light);
-    border-radius: 12px; padding: 1rem 1.2rem;
+    background: var(--ink); border: 1px solid var(--forest-light);
+    border-radius: 0; padding: 1rem 1.2rem;
     color: var(--cream); font-family: inherit; font-size: 1rem;
     cursor: pointer; transition: border-color 0.2s;
 }
@@ -131,7 +131,7 @@ body.st {
 /* Dropzone */
 .st-drop {
     border: 2px dashed var(--forest-light);
-    border-radius: 14px; padding: 2.25rem 1.25rem;
+    border-radius: 0; padding: 2.25rem 1.25rem;
     text-align: center; transition: border-color 0.2s, background 0.2s;
 }
 .st-drop.is-over { border-color: var(--orange); background: rgba(239,121,56,0.06); }
@@ -145,8 +145,8 @@ body.st {
 .st-upload {
     display: grid; grid-template-columns: 1fr 120px 52px;
     gap: 0.75rem; align-items: center;
-    background: var(--forest); border: 1px solid var(--forest-light);
-    border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 0.85rem;
+    background: var(--ink); border: 1px solid var(--forest-light);
+    border-radius: 0; padding: 0.7rem 0.9rem; font-size: 0.85rem;
 }
 .st-upload-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .st-bar { background: var(--forest-dark); border-radius: 99px; height: 6px; overflow: hidden; }
@@ -163,8 +163,8 @@ body.st {
 }
 .st-video-frame {
     position: relative; aspect-ratio: 16/9;
-    background: var(--forest); border: 1px solid var(--forest-light);
-    border-radius: 12px; overflow: hidden;
+    background: var(--ink); border: 1px solid var(--forest-light);
+    border-radius: 0; overflow: hidden;
 }
 .st-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 .st-video-meta {
@@ -184,29 +184,29 @@ body.st {
 }
 .st-photo {
     position: relative; aspect-ratio: 4/3;
-    background: var(--forest); border: 1px solid var(--forest-light);
-    border-radius: 12px; overflow: hidden;
+    background: var(--ink); border: 1px solid var(--forest-light);
+    border-radius: 0; overflow: hidden;
 }
 .st-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .st-photo-x {
     position: absolute; top: 0.4rem; right: 0.4rem;
     width: 28px; height: 28px; border-radius: 50%;
-    background: rgba(5,8,5,0.75); border: none; color: var(--cream);
+    background: rgba(20,16,12,0.75); border: none; color: var(--cream);
     font-size: 1.15rem; line-height: 1; cursor: pointer;
 }
 .st-photo-x:hover { background: #e57373; }
 
 /* Modal */
 .st-modal {
-    position: fixed; inset: 0; background: rgba(5,8,5,0.88);
+    position: fixed; inset: 0; background: rgba(20,16,12,0.88);
     backdrop-filter: blur(6px);
     display: none; align-items: center; justify-content: center;
     padding: 1.25rem; z-index: 60;
 }
 .st-modal.is-open { display: flex; }
 .st-modal-box {
-    background: var(--forest); border: 1px solid rgba(239,121,56,0.4);
-    border-radius: 18px; padding: 1.9rem 1.6rem;
+    background: var(--ink); border: 1px solid rgba(239,121,56,0.4);
+    border-radius: 0; padding: 1.9rem 1.6rem;
     width: 100%; max-width: 420px; position: relative;
 }
 .st-modal-box h3 {
