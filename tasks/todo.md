@@ -711,3 +711,36 @@ people at the top of the homepage with nothing to do. Now /#contact.
 - [ ] Bunny Storage secret key, to finish the studio photo migration
 - [ ] /epoxy and /pool-cage still use the old dark styling and now look like a
       different company than the rest of the site
+
+## Condensed mobile homepage — 2026-08-07
+
+New handoff bundle adds mobile prototypes and a CLAUDE.md with an acceptance
+checklist. Built the condensed homepage hero from
+`Homepage Mobile Condensed.dc.html`, checked against
+`reference/homepage-mobile-condensed.png`. All CSS at <=900px on the same DOM,
+per the handoff's build order ("Homepage, mobile. Same page. Not a second page").
+
+Done and verified live at 360px:
+- Hero is one 500px stage, not a ~1,100px stack. Headline over the orange block
+  with a cream glow across the join, figure behind, lede + CTA on a dark
+  translucent overlay. h1 exactly 50px per the checklist.
+- Chips are one horizontal scroller instead of three wrapped rows.
+- Sticky translucent header with blur; hamburger's third bar is the accent; nav
+  panel is dark with an orange rule.
+- Bottom bar clears `env(safe-area-inset-bottom)`, root reserves 76px, tap
+  targets >=44px, `:active` states added since touch has no hover.
+
+### Not done — needs a decision
+The prototype's remaining condensations use SHORTER COPY, not just tighter CSS.
+The customer-path rows collapse to one line each ("They search — Google, the
+map, social.") where the desktop DOM has a full h3 plus paragraph. Matching that
+means mobile-only markup carrying the short strings with the desktop version
+hidden, which puts both copies in the DOM. Worth Devon's call before doing it.
+Page is 10,051px tall on a phone; the hero change took roughly 690px off it, and
+the rest of the length is in these copy-level sections.
+
+### Checklist items still to audit against the new spec
+- [ ] Brand Films h1 82px on mobile, How It Works "90" 104px (currently clamped
+      to smaller minimums)
+- [ ] Second intentional horizontal scroller in the condensed variant
+- [ ] Copy diff, character by character, against the reference files
