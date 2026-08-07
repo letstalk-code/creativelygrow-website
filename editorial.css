@@ -182,7 +182,22 @@ body.cg-ed .cg-bar { display: none; }
    carries the section rather than sitting beside it. Copy still has a
    comfortable measure at this ratio. */
 @media (min-width: 901px) {
-    body.cg-ed .cg-page-band { grid-template-columns: 1fr 1.45fr !important; }
+    body.cg-ed .cg-page-band { grid-template-columns: 1fr 2.1fr !important; }
+    /* Let the film run out to the band's edge, reclaiming the gutter it was
+       sitting inside. */
+    body.cg-ed .cg-page-band .cg-fan {
+        margin-right: calc(-1 * clamp(18px, 2.8vw, 40px));
+    }
+}
+
+/* On a phone the film goes edge to edge - the gutter was the only thing left
+   making it small once the band had stacked. */
+@media (max-width: 900px) {
+    body.cg-ed .cg-page-band .cg-fan {
+        margin-left: calc(-1 * clamp(18px, 2.8vw, 40px));
+        margin-right: calc(-1 * clamp(18px, 2.8vw, 40px));
+        width: auto;
+    }
 }
 
 /* Contact form. Focus state is the brand standard from the handoff: the
