@@ -153,7 +153,35 @@
     });
   }
 
-  function init() { reveal(); player(); fanVideo(); contactForm(); }
+  // ---- mobile menu --------------------------------------------------------
+  function burger() {
+    var btn = document.getElementById('cgBurger');
+    var head = document.querySelector('.cg-head');
+    if (!btn || !head) return;
+
+    function setOpen(open) {
+      head.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    btn.addEventListener('click', function () {
+      setOpen(!head.classList.contains('is-open'));
+    });
+
+    // Tapping a link, tapping away, or Escape all close it.
+    head.querySelectorAll('.cg-nav a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('click', function (e) {
+      if (!head.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

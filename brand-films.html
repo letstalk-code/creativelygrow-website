@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="editorial.css?v=5">
+<link rel="stylesheet" href="editorial.css?v=6">
 </head>
 <body class="cg-ed">
 <div style="background:#f9f8eb; max-width:1440px; margin:0 auto; border-left:1px solid rgba(20,16,12,0.1); border-right:1px solid rgba(20,16,12,0.1); overflow:hidden">
@@ -20,7 +20,7 @@
       <a href="/" aria-label="Creatively Grow home"><img src="assets/logo.webp" alt="Creatively Grow" style="height:34px; width:auto"></a>
       <span style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.22em; font-size:11px; line-height:1.5; color:#14100c">Video Content<br>+ Growth Systems</span>
     </div>
-    <nav class="cg-nav" aria-label="Pages"><div class="cg-nav-item"><a class="cg-nav-trigger" href="/">Home<span class="cg-caret" aria-hidden="true"></span></a><div class="cg-nav-drop"><a href="/how-it-works">How It Works</a></div></div></nav>
+    <button class="cg-burger" id="cgBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="cgMenu"><span></span><span></span><span></span></button><nav class="cg-nav" id="cgMenu" aria-label="Pages"><div class="cg-nav-item"><a class="cg-nav-trigger" href="/">Home<span class="cg-caret" aria-hidden="true"></span></a><div class="cg-nav-drop"><a href="/how-it-works">How It Works</a></div></div></nav>
     <div style="display:flex; align-items:flex-start; gap:12px">
       <span style="width:22px; height:3px; background:#ef7938; margin-top:6px"></span>
       <a href="tel:+17272708422" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; font-size:11px; line-height:1.5; color:#14100c">Call now<br>(727) 270-8422</a>
@@ -151,7 +151,7 @@
     <div style="padding:52px clamp(18px,2.8vw,40px); display:flex; flex-direction:column; gap:26px">
       <h2 style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(32px,5.28vw,76px); line-height:0.9; color:#14100c">Just need the film?</h2>
       <p style="max-width:680px; font-size:17px; line-height:1.7; color:#4e5a4e">We shoot brand films, ad creative, and social content as standalone work. Tell us what you need and we'll quote it straight.</p>
-      <a href="/" style="align-self:flex-start; background:#ef7938; color:#14100c; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:20px; padding:18px 34px; border-radius:999px; box-shadow:0 8px 24px rgba(239,121,56,0.25)">Tell My Brand Story &nbsp;→</a>
+      <a href="/#contact" style="align-self:flex-start; background:#ef7938; color:#14100c; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:20px; padding:18px 34px; border-radius:999px; box-shadow:0 8px 24px rgba(239,121,56,0.25)">Tell My Brand Story &nbsp;→</a>
     </div>
   </div>
 
@@ -170,6 +170,7 @@
   </div>
 
 </div>
-<script src="editorial.js?v=2"></script>
+<div class="cg-bar"><a class="cg-bar-call" href="tel:+17272708422">Call Now</a><a class="cg-bar-cta" href="/#contact">Tell My Story &nbsp;&rarr;</a></div>
+<script src="editorial.js?v=3"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="editorial.css?v=5">
+<link rel="stylesheet" href="editorial.css?v=6">
 </head>
 <body class="cg-ed">
 <div style="background:#f9f8eb; max-width:1440px; margin:0 auto; border-left:1px solid rgba(20,16,12,0.1); border-right:1px solid rgba(20,16,12,0.1); overflow:hidden">
@@ -20,7 +20,7 @@
       <a href="/" aria-label="Creatively Grow home"><img src="assets/logo.webp" alt="Creatively Grow" style="height:34px; width:auto"></a>
       <span style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.22em; font-size:11px; line-height:1.5; color:#14100c">Video Content<br>+ Growth Systems</span>
     </div>
-    <nav class="cg-nav" aria-label="Pages"><div class="cg-nav-item"><a class="cg-nav-trigger" href="/">Home<span class="cg-caret" aria-hidden="true"></span></a><div class="cg-nav-drop"><a href="/brand-films">Brand Films</a></div></div></nav>
+    <button class="cg-burger" id="cgBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="cgMenu"><span></span><span></span><span></span></button><nav class="cg-nav" id="cgMenu" aria-label="Pages"><div class="cg-nav-item"><a class="cg-nav-trigger" href="/">Home<span class="cg-caret" aria-hidden="true"></span></a><div class="cg-nav-drop"><a href="/brand-films">Brand Films</a></div></div></nav>
     <div style="display:flex; align-items:flex-start; gap:12px">
       <span style="width:22px; height:3px; background:#ef7938; margin-top:6px"></span>
       <a href="tel:+17272708422" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; font-size:11px; line-height:1.5; color:#14100c">Call now<br>(727) 270-8422</a>
@@ -139,7 +139,7 @@
         <h2 style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(33px,5.42vw,78px); line-height:0.88; color:#ef7938">The first step doesn't cost anything.</h2>
         <p style="max-width:560px; font-size:17px; line-height:1.7; color:#b8b8a8">Start with the free video review. Three minutes, no call, and you get a video showing exactly where customers are slipping away.</p>
       </div>
-      <a href="/" style="text-align:center; background:#ef7938; color:#14100c; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:20px; padding:22px 28px; border-radius:999px; box-shadow:0 8px 24px rgba(239,121,56,0.25)">Get My Free Video Review &nbsp;→</a>
+      <a href="/#contact" style="text-align:center; background:#ef7938; color:#14100c; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:20px; padding:22px 28px; border-radius:999px; box-shadow:0 8px 24px rgba(239,121,56,0.25)">Get My Free Video Review &nbsp;→</a>
     </div>
     <div style="margin-top:56px; padding-top:24px; border-top:1px solid #2d3a2d; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap">
       <div style="display:flex; align-items:center; gap:14px">
@@ -155,6 +155,7 @@
   </div>
 
 </div>
-<script src="editorial.js?v=2"></script>
+<div class="cg-bar"><a class="cg-bar-call" href="tel:+17272708422">Call Now</a><a class="cg-bar-cta" href="/#contact">Free Review &nbsp;&rarr;</a></div>
+<script src="editorial.js?v=3"></script>
 </body>
 </html>
