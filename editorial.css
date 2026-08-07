@@ -1,0 +1,171 @@
+/* Creatively Grow — editorial redesign.
+   Structure and measured values live inline on the elements, ported from the
+   design handoff. This file carries only what inline styles cannot express:
+   animation, hover, focus, and the responsive collapse. */
+
+:root {
+    --cream: #f9f8eb;
+    --ink: #14100c;
+    --forest-dark: #0d140d;
+    --forest-light: #2d3a2d;
+    --sage: #4e5a4e;
+    --cream-dim: #b8b8a8;
+    --orange: #ef7938;
+    --orange-hover: #d96a2d;
+}
+
+* { box-sizing: border-box; }
+
+body.cg-ed {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+body.cg-ed h1, body.cg-ed h2, body.cg-ed h3, body.cg-ed p { margin: 0; }
+body.cg-ed a { color: var(--orange); text-decoration: none; transition: color 0.2s ease; }
+body.cg-ed a:hover { color: var(--orange-hover); }
+body.cg-ed img, body.cg-ed video { max-width: 100%; }
+
+/* Buttons. The handoff specifies these as brand standard across all pages. */
+body.cg-ed a[href="#contact"],
+body.cg-ed a[href^="tel:"].cg-btn {
+    display: inline-block;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+body.cg-ed a[href="#contact"]:hover {
+    background: var(--orange-hover) !important;
+    color: var(--ink) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(239, 121, 56, 0.4) !important;
+}
+/* The ghost CTA is the one #contact link with a border instead of a fill. */
+body.cg-ed a[href="#contact"][style*="border:2px solid"]:hover {
+    background: transparent !important;
+    border-color: var(--orange) !important;
+    color: var(--orange) !important;
+    box-shadow: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+   The paper-cutout loop.
+
+   Ten frames side by side in one PNG. steps(1) on every keyframe is what holds
+   the first frame, runs the reaction fast, then holds the smile; a single
+   steps(10) across the whole animation gives even timing and the smile flashes
+   past. The element must stay width-driven or the aspect ratio is discarded
+   and every frame stretches.
+--------------------------------------------------------------------------- */
+@keyframes cg-flip {
+    0%   { background-position-x: 0%;        animation-timing-function: steps(1); }
+    30%  { background-position-x: 11.1111%;  animation-timing-function: steps(1); }
+    34%  { background-position-x: 22.2222%;  animation-timing-function: steps(1); }
+    38%  { background-position-x: 33.3333%;  animation-timing-function: steps(1); }
+    42%  { background-position-x: 44.4444%;  animation-timing-function: steps(1); }
+    46%  { background-position-x: 55.5555%;  animation-timing-function: steps(1); }
+    50%  { background-position-x: 66.6666%;  animation-timing-function: steps(1); }
+    54%  { background-position-x: 77.7777%;  animation-timing-function: steps(1); }
+    58%  { background-position-x: 88.8888%;  animation-timing-function: steps(1); }
+    63%  { background-position-x: 100%;      animation-timing-function: steps(1); }
+    100% { background-position-x: 100%; }
+}
+
+/* ---------------------------------------------------------------------------
+   "Step Two: The Page" — the fanned landing pages on How It Works.
+
+   The three frames start stacked square and settle into their fan when the
+   band scrolls into view, so the composition assembles itself rather than
+   arriving pre-built. Rotations match the handoff exactly once settled.
+--------------------------------------------------------------------------- */
+.cg-js .cg-fan-a, .cg-js .cg-fan-b, .cg-js .cg-fan-c {
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+}
+.cg-js .cg-fan-a { transform: rotate(0deg) translate(14%, 6%) scale(0.94); }
+.cg-js .cg-fan-c { transform: rotate(0deg) translate(-14%, 6%) scale(0.94); }
+.cg-js .cg-fan-b { transform: translateX(-50%) translateY(22px) scale(0.96); }
+
+.cg-fan.is-in .cg-fan-a { opacity: 1; transform: rotate(-7deg); transition-delay: 0.12s; }
+.cg-fan.is-in .cg-fan-c { opacity: 1; transform: rotate(6deg); transition-delay: 0.2s; }
+.cg-fan.is-in .cg-fan-b { opacity: 1; transform: translateX(-50%); }
+
+/* The centre frame is the live one; lift the whole stack a touch on hover. */
+.cg-fan-a, .cg-fan-c { cursor: default; }
+.cg-fan.is-in:hover .cg-fan-a { transform: rotate(-9deg) translateX(-2%); }
+.cg-fan.is-in:hover .cg-fan-c { transform: rotate(8deg) translateX(2%); }
+.cg-fan.is-in:hover .cg-fan-b { transform: translateX(-50%) translateY(-6px); }
+.cg-fan-video { background: var(--ink); }
+
+/* Film cards on Brand Films */
+.cg-film-card img { transition: transform 0.4s ease, opacity 0.3s ease; }
+.cg-film-card:hover img { transform: scale(1.03); }
+.cg-film-card button { transition: color 0.2s ease, border-color 0.2s ease; }
+.cg-film-card button:hover { color: var(--orange-hover) !important; border-color: var(--orange-hover) !important; }
+.cg-film-card.is-playing img { opacity: 0.55; }
+
+/* Sections fade up as they arrive. Subtle: this is an editorial layout, not a
+   slideshow, so it is a short move and it only ever runs once. */
+.cg-js .cg-rise { opacity: 0; transform: translateY(18px); }
+.cg-js .cg-rise.is-in {
+    opacity: 1; transform: none;
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive. The prototypes are desktop-only at 1440px; display sizes already
+   scale by viewport through clamp() on the elements. What is left is stacking
+   the multi-column bands and unwinding the pieces that assume side-by-side.
+--------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    body.cg-ed .cg-cols { grid-template-columns: 1fr !important; }
+    body.cg-ed .cg-cols4 { grid-template-columns: 1fr 1fr !important; }
+
+    /* Hairlines that divided columns now divide rows. */
+    body.cg-ed .cg-cols > div[style*="border-right"] { border-right: 0 !important; }
+
+    /* The hero figure sits under the headline instead of beside it. */
+    body.cg-ed .cg-hero-figure { min-height: 460px !important; }
+
+    /* The fan becomes the single live frame; the flanking stills would be
+       unreadable at this width. */
+    .cg-fan { height: 300px !important; }
+    .cg-fan-a, .cg-fan-c { display: none; }
+    .cg-fan-b { width: 92% !important; }
+    .cg-fan.is-in .cg-fan-b { transform: translateX(-50%); }
+
+    /* Vertical spine labels cost too much width on a phone. */
+    body.cg-ed [style*="writing-mode:vertical-rl"] {
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+    }
+    body.cg-ed [style*="display:flex"][style*="background:#14100c"] { flex-wrap: wrap; }
+
+    /* Decorative corner triangles overflow small panels. */
+    body.cg-ed [style*="border-bottom:120px solid"],
+    body.cg-ed [style*="border-bottom:130px solid"] { display: none; }
+}
+
+@media (max-width: 620px) {
+    body.cg-ed .cg-cols4 { grid-template-columns: 1fr !important; }
+    /* The chips strip wraps rather than scrolling off the edge. */
+    body.cg-ed .cg-chips { flex-wrap: wrap !important; }
+    body.cg-ed .cg-chips > span { border-right: 0 !important; }
+}
+
+/* Respect the system setting: hold the last frame, drop every motion. */
+@media (prefers-reduced-motion: reduce) {
+    body.cg-ed *, body.cg-ed *::before, body.cg-ed *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    .cg-cutout { background-position-x: 100% !important; }
+    .cg-fan-a, .cg-fan-b, .cg-fan-c, .cg-rise { opacity: 1 !important; }
+    .cg-fan-a { transform: rotate(-7deg) !important; }
+    .cg-fan-c { transform: rotate(6deg) !important; }
+    .cg-fan-b { transform: translateX(-50%) !important; }
+    .cg-rise { transform: none !important; }
+}
