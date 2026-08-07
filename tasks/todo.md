@@ -556,3 +556,41 @@ send without an explicit sender inherits it.
       now carries the Creatively Grow brand, not just the lead alert.
       Note for future work: `PUT /locations/{id}` with the location PIT returns
       401 — sub-account profile edits need an agency-scoped token or the UI.
+
+## Editorial redesign from Design — ported 2026-07-29
+
+Handoff bundle (zip was named "Epoxy Marketing Images" but contains the full
+creativelygrow.com redesign): three pages, brutalist/editorial, cream ground,
+ink type, orange as the only accent. Copy is verbatim from the live site and
+the handoff says explicitly not to rewrite it.
+
+Built: `index-editorial.html`, `how-it-works.html`, `brand-films.html`,
+`editorial.css`, `editorial.js`. All three noindex until signed off. The live
+homepage is untouched — `index-editorial.html` is the staged replacement.
+
+### Video placement (what Devon asked for)
+- How It Works step two: the handoff wanted 3 landing-page screenshots. Instead
+  the two real client screenshots we already have flank the live
+  `portfolio-showcase.mp4`, autoplaying muted in the centre frame. The trio
+  assembles into its fan on scroll and lifts on hover.
+- Brand Films: all 8 films, featured player swaps on Play.
+- Homepage Selected Work: the 3 films embedded directly.
+
+### Worth knowing
+- Bunny thumbnails 403 off-domain, which is why the handoff asked for 11 manual
+  still exports. They serve fine from creativelygrow.com, so no exports needed.
+  Same referrer gate as the gallery MP4 downloads.
+- Fixed while porting: an `aspect-ratio` box cannot resolve when its child asks
+  for `height:100%`; portrait stills stretched their cards. Frames are now
+  positioning contexts with media pinned inside.
+- Reveal styles are gated behind `.cg-js` plus a 2.5s timeout backstop, so a
+  page whose JS fails is fully visible rather than blank.
+
+### Open
+- [ ] Decide whether to swap `index-editorial.html` in as the live homepage
+- [ ] The design gives the header no nav — only the footer links to the other
+      two pages. Worth deciding if that is enough wayfinding.
+- [ ] Contact form on the new homepage is still the handoff's non-functional
+      divs; wire to `api/leak-check.js` before it goes live
+- [ ] Handoff asks for the logo as vector before shipping
+- [ ] Landing pages (/epoxy, /pool-cage) still use the old dark styling
