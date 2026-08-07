@@ -162,6 +162,25 @@ body.cg-ed .cg-nav-drop::before {
 .cg-fan.is-in:hover .cg-fan-b { transform: translateX(-50%) translateY(-6px); }
 .cg-fan-video { background: var(--ink); }
 
+/* Contact form. Focus state is the brand standard from the handoff: the
+   border is replaced by a 2px orange outline. */
+body.cg-ed .cg-field {
+    width: 100%; padding: 0 14px; color: var(--cream);
+    font-family: 'Inter', sans-serif; font-size: 15px;
+}
+body.cg-ed .cg-field::placeholder { color: rgba(184, 184, 168, 0.5); }
+body.cg-ed .cg-field:focus {
+    outline: 2px solid var(--orange); outline-offset: 0; border-color: transparent;
+}
+body.cg-ed .cg-submit { transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
+body.cg-ed .cg-submit:hover:not(:disabled) {
+    background: var(--orange-hover); transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(239, 121, 56, 0.4);
+}
+body.cg-ed .cg-submit:disabled { opacity: 0.7; cursor: default; }
+body.cg-ed .cg-success[hidden] { display: none; }
+body.cg-ed .cg-success { padding: 8px 0; }
+
 /* Film cards on Brand Films */
 .cg-film-card img { transition: transform 0.4s ease, opacity 0.3s ease; }
 .cg-film-card:hover img { transform: scale(1.03); }

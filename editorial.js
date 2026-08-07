@@ -97,7 +97,57 @@
     if (go && go.catch) go.catch(function () { /* poster carries it */ });
   }
 
-  function init() { reveal(); player(); fanVideo(); }
+  // ---- contact form -------------------------------------------------------
+  // Same endpoint and payload the previous homepage used, so leads keep
+  // landing in GHL exactly as before.
+  function contactForm() {
+    var form = document.getElementById('leakForm');
+    if (!form) return;
+    var success = document.getElementById('leakSuccess');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var label = btn.textContent;
+
+      var payload = {
+        business: document.getElementById('lf-business').value.trim(),
+        firstName: document.getElementById('lf-name').value.trim(),
+        trade: document.getElementById('lf-trade').value.trim(),
+        phone: document.getElementById('lf-phone').value.trim(),
+        niche: 'contact'
+      };
+
+      // novalidate is set so the browser cannot bury a message behind the
+      // dark band; check it here and say so plainly instead.
+      if (!payload.business || !payload.firstName || !payload.trade || !payload.phone) {
+        var missing = form.querySelector('input:placeholder-shown') || form.querySelector('input');
+        if (missing) missing.focus();
+        btn.textContent = 'Fill in every field';
+        setTimeout(function () { btn.textContent = label; }, 1800);
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch('/api/leak-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) {
+        if (!r.ok) throw new Error('bad response');
+        form.hidden = true;
+        if (success) success.hidden = false;
+      }).catch(function () {
+        btn.disabled = false;
+        btn.textContent = label;
+        window.alert('Something hiccuped. Call or text us instead: (727) 270-8422');
+      });
+    });
+  }
+
+  function init() { reveal(); player(); fanVideo(); contactForm(); }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
