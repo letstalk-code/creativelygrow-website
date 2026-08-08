@@ -310,12 +310,23 @@ live static marketing site untouched.
 - [x] Hermes cron **`f4de4d82aebe`** — "Creatively Grow blog drafts — 2/week", `0 9 * * 1,4`
       (Mon/Thu 9am, staggered off Labif's Tue/Fri job `896bc17086c1`).
       Workdir `creativelygrow-clone`, writes one `<slug>.md` to `tasks/blog-drafts/` with `status: draft`.
-- [ ] **Review/publish half — NOT created, needs Devon's OK.** Without it drafts accumulate
-      unpublished. It would: review against this plan, generate images, flip `status: published`,
-      move into `creativelygrow-next/content/blog/`, commit, `vercel --prod`, verify live.
-      That auto-deploys to the live site on a schedule, which is why it wasn't created unilaterally.
-- [ ] Drafts carry no images by design — Hermes can't generate them and must not link stock.
+- [x] Review/publish scheduled task **`creativelygrow-blog-review-publish`**, `0 10 * * 1,4`
+      (Mon/Thu 10am, one hour after Hermes). Reviews against this plan, generates 3 images via
+      Higgsfield (~6 credits/post), flips `status: published`, moves into
+      `creativelygrow-next/content/blog/`, builds, deploys the blog zone, verifies live, commits.
+      Devon approved auto-deploy 2026-08-07.
+- [x] Drafts carry no images by design — Hermes can't generate them and must not link stock.
       Images are added during review.
+
+**Stop-and-hold rules baked into the publisher** — it holds the draft and reports instead of
+publishing if it finds: a fabricated statistic, a named client, demo builds described as delivered
+client work, or an off-thesis target (agency+Tampa, or video-led). Those are the failure modes that
+would actually damage credibility, so they're never auto-resolved.
+
+**The loop, end to end:**
+`Hermes f4de4d82aebe (Mon/Thu 9am)` → draft in `tasks/blog-drafts/` →
+`creativelygrow-blog-review-publish (Mon/Thu 10am)` → review + images → live at
+`/blog/<slug>` → moved to `tasks/blog-drafts/published/`
 
 ### Phase 3 — Publish the backlog, top to bottom
 
