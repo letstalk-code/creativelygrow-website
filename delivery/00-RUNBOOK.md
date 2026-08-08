@@ -142,10 +142,10 @@ missed calls recovered, inquiries and bookings, follow-up status, reviews and re
 | Doc | State |
 |---|---|
 | `00-RUNBOOK.md` | ✅ this file |
-| `01-intake.md` | ⬜ next |
+| `01-intake.md` | ✅ |
 | `01b-seo-audit.md` | ✅ |
-| `02-video-treatment.md` | ⬜ |
-| `03-ad-creative.md` | ⬜ |
+| `02-video-treatment.md` | ✅ |
+| `03-ad-creative.md` | ⬜ next |
 | `04-landing-page.md` | ⬜ |
 | `05-ghl-snapshot.md` | ⬜ blocked on Hermes + Computer Use |
 | `06-traffic.md` | ⬜ |
