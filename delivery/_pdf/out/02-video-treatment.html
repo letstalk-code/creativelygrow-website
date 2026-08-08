@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video Treatment — Creatively Grow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Creatively Grow print system — same tokens as the live editorial site
+     (DESIGN-REFERENCE.md): cream ground, ink type, orange the only accent,
+     hard rules instead of cards, zero radius on structure. */
+  :root{
+    --cream:#f9f8eb; --ink:#14100c; --sage:#4e5a4e; --hair:rgba(20,16,12,.22);
+    --hair-lt:rgba(20,16,12,.12); --orange:#ef7938;
+  }
+  @page{ size:Letter; margin:0; }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--cream); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; font-size:10.3pt; line-height:1.55;
+    font-variant-numeric:tabular-nums;
+  }
+  h1,h2,h3,h4{
+    font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    line-height:1.08; margin:0; text-wrap:balance;
+  }
+
+  /* ---- cover ---- */
+  .cover{
+    height:11in; padding:0.95in 0.85in; display:flex; flex-direction:column;
+    justify-content:space-between; page-break-after:always;
+  }
+  .cover-top{display:flex; justify-content:space-between; align-items:flex-start}
+  .brand{font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    letter-spacing:.16em; font-size:11pt}
+  .brand .sub{display:block; font-family:'Inter',sans-serif; font-weight:400;
+    text-transform:none; letter-spacing:0; font-size:8pt; color:var(--sage); margin-top:3px}
+  .doc-num{font-family:'Oswald',sans-serif; font-weight:700; font-size:13pt; color:var(--orange)}
+
+  .cover-mid{border-top:2px solid var(--ink); padding-top:.4in}
+  .eyebrow{display:block; font-family:'Oswald',sans-serif; font-weight:700;
+    text-transform:uppercase; letter-spacing:.24em; font-size:10pt; color:var(--orange);
+    margin-bottom:.22in}
+  .cover-title{font-size:44pt; max-width:9in}
+  .cover-sub{color:var(--sage); font-size:12.5pt; margin-top:.22in; max-width:6.4in; font-family:'Inter',sans-serif; font-weight:400; text-transform:none; letter-spacing:0}
+
+  .cover-bottom{border-top:1px solid var(--hair); padding-top:.22in;
+    display:flex; justify-content:space-between; font-size:8.5pt; color:var(--sage)}
+
+  /* ---- body pages ---- */
+  .body{padding:.85in .85in 1in}
+  .body h1{font-size:19pt; margin:.5in 0 .18in; padding-top:.24in; border-top:2px solid var(--ink)}
+  .body h1:first-child{margin-top:0; padding-top:0; border-top:0}
+  .body h2{font-size:14.5pt; margin:.32in 0 .13in}
+  .body h3{font-size:11.5pt; text-transform:none; letter-spacing:.01em; margin:.24in 0 .08in}
+  .body h4{font-size:10.3pt; text-transform:none; font-family:'Inter',sans-serif; font-weight:700; margin:.16in 0 .06in}
+  p{margin:0 0 .13in; orphans:3; widows:3}
+  strong{font-weight:700}
+  em{font-style:italic; color:var(--sage)}
+  code{font-family:'SF Mono','Menlo',monospace; font-size:9pt; background:rgba(20,16,12,.06); padding:1px 4px}
+  pre{background:var(--ink); color:#e8e6d8; padding:.16in; font-size:8.5pt;
+    overflow-x:auto; margin:0 0 .16in; page-break-inside:avoid}
+  pre code{background:none; padding:0; color:inherit}
+  a{color:var(--orange); text-decoration:none}
+  hr{border:0; border-top:1px solid var(--hair); margin:.24in 0}
+  blockquote{border-left:3px solid var(--orange); margin:.16in 0; padding:.02in 0 .02in .18in;
+    color:var(--ink); font-style:italic}
+
+  ul,ol{margin:0 0 .16in; padding-left:.28in}
+  li{margin-bottom:.06in; page-break-inside:avoid}
+  ul.check{list-style:none; padding-left:0}
+  ul.check li{display:flex; align-items:flex-start; gap:.1in; padding-left:0}
+  ul.check .box{
+    flex:0 0 auto; width:9pt; height:9pt; border:1.4pt solid var(--ink);
+    margin-top:2.5pt; display:inline-block;
+  }
+  ul.check li.done .box{background:var(--orange); border-color:var(--orange)}
+  ul.check li.done{color:var(--sage); text-decoration:line-through}
+
+  /* brand-styled substitutes for the ⭐📱✅⏳ emoji, kept in-palette rather
+     than falling back to the system color-emoji font */
+  .mk-star{color:var(--orange); font-weight:700; font-size:1.1em}
+  .mk-vert{
+    display:inline-block; font-family:'Oswald',sans-serif; font-weight:700;
+    text-transform:uppercase; letter-spacing:.05em; font-size:7pt;
+    border:1pt solid var(--orange); color:var(--orange); padding:0 3pt;
+    vertical-align:.5pt;
+  }
+  .mk-done{color:var(--orange); font-weight:700}
+  .mk-wip{color:var(--sage); font-style:italic}
+
+  .tbl-wrap{margin:0 0 .18in}
+  table{width:100%; border-collapse:collapse; font-size:9.3pt}
+  th,td{border:1px solid var(--hair); padding:.06in .1in; text-align:left; vertical-align:top}
+  th{font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    letter-spacing:.05em; font-size:8pt; background:rgba(20,16,12,.05)}
+  tr{page-break-inside:avoid}
+
+  /* running footer via printed page numbers is handled by Chrome's own
+     print-to-pdf footer when enabled; we render our own instead for full
+     brand control, repeated per section via CSS page context is not
+     available in print-to-pdf, so footer is omitted from body pages by
+     design — the cover carries the document identity. */
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="cover-top">
+    <div class="brand">Creatively Grow<span class="sub">Video Content + Growth Systems · Tampa Bay, FL</span></div>
+    <div class="doc-num">02</div>
+  </div>
+  <div class="cover-mid">
+    <span class="eyebrow">Client Delivery System</span>
+    <h1 class="cover-title">Video Treatment</h1>
+    <p class="cover-sub">Brief, shot list, call sheet, deliverables</p>
+  </div>
+  <div class="cover-bottom">
+    <span>Internal — not for client distribution</span>
+    <span>creativelygrow.com</span>
+  </div>
+</section>
+
+<section class="body">
+<p><strong>Owner: Claude drafts from intake. Devon approves and shoots.</strong></p>
+<p>Fill this in, don't invent it. Everything below comes from the intake — especially section B, where the owner's own words are written verbatim. Those words are the film.</p>
+<hr>
+<h2>The rule that governs everything here</h2>
+<p><strong>A brand story film is proof, not advertising.</strong> The customer is buying a promise about work that doesn't exist yet, from someone they met once. The film's only job is to make that promise credible.</p>
+<p>So: real crew, real work, real voice. No stock. No "we're passionate about quality." If a line could appear on any competitor's site, cut it.</p>
+<hr>
+<h2>Part 1 — The brief <code>[fill from intake]</code></h2>
+<p><strong>Client:</strong></p>
+<p><strong>Trade:</strong></p>
+<p><strong>Shoot date:</strong></p>
+<p><strong>Location(s):</strong></p>
+<p><strong>On-camera person:</strong></p>
+<p><strong>The one thing a viewer should believe after 90 seconds:</strong></p>
+<blockquote>*(One sentence. Not three. Something like: "These people will show up when they say, and my place will end up looking like that.")*</blockquote>
+<p><strong>Who's watching:</strong></p>
+<blockquote><em>(Homeowner mid-research? Facility manager? Be specific — it changes the tone.)</em></blockquote>
+<p><strong>The fear we're answering:</strong></p>
+<blockquote>*(Every trade has one — "will it last," "will they show up," "will they disappear halfway," "will it cost double what they quoted." Name theirs, then answer it on camera.)*</blockquote>
+<p><strong>Their actual words</strong> <em>(verbatim from intake B — do not clean these up)</em>:</p>
+<blockquote> </blockquote>
+<hr>
+<h2>Part 2 — Structure</h2>
+<p>Default 90 seconds. Five beats.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Beat</th><th>Sec</th><th>What happens</th></tr></thead><tbody>
+<tr><td><strong>1. The hook</strong></td><td>0–8</td><td>The most visually arresting thing on the job. Not a logo. Not a drone shot of the town. The work.</td></tr>
+<tr><td><strong>2. Who they are</strong></td><td>8–25</td><td>Owner on camera, in their space. Name, trade, how long. Plain.</td></tr>
+<tr><td><strong>3. The problem they solve</strong></td><td>25–50</td><td>The fear, named and answered. Cut to work that proves it.</td></tr>
+<tr><td><strong>4. Proof</strong></td><td>50–75</td><td>Process, crew, craft. The unglamorous competence. This is the part that sells.</td></tr>
+<tr><td><strong>5. The close</strong></td><td>75–90</td><td>Owner, direct to camera, one sentence. Then logo + phone.</td></tr>
+</tbody></table></div>
+<p><strong>Cutdowns from the same shoot</strong> — plan these on the day, don't reframe later:</p>
+<ul>
+<li><strong>9:16 × 3</strong> (15–30s) for ads — hook must land in 2 seconds</li>
+<li><strong>6s bumper</strong> — one shot, one line, logo</li>
+</ul>
+<hr>
+<h2>Part 3 — Shot list &amp; B-roll</h2>
+<p>Works for any trade. The structure below doesn't change; what fills it does.</p>
+<p><strong><span class="mk-star">&#9679;</span> = the money shot.</strong> If the day falls apart, get these. <strong><span class="mk-vert">Vert</span> = shoot 9:16 natively</strong> on the day. Reframed 16:9 always looks reframed.</p>
+<h3>First: find this client's money shot</h3>
+<p>Every trade has one moment that is genuinely satisfying to watch and that competitors never film. Find it before the shoot by asking the owner two questions:</p>
+<ol>
+<li><strong>"What part of the job would someone stop and watch?"</strong></li>
+<li><strong>"What do you do that a bad crew skips?"</strong></li>
+</ol>
+<p>The answer to #1 is your hook. The answer to #2 is your proof. Everything else is coverage.</p>
+<p>If they can't answer, look for the moment where <strong>the material changes state</strong> — liquid to solid, loose to taut, rough to smooth, broken to whole. That's almost always it.</p>
+<h3>The universal list</h3>
+<p><strong>A. Before <span class="mk-star">&#9679;</span></strong></p>
+<ul class="check">
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> The starting state — <strong>locked-off tripod, tape the legs, note lens and height.</strong></li>
+</ul>
+<p>      You will need this exact frame again and cannot recreate it later.</p>
+<ul class="check">
+<li class=""><span class="box"></span>Detail of the problem: the wear, damage, dated finish, whatever they're being paid to fix</li>
+<li class=""><span class="box"></span>Wide establishing of the property or space</li>
+</ul>
+<p><strong>B. Arrival and setup</strong></p>
+<ul class="check">
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> Truck arriving, door opening, boots down</li>
+<li class=""><span class="box"></span>Tools coming off the rack</li>
+<li class=""><span class="box"></span>Protective covering going down — <em>a trust shot; almost nobody films it and customers notice it</em></li>
+<li class=""><span class="box"></span>Measuring, marking, checking</li>
+</ul>
+<p><strong>C. The process <span class="mk-star">&#9679;</span> — most of your footage</strong></p>
+<ul class="check">
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span><span class="mk-vert">Vert</span> <strong>The money shot</strong>, 4–5 takes, multiple angles</li>
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> The state change itself, close and slow</li>
+<li class=""><span class="box"></span>Hands working — no face, just competence</li>
+<li class=""><span class="box"></span>The tool doing its job, tight</li>
+<li class=""><span class="box"></span>Material texture, macro</li>
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> Two people on one task — crews read as capable, soloists read as small</li>
+<li class=""><span class="box"></span><span class="mk-vert">Vert</span> Wide of the whole operation</li>
+</ul>
+<p><strong>D. After <span class="mk-star">&#9679;</span></strong></p>
+<ul class="check">
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> <strong>The exact locked-off before frame</strong>, finished. Same lens, height, position</li>
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> Light raking across the finished work</li>
+<li class=""><span class="box"></span>Detail: the edge, the joint, the seam — where quality actually shows</li>
+<li class=""><span class="box"></span>The tactile proof — a hand testing it, pressing it, running along it</li>
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> Clean-up: vacuum, broom, wiping down. <em>"They left it spotless" is what customers repeat</em></li>
+<li class=""><span class="box"></span><span class="mk-vert">Vert</span> Slow push or walk through the finished result</li>
+</ul>
+<p><strong>E. Human <span class="mk-star">&#9679;</span></strong></p>
+<ul class="check">
+<li class=""><span class="box"></span>Owner in their space, working</li>
+<li class=""><span class="box"></span>Crew talking something through, pointing at the work</li>
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> One genuine unguarded moment — someone laughing. <em>Beats ten posed ones</em></li>
+<li class=""><span class="box"></span><span class="mk-star">&#9679;</span> Owner looking at the finished work — the face, not the words</li>
+<li class=""><span class="box"></span>Logo on truck or shirt, shallow depth</li>
+</ul>
+<h3>Reference — where the money shot usually lives</h3>
+<p>Starting points only. Confirm with the owner; they know better than this table.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Trade</th><th>Likely hook</th><th>The state change</th></tr></thead><tbody>
+<tr><td>Coatings / epoxy</td><td>Decorative flake thrown mid-air, side-lit</td><td>Liquid resin curing hard</td></tr>
+<tr><td>Screen enclosure</td><td>Spline roller running the channel</td><td>Sagging → taut</td></tr>
+<tr><td>Remodel</td><td>Dust sheet pulled back</td><td>Demo → finished room</td></tr>
+<tr><td>Roofing</td><td>Tear-off, material coming away</td><td>Worn → sealed</td></tr>
+<tr><td>Painting</td><td>First cut-in line, brush edge</td><td>Patchy → clean</td></tr>
+<tr><td>Landscaping</td><td>Fresh edge cut into turf</td><td>Overgrown → shaped</td></tr>
+<tr><td>HVAC / plumbing</td><td>The failed part vs the new one, side by side</td><td>Broken → running</td></tr>
+<tr><td>Concrete</td><td>Screed pull across wet pour</td><td>Wet → set</td></tr>
+<tr><td>Detailing / cleaning</td><td>The half-and-half pass</td><td>Filthy → clean</td></tr>
+</tbody></table></div>
+<p><strong>When the job has no visible transformation</strong> — service calls, inspections, consultations — the film leans on people instead: the interview carries it, and b-roll becomes hands, tools, truck, and the customer conversation. Shoot more interview, not more coverage.</p>
+<h3>Marking the before frame</h3>
+<p>Tape the tripod legs. Note lens, height, position. A matched before/after from the identical position is worth more than any other pair of shots on the job, and it is the one thing you physically cannot recreate once the work is done.</p>
+<hr>
+<h2>Part 4 — Interview questions</h2>
+<p>Ask these. Let them ramble. The usable line is almost always the third sentence of an answer, after they stop performing.</p>
+<ol>
+<li>Tell me what you do, like you're telling a neighbor.</li>
+<li>How'd you get into this?</li>
+<li>What's the part of the job most people don't see?</li>
+<li>What do customers worry about before they call you?</li>
+<li>What do you do differently from the guy down the road?</li>
+<li>Tell me about a job you're proud of.</li>
+<li>What goes wrong on a bad job — and what do you do about it?</li>
+<li>Why should someone pick you?</li>
+</ol>
+<p><strong>Q7 is the most valuable question on this list.</strong> Everyone answers 5 and 8 with a slogan. Nobody rehearses 7, so that's where the credible answer lives.</p>
+<p><strong>Never feed them lines.</strong> If they say something great, ask them to say it again — don't say it for them.</p>
+<hr>
+<h2>Part 5 — Call sheet <code>[send 48h before]</code></h2>
+<p><strong>Date / call time / wrap:</strong></p>
+<p><strong>Address:</strong></p>
+<p><strong>Contact on site + mobile:</strong></p>
+<p><strong>Who needs to be there:</strong></p>
+<p><strong>What the client must have ready:</strong></p>
+<ul>
+<li>Site clean and presentable — the space, vehicles, uniforms</li>
+<li>Anyone on camera dressed the way they'd meet a customer</li>
+<li>Access to any locked areas</li>
+<li>A job actually in progress if at all possible</li>
+</ul>
+<p><strong>What Devon brings:</strong></p>
+<ul>
+<li>Camera, lenses, support</li>
+<li>Lav + shotgun audio</li>
+<li>Lights</li>
+<li>Backup media, batteries charged</li>
+<li>Release forms</li>
+</ul>
+<p><strong>Weather backup:</strong></p>
+<hr>
+<h2>Part 6 — Deliverables</h2>
+<div class="tbl-wrap"><table><thead><tr><th>Deliverable</th><th>Spec</th><th>Where it's used</th></tr></thead><tbody>
+<tr><td>Brand story master</td><td>16:9, 60–90s</td><td>Landing page hero, GBP, YouTube</td></tr>
+<tr><td>Vertical cutdowns × 3</td><td>9:16, 15–30s</td><td>Meta ads</td></tr>
+<tr><td>Bumper</td><td>6s</td><td>Retargeting, pre-roll</td></tr>
+<tr><td>Stills</td><td>20–30</td><td>Landing page, GBP photos, ads</td></tr>
+</tbody></table></div>
+<p><strong>Turnaround:</strong> first cut within 7 days of shoot. One revision round included.</p>
+<p><strong>Say this out loud when you deliver:</strong> the stills matter as much as the film. GBP photos are a ranking and conversion input, and most competitors have none.</p>
+<hr>
+<h2>Rules</h2>
+<ol>
+<li><strong>Never script the owner.</strong> Ask questions, cut the answers.</li>
+<li><strong>Over-shoot b-roll.</strong> You'll never wish you had less. Every ad for the next year comes from this day.</li>
+<li><strong>Shoot vertical on the day.</strong> Reframed 16:9 always looks reframed.</li>
+<li><strong>No stock footage. Ever.</strong> The entire point is that this is real.</li>
+<li><strong>If the site is a mess, reschedule or clean it.</strong> You cannot fix it in the edit, and the client</li>
+</ol>
+<p>   will blame the film.</p>
+</section>
+
+</body>
+</html>

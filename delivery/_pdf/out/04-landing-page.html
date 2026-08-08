@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Landing Page — Creatively Grow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Creatively Grow print system — same tokens as the live editorial site
+     (DESIGN-REFERENCE.md): cream ground, ink type, orange the only accent,
+     hard rules instead of cards, zero radius on structure. */
+  :root{
+    --cream:#f9f8eb; --ink:#14100c; --sage:#4e5a4e; --hair:rgba(20,16,12,.22);
+    --hair-lt:rgba(20,16,12,.12); --orange:#ef7938;
+  }
+  @page{ size:Letter; margin:0; }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--cream); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; font-size:10.3pt; line-height:1.55;
+    font-variant-numeric:tabular-nums;
+  }
+  h1,h2,h3,h4{
+    font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    line-height:1.08; margin:0; text-wrap:balance;
+  }
+
+  /* ---- cover ---- */
+  .cover{
+    height:11in; padding:0.95in 0.85in; display:flex; flex-direction:column;
+    justify-content:space-between; page-break-after:always;
+  }
+  .cover-top{display:flex; justify-content:space-between; align-items:flex-start}
+  .brand{font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    letter-spacing:.16em; font-size:11pt}
+  .brand .sub{display:block; font-family:'Inter',sans-serif; font-weight:400;
+    text-transform:none; letter-spacing:0; font-size:8pt; color:var(--sage); margin-top:3px}
+  .doc-num{font-family:'Oswald',sans-serif; font-weight:700; font-size:13pt; color:var(--orange)}
+
+  .cover-mid{border-top:2px solid var(--ink); padding-top:.4in}
+  .eyebrow{display:block; font-family:'Oswald',sans-serif; font-weight:700;
+    text-transform:uppercase; letter-spacing:.24em; font-size:10pt; color:var(--orange);
+    margin-bottom:.22in}
+  .cover-title{font-size:44pt; max-width:9in}
+  .cover-sub{color:var(--sage); font-size:12.5pt; margin-top:.22in; max-width:6.4in; font-family:'Inter',sans-serif; font-weight:400; text-transform:none; letter-spacing:0}
+
+  .cover-bottom{border-top:1px solid var(--hair); padding-top:.22in;
+    display:flex; justify-content:space-between; font-size:8.5pt; color:var(--sage)}
+
+  /* ---- body pages ---- */
+  .body{padding:.85in .85in 1in}
+  .body h1{font-size:19pt; margin:.5in 0 .18in; padding-top:.24in; border-top:2px solid var(--ink)}
+  .body h1:first-child{margin-top:0; padding-top:0; border-top:0}
+  .body h2{font-size:14.5pt; margin:.32in 0 .13in}
+  .body h3{font-size:11.5pt; text-transform:none; letter-spacing:.01em; margin:.24in 0 .08in}
+  .body h4{font-size:10.3pt; text-transform:none; font-family:'Inter',sans-serif; font-weight:700; margin:.16in 0 .06in}
+  p{margin:0 0 .13in; orphans:3; widows:3}
+  strong{font-weight:700}
+  em{font-style:italic; color:var(--sage)}
+  code{font-family:'SF Mono','Menlo',monospace; font-size:9pt; background:rgba(20,16,12,.06); padding:1px 4px}
+  pre{background:var(--ink); color:#e8e6d8; padding:.16in; font-size:8.5pt;
+    overflow-x:auto; margin:0 0 .16in; page-break-inside:avoid}
+  pre code{background:none; padding:0; color:inherit}
+  a{color:var(--orange); text-decoration:none}
+  hr{border:0; border-top:1px solid var(--hair); margin:.24in 0}
+  blockquote{border-left:3px solid var(--orange); margin:.16in 0; padding:.02in 0 .02in .18in;
+    color:var(--ink); font-style:italic}
+
+  ul,ol{margin:0 0 .16in; padding-left:.28in}
+  li{margin-bottom:.06in; page-break-inside:avoid}
+  ul.check{list-style:none; padding-left:0}
+  ul.check li{display:flex; align-items:flex-start; gap:.1in; padding-left:0}
+  ul.check .box{
+    flex:0 0 auto; width:9pt; height:9pt; border:1.4pt solid var(--ink);
+    margin-top:2.5pt; display:inline-block;
+  }
+  ul.check li.done .box{background:var(--orange); border-color:var(--orange)}
+  ul.check li.done{color:var(--sage); text-decoration:line-through}
+
+  /* brand-styled substitutes for the ⭐📱✅⏳ emoji, kept in-palette rather
+     than falling back to the system color-emoji font */
+  .mk-star{color:var(--orange); font-weight:700; font-size:1.1em}
+  .mk-vert{
+    display:inline-block; font-family:'Oswald',sans-serif; font-weight:700;
+    text-transform:uppercase; letter-spacing:.05em; font-size:7pt;
+    border:1pt solid var(--orange); color:var(--orange); padding:0 3pt;
+    vertical-align:.5pt;
+  }
+  .mk-done{color:var(--orange); font-weight:700}
+  .mk-wip{color:var(--sage); font-style:italic}
+
+  .tbl-wrap{margin:0 0 .18in}
+  table{width:100%; border-collapse:collapse; font-size:9.3pt}
+  th,td{border:1px solid var(--hair); padding:.06in .1in; text-align:left; vertical-align:top}
+  th{font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    letter-spacing:.05em; font-size:8pt; background:rgba(20,16,12,.05)}
+  tr{page-break-inside:avoid}
+
+  /* running footer via printed page numbers is handled by Chrome's own
+     print-to-pdf footer when enabled; we render our own instead for full
+     brand control, repeated per section via CSS page context is not
+     available in print-to-pdf, so footer is omitted from body pages by
+     design — the cover carries the document identity. */
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="cover-top">
+    <div class="brand">Creatively Grow<span class="sub">Video Content + Growth Systems · Tampa Bay, FL</span></div>
+    <div class="doc-num">04</div>
+  </div>
+  <div class="cover-mid">
+    <span class="eyebrow">Client Delivery System</span>
+    <h1 class="cover-title">Landing Page</h1>
+    <p class="cover-sub">Structure, form, build steps</p>
+  </div>
+  <div class="cover-bottom">
+    <span>Internal — not for client distribution</span>
+    <span>creativelygrow.com</span>
+  </div>
+</section>
+
+<section class="body">
+<p><strong>Owner: Claude builds, Devon reviews and pushes DNS.</strong></p>
+<hr>
+<h2>What already exists — and what it isn't</h2>
+<p>Checked the repo before writing this. Two different things exist and neither is a ready-made client template as-is:</p>
+<div class="tbl-wrap"><table><thead><tr><th>Files</th><th>What they actually are</th></tr></thead><tbody>
+<tr><td><code>demos/demo-hvac.html</code>, <code>demo-plumber.html</code>, <code>demo-salon.html</code></td><td><strong>Visual references only.</strong> Hero, services grid, CTA band, footer. No form, no GHL wiring. Good for structure and styling; not wired for leads.</td></tr>
+<tr><td><code>epoxy.html</code>, <code>pool-cage.html</code></td><td><strong>Creatively Grow's own outbound tool</strong> — the "leak check" offer, posting to <code>/api/leak-check</code>. This sells <em>Creatively Grow's services</em>, not the client's. Do not clone this as a client page.</td></tr>
+</tbody></table></div>
+<p><strong>So every client landing page needs its own lead form built and wired.</strong> The demos give you the look; they don't give you the function. Budget for that — it's not a copy-paste.</p>
+<hr>
+<h2>Structure</h2>
+<p>One page, five sections. Do not build more; a contractor's landing page that's twenty pages loses to one that answers the four questions fast.</p>
+<h3>1. Hero</h3>
+<ul>
+<li>Headline: the angle from <code>03-ad-creative.md</code> #1 — same words as the ad that brought them here.</li>
+</ul>
+<p>  <strong>Mismatch between ad and headline is the single biggest silent conversion killer.</strong></p>
+<ul>
+<li>One line sub-headline: the specific (service area, or the honest range)</li>
+<li>One button: the same CTA text as everywhere else in the funnel</li>
+<li>Background: a still from the shoot, never stock</li>
+</ul>
+<h3>2. The work</h3>
+<ul>
+<li>6–12 photos of finished jobs, real, from the shoot</li>
+<li>If pre-launch and no shoot yet: 3–4 from intake §5, clearly captioned with real job details</li>
+<li><strong>Never a stock photo of a smiling stranger.</strong> It's the fastest way to look fake.</li>
+</ul>
+<h3>3. How it works / the process</h3>
+<ul>
+<li>3–4 steps, plain language, matching what intake said actually happens</li>
+<li>This section exists to answer "will they disappear halfway" — the fear from the treatment</li>
+</ul>
+<h3>4. Honest ranges</h3>
+<ul>
+<li>Price range and typical timeline per service, from intake §2</li>
+<li>State it. Most competitors won't, which is why saying it is an advantage, not a risk.</li>
+</ul>
+<h3>5. Contact</h3>
+<ul>
+<li>Form: name, phone, one-line "what do you need"</li>
+<li>Phone number, click-to-call</li>
+<li>If the video ads exist: embed the brand story here too — this is where undecided traffic lands</li>
+</ul>
+<hr>
+<h2>The form — build this per client</h2>
+<p>Two ways to wire it. Pick one per client, don't mix.</p>
+<p><strong>A. Direct to their GHL sub-account (default).</strong> A plain form posting straight to the client's inbound webhook. Simplest, and it's their data in their CRM from day one.</p>
+<p><strong>B. Multi-tenant page, URL-param wired</strong> — the pattern already proven on <code>review-funnel.html</code> and <code>client-intake-form.html</code>. One hosted page, <code>?business=&amp;webhook=</code> per client. Worth it only if you expect to spin up landing pages fast and don't want a new file per client. Skip this for the first few clients — build direct until the volume justifies the extra layer.</p>
+<p><strong>Either way, non-negotiable:</strong></p>
+<ul>
+<li>Submit button disables on click, shows a status message — no double-submits</li>
+<li>Success state confirms <em>and</em> tells them what happens next ("we'll text you within the hour")</li>
+<li>Never a dead end on network failure — same fallback pattern as <code>client-intake-form.html</code></li>
+</ul>
+<p>  (fall back to a pre-filled <code>mailto:</code> rather than losing the lead)</p>
+<ul>
+<li><code>robots.txt</code>: no <code>Disallow</code> needed here — unlike the intake form, you want this one indexed</li>
+</ul>
+<hr>
+<h2>Build steps</h2>
+<ol>
+<li>Pull the closest visual reference from the three demos, or start from the editorial system in</li>
+</ol>
+<p>   <code>creativelygrow-next/app/blog/blog.css</code> if the client's brand leans that direction</p>
+<ol>
+<li>Swap in the client's brand tokens — colors, logo, fonts if they have them</li>
+<li>Write the five sections from intake + the SEO audit's findings (<code>01b-seo-audit.md</code>) — the audit</li>
+</ol>
+<p>   tells you what the old page was missing</p>
+<ol>
+<li>Build and wire the form (above)</li>
+<li>Add the client's schema: <code>LocalBusiness</code>, correct <code>areaServed</code>, no fabricated <code>PostalAddress</code> if</li>
+</ol>
+<p>   they're a service-area business — see the fix already made to <code>index.html</code> for the pattern</p>
+<ol>
+<li>Mobile pass — most of this traffic is a phone, test at 375px width before anything else</li>
+<li>Page speed check — a slow page kills paid traffic before it converts</li>
+</ol>
+<hr>
+<h2>Rules</h2>
+<ol>
+<li><strong>Ad copy and page headline must match.</strong> Write them together, not separately.</li>
+<li><strong>No stock photography, ever.</strong> Real work or nothing.</li>
+<li><strong>One page, five sections.</strong> Resist adding more.</li>
+<li><strong>State the price range.</strong> Hiding it costs more leads than it protects.</li>
+<li><strong>Test on a phone before launch.</strong> Not the browser dev-tools mobile view — an actual phone.</li>
+</ol>
+</section>
+
+</body>
+</html>

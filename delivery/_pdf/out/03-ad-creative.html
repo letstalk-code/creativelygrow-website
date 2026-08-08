@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ad Creative — Creatively Grow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Creatively Grow print system — same tokens as the live editorial site
+     (DESIGN-REFERENCE.md): cream ground, ink type, orange the only accent,
+     hard rules instead of cards, zero radius on structure. */
+  :root{
+    --cream:#f9f8eb; --ink:#14100c; --sage:#4e5a4e; --hair:rgba(20,16,12,.22);
+    --hair-lt:rgba(20,16,12,.12); --orange:#ef7938;
+  }
+  @page{ size:Letter; margin:0; }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--cream); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; font-size:10.3pt; line-height:1.55;
+    font-variant-numeric:tabular-nums;
+  }
+  h1,h2,h3,h4{
+    font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    line-height:1.08; margin:0; text-wrap:balance;
+  }
+
+  /* ---- cover ---- */
+  .cover{
+    height:11in; padding:0.95in 0.85in; display:flex; flex-direction:column;
+    justify-content:space-between; page-break-after:always;
+  }
+  .cover-top{display:flex; justify-content:space-between; align-items:flex-start}
+  .brand{font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    letter-spacing:.16em; font-size:11pt}
+  .brand .sub{display:block; font-family:'Inter',sans-serif; font-weight:400;
+    text-transform:none; letter-spacing:0; font-size:8pt; color:var(--sage); margin-top:3px}
+  .doc-num{font-family:'Oswald',sans-serif; font-weight:700; font-size:13pt; color:var(--orange)}
+
+  .cover-mid{border-top:2px solid var(--ink); padding-top:.4in}
+  .eyebrow{display:block; font-family:'Oswald',sans-serif; font-weight:700;
+    text-transform:uppercase; letter-spacing:.24em; font-size:10pt; color:var(--orange);
+    margin-bottom:.22in}
+  .cover-title{font-size:44pt; max-width:9in}
+  .cover-sub{color:var(--sage); font-size:12.5pt; margin-top:.22in; max-width:6.4in; font-family:'Inter',sans-serif; font-weight:400; text-transform:none; letter-spacing:0}
+
+  .cover-bottom{border-top:1px solid var(--hair); padding-top:.22in;
+    display:flex; justify-content:space-between; font-size:8.5pt; color:var(--sage)}
+
+  /* ---- body pages ---- */
+  .body{padding:.85in .85in 1in}
+  .body h1{font-size:19pt; margin:.5in 0 .18in; padding-top:.24in; border-top:2px solid var(--ink)}
+  .body h1:first-child{margin-top:0; padding-top:0; border-top:0}
+  .body h2{font-size:14.5pt; margin:.32in 0 .13in}
+  .body h3{font-size:11.5pt; text-transform:none; letter-spacing:.01em; margin:.24in 0 .08in}
+  .body h4{font-size:10.3pt; text-transform:none; font-family:'Inter',sans-serif; font-weight:700; margin:.16in 0 .06in}
+  p{margin:0 0 .13in; orphans:3; widows:3}
+  strong{font-weight:700}
+  em{font-style:italic; color:var(--sage)}
+  code{font-family:'SF Mono','Menlo',monospace; font-size:9pt; background:rgba(20,16,12,.06); padding:1px 4px}
+  pre{background:var(--ink); color:#e8e6d8; padding:.16in; font-size:8.5pt;
+    overflow-x:auto; margin:0 0 .16in; page-break-inside:avoid}
+  pre code{background:none; padding:0; color:inherit}
+  a{color:var(--orange); text-decoration:none}
+  hr{border:0; border-top:1px solid var(--hair); margin:.24in 0}
+  blockquote{border-left:3px solid var(--orange); margin:.16in 0; padding:.02in 0 .02in .18in;
+    color:var(--ink); font-style:italic}
+
+  ul,ol{margin:0 0 .16in; padding-left:.28in}
+  li{margin-bottom:.06in; page-break-inside:avoid}
+  ul.check{list-style:none; padding-left:0}
+  ul.check li{display:flex; align-items:flex-start; gap:.1in; padding-left:0}
+  ul.check .box{
+    flex:0 0 auto; width:9pt; height:9pt; border:1.4pt solid var(--ink);
+    margin-top:2.5pt; display:inline-block;
+  }
+  ul.check li.done .box{background:var(--orange); border-color:var(--orange)}
+  ul.check li.done{color:var(--sage); text-decoration:line-through}
+
+  /* brand-styled substitutes for the ⭐📱✅⏳ emoji, kept in-palette rather
+     than falling back to the system color-emoji font */
+  .mk-star{color:var(--orange); font-weight:700; font-size:1.1em}
+  .mk-vert{
+    display:inline-block; font-family:'Oswald',sans-serif; font-weight:700;
+    text-transform:uppercase; letter-spacing:.05em; font-size:7pt;
+    border:1pt solid var(--orange); color:var(--orange); padding:0 3pt;
+    vertical-align:.5pt;
+  }
+  .mk-done{color:var(--orange); font-weight:700}
+  .mk-wip{color:var(--sage); font-style:italic}
+
+  .tbl-wrap{margin:0 0 .18in}
+  table{width:100%; border-collapse:collapse; font-size:9.3pt}
+  th,td{border:1px solid var(--hair); padding:.06in .1in; text-align:left; vertical-align:top}
+  th{font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
+    letter-spacing:.05em; font-size:8pt; background:rgba(20,16,12,.05)}
+  tr{page-break-inside:avoid}
+
+  /* running footer via printed page numbers is handled by Chrome's own
+     print-to-pdf footer when enabled; we render our own instead for full
+     brand control, repeated per section via CSS page context is not
+     available in print-to-pdf, so footer is omitted from body pages by
+     design — the cover carries the document identity. */
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="cover-top">
+    <div class="brand">Creatively Grow<span class="sub">Video Content + Growth Systems · Tampa Bay, FL</span></div>
+    <div class="doc-num">03</div>
+  </div>
+  <div class="cover-mid">
+    <span class="eyebrow">Client Delivery System</span>
+    <h1 class="cover-title">Ad Creative</h1>
+    <p class="cover-sub">Angle bank, two video cuts, one static</p>
+  </div>
+  <div class="cover-bottom">
+    <span>Internal — not for client distribution</span>
+    <span>creativelygrow.com</span>
+  </div>
+</section>
+
+<section class="body">
+<p><strong>Owner: Claude drafts, Devon cuts.</strong> Everything here is built from the shoot — no stock, no templates-with-their-logo-on.</p>
+<p>Two video ads and one static, all cut from the same day's footage. Channel is decided in <code>06-traffic.md</code>; this doc is the creative regardless of where it runs.</p>
+<hr>
+<h2>The principle</h2>
+<p><strong>The creative is the targeting.</strong> Modern ad platforms find the audience — your job is to make something that self-selects the right person in the first two seconds. A tight audience with weak creative loses to broad targeting with creative that speaks to exactly one person's problem.</p>
+<p>Practical consequence: <strong>don't build six audiences. Build six angles.</strong> Let the platform sort it out.</p>
+<hr>
+<h2>Step 1 — The angle bank <code>[do this before writing anything]</code></h2>
+<p>Pull straight from intake §2.1 and §2.4 — the owner's verbatim words and the customer fear. Do not invent angles from imagination.</p>
+<p>Write 4–6. Each one is a single sentence naming <strong>one specific person's problem.</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>#</th><th>Angle</th><th>Source</th><th>For</th></tr></thead><tbody>
+<tr><td>1</td><td><em>The fear</em> — the thing they worry about before calling</td><td>Intake §2.4</td><td>Cold</td></tr>
+<tr><td>2</td><td><em>The differentiator</em> — what they do that others skip</td><td>Intake §2.1</td><td>Cold</td></tr>
+<tr><td>3</td><td><em>The price question</em> — what it actually costs, said plainly</td><td>Intake §2.1</td><td>Consideration</td></tr>
+<tr><td>4</td><td><em>The timeline</em> — how long, how disrupted</td><td>Intake §2.1</td><td>Consideration</td></tr>
+<tr><td>5</td><td><em>The proof</em> — the finished work speaking for itself</td><td>Shoot footage</td><td>Retarget</td></tr>
+<tr><td>6</td><td><em>The unwanted job, inverted</em> — "we're the people for X, not Y"</td><td>Intake §2.1</td><td>Cold</td></tr>
+</tbody></table></div>
+<p><strong>Good angle:</strong> "Your garage floor is peeling because whoever did it skipped the grind." <strong>Bad angle:</strong> "Quality flooring solutions for discerning homeowners."</p>
+<p>The test: could a competitor put their logo on it? If yes, it isn't an angle.</p>
+<hr>
+<h2>Step 2 — Video Ad A · Problem / Agitate</h2>
+<p><strong>9:16 · 15–30s · cold audience</strong></p>
+<p>The hook does all the work. If the first two seconds don't land, nothing else in the ad matters.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Beat</th><th>Time</th><th>Content</th></tr></thead><tbody>
+<tr><td>Hook</td><td>0–2s</td><td>The problem, visually. The damage, the failure, the mess</td></tr>
+<tr><td>Name it</td><td>2–6s</td><td>One line of text or VO stating the problem plainly</td></tr>
+<tr><td>Turn</td><td>6–10s</td><td>Cut to the process — the money shot</td></tr>
+<tr><td>Proof</td><td>10–20s</td><td>The state change. Before → after</td></tr>
+<tr><td>Ask</td><td>20–30s</td><td>Owner to camera or text card. One CTA</td></tr>
+</tbody></table></div>
+<p><strong>Hook library</strong> <em>(pick by trade, all cut from Part 3 of the treatment)</em></p>
+<ul>
+<li>The failure, close and unflattering — peeling, sagging, cracked, filthy</li>
+<li>Hand pointing at the problem</li>
+<li>The unflattering before frame, held one beat too long</li>
+<li>Text-on-screen question: <em>"How long since anyone looked at this?"</em></li>
+<li>The money shot cold-opened with no setup</li>
+</ul>
+<p><strong>Text overlay rules</strong></p>
+<ul>
+<li>Big enough to read at arm's length on a phone</li>
+<li>Assume sound is off — the ad must work silent</li>
+<li>One idea per card, never two</li>
+</ul>
+<hr>
+<h2>Step 3 — Video Ad B · Proof / Authority</h2>
+<p><strong>9:16 · 15–30s · warm and retargeting</strong></p>
+<p>This is the brand story film, cut down. Same footage, different job: the person already knows they have the problem. Now they're deciding who to trust.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Beat</th><th>Time</th><th>Content</th></tr></thead><tbody>
+<tr><td>Face</td><td>0–3s</td><td>Owner, talking, in their space. A real person opens it</td></tr>
+<tr><td>Credential</td><td>3–8s</td><td>Years, crew, what they do — plainly, no boasting</td></tr>
+<tr><td>The line</td><td>8–18s</td><td>Their best verbatim line from the interview <em>(usually the answer to Q7)</em></td></tr>
+<tr><td>Work</td><td>18–26s</td><td>Process and finished result under the line</td></tr>
+<tr><td>Ask</td><td>26–30s</td><td>One CTA</td></tr>
+</tbody></table></div>
+<p><strong>This is where the film pays for itself.</strong> Nobody else in the local market has a real owner on camera saying something true.</p>
+<hr>
+<h2>Step 4 — Static Ad</h2>
+<p><strong>1:1 and 4:5 · both sizes, same design</strong></p>
+<p>One claim. One image. One CTA. Static is for the person who's seen the video and needs a reason to act now, or for a Google display placement where video won't run.</p>
+<ul>
+<li><strong>Image:</strong> the strongest single frame from the shoot — usually the after, or a matched before/after split</li>
+<li><strong>Headline:</strong> 5–8 words, the angle</li>
+<li><strong>Sub:</strong> one line, the specific</li>
+<li><strong>CTA:</strong> the same words as the landing page button — never a different phrase</li>
+<li><strong>Logo:</strong> small, corner, not the point</li>
+</ul>
+<p><strong>Do not</strong> put five bullet points, a phone number, a QR code, and a starburst on it. The image does the work.</p>
+<hr>
+<h2>Step 5 — Copy</h2>
+<p>Same structure whichever platform. Write one set per angle.</p>
+<p><strong>Primary text</strong></p>
+<pre><code>[Line 1 — the problem, in their words. Must stand alone; the rest is truncated on mobile.]
+
+[Line 2–3 — what you do about it, specifically.]
+
+[Line 4 — the honest range or timeline.]
+
+[CTA line.]</code></pre>
+<p><strong>Headline:</strong> under 40 characters, the angle not the brand <strong>Description:</strong> the specific — service area, timeline, or range</p>
+<p><strong>If Google instead of Meta</strong> <em>(client declined video ads — see <code>06-traffic.md</code>)</em></p>
+<ul>
+<li>15 headlines, 30 chars each — mix service + city + differentiator + price</li>
+<li>4 descriptions, 90 chars each</li>
+<li>Sitelinks pointing at the landing page sections</li>
+<li>Callouts: licensed, insured, years, warranty — whatever's actually true</li>
+</ul>
+<hr>
+<h2>Step 6 — What to test</h2>
+<p>Test <strong>one variable at a time</strong>, in this order. Most accounts test the wrong thing first.</p>
+<ol>
+<li><strong>Hook</strong> (first 2s) — the highest-leverage variable by a wide margin</li>
+<li><strong>Angle</strong> — which problem statement pulls</li>
+<li><strong>Format</strong> — video A vs B vs static</li>
+<li><strong>Copy</strong> — primary text variants</li>
+<li><strong>Everything else</strong> — rarely worth the traffic</li>
+</ol>
+<p><strong>Don't test:</strong> button colours, tiny copy tweaks, audience slicing. There isn't enough volume at a local budget to read those, and pretending otherwise burns the month.</p>
+<hr>
+<h2>Rules</h2>
+<ol>
+<li><strong>Never use footage from another client's job.</strong> Not once, not "just as a placeholder." One</li>
+</ol>
+<p>   discovery ends the relationship and deserves to.</p>
+<ol>
+<li><strong>No invented numbers.</strong> No "97% satisfaction," no made-up job counts, no fake review screenshots.</li>
+</ol>
+<p>   If the real number isn't known, describe the mechanism.</p>
+<ol>
+<li><strong>No fake urgency.</strong> No countdowns that reset, no "3 spots left" that's always 3.</li>
+<li><strong>Before/after must be the same job</strong>, same position. A before from one job and an after from</li>
+</ol>
+<p>   another is a fabricated result.</p>
+<ol>
+<li><strong>Claims must be verifiable.</strong> Licensed, insured, warrantied — only if intake confirmed it.</li>
+<li><strong>The CTA on the ad matches the CTA on the page.</strong> A mismatch is the most common reason a good ad</li>
+</ol>
+<p>   converts badly.</p>
+<ol>
+<li><strong>Silent-first.</strong> Most of the audience never turns sound on.</li>
+</ol>
+</section>
+
+</body>
+</html>
