@@ -11,7 +11,8 @@ Positioning stays Creatively Grow — video is the entry product, not the brand.
 - [x] Write up qualified list → `tasks/agency-partners.md` (9 qualified, 2 dropped, 2 unverified)
 - [ ] Manually check Nathan Currin (403'd) + Mack Media Group (truncated)
 - [ ] Import Tiers 1-2 to GHL agency account (`ghl-mcp` / `xwdd…`) tagged `partner-prospect`
-- [ ] Write partner intro message — white-label framing, trade rate, hands off their client
+- [x] Write partner intro message — white-label framing, trade rate, hands off their client
+      → `tasks/partner-outreach.md` (Tier 1 email, Tier 2 email, text version, objection answer, send order)
 - [ ] Call My SEO Guys (813) 333-9666 + Clearwater SEO (727) 900-5585 first
 
 ## One-pagers — TWO different documents, two different buyers
