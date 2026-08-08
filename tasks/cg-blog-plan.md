@@ -312,7 +312,10 @@ live static marketing site untouched.
       Workdir `creativelygrow-clone`, writes one `<slug>.md` to `tasks/blog-drafts/` with `status: draft`.
 - [x] Review/publish scheduled task **`creativelygrow-blog-review-publish`**, `0 10 * * 1,4`
       (Mon/Thu 10am, one hour after Hermes). Reviews against this plan, generates 3 images via
-      Higgsfield (~6 credits/post), flips `status: published`, moves into
+      the Higgsfield **web UI via Chrome MCP on the Unlimited tab — never the Higgsfield MCP,
+      which bills credits** (it reports `unlim: available: false`; the Ultimate plan's unlimited
+      generations are only spendable in the web app). If the unlimited path is unavailable the task
+      publishes without images rather than spending. Flips `status: published`, moves into
       `creativelygrow-next/content/blog/`, builds, deploys the blog zone, verifies live, commits.
       Devon approved auto-deploy 2026-08-07.
 - [x] Drafts carry no images by design — Hermes can't generate them and must not link stock.
