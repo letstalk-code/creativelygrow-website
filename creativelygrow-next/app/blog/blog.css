@@ -1,0 +1,378 @@
+/* Blog surface — built to DESIGN-REFERENCE.md (the editorial system, `cg-ed`).
+   Cream paper, ink type, orange as the only accent. Radius 0 for structure,
+   999px pills for buttons only. Hard rules instead of cards. No shadows at rest. */
+.cg-blog {
+    --cream: #f9f8eb;
+    --ink: #14100c;
+    --forest-light: #2d3a2d;
+    --sage: #4e5a4e;
+    --cream-dim: #b8b8a8;
+    --orange: #ef7938;
+    --orange-hover: #d96a2d;
+
+    --rule: 2px solid var(--ink);
+    --hairline: 1px solid rgba(20, 16, 12, 0.18);
+
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Full-bleed editorial frame; content sits left, not centred. */
+.cg-frame {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+.cg-col {
+    max-width: 720px;
+}
+
+.cg-blog h1,
+.cg-blog h2,
+.cg-blog h3 {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.04;
+    color: var(--ink);
+    margin: 0;
+}
+
+/* Eyebrow — Oswald 700, heavily tracked, always orange. */
+.cg-eyebrow {
+    display: block;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: var(--orange);
+}
+
+/* ---- header ---- */
+.cg-head {
+    border-bottom: var(--hairline);
+    background: var(--cream);
+}
+.cg-head-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 20px;
+}
+.cg-brand,
+.cg-nav a {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+}
+.cg-brand {
+    font-size: 13px;
+}
+.cg-nav {
+    display: flex;
+    gap: 28px;
+}
+.cg-nav a:hover {
+    color: var(--orange);
+}
+
+/* ---- index ---- */
+.cg-lede {
+    padding: 64px 0 40px;
+}
+.cg-lede h1 {
+    font-size: clamp(44px, 7vw, 88px);
+    margin: 14px 0 0;
+}
+.cg-lede p {
+    max-width: 620px;
+    margin: 22px 0 0;
+    color: var(--sage);
+    font-size: 17px;
+    line-height: 1.65;
+}
+
+/* The numbered row — the system's replacement for cards. */
+.cg-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 80px;
+    border-top: var(--rule);
+}
+.cg-row {
+    border-bottom: var(--hairline);
+}
+.cg-row a {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    text-decoration: none;
+    color: inherit;
+}
+.cg-num {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--orange);
+    line-height: 1.1;
+}
+.cg-row h2 {
+    font-size: 26px;
+    max-width: 780px;
+}
+.cg-row p {
+    margin: 10px 0 0;
+    max-width: 680px;
+    color: var(--sage);
+    font-size: 16px;
+    line-height: 1.65;
+}
+.cg-row a:hover h2 {
+    color: var(--orange);
+}
+.cg-row .cg-eyebrow {
+    margin-top: 12px;
+}
+.cg-empty {
+    border-top: var(--rule);
+    padding: 64px 0;
+    color: var(--sage);
+}
+
+/* ---- article ---- */
+.cg-post-head {
+    padding: 56px 0 36px;
+}
+.cg-post-head h1 {
+    font-size: clamp(40px, 6vw, 76px);
+    margin-top: 16px;
+    max-width: 15ch;
+}
+
+/* Images: 16:9, hairline border, zero radius, flush in the grid. */
+.cg-figure {
+    margin: 0 0 44px;
+    max-width: 1040px;
+}
+.cg-hero,
+.cg-body img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: var(--hairline);
+    border-radius: 0;
+}
+
+.cg-body {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--sage);
+    padding-bottom: 24px;
+}
+.cg-body strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+.cg-body h2 {
+    font-size: 30px;
+    margin: 52px 0 18px;
+    padding-top: 26px;
+    border-top: var(--hairline);
+}
+.cg-body h3 {
+    font-size: 19px;
+    margin: 34px 0 10px;
+}
+.cg-body p {
+    margin: 0 0 20px;
+}
+.cg-body ul,
+.cg-body ol {
+    margin: 0 0 20px;
+    padding-left: 20px;
+}
+.cg-body li {
+    margin-bottom: 9px;
+}
+.cg-body a {
+    color: var(--orange);
+    text-underline-offset: 3px;
+}
+.cg-body a:hover {
+    color: var(--orange-hover);
+}
+.cg-body blockquote {
+    margin: 28px 0;
+    padding-left: 22px;
+    border-left: 3px solid var(--orange);
+    color: var(--ink);
+}
+/* Figure captions: the in-body image is followed by an italic line. */
+.cg-body img + em {
+    display: block;
+    margin: 12px 0 40px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--sage);
+}
+.cg-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 28px;
+    font-size: 15px;
+}
+.cg-body th,
+.cg-body td {
+    border: var(--hairline);
+    padding: 10px 12px;
+    text-align: left;
+}
+.cg-body th {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--ink);
+}
+.cg-scroll-x {
+    overflow-x: auto;
+}
+
+/* ---- FAQ ---- */
+.cg-faq {
+    border-top: var(--rule);
+    padding: 48px 0 64px;
+}
+.cg-faq h2 {
+    font-size: 30px;
+    margin-bottom: 28px;
+}
+.cg-faq dt {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 17px;
+    color: var(--ink);
+    padding-top: 22px;
+    border-top: var(--hairline);
+}
+.cg-faq dd {
+    margin: 10px 0 26px;
+    color: var(--sage);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* ---- CTA: a dark band, the system's rhythm device ---- */
+.cg-cta {
+    background: var(--ink);
+    color: var(--cream-dim);
+    padding: 64px 0;
+}
+.cg-cta h2 {
+    color: var(--cream);
+    font-size: clamp(30px, 4vw, 46px);
+    max-width: 18ch;
+}
+.cg-cta p {
+    margin: 20px 0 32px;
+    max-width: 560px;
+    font-size: 17px;
+    line-height: 1.7;
+}
+.cg-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+/* Buttons are the only pills in the system. */
+.cg-btn {
+    display: inline-block;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    padding: 15px 30px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: var(--orange);
+    color: var(--ink);
+    border: 2px solid var(--orange);
+    box-shadow: 0 8px 24px rgba(239, 121, 56, 0.25);
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.cg-btn:hover {
+    background: var(--orange-hover);
+    border-color: var(--orange-hover);
+    color: var(--ink);
+}
+/* Ghost is `2px solid ink` on cream; on the dark band it takes cream instead —
+   same palette, the only place the spec needed extending. */
+.cg-btn-ghost {
+    background: transparent;
+    border: 2px solid var(--cream);
+    color: var(--cream);
+    box-shadow: none;
+}
+.cg-btn-ghost:hover {
+    background: var(--cream);
+    border-color: var(--cream);
+    color: var(--ink);
+}
+
+/* ---- footer ---- */
+.cg-foot {
+    margin-top: auto;
+    background: var(--ink);
+    color: var(--cream-dim);
+    border-top: 1px solid var(--forest-light);
+    padding: 34px 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.cg-foot a {
+    color: var(--cream-dim);
+    text-decoration: none;
+}
+.cg-foot a:hover {
+    color: var(--orange);
+}
+
+/* Focus: inputs and links take the orange ring, per brand. */
+.cg-blog a:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+    .cg-frame {
+        padding: 0 20px;
+    }
+    .cg-nav {
+        gap: 18px;
+    }
+    .cg-row a {
+        grid-template-columns: 40px 1fr;
+        gap: 14px;
+    }
+    .cg-body h2 {
+        font-size: 25px;
+    }
+}

@@ -2,23 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "creativelygrow",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321"],
-      "port": 4321
-    },
-    {
-      "name": "creativelygrow-alt",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4322"],
-      "port": 4322
-    },
-    {
-      "name": "design-handoff",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4330", "--directory",
-        "/private/tmp/claude-503/-Users-labiffilmhouse-Desktop2-creativelygrow-clone/62cb1ae3-e451-4db5-8dc4-fc42fcd5f036/scratchpad/design/design_handoff_creatively_grow"],
-      "port": 4330
+      "name": "cg-blog",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3005,
+      "cwd": "creativelygrow-next"
     }
   ]
 }

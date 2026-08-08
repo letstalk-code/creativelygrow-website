@@ -1,0 +1,14 @@
+{
+  "functions": {
+    "app/api/analyze/route.ts": {
+      "maxDuration": 60
+    }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://creativelygrow.com",
+      "permanent": false
+    }
+  ]
+}

@@ -6,5 +6,6 @@ Disallow: /pool-cage
 Disallow: /studio
 Disallow: /g
 
-# Sitemap
+# Sitemaps
 Sitemap: https://creativelygrow.com/sitemap.xml
+Sitemap: https://creativelygrow.com/blog/sitemap.xml
