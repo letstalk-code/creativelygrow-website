@@ -146,7 +146,7 @@ missed calls recovered, inquiries and bookings, follow-up status, reviews and re
 | `01b-seo-audit.md` | ✅ |
 | `02-video-treatment.md` | ✅ (b-roll included) |
 | `03-ad-creative.md` | ✅ |
-| `04-landing-page.md` | ⬜ next |
-| `05-ghl-snapshot.md` | ⬜ blocked on Hermes + Computer Use |
+| `04-landing-page.md` | ✅ |
+| `05-ghl-snapshot.md` | ⏳ Hermes building live |
 | `06-traffic.md` | ⬜ |
 | `07-reporting.md` | ⬜ |
