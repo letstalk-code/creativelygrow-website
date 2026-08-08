@@ -15,7 +15,8 @@ SIGNED
   │
   ├─ Day 0    Intake (GATE — nothing proceeds until complete)          Devon
   │
-  ├─ Day 1-2  Treatment + ad concepts                                  Claude
+  ├─ Day 1-2  SEO audit + baseline capture                             Claude
+  │           Treatment + ad concepts                                  Claude
   │           GHL sub-account + snapshot push                          Devon
   │
   ├─ Day 3-7  Landing page built                                       Claude
@@ -50,6 +51,11 @@ it changes the whole engagement.
 ---
 
 ## Phase 1 — Foundation (Day 1–2)
+
+**Claude:** run the SEO audit on their site → `01b-seo-audit.md`
+`/seo-audit https://clientsite.com` + `/seo-local`. Do this **first** — the findings feed the landing
+page, the GBP fixes, and the Day-90 baseline. **Capture the baseline numbers before changing anything**,
+or there's nothing to compare against at the end.
 
 **Claude:** write the video treatment from intake → `02-video-treatment.md`
 **Claude:** draft 3 ad concepts against the angle bank → `03-ad-creative.md`
@@ -137,6 +143,7 @@ missed calls recovered, inquiries and bookings, follow-up status, reviews and re
 |---|---|
 | `00-RUNBOOK.md` | ✅ this file |
 | `01-intake.md` | ⬜ next |
+| `01b-seo-audit.md` | ✅ |
 | `02-video-treatment.md` | ⬜ |
 | `03-ad-creative.md` | ⬜ |
 | `04-landing-page.md` | ⬜ |
