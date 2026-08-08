@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started — Creatively Grow</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f9f8eb; --ink:#14100c; --sage:#4e5a4e; --orange:#ef7938;
+    --orange-hover:#d96a2d; --hair:rgba(20,16,12,.18);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);
+       font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  header{border-bottom:2px solid var(--ink);padding:40px 0 28px}
+  .eyebrow{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+           letter-spacing:.22em;font-size:12px;color:var(--orange);display:block}
+  h1{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+     font-size:clamp(32px,6vw,54px);line-height:1.05;margin:14px 0 0}
+  .lede{color:var(--sage);margin:18px 0 0;max-width:56ch}
+  .time{margin:18px 0 0;font-size:14px;color:var(--sage)}
+
+  fieldset{border:0;border-top:1px solid var(--hair);margin:0;padding:36px 0 8px}
+  legend{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+         letter-spacing:.1em;font-size:15px;padding:0}
+  .why{color:var(--sage);font-size:14px;margin:8px 0 22px;max-width:58ch}
+
+  label{display:block;margin:0 0 20px}
+  .lab{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+  .hint{display:block;font-weight:400;color:var(--sage);font-size:13px;margin-bottom:8px}
+  input[type=text],input[type=email],input[type=tel],input[type=url],textarea,select{
+    width:100%;padding:11px 13px;border:1px solid var(--ink);border-radius:0;
+    background:#fff;font-family:inherit;font-size:15px;color:var(--ink)}
+  textarea{min-height:96px;resize:vertical}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--orange);
+    outline-offset:0;border-color:transparent}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+  @media(max-width:620px){.row{grid-template-columns:1fr}}
+
+  .radios{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+  .radios label{margin:0}
+  .radios input{position:absolute;opacity:0;pointer-events:none}
+  .radios span{display:inline-block;padding:9px 18px;border:2px solid var(--ink);
+    border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;user-select:none}
+  .radios input:checked + span{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+  .radios input:focus-visible + span{outline:2px solid var(--orange);outline-offset:2px}
+
+  .note{background:var(--ink);color:#b8b8a8;padding:22px;margin:26px 0 0;font-size:14.5px}
+  .note strong{color:var(--cream)}
+
+  .actions{border-top:2px solid var(--ink);margin-top:34px;padding:28px 0 70px}
+  button{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;font-size:14px;padding:15px 34px;border:2px solid var(--orange);
+    border-radius:999px;background:var(--orange);color:var(--ink);cursor:pointer;
+    box-shadow:0 8px 24px rgba(239,121,56,.25)}
+  button:hover{background:var(--orange-hover);border-color:var(--orange-hover)}
+  button[disabled]{opacity:.5;cursor:default;box-shadow:none}
+  .status{margin-top:14px;font-size:14px;color:var(--sage)}
+  .done{display:none;padding:60px 0 80px}
+  .done h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:30px;margin:0 0 12px}
+</style>
+</head>
+<body>
+
+<div id="form-view">
+  <header class="wrap">
+    <span class="eyebrow">Creatively Grow</span>
+    <h1>Let's get you set up.</h1>
+    <p class="lede">A few things we need before we start building. Most of it you'll know off the top
+      of your head — the only fiddly part is account access, and we can find those together if you
+      get stuck.</p>
+    <p class="time">About 10 minutes. Nothing here is a commitment — it's what we need to do the work.</p>
+  </header>
+
+  <form class="wrap" id="intake">
+
+    <fieldset>
+      <legend>1. The basics</legend>
+      <p class="why">This has to match your Google listing exactly, so we don't split your search
+        presence across two versions of your name.</p>
+      <label><span class="lab">Business name</span><input type="text" name="business_name" required></label>
+      <div class="row">
+        <label><span class="lab">Your name</span><input type="text" name="contact_name" required></label>
+        <label><span class="lab">Best email</span><input type="email" name="email" required></label>
+      </div>
+      <div class="row">
+        <label><span class="lab">Business phone</span><input type="tel" name="phone" required></label>
+        <label><span class="lab">Website <span class="hint" style="display:inline">if you have one</span></span><input type="url" name="website" placeholder="https://"></label>
+      </div>
+      <label><span class="lab">Can that phone number receive texts?</span>
+        <span class="hint">Missed-call text-back is one of the first things we turn on. It only works on a mobile or VoIP line — not a landline.</span>
+        <span class="radios">
+          <label><input type="radio" name="textable" value="yes" required><span>Yes</span></label>
+          <label><input type="radio" name="textable" value="no"><span>No</span></label>
+          <label><input type="radio" name="textable" value="unsure"><span>Not sure</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Towns you'll actually drive to</span>
+        <span class="hint">Where you really work — not where you'd like to.</span>
+        <textarea name="service_area" required></textarea></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. The work</legend>
+      <p class="why">We build the campaign around the jobs you want more of, not the ones you happen
+        to do most.</p>
+      <label><span class="lab">Top 3 services — most wanted first</span>
+        <textarea name="services" required></textarea></label>
+      <div class="row">
+        <label><span class="lab">Typical price range for those</span>
+          <span class="hint">A range is fine. "$3,500–$7,000" works.</span>
+          <input type="text" name="price_range" required></label>
+        <label><span class="lab">How long a typical job takes</span><input type="text" name="timeline" required></label>
+      </div>
+      <label><span class="lab">The job you'd rather stop taking</span>
+        <span class="hint">Genuinely useful — we can filter it out instead of attracting it.</span>
+        <input type="text" name="least_wanted"></label>
+      <label><span class="lab">What makes you different from the guy down the road?</span>
+        <span class="hint">Your words, not marketing words. This often ends up in the film.</span>
+        <textarea name="differentiator" required></textarea></label>
+      <label><span class="lab">What do customers worry about before they call you?</span>
+        <span class="hint">Every trade has one. Answering it on camera is worth more than any ad.</span>
+        <textarea name="customer_fear"></textarea></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Who picks up the phone</legend>
+      <p class="why">This is the one that decides how the whole thing goes. Straight answers help us
+        more than tidy ones.</p>
+      <label><span class="lab">Who answers during the workday?</span><input type="text" name="who_answers" required></label>
+      <label><span class="lab">What happens to a call at 2pm when you're on a job?</span>
+        <span class="radios">
+          <label><input type="radio" name="call_handling" value="someone_answers" required><span>Someone answers</span></label>
+          <label><input type="radio" name="call_handling" value="voicemail"><span>Goes to voicemail</span></label>
+          <label><input type="radio" name="call_handling" value="missed"><span>Usually missed</span></label>
+        </span>
+      </label>
+      <label><span class="lab">What about a form or message at 9pm?</span><input type="text" name="after_hours"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Access we'll need</legend>
+      <p class="why">This is the part that holds projects up. If you don't know a login, say so — we'll
+        find it together in 15 minutes rather than trading emails for a fortnight.</p>
+      <label><span class="lab">Google Business Profile</span>
+        <span class="hint">Add <strong>letstalk@creativelygrow.com</strong> as a Manager, or tell us you need help.</span>
+        <span class="radios">
+          <label><input type="radio" name="gbp_access" value="added" required><span>Added</span></label>
+          <label><input type="radio" name="gbp_access" value="need_help"><span>Need help</span></label>
+          <label><input type="radio" name="gbp_access" value="no_profile"><span>Don't have one</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Where's your domain registered?</span>
+        <span class="hint">GoDaddy, Namecheap, Wix, wherever. Or "no idea" — that's a common answer.</span>
+        <input type="text" name="domain_host"></label>
+      <label><span class="lab">Do you run ads today?</span>
+        <span class="radios">
+          <label><input type="radio" name="ads_now" value="meta"><span>Facebook / Instagram</span></label>
+          <label><input type="radio" name="ads_now" value="google"><span>Google</span></label>
+          <label><input type="radio" name="ads_now" value="both"><span>Both</span></label>
+          <label><input type="radio" name="ads_now" value="none"><span>None</span></label>
+        </span>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>5. What you already have</legend>
+      <p class="why">Photos of your finished work are the most valuable thing you own for this, and
+        they're usually sitting on your phone. Send whatever you've got — we'll sort it.</p>
+      <label><span class="lab">Photos of finished jobs</span>
+        <span class="radios">
+          <label><input type="radio" name="photos" value="lots"><span>Plenty</span></label>
+          <label><input type="radio" name="photos" value="some"><span>A few</span></label>
+          <label><input type="radio" name="photos" value="none"><span>None</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Logo and brand files</span>
+        <span class="radios">
+          <label><input type="radio" name="logo" value="yes"><span>Have them</span></label>
+          <label><input type="radio" name="logo" value="somewhere"><span>Somewhere</span></label>
+          <label><input type="radio" name="logo" value="no"><span>Don't have any</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Anything else worth knowing?</span>
+        <span class="hint">Awards, licenses, certifications, a job you're proud of, something you've tried that didn't work.</span>
+        <textarea name="anything_else"></textarea></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>6. The film</legend>
+      <p class="why">Nobody's a natural on camera. We ask questions and cut the answers — you won't be
+        handed a script to perform.</p>
+      <label><span class="lab">Who'd be on camera?</span><input type="text" name="on_camera"></label>
+      <label><span class="lab">Do you want video ads, or just the brand film?</span>
+        <span class="hint">This decides which ad platform we use, so it's worth a moment's thought.</span>
+        <span class="radios">
+          <label><input type="radio" name="wants_video_ads" value="yes"><span>Video ads too</span></label>
+          <label><input type="radio" name="wants_video_ads" value="film_only"><span>Just the film</span></label>
+          <label><input type="radio" name="wants_video_ads" value="unsure"><span>Not sure yet</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Any job coming up worth filming?</span>
+        <span class="hint">Work in progress films far better than a finished, empty site.</span>
+        <input type="text" name="upcoming_job"></label>
+    </fieldset>
+
+    <div class="note">
+      <strong>One thing to expect:</strong> you'll see leads before you see rankings. Answering and
+      follow-up start working in week one. Local search takes months. We'd rather say that now than
+      have you wondering in month two.
+    </div>
+
+    <div class="actions">
+      <button type="submit" id="submitBtn">Send it over</button>
+      <div class="status" id="status"></div>
+    </div>
+  </form>
+</div>
+
+<div class="wrap done" id="done">
+  <h2>Got it — thank you.</h2>
+  <p class="lede">We'll review everything and come back within one business day with the treatment for
+    your film and what we're fixing first. If anything's missing we'll ask, rather than guess.</p>
+  <p class="time">Questions before then: <a href="tel:+17272708422" style="color:var(--orange)">(727) 270-8422</a>
+    or <a href="mailto:letstalk@creativelygrow.com" style="color:var(--orange)">letstalk@creativelygrow.com</a></p>
+</div>
+
+<script>
+  // Webhook comes in per client: ?webhook=<GHL inbound webhook URL>
+  // Same pattern as review-funnel.html so one hosted page serves every client.
+  var WEBHOOK = new URLSearchParams(location.search).get('webhook') || '';
+
+  document.getElementById('intake').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var btn = document.getElementById('submitBtn');
+    var status = document.getElementById('status');
+    var data = Object.fromEntries(new FormData(e.target).entries());
+
+    btn.disabled = true;
+    status.textContent = 'Sending…';
+
+    if (WEBHOOK) {
+      try {
+        await fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } catch (err) {
+        // Never strand the client on a network error — their answers are still worth capturing.
+        console.error(err);
+        status.textContent = '';
+        btn.disabled = false;
+        window.location.href = 'mailto:letstalk@creativelygrow.com'
+          + '?subject=' + encodeURIComponent('Intake — ' + (data.business_name || ''))
+          + '&body=' + encodeURIComponent(JSON.stringify(data, null, 2));
+        return;
+      }
+    } else {
+      // No webhook configured: fall back to email so the form is never a dead end.
+      window.location.href = 'mailto:letstalk@creativelygrow.com'
+        + '?subject=' + encodeURIComponent('Intake — ' + (data.business_name || ''))
+        + '&body=' + encodeURIComponent(JSON.stringify(data, null, 2));
+    }
+
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('done').style.display = 'block';
+    window.scrollTo(0, 0);
+  });
+</script>
+
+</body>
+</html>

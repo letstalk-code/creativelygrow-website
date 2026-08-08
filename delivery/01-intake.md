@@ -1,123 +1,134 @@
 # Phase 0 — Intake `[GATE]`
 
-**Owner: Devon.** Nothing downstream starts until this is complete.
+**Owner: Devon.** Nothing downstream starts until this is done.
 
-This is a gate, not a form. The most common way these engagements die is three weeks of "waiting on
-the client" — for a Google login, for logo files, for a decision on price. Collect it all once, on the
-call where they sign, while they're motivated.
+**Two pieces, and they do different jobs:**
 
-**Target: 20 minutes, on the phone or in person.** Do not email this as a PDF and hope. People don't
-fill in PDFs.
+| | Who fills it | What it captures |
+|---|---|---|
+| **This document** | Devon, on the call | Judgement calls — how they talk, whether they answer the phone, what they actually want more of |
+| **`client-intake-form.html`** | The client, after the call | Logins, files, facts. The stuff only they have |
+
+Send the form *after* the call, not instead of it. A form alone gets you facts and no understanding.
 
 ---
 
-## A. The business
+## Step 1 — Before the call (5 min)
 
-- Legal name / DBA (must match the GBP exactly)
-- Address — and **is it a service-area business?** (do customers come to them, or do they go out?)
-- Service area: the towns they'll actually drive to, not the ones they wish
-- Phone — **is this number textable?** If it's a landline, missed-call text-back won't work and that
-  needs solving before anything else
-- Email for leads
-- Hours, including Saturday
-- Years in business
+Look them up first so you're not asking what you could have seen:
 
-## B. What they sell
+- [ ] Their website — does one exist? Is it any good?
+- [ ] Their Google Business Profile — review count, rating, last review date, photos, category
+- [ ] Their Instagram / Facebook — active or dead?
+- [ ] Search `[their trade] [their city]` — where are they, who's above them?
 
-- Top 3 services, in order of what they *want more of* — not what they do most
+**Write down the one thing you already know is broken.** Leading with a specific observation
+("you've got 6 reviews and the newest is from 2024") earns more trust in ten seconds than any pitch.
+
+---
+
+## Step 2 — On the call (20 min)
+
+Work top to bottom. Write their words down verbatim — don't tidy them up. This copy ends up in the
+film and the ads, and your paraphrase is always worse than what the owner actually said.
+
+### 2.1 What they sell
+
+- Top 3 services, ordered by **what they want more of** — not what they do most
 - The one job they want more of
 - The job they'd rather stop taking
-- Price range per service (a range is fine; "it depends" is not)
+- Price range per service *(a range is fine, "it depends" is not)*
 - Average job value
-- Typical timeline start-to-finish
-- What makes them different, in their words — write it verbatim, don't clean it up
+- Typical timeline start to finish
 
-## C. Access `[the usual bottleneck]`
+> **Ask:** *"What makes you different from the guy down the road?"* — write the answer word for word.
 
-Get these **on the signing call**. Every one of them stalls a phase if it arrives late.
+### 2.2 Answering `[the section that predicts the outcome]`
 
-| Access | Needed for | Blocks |
-|---|---|---|
-| Google Business Profile — manager | GBP fixes, review link | Phase 1 |
-| Domain / DNS registrar login | Landing page going live | Phase 2 |
-| Website admin (if they have one) | SEO audit fixes | Phase 1 |
-| Meta Business Manager | Ads | Phase 4 |
-| Google Ads account | Ads | Phase 4 |
-| Existing CRM (if any) | Migration, dedupe | Phase 1 |
-
-If they don't know their logins, **that is normal.** Schedule 15 minutes to find them together rather
-than accepting "I'll send it over."
-
-## D. Answering `[do not skip]`
-
-- **Who answers the phone during the workday?**
+- Who answers the phone during the workday?
 - What happens to a call at 2pm on a Tuesday when they're on a roof?
-- What happens to a form submission at 9pm?
-- Do they currently text customers at all?
+- What happens to a form submitted at 9pm?
+- Do they text customers at all today?
 - Voicemail — do they check it? Honestly?
 
-If nobody answers, **that is the engagement's first deliverable**, and it changes the sequence. Fix it
-before spending a dollar on traffic. This section predicts the outcome of the pilot more than anything
-else on this page.
+> **If nobody answers, that is the first deliverable of the engagement** and it changes the sequence.
+> Fix it before spending a dollar on traffic. This section tells you more about how the pilot will go
+> than anything else on this page.
 
-## E. Reputation baseline
+### 2.3 Reputation now
 
-- Current Google review count and rating (screenshot it — you want the before-picture)
+- Current review count and rating — **screenshot it**
 - Do they ask for reviews today? How?
 - Any 1-star reviews needing a response?
 - Other profiles: Yelp, Facebook, Angi, BBB, Nextdoor
-- Have they ever been suspended or had reviews removed?
+- Ever been suspended or had reviews removed?
 
-## F. Assets
+### 2.4 Video
 
-- Logo — vector if it exists, PNG if not
-- Brand colors and fonts, if they have them
-- Existing photos of finished work — **this is the most valuable thing they own** and it's usually
-  sitting on a phone
-- Existing video, if any
-- Testimonials in writing
-- Anything they're proud of: awards, certifications, licenses
+- Comfortable on camera? Who's the on-camera person?
+- Best place to shoot — shop, job site, or both
+- Any job coming up worth filming?
+- **Do they want video ads, or just the brand film?**
 
-## G. Video
+> That last answer sets the ad channel. Video ads → Meta. No video ads → Google. See `06-traffic.md`.
 
-- Are they comfortable on camera? Who's the on-camera person?
-- Best location to shoot — their shop, a job site, or both
-- Is there a job coming up worth filming?
-- Do they want video ads, or just the brand film?
-  **→ This answer sets the ad channel.** Video ads → Meta. No video ads → Google. See `06-traffic.md`.
-
-## H. Money and expectations
+### 2.5 Money and expectations
 
 - Monthly ad budget they're comfortable with
 - What does a win look like at 90 days, in their words
 - What have they tried before, and what happened
-- **Are they currently paying anyone else for marketing?** (overlap causes attribution fights later)
+- Are they paying anyone else for marketing right now? *(overlap causes attribution fights later)*
 
 ---
 
-## Before closing the call
+## Step 3 — Before you hang up
 
-1. Book the shoot date. On the call. Not later.
-2. Confirm who the single point of contact is.
-3. Set the expectation: **"You'll see leads before you see rankings."** Local search takes months;
-   answering and follow-up work in week one. Say this now, so month two isn't a disappointment.
-4. Tell them what you need from them and when — usually just the photos and being available on shoot day.
+1. **Book the shoot date.** On this call. Not later.
+2. Confirm the single point of contact.
+3. Send them the intake form link while you're still on the phone.
+4. Set this expectation out loud:
+   > *"You'll see leads before you see rankings."*
+   Local search takes months. Answering and follow-up work in week one. Say it now so month two isn't
+   a disappointment.
 
 ---
 
-## Then
+## Step 4 — Chase the form (the actual bottleneck)
 
-Say to Claude: **"new client: [name]"** and paste this completed intake.
+The form is where engagements stall. Every item below blocks a specific phase:
 
-That kicks off Phase 1 — SEO audit, treatment, ad concepts.
+| They must provide | Blocks | Phase |
+|---|---|---|
+| Google Business Profile manager access | GBP fixes, review link | 1 |
+| Domain / DNS login | Landing page going live | 2 |
+| Website admin (if any) | SEO audit fixes | 1 |
+| Logo + brand files | Landing page, ads | 2 |
+| **Photos of finished work** | Landing page, ads | 2 |
+| Meta Business Manager | Ads | 4 |
+| Google Ads account | Ads | 4 |
+
+**"I'll send it over" is how you lose two weeks.** If they don't know their logins — which is normal —
+book 15 minutes to find them together rather than accepting the promise.
+
+Photos are the one people underestimate. They're usually sitting on the owner's phone and they're the
+most valuable asset the business owns.
+
+---
+
+## Step 5 — Kick off
+
+Say to Claude:
+
+> **new client: [name]** — and paste this completed doc plus the form response.
+
+That starts Phase 1: SEO audit, treatment, ad concepts.
 
 ---
 
 ## Rules
 
-1. **Do not start production on a partial intake.** A missing GBP login on day one is a two-week delay
+1. **Don't start production on a partial intake.** A missing GBP login on day one is a two-week delay
    on day ten.
-2. **Write their words verbatim** in section B. That copy ends up in the film and the ads. Your
-   paraphrase is always worse than what the owner actually said.
-3. **Screenshot the review count** before you touch anything. It's the cleanest proof of work you'll
-   have at Day 90.
+2. **Verbatim, not paraphrased,** in 2.1. Those are the words that end up on camera.
+3. **Screenshot the review count** before touching anything. It's your cleanest proof of work at Day 90.
+4. **The form supplements the call. It never replaces it.**
