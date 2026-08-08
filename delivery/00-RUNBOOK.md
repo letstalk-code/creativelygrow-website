@@ -148,5 +148,5 @@ missed calls recovered, inquiries and bookings, follow-up status, reviews and re
 | `03-ad-creative.md` | ✅ |
 | `04-landing-page.md` | ✅ |
 | `05-ghl-snapshot.md` | ⏳ Hermes building live |
-| `06-traffic.md` | ⬜ |
-| `07-reporting.md` | ⬜ |
+| `06-traffic.md` | ✅ |
+| `07-reporting.md` | ✅ |
