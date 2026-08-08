@@ -96,6 +96,35 @@ body.st {
 }
 
 /* Gallery list */
+/* Section tabs — same hard-rule language as the rest of the studio. */
+.st-tabs {
+    max-width: 960px; margin: 0 auto;
+    padding: 0 1.25rem;
+    display: flex; gap: 1.5rem;
+}
+.st-tab {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--head); text-transform: uppercase;
+    letter-spacing: 0.14em; font-size: 12px; font-weight: 600;
+    color: var(--cream-dim);
+    padding: 0 0 0.85rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+.st-tab:hover { color: var(--cream); }
+.st-tab.is-on { color: var(--orange); border-bottom-color: var(--orange); }
+
+.st-blog-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;
+}
+.st-blog-head h2 { margin: 0; }
+.st-row-kw {
+    display: block; margin-top: 0.3rem;
+    font-family: var(--head); text-transform: uppercase;
+    letter-spacing: 0.12em; font-size: 11px; color: var(--orange);
+}
+
 .st-list { display: flex; flex-direction: column; gap: 0.75rem; }
 .st-row {
     display: flex; align-items: center; justify-content: space-between;

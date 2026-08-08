@@ -35,6 +35,10 @@
             </div>
             <button class="st-btn st-btn-sm" id="newBtn">+ New gallery</button>
         </div>
+        <nav class="st-tabs" id="tabs" aria-label="Studio sections">
+            <button class="st-tab is-on" data-tab="galleries" type="button">Galleries</button>
+            <button class="st-tab" data-tab="blog" type="button">Blog</button>
+        </nav>
     </header>
 
     <main class="st-main">
@@ -67,6 +71,17 @@
             <div id="uploads" class="st-uploads"></div>
             <div id="videoList" class="st-videos"></div>
             <div id="photoList" class="st-photos"></div>
+        </section>
+
+        <!-- BLOG -->
+        <section id="blogView" hidden>
+            <div class="st-blog-head">
+                <h2>Published posts</h2>
+                <a class="st-btn st-btn-sm st-btn-ghost" href="/blog" target="_blank" rel="noopener">Open blog &rarr;</a>
+            </div>
+            <div id="blogList" class="st-list"></div>
+            <p class="st-empty" id="blogEmpty" hidden>No published posts yet.</p>
+            <p class="st-error" id="blogError"></p>
         </section>
     </main>
 </div>

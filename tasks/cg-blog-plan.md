@@ -303,10 +303,19 @@ live static marketing site untouched.
 - [ ] Post CTA currently points at `/book` (exists as `book.html`, served via `cleanUrls`). Confirm
       it's the right destination, or build `/contact`.
 
-### Phase 2 — Pipeline (mirror the Labif wiring)
-- [ ] Hand this file to Hermes; create a cron writing one draft per run to `tasks/blog-drafts/`
-- [ ] Create the review/publish scheduled task (clone of `labif-blog-review-publish`)
-- [ ] Verify end-to-end on post #1 before automating post #2
+### Phase 2 — Pipeline
+
+- [x] Hermes skill `creativelygrow-blog-production` at
+      `~/.hermes/skills/content/creativelygrow-blog-production/SKILL.md` — draft-only, never publishes
+- [x] Hermes cron **`f4de4d82aebe`** — "Creatively Grow blog drafts — 2/week", `0 9 * * 1,4`
+      (Mon/Thu 9am, staggered off Labif's Tue/Fri job `896bc17086c1`).
+      Workdir `creativelygrow-clone`, writes one `<slug>.md` to `tasks/blog-drafts/` with `status: draft`.
+- [ ] **Review/publish half — NOT created, needs Devon's OK.** Without it drafts accumulate
+      unpublished. It would: review against this plan, generate images, flip `status: published`,
+      move into `creativelygrow-next/content/blog/`, commit, `vercel --prod`, verify live.
+      That auto-deploys to the live site on a schedule, which is why it wasn't created unilaterally.
+- [ ] Drafts carry no images by design — Hermes can't generate them and must not link stock.
+      Images are added during review.
 
 ### Phase 3 — Publish the backlog, top to bottom
 

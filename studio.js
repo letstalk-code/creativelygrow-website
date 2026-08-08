@@ -298,6 +298,58 @@ function escapeHtml(s) {
   ));
 }
 
+// ---------- tabs ----------
+// The blog list is public data served from the blog zone; it needs no studio key.
+function showTab(name) {
+  document.querySelectorAll('.st-tab').forEach((t) => {
+    t.classList.toggle('is-on', t.dataset.tab === name);
+  });
+  const blog = name === 'blog';
+  $('blogView').hidden = !blog;
+  $('listView').hidden = blog;
+  // Leaving the blog tab should never strand the gallery detail view open.
+  if (blog) $('detailView').hidden = true;
+  else if (CURRENT) { $('listView').hidden = true; $('detailView').hidden = false; }
+  if (blog) loadBlog();
+}
+
+document.querySelectorAll('.st-tab').forEach((t) => {
+  t.addEventListener('click', () => showTab(t.dataset.tab));
+});
+
+async function loadBlog() {
+  const list = $('blogList');
+  const err = $('blogError');
+  err.textContent = '';
+  list.innerHTML = '<p class="st-empty">Loading…</p>';
+  try {
+    const res = await fetch('/blog/index.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const { posts } = await res.json();
+    list.innerHTML = '';
+    $('blogEmpty').hidden = posts.length > 0;
+    posts.forEach((p) => {
+      const row = document.createElement('a');
+      row.className = 'st-row';
+      row.href = p.url;
+      row.target = '_blank';
+      row.rel = 'noopener';
+      row.innerHTML = `
+        <span>
+          <strong>${escapeHtml(p.title)}</strong>
+          <span>${escapeHtml(p.dateDisplay)}</span>
+          ${p.targetKeyword ? `<span class="st-row-kw">${escapeHtml(p.targetKeyword)}</span>` : ''}
+        </span>
+        <span class="st-row-go">&rarr;</span>`;
+      list.appendChild(row);
+    });
+  } catch (e) {
+    list.innerHTML = '';
+    $('blogEmpty').hidden = true;
+    err.textContent = `Could not load posts (${e.message}).`;
+  }
+}
+
 // ---------- boot ----------
 (async () => {
   if (KEY && await tryLogin(KEY)) showApp();
