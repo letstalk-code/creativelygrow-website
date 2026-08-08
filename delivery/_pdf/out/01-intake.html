@@ -90,6 +90,14 @@
   .mk-done{color:var(--orange); font-weight:700}
   .mk-wip{color:var(--sage); font-style:italic}
 
+  /* A blank line to write on — replaces the old broken empty-blockquote
+     artifact for fields meant to be filled in by hand on a printed copy. */
+  .fill-lines{margin:0 0 .16in}
+  .fill-line{
+    display:block; height:.26in; border-bottom:1px solid var(--hair);
+  }
+  .fill-line:last-child{margin-bottom:0}
+
   .tbl-wrap{margin:0 0 .18in}
   table{width:100%; border-collapse:collapse; font-size:9.3pt}
   th,td{border:1px solid var(--hair); padding:.06in .1in; text-align:left; vertical-align:top}
@@ -125,6 +133,7 @@
 <section class="body">
 <p><strong>Owner: Devon.</strong> Nothing downstream starts until this is done.</p>
 <p><strong>Two pieces, and they do different jobs:</strong></p>
+<div class="fill-lines"><span class="fill-line"></span></div>
 <div class="tbl-wrap"><table><thead><tr><th></th><th>Who fills it</th><th>What it captures</th></tr></thead><tbody>
 <tr><td><strong>This document</strong></td><td>Devon, on the call</td><td>Judgement calls — how they talk, whether they answer the phone, what they actually want more of</td></tr>
 <tr><td><strong><code>client-intake-form.html</code></strong></td><td>The client, after the call</td><td>Logins, files, facts. The stuff only they have</td></tr>

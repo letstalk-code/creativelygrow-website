@@ -90,6 +90,14 @@
   .mk-done{color:var(--orange); font-weight:700}
   .mk-wip{color:var(--sage); font-style:italic}
 
+  /* A blank line to write on — replaces the old broken empty-blockquote
+     artifact for fields meant to be filled in by hand on a printed copy. */
+  .fill-lines{margin:0 0 .16in}
+  .fill-line{
+    display:block; height:.26in; border-bottom:1px solid var(--hair);
+  }
+  .fill-line:last-child{margin-bottom:0}
+
   .tbl-wrap{margin:0 0 .18in}
   table{width:100%; border-collapse:collapse; font-size:9.3pt}
   th,td{border:1px solid var(--hair); padding:.06in .1in; text-align:left; vertical-align:top}
@@ -171,7 +179,7 @@
 <hr>
 <h2>Step 3 — Video Ad B · Proof / Authority</h2>
 <p><strong>9:16 · 15–30s · warm and retargeting</strong></p>
-<p>This is the brand story film, cut down. Same footage, different job: the person already knows they have the problem. Now they're deciding who to trust.</p>
+<p>Cut from the same shoot as Ad A — the owner-on-camera offer plus the crew b-roll, not a separate piece. If a longer brand story cut exists, pull from that too. Different job from Ad A: the person already knows they have the problem. Now they're deciding who to trust.</p>
 <div class="tbl-wrap"><table><thead><tr><th>Beat</th><th>Time</th><th>Content</th></tr></thead><tbody>
 <tr><td>Face</td><td>0–3s</td><td>Owner, talking, in their space. A real person opens it</td></tr>
 <tr><td>Credential</td><td>3–8s</td><td>Years, crew, what they do — plainly, no boasting</td></tr>
@@ -185,7 +193,10 @@
 <p><strong>1:1 and 4:5 · both sizes, same design</strong></p>
 <p>One claim. One image. One CTA. Static is for the person who's seen the video and needs a reason to act now, or for a Google display placement where video won't run.</p>
 <ul>
-<li><strong>Image:</strong> the strongest single frame from the shoot — usually the after, or a matched before/after split</li>
+<li><strong>Image:</strong> the strongest single frame from the shoot — a crew or work still by default, a</li>
+</ul>
+<p>  matched before/after only if the visit happened to catch both</p>
+<ul>
 <li><strong>Headline:</strong> 5–8 words, the angle</li>
 <li><strong>Sub:</strong> one line, the specific</li>
 <li><strong>CTA:</strong> the same words as the landing page button — never a different phrase</li>

@@ -73,8 +73,9 @@ The hook does all the work. If the first two seconds don't land, nothing else in
 
 **9:16 · 15–30s · warm and retargeting**
 
-This is the brand story film, cut down. Same footage, different job: the person already knows they
-have the problem. Now they're deciding who to trust.
+Cut from the same shoot as Ad A — the owner-on-camera offer plus the crew b-roll, not a separate
+piece. If a longer brand story cut exists, pull from that too. Different job from Ad A: the person
+already knows they have the problem. Now they're deciding who to trust.
 
 | Beat | Time | Content |
 |---|---|---|
@@ -96,7 +97,8 @@ camera saying something true.
 One claim. One image. One CTA. Static is for the person who's seen the video and needs a reason to act
 now, or for a Google display placement where video won't run.
 
-- **Image:** the strongest single frame from the shoot — usually the after, or a matched before/after split
+- **Image:** the strongest single frame from the shoot — a crew or work still by default, a
+  matched before/after only if the visit happened to catch both
 - **Headline:** 5–8 words, the angle
 - **Sub:** one line, the specific
 - **CTA:** the same words as the landing page button — never a different phrase

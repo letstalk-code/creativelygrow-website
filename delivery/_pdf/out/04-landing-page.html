@@ -90,6 +90,14 @@
   .mk-done{color:var(--orange); font-weight:700}
   .mk-wip{color:var(--sage); font-style:italic}
 
+  /* A blank line to write on — replaces the old broken empty-blockquote
+     artifact for fields meant to be filled in by hand on a printed copy. */
+  .fill-lines{margin:0 0 .16in}
+  .fill-line{
+    display:block; height:.26in; border-bottom:1px solid var(--hair);
+  }
+  .fill-line:last-child{margin-bottom:0}
+
   .tbl-wrap{margin:0 0 .18in}
   table{width:100%; border-collapse:collapse; font-size:9.3pt}
   th,td{border:1px solid var(--hair); padding:.06in .1in; text-align:left; vertical-align:top}
@@ -165,8 +173,9 @@
 <ul>
 <li>Form: name, phone, one-line "what do you need"</li>
 <li>Phone number, click-to-call</li>
-<li>If the video ads exist: embed the brand story here too — this is where undecided traffic lands</li>
+<li>Embed the offer spot here too (or the longer brand story cut, if one exists) — this is where</li>
 </ul>
+<p>  undecided traffic lands</p>
 <hr>
 <h2>The form — build this per client</h2>
 <p>Two ways to wire it. Pick one per client, don't mix.</p>

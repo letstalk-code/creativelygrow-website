@@ -97,14 +97,23 @@ def md_to_html(md):
             out.append(f'<pre><code>{chr(10).join(buf)}</code></pre>')
             continue
 
-        # blockquote
+        # blockquote — join raw lines BEFORE inline(), so em/strong spans that
+        # wrap across two source lines (common in these docs) still match.
+        # A bare `>` with nothing after it is a print placeholder, not prose —
+        # render it as an actual line to write on, one per bare `>` line.
         if line.strip().startswith(">"):
             close_list()
-            buf = []
+            raw = []
             while i < n and lines[i].strip().startswith(">"):
-                buf.append(inline(re.sub(r'^\s*>\s?', '', lines[i])))
+                raw.append(re.sub(r'^\s*>\s?', '', lines[i]))
                 i += 1
-            out.append(f'<blockquote>{" ".join(buf)}</blockquote>')
+            joined = " ".join(raw).strip()
+            if joined:
+                out.append(f'<blockquote>{inline(joined)}</blockquote>')
+            else:
+                out.append('<div class="fill-lines">'
+                            + ('<span class="fill-line"></span>' * max(1, len(raw)))
+                            + '</div>')
             continue
 
         # headers
@@ -160,14 +169,22 @@ def md_to_html(md):
         # paragraph — a standalone "**Label:**" line (the fillable fields in the
         # brief / call sheet) is its own line, never merged with a neighbour.
         close_list()
+        is_label = LABEL_RE.match(line.strip())
         buf = [line]
         i += 1
-        if not LABEL_RE.match(line.strip()):
+        if not is_label:
             while (i < n and lines[i].strip()
                    and not re.match(r'^(\s*)([-\d#>]|```|\s*\|)', lines[i])
                    and not LABEL_RE.match(lines[i].strip())):
                 buf.append(lines[i]); i += 1
         out.append(f'<p>{inline(" ".join(buf))}</p>')
+        # A field label with nothing structured right after it (blank, another
+        # label, or end of section) is a blank to write on, not a heading —
+        # give it a line. One that leads into a list/table/paragraph doesn't.
+        if is_label:
+            nxt = lines[i].strip() if i < n else ""
+            if not nxt or LABEL_RE.match(nxt) or nxt == ">":
+                out.append('<div class="fill-lines"><span class="fill-line"></span></div>')
 
     close_list()
     return "\n".join(out)

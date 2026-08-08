@@ -91,8 +91,9 @@ make contact repeated down the page. Form posts into the client's GHL sub-accoun
 
 **Devon:** shoot. **Devon:** edit.
 
-Deliverables: 16:9 brand story master, 9:16 cutdowns for ads, a 6s bumper.
-Shoot the vertical cutdowns *on the day* — reframing later is always worse.
+One visit, 60–90 minutes — not a full-day booking. Deliverables: the 9:16 offer spot (primary),
+an alt cutdown, a 6s bumper, stills. A longer 16:9 brand story cut only if the footage supports it.
+Shoot vertical natively *on the day* — reframing later is always worse.
 
 ---
 

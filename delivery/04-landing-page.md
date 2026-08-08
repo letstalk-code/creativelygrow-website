@@ -47,7 +47,8 @@ one that answers the four questions fast.
 ### 5. Contact
 - Form: name, phone, one-line "what do you need"
 - Phone number, click-to-call
-- If the video ads exist: embed the brand story here too — this is where undecided traffic lands
+- Embed the offer spot here too (or the longer brand story cut, if one exists) — this is where
+  undecided traffic lands
 
 ---
 
