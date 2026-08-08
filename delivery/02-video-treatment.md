@@ -62,6 +62,9 @@ Default 90 seconds. Five beats.
 
 ## Part 3 — Shot list
 
+**→ Pull the pre-built list from `02b-shot-lists.md`** (epoxy, pool cage, remodel, plus the
+any-trade shots). Delete what doesn't apply, add what the job gives you. Don't start from blank.
+
 **Hero / opening**
 - [ ]
 - [ ]
