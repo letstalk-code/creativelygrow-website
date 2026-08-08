@@ -144,10 +144,10 @@ missed calls recovered, inquiries and bookings, follow-up status, reviews and re
 | `00-RUNBOOK.md` | ✅ this file |
 | `01-intake.md` | ✅ |
 | `01b-seo-audit.md` | ✅ |
-| `02-video-treatment.md` | ✅ |
-| `02b-shot-lists.md` | ✅ |
-| `03-ad-creative.md` | ⬜ next |
-| `04-landing-page.md` | ⬜ |
+| `02-video-treatment.md` | ✅ (b-roll included) |
+
+| `03-ad-creative.md` | ✅ |
+| `04-landing-page.md` | ⬜ next |
 | `05-ghl-snapshot.md` | ⬜ blocked on Hermes + Computer Use |
 | `06-traffic.md` | ⬜ |
 | `07-reporting.md` | ⬜ |

@@ -26,15 +26,15 @@ appear on any competitor's site, cut it.
 **On-camera person:**
 
 **The one thing a viewer should believe after 90 seconds:**
-> *(One sentence. Not three. Example: "These guys will show up when they say and my garage will look
-> like that.")*
+> *(One sentence. Not three. Something like: "These people will show up when they say, and my place
+> will end up looking like that.")*
 
 **Who's watching:**
 > *(Homeowner mid-research? Facility manager? Be specific — it changes the tone.)*
 
 **The fear we're answering:**
-> *(Every trade has one. Epoxy: "will it peel." Pool cage: "will it survive a storm." Remodel: "will
-> they disappear halfway." Name it, then answer it on camera.)*
+> *(Every trade has one — "will it last," "will they show up," "will they disappear halfway,"
+> "will it cost double what they quoted." Name theirs, then answer it on camera.)*
 
 **Their actual words** *(verbatim from intake B — do not clean these up)*:
 >
@@ -62,150 +62,87 @@ Default 90 seconds. Five beats.
 
 ## Part 3 — Shot list & B-roll
 
-Pull the list for the trade. Delete what doesn't apply, add what the job gives you. Don't start blank.
+Works for any trade. The structure below doesn't change; what fills it does.
 
 **⭐ = the money shot.** If the day falls apart, get these.
 **📱 = shoot 9:16 natively** on the day. Reframed 16:9 always looks reframed.
 
-### Epoxy / concrete coating
+### First: find this client's money shot
 
-The whole trade is a transformation with a genuinely cinematic middle. Most competitors post one
-finished photo. The process is the differentiator — shoot it.
+Every trade has one moment that is genuinely satisfying to watch and that competitors never film.
+Find it before the shoot by asking the owner two questions:
 
-**Hook candidates (0–8s)**
-- ⭐📱 Flake broadcast — hand throwing chips, caught mid-air against the open garage door light
-- ⭐ Squeegee pulling a clean wet line across grey concrete, hard light raking
-- Reflection: garage door + palms mirrored in the finished floor
+1. **"What part of the job would someone stop and watch?"**
+2. **"What do you do that a bad crew skips?"**
 
-**Prep**
-- [ ] Empty garage, before state — **locked-off tripod, mark the position** (you need the exact same
-      frame for the after)
-- [ ] Grinder on concrete, dust extraction running, dust in the light beam
-- [ ] Crack repair / patch detail, close
-- [ ] Taping the perimeter
-- [ ] 📱 Wide of crew working the floor
+The answer to #1 is your hook. The answer to #2 is your proof. Everything else is coverage.
 
-**Mix and pour** ⭐
-- [ ] ⭐ Resin + hardener pouring into the bucket
-- [ ] ⭐ Drill mixer, colour swirling
-- [ ] Pouring the ribbon onto the slab
-- [ ] ⭐📱 Notched squeegee pass — follow the edge of the wet line
-- [ ] Spike roller / back-roll, low angle across the surface
+If they can't answer, look for the moment where **the material changes state** — liquid to solid,
+loose to taut, rough to smooth, broken to whole. That's almost always it.
 
-**Flake** ⭐ *(this is the sequence people watch to the end)*
-- [ ] ⭐📱 Broadcast throw, side-lit, air full of chips — get 4–5 takes
-- [ ] ⭐ Slow-mo flake landing on wet resin
-- [ ] Spiked shoes walking the wet floor
-- [ ] Macro: flake texture in the resin
+### The universal list
 
-**Finish**
-- [ ] Next-day scrape / knockdown
-- [ ] Topcoat pour and spread
-- [ ] ⭐ **After — the exact locked-off before frame.** Same lens, same height, same spot
-- [ ] ⭐ Low angle across finished floor, light raking to camera
-- [ ] Reflection of the open garage door / sky
-- [ ] 📱 Slow push-in on finished surface
-- [ ] Owner walking the finished floor
+**A. Before ⭐**
+- [ ] ⭐ The starting state — **locked-off tripod, tape the legs, note lens and height.**
+      You will need this exact frame again and cannot recreate it later.
+- [ ] Detail of the problem: the wear, damage, dated finish, whatever they're being paid to fix
+- [ ] Wide establishing of the property or space
 
-**Over-shoot:** the flake broadcast and the squeegee pass. Every ad for the next year is cut from those two.
-
----
-
-### Pool cage / screen enclosure
-
-Structural build against Florida sky. Strong graphic lines, and the rescreen has a satisfying repetitive
-detail shot most people miss.
-
-**Hook candidates (0–8s)**
-- ⭐📱 Spline roller running the channel — tight, fast, rhythmic
-- ⭐ Frame skeleton against blue sky, low angle looking up
-- Torn screen flapping → cut → taut new screen
-
-**Before**
-- [ ] ⭐ Sagging / torn screen, **locked-off tripod, mark it**
-- [ ] Detail: rust, tears, failed spline
-- [ ] Wide of the cage from the pool deck
-
-**Build / rescreen**
-- [ ] Aluminium extrusion stack, cut ends catching light
-- [ ] ⭐ Chop saw cutting aluminium, sparks
-- [ ] Screws driving into frame, close
-- [ ] ⭐📱 Frame members going up — low angle, sky behind
-- [ ] Screen roll unspooling
-- [ ] ⭐📱 Spline roller in the channel — the money detail. Multiple angles
-- [ ] Knife trimming excess screen
-- [ ] Ladder work, wide, crew scale against the structure
-- [ ] Kickplate install
-
-**After** ⭐
-- [ ] ⭐ **Exact locked-off before frame**, taut and clean
-- [ ] ⭐ Interior looking out — pool, screen, sky
-- [ ] Golden hour raking through the mesh
-- [ ] Pool water reflecting through new screen
-- [ ] Hand pressing the screen — tautness, the tactile proof
-- [ ] 📱 Slow walk through the finished enclosure
-
-**Over-shoot:** the spline roller and the frame-against-sky. Those two carry the whole cut.
-
----
-
-### Remodel / interior
-
-Long jobs, high price, nervous buyers. The film's job is showing they won't disappear halfway and won't
-wreck the house.
-
-**Hook candidates**
-- ⭐ Dust sheet pulled back to reveal finished space
-- ⭐📱 Push through a doorway from demo into finished
-- Hand running along a finished surface
-
-**Before / demo**
-- [ ] ⭐ Before state — **locked off, marked**
-- [ ] Protective covering going down — *(trust shot, nobody films this, it matters)*
-- [ ] Demo: controlled, not chaotic
-- [ ] The thing found in the wall ⭐ — *if it happens, drop everything and shoot it. It's the most
-      persuasive footage on any remodel job.*
-
-**Build**
-- [ ] Measuring and marking
-- [ ] Cutting, close
-- [ ] Level against a surface
-- [ ] Cabinet / fixture going in
-- [ ] ⭐ Crew working together — two people, one task
-- [ ] Materials laid out, tidy
-
-**Finish**
-- [ ] ⭐ **Exact locked-off after**
-- [ ] ⭐ Light moving across the finished room
-- [ ] Detail: hardware, tile edge, joint
-- [ ] ⭐ Clean-up — vacuum, broom, wiping down *(the single most underrated shot in the trades;
-      "they left it spotless" is what customers actually repeat)*
-- [ ] Owner walking the client through the finished space
-- [ ] 📱 Slow reveal through the space
-
----
-
-### Any trade — always get these
-
-Regardless of vertical. These are the human shots the film needs and job-site footage never has enough of.
-
+**B. Arrival and setup**
 - [ ] ⭐ Truck arriving, door opening, boots down
 - [ ] Tools coming off the rack
-- [ ] ⭐ Owner's hands working — no face, just competence
-- [ ] Crew talking something through, pointing at the work
-- [ ] ⭐ Somebody laughing — *one genuine unguarded moment beats ten posed ones*
-- [ ] Wide establishing of the property / street
-- [ ] Logo on truck or shirt, shallow depth
-- [ ] ⭐ Owner watching the finished work — the look, not the words
-- [ ] 📱 Vertical wide of the whole scene, for ad backgrounds
+- [ ] Protective covering going down — *a trust shot; almost nobody films it and customers notice it*
+- [ ] Measuring, marking, checking
 
----
+**C. The process ⭐ — most of your footage**
+- [ ] ⭐📱 **The money shot**, 4–5 takes, multiple angles
+- [ ] ⭐ The state change itself, close and slow
+- [ ] Hands working — no face, just competence
+- [ ] The tool doing its job, tight
+- [ ] Material texture, macro
+- [ ] ⭐ Two people on one task — crews read as capable, soloists read as small
+- [ ] 📱 Wide of the whole operation
+
+**D. After ⭐**
+- [ ] ⭐ **The exact locked-off before frame**, finished. Same lens, height, position
+- [ ] ⭐ Light raking across the finished work
+- [ ] Detail: the edge, the joint, the seam — where quality actually shows
+- [ ] The tactile proof — a hand testing it, pressing it, running along it
+- [ ] ⭐ Clean-up: vacuum, broom, wiping down. *"They left it spotless" is what customers repeat*
+- [ ] 📱 Slow push or walk through the finished result
+
+**E. Human ⭐**
+- [ ] Owner in their space, working
+- [ ] Crew talking something through, pointing at the work
+- [ ] ⭐ One genuine unguarded moment — someone laughing. *Beats ten posed ones*
+- [ ] ⭐ Owner looking at the finished work — the face, not the words
+- [ ] Logo on truck or shirt, shallow depth
+
+### Reference — where the money shot usually lives
+
+Starting points only. Confirm with the owner; they know better than this table.
+
+| Trade | Likely hook | The state change |
+|---|---|---|
+| Coatings / epoxy | Decorative flake thrown mid-air, side-lit | Liquid resin curing hard |
+| Screen enclosure | Spline roller running the channel | Sagging → taut |
+| Remodel | Dust sheet pulled back | Demo → finished room |
+| Roofing | Tear-off, material coming away | Worn → sealed |
+| Painting | First cut-in line, brush edge | Patchy → clean |
+| Landscaping | Fresh edge cut into turf | Overgrown → shaped |
+| HVAC / plumbing | The failed part vs the new one, side by side | Broken → running |
+| Concrete | Screed pull across wet pour | Wet → set |
+| Detailing / cleaning | The half-and-half pass | Filthy → clean |
+
+**When the job has no visible transformation** — service calls, inspections, consultations — the film
+leans on people instead: the interview carries it, and b-roll becomes hands, tools, truck, and the
+customer conversation. Shoot more interview, not more coverage.
 
 ### Marking the before frame
 
-Tape the tripod legs. Note lens, height, and position. A matched before/after from the identical
-position is worth more than any other pair of shots on the job, and it is the one thing you physically
-cannot recreate once the work is done.
+Tape the tripod legs. Note lens, height, position. A matched before/after from the identical position
+is worth more than any other pair of shots on the job, and it is the one thing you physically cannot
+recreate once the work is done.
 
 ---
 
