@@ -45,11 +45,11 @@ export default function BlogHeader() {
                             <a href="/how-it-works" onClick={() => setOpen(false)}>
                                 How It Works
                             </a>
-                            <a href="/brand-films" onClick={() => setOpen(false)}>
-                                Brand Films
-                            </a>
                             <a href="/services" onClick={() => setOpen(false)}>
                                 Services
+                            </a>
+                            <a href="/brand-films" onClick={() => setOpen(false)}>
+                                Brand Films
                             </a>
                         </div>
                     </div>

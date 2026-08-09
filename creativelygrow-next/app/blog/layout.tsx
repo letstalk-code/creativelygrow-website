@@ -25,8 +25,8 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
                     <div className="cg-foot-links">
                         <a href="/">Home</a>
                         <a href="/how-it-works">How It Works</a>
-                        <a href="/brand-films">Brand Films</a>
                         <a href="/services">Services</a>
+                        <a href="/brand-films">Brand Films</a>
                         <a href="tel:+17272708422" className="cg-foot-phone">
                             (727) 270-8422
                         </a>
