@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Google Profile Audit · Creatively Grow</title>
+<meta name="description" content="Type your business name. See what is missing from your Google Business Profile and how you compare to the businesses ranking above you. Free, no signup to see your score.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f9f8eb;--ink:#14100c;--forest-dark:#0d140d;--forest-light:#2d3a2d;
+--sage:#4e5a4e;--cream-dim:#b8b8a8;--orange:#ef7938;--orange-hover:#d96a2d;--alert:#e57373}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.7}
+a{color:var(--orange);text-decoration:none}a:hover{color:var(--orange-hover)}
+.wrap{max-width:1440px;margin:0 auto;overflow:hidden;border-left:1px solid rgba(20,16,12,.1);border-right:1px solid rgba(20,16,12,.1)}
+.band{border-bottom:2px solid var(--ink)}
+.disp{font-family:Oswald,sans-serif;font-weight:700;text-transform:uppercase;margin:0}
+.eyebrow{font-family:Oswald,sans-serif;font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);margin:0 0 14px}
+p{margin:0 0 16px}
+.lede{font-size:17px;color:var(--sage);max-width:460px}
+.body{font-size:15px;color:var(--sage)}
+.btn{display:inline-block;background:var(--orange);color:var(--ink);font-family:Oswald,sans-serif;font-weight:700;
+font-size:20px;text-transform:uppercase;letter-spacing:.06em;padding:18px 34px;border-radius:999px;border:0;cursor:pointer;
+box-shadow:0 8px 24px rgba(239,121,56,.25);transition:all .25s ease}
+.btn:hover{background:var(--orange-hover);transform:translateY(-2px);box-shadow:0 16px 32px rgba(239,121,56,.4)}
+.btn:active{opacity:.9;transform:scale(1.02)}
+.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;border-bottom:1px solid rgba(20,16,12,.15)}
+.hdr-l{display:flex;align-items:center;gap:14px}.hdr-l img{height:34px;display:block}
+.micro{font-family:Oswald,sans-serif;font-weight:700;font-size:11px;letter-spacing:.22em;text-transform:uppercase;line-height:1.5}
+.micro-mid{font-weight:500;color:var(--sage);text-align:center}
+.hdr-r{display:flex;align-items:center;gap:12px}.bar22{width:22px;height:3px;background:var(--orange);flex:none}
+.hero{display:grid;grid-template-columns:1fr 1fr}
+.hero-l{padding:56px 40px 40px;border-right:1px solid rgba(20,16,12,.15)}
+.hero-l h1{font-size:84px;line-height:.88;letter-spacing:-.005em;margin:0 0 24px}
+.hero-l h1 .accent{color:var(--orange)}
+.hero-r{padding:56px 40px;background:var(--ink);display:flex;flex-direction:column;justify-content:center}
+.field{margin-bottom:16px}
+.field label{display:block;font-family:Oswald,sans-serif;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:7px}
+.field input{width:100%;min-width:0;height:48px;padding:0 14px;border:1px solid var(--forest-light);border-radius:8px;
+background:var(--forest-dark);color:var(--cream);font-family:Inter,sans-serif;font-size:15px}
+.field input:focus{outline:2px solid var(--orange);border-color:transparent}
+.btn-full{width:100%;text-align:center;padding:16px;font-size:18px}
+.note-dark{font-size:13px;color:var(--cream-dim);margin-top:14px}
+.chips{display:flex;flex-wrap:wrap}
+.chip{padding:16px 24px;border-right:1px solid rgba(20,16,12,.15);font-family:Oswald,sans-serif;font-weight:700;
+font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
+.chip.accent{color:var(--orange)}
+#result{display:none}
+.scoreband{display:grid;grid-template-columns:1fr 1fr}
+.scorebox{background:var(--orange);padding:48px 40px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.scorebox .lbl{font-family:Oswald,sans-serif;font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+.scorebox .num{font-family:Oswald,sans-serif;font-weight:700;font-size:150px;line-height:.86;color:var(--ink)}
+.scorebox .sub{font-family:Oswald,sans-serif;font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin-top:6px}
+.tri{position:absolute;right:0;bottom:0;width:0;height:0;border-left:120px solid transparent;border-bottom:120px solid var(--ink)}
+.scoreside{padding:48px 40px;border-left:1px solid rgba(20,16,12,.15)}
+.scoreside h2{font-size:44px;line-height:.95;margin:0 0 16px}
+.row{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid rgba(20,16,12,.15)}
+.row .mark{font-family:Oswald,sans-serif;font-weight:700;font-size:19px}
+.row.fail .mark{color:var(--orange)}
+.row.pass .mark{color:var(--sage)}
+.row h3{font-family:Oswald,sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.02em;margin:0 0 4px}
+.row.fail{background:rgba(239,121,56,.12);padding:18px 14px;margin:0 -14px}
+.row p{font-size:15px;color:var(--sage);margin:0}
+.sec{padding:56px 40px}
+.sec h2{font-size:44px;line-height:.95;margin:0 0 20px}
+.gate{border:2px solid var(--ink);padding:32px 28px;display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start}
+.gate h3{font-family:Oswald,sans-serif;font-weight:700;font-size:32px;text-transform:uppercase;margin:0 0 10px;line-height:1.02}
+.gate .field label{color:var(--sage)}
+.gate .field input{background:var(--cream);color:var(--ink);border:1px solid rgba(20,16,12,.3)}
+.rivals{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid rgba(20,16,12,.15);margin-top:8px}
+.rival{padding:14px 22px 14px 0;margin-right:22px;border-right:1px solid rgba(20,16,12,.15)}
+.rival:last-child{border-right:0}
+.rival .rn{font-family:Oswald,sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;display:block}
+.rival .rv{font-size:14px;color:var(--sage)}
+.err{color:var(--alert);font-size:14px;margin-top:12px}
+.ftr{background:var(--ink);padding:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ftr-l{display:flex;align-items:center;gap:14px}.ftr-l img{height:30px;display:block}
+.ftr-l span{font-family:Oswald,sans-serif;font-weight:500;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-dim)}
+.ftr-r a{font-family:Oswald,sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-dim);margin-left:28px}
+.ftr-r a.tel{color:var(--orange)}
+@media(max-width:900px){
+ .hdr{padding:14px 20px}.hdr-r,.micro-mid{display:none}
+ .hero,.scoreband,.gate{grid-template-columns:1fr}
+ .hero-l{padding:32px 20px 24px;border-right:0}
+ .hero-l h1{font-size:46px}
+ .hero-r{padding:28px 20px}
+ .scorebox{padding:32px 20px}.scorebox .num{font-size:92px}
+ .scoreside{padding:32px 20px;border-left:0;border-top:2px solid var(--ink)}
+ .scoreside h2,.sec h2{font-size:32px}
+ .sec{padding:32px 20px}
+ .gate{padding:24px 20px}.gate h3{font-size:26px}
+ .tri{border-left-width:70px;border-bottom-width:70px}
+ .chip{padding:11px 14px;font-size:10px;border-bottom:1px solid rgba(20,16,12,.15)}
+ .ftr{padding:28px 20px;flex-direction:column;align-items:flex-start;gap:16px}
+ .ftr-r a{margin:0 24px 0 0}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hdr">
+    <div class="hdr-l">
+      <img src="assets/logo.webp" alt="Creatively Grow">
+      <div class="micro">Video Content<br>+ Growth Systems</div>
+    </div>
+    <div class="micro micro-mid">Based in<br>Tampa Bay, FL</div>
+    <div class="hdr-r">
+      <div class="bar22"></div>
+      <a href="tel:+17272708422" class="micro">Call now<br>(727) 270-8422</a>
+    </div>
+  </header>
+
+  <section class="band hero">
+    <div class="hero-l">
+      <p class="eyebrow">Free Google Profile Audit</p>
+      <h1 class="disp">See why they're<br>calling <span class="accent">them</span><br>instead of you.</h1>
+      <p class="lede">Type your business name. We check your Google profile against the businesses ranking above you and show you exactly what they have that you don't.</p>
+      <p class="lede">Takes about ten seconds. No signup to see your score.</p>
+    </div>
+    <div class="hero-r">
+      <form id="lookup">
+        <div class="field">
+          <label for="business">Business name</label>
+          <input id="business" name="business" type="text" placeholder="As it appears on Google" autocomplete="organization" required>
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <input id="city" name="city" type="text" placeholder="Tampa, Florida" required>
+        </div>
+        <button class="btn btn-full" type="submit" id="go">Check My Profile</button>
+        <p class="note-dark" id="status">We never post, change, or touch your listing. We only read what Google already shows.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="band chips">
+    <div class="chip">Photos</div>
+    <div class="chip">Categories</div>
+    <div class="chip">Reviews vs competitors</div>
+    <div class="chip">Hours &amp; description</div>
+    <div class="chip">Website link</div>
+    <div class="chip accent">Who is outranking you</div>
+  </section>
+
+  <div id="result">
+    <section class="band scoreband">
+      <div class="scorebox">
+        <div class="lbl">Your profile scores</div>
+        <div class="num" id="score">...</div>
+        <div class="sub" id="scoresub">out of 100</div>
+        <div class="tri"></div>
+      </div>
+      <div class="scoreside">
+        <p class="eyebrow" id="bizname">Your business</p>
+        <h2 class="disp" id="verdict">Here's what's costing you calls.</h2>
+        <div id="rivals"></div>
+      </div>
+    </section>
+
+    <section class="band sec" id="checks-band">
+      <p class="eyebrow">The Breakdown</p>
+      <h2 class="disp" id="checks-title">What's missing.</h2>
+      <div id="checks"></div>
+    </section>
+
+    <section class="band sec" id="gate-band">
+      <div class="gate">
+        <div>
+          <h3 id="gate-h">See all of it.</h3>
+          <p class="body" id="gate-p">You've got issues we haven't shown you yet. Tell us where to send the full breakdown and we'll show you every one, plus what to fix first.</p>
+          <p class="body">No pitch attached. If you want help after that, you'll ask.</p>
+        </div>
+        <form id="unlock">
+          <div class="field">
+            <label for="firstName">Your name</label>
+            <input id="firstName" name="firstName" type="text" autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+          </div>
+          <button class="btn btn-full" type="submit" id="unlockgo">Show Me Everything</button>
+          <p class="err" id="unlockerr" style="display:none"></p>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <footer class="ftr">
+    <div class="ftr-l">
+      <img src="assets/logo.webp" alt="Creatively Grow">
+      <span>Video + growth systems · Tampa Bay, FL</span>
+    </div>
+    <div class="ftr-r">
+      <a href="/how-it-works">How It Works</a>
+      <a href="/brand-films">Brand Films</a>
+      <a class="tel" href="tel:+17272708422">(727) 270-8422</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var API='/api/gbp-audit';
+  var $=function(id){return document.getElementById(id)};
+  var last={business:'',city:''};
+
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+  function renderRivals(list){
+    if(!list||!list.length){$('rivals').innerHTML='';return}
+    var h='<div class="rivals">';
+    list.forEach(function(r){
+      h+='<div class="rival"><span class="rn">'+esc(r.name)+'</span>'+
+         '<span class="rv">'+(r.rating||'N/A')+' ★ · '+(r.reviews||0)+' reviews</span></div>';
+    });
+    $('rivals').innerHTML=h+'</div>';
+  }
+
+  function renderChecks(items){
+    $('checks').innerHTML=items.map(function(c){
+      return '<div class="row '+(c.ok?'pass':'fail')+'">'+
+        '<div class="mark">'+(c.ok?'✓':'✕')+'</div>'+
+        '<div><h3>'+esc(c.label)+'</h3><p>'+esc(c.detail)+'</p></div></div>';
+    }).join('');
+  }
+
+  $('lookup').addEventListener('submit',function(e){
+    e.preventDefault();
+    var b=$('business').value.trim(), c=$('city').value.trim();
+    if(!b||!c)return;
+    last={business:b,city:c};
+    $('go').disabled=true; $('status').textContent='Reading your Google listing…';
+    fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({business:b,city:c})})
+    .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
+    .then(function(res){
+      $('go').disabled=false;
+      if(!res.ok){$('status').textContent=res.j.error||'Something went wrong. Try again.';return}
+      $('status').textContent='We never post, change, or touch your listing.';
+      var d=res.j;
+      $('score').textContent=d.score;
+      $('bizname').textContent=d.business;
+      $('verdict').textContent=d.score>=80?"Solid. Here's the rest."
+        :d.score>=50?"Here's what's costing you calls."
+        :"This is why they're not calling.";
+      renderRivals(d.rivals);
+      renderChecks((d.teaser||[]).map(function(t){return{ok:false,label:t.label,detail:t.detail}}));
+      var hidden=(d.failingCount||0)-(d.teaser||[]).length;
+      $('checks-title').textContent=hidden>0?('The two worst. '+hidden+' more below.'):"What's missing.";
+      $('gate-band').style.display=hidden>0?'':'none';
+      $('gate-h').textContent=hidden>0?('See the other '+hidden+'.'):'See the full breakdown.';
+      $('result').style.display='block';
+      $('result').scrollIntoView({behavior:'smooth',block:'start'});
+    })
+    .catch(function(){$('go').disabled=false;$('status').textContent='Could not reach the server. Try again.'});
+  });
+
+  $('unlock').addEventListener('submit',function(e){
+    e.preventDefault();
+    var p=$('phone').value.trim();
+    if(p.replace(/\D/g,'').length<10){
+      $('unlockerr').style.display='block';$('unlockerr').textContent='Please enter a valid phone number.';return}
+    $('unlockerr').style.display='none';$('unlockgo').disabled=true;
+    $('unlockgo').textContent='Loading…';
+    fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({business:last.business,city:last.city,firstName:$('firstName').value.trim(),phone:p,full:true})})
+    .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
+    .then(function(res){
+      $('unlockgo').disabled=false;$('unlockgo').textContent='Show Me Everything';
+      if(!res.ok){$('unlockerr').style.display='block';$('unlockerr').textContent=res.j.error||'Something went wrong.';return}
+      renderChecks(res.j.checks);
+      $('checks-title').textContent="Everything we found.";
+      $('gate-band').style.display='none';
+      $('checks-band').scrollIntoView({behavior:'smooth',block:'start'});
+    })
+    .catch(function(){$('unlockgo').disabled=false;$('unlockgo').textContent='Show Me Everything';
+      $('unlockerr').style.display='block';$('unlockerr').textContent='Could not reach the server.'});
+  });
+})();
+</script>
+</body>
+</html>
