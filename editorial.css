@@ -240,6 +240,31 @@ body.cg-ed .cg-cornernote { padding-right: 132px; }
     body.cg-ed .cg-cutout { max-width: 520px; }
 }
 
+/* Services page — draft-copy badge. The dashed border is the only dashed
+   border in the system and exists solely to mark unfinished copy; remove the
+   badge when real copy lands rather than restyling it. */
+body.cg-ed .cg-draft {
+    display: inline-block; align-self: flex-start;
+    border: 1px dashed var(--ink); border-radius: 999px;
+    padding: 8px 16px;
+    font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.16em; font-size: 11px; color: var(--ink);
+}
+
+/* Services hero "list" on mobile: decorative pills, not a scroller and not
+   links - deliberately distinct markup from .cg-chips so the homepage's
+   auto-scroll marquee never attaches here. */
+body.cg-ed .cg-svc-chips span {
+    border: 1px solid rgba(20, 16, 12, 0.5); border-radius: 999px;
+    padding: 7px 13px;
+    font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; font-size: 11px; color: var(--ink);
+}
+
+/* Services mobile accordion. One row open at a time; Local SEO starts open. */
+body.cg-ed .cg-acc-row.is-open > button { background: rgba(239, 121, 56, 0.08); }
+body.cg-ed .cg-acc-sign { transition: none; }
+
 /* Contact modal. Structure keeps radius 0 per the design; only the button and
    the inputs are allowed their pill and 8px. */
 body.cg-ed .cg-modal[hidden] { display: none !important; }
@@ -477,8 +502,11 @@ body.cg-ed .cg-success { padding: 8px 0; }
     }
     /* The nameplate is not in the condensed hero. */
     body.cg-ed .cg-hero-figure > div:nth-child(3) { display: none !important; }
-    /* Height-driven here, so the figure fits the stage exactly. */
-    body.cg-ed .cg-cutout {
+    /* Height-driven here, so the figure fits the stage exactly. Scoped to the
+       homepage's condensed hero specifically - .cg-cutout is shared site-wide
+       (Services' call-cutout also uses it), and this !important rule would
+       otherwise clobber its explicit width on that page. */
+    body.cg-ed .cg-hero-figure .cg-cutout {
         height: 100% !important; width: auto !important; max-width: none !important;
     }
 

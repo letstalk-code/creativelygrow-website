@@ -7,6 +7,12 @@
       "runtimeArgs": ["run", "dev"],
       "port": 3005,
       "cwd": "creativelygrow-next"
+    },
+    {
+      "name": "creativelygrow",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4321"],
+      "port": 4321
     }
   ]
 }

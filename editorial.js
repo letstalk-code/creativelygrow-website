@@ -332,7 +332,40 @@
     strip.appendChild(track);
   }
 
-  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); condensed(); marquee(); modal(); }
+  // ---- Services accordion (mobile) -----------------------------------------
+  // One row open at a time. Local SEO starts open in the markup itself
+  // (is-open class + visible panel), so this only has to handle clicks.
+  function accordion() {
+    var rows = document.querySelectorAll('.cg-acc-row');
+    if (!rows.length) return;
+
+    rows.forEach(function (row) {
+      var btn = row.querySelector('[data-acc]');
+      var panel = row.querySelector('.cg-acc-panel');
+      var sign = row.querySelector('.cg-acc-sign');
+      if (!btn || !panel) return;
+
+      btn.addEventListener('click', function () {
+        var opening = panel.hidden;
+
+        rows.forEach(function (r) {
+          r.classList.remove('is-open');
+          var p = r.querySelector('.cg-acc-panel');
+          var s = r.querySelector('.cg-acc-sign');
+          if (p) p.hidden = true;
+          if (s) s.textContent = '+';
+        });
+
+        if (opening) {
+          row.classList.add('is-open');
+          panel.hidden = false;
+          if (sign) sign.textContent = '−';
+        }
+      });
+    });
+  }
+
+  function init() { reveal(); player(); fanVideo(); contactForm(); burger(); condensed(); marquee(); modal(); accordion(); }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
