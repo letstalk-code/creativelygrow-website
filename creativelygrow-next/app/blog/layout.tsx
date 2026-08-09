@@ -17,7 +17,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
             <footer className="cg-foot">
                 <div className="cg-frame cg-foot-inner">
                     <div className="cg-foot-brand">
-                        <img src="/cg-logo.webp" alt="Creatively Grow" className="cg-foot-logo" />
+                        <img src="/blog/cg-logo.webp" alt="Creatively Grow" className="cg-foot-logo" />
                         <span className="cg-foot-tagline">
                             Video + growth systems · Tampa Bay, FL
                         </span>

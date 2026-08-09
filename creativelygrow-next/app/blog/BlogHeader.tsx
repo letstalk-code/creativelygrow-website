@@ -16,7 +16,7 @@ export default function BlogHeader() {
         <header className={`cg-head${open ? " is-open" : ""}`}>
             <div className="cg-frame cg-head-inner">
                 <a href="/" aria-label="Creatively Grow home" className="cg-brand">
-                    <img src="/cg-logo.webp" alt="Creatively Grow" className="cg-logo-img" />
+                    <img src="/blog/cg-logo.webp" alt="Creatively Grow" className="cg-logo-img" />
                     <span className="cg-brand-label">
                         Video Content
                         <br />+ Growth Systems
@@ -55,9 +55,9 @@ export default function BlogHeader() {
                     </div>
                 </nav>
 
-                <a href="tel:+17272708422" className="cg-head-phone">
+                <a href="sms:+17272708422" className="cg-head-phone">
                     <span className="cg-head-dash" aria-hidden="true" />
-                    Call now
+                    Shoot us a text
                     <br />
                     (727) 270-8422
                 </a>
