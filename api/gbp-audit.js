@@ -85,6 +85,40 @@ function normalise(item) {
   };
 }
 
+// How confidently a Maps search result matches what the user actually typed.
+//
+// The old logic checked whether the first 12 characters of what they typed appeared
+// literally in the result name, and if nothing matched, silently returned the #1
+// search result and reported on it as if it were confirmed. A real QA run caught
+// this: searching a business by a name that didn't exactly match its Google listing
+// returned a DIFFERENT business with no indication anything was uncertain.
+//
+// This doesn't try to be a perfect matcher — it can't be, business names are messy.
+// What it guarantees instead is that we never silently pretend confidence we don't
+// have. Below MATCH_THRESHOLD the response says so explicitly, in the free teaser
+// too, not just the paid-for full report.
+const STOPWORDS = new Set(['llc', 'inc', 'incorporated', 'corp', 'corporation', 'co', 'company', 'the', 'and', 'of']);
+const MATCH_THRESHOLD = 0.5;
+
+function nameWords(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => (w.endsWith('s') && w.length > 3 ? w.slice(0, -1) : w)) // light plural stem
+    .filter((w) => !STOPWORDS.has(w));
+}
+
+/** Fraction of the words the user typed that also appear in the candidate name. */
+function matchScore(typed, candidateName) {
+  const typedWords = nameWords(typed);
+  if (!typedWords.length) return 0;
+  const candidateSet = new Set(nameWords(candidateName));
+  const hits = typedWords.filter((w) => candidateSet.has(w)).length;
+  return hits / typedWords.length;
+}
+
 function scoreProfile(me, rivals) {
   const checks = [];
   const add = (id, label, ok, detail, weight) => checks.push({ id, label, ok, detail, weight });
@@ -209,10 +243,20 @@ module.exports = async (req, res) => {
       dayCount += 1;
       rate.set(rateKey, used + 1);
 
-      const target = found.map(normalise).find((b) =>
-        b.name.toLowerCase().includes(business.toLowerCase().slice(0, 12))) || (found[0] ? normalise(found[0]) : null);
+      if (!found.length) {
+        return res.status(404).json({ error: `Could not find "${business}" on Google Maps in ${city}. Check the spelling as it appears on your listing.` });
+      }
 
-      if (!target) return res.status(404).json({ error: `Could not find "${business}" on Google Maps in ${city}. Check the spelling as it appears on your listing.` });
+      // Pick the best-scoring candidate rather than the first substring hit — see
+      // matchScore() above for why. Ties keep whichever Maps ranked first.
+      const candidates = found.map(normalise);
+      let target = candidates[0];
+      let confidence = matchScore(business, target.name);
+      for (const cand of candidates.slice(1)) {
+        const score = matchScore(business, cand.name);
+        if (score > confidence) { target = cand; confidence = score; }
+      }
+      const matched = confidence >= MATCH_THRESHOLD;
 
       let rivals = [];
       if (target.category) {
@@ -222,11 +266,26 @@ module.exports = async (req, res) => {
       }
 
       const { score, checks } = scoreProfile(target, rivals);
-      payload = { business: target.name, category: target.category, city, score, checks, rivals: rivals.map((r) => ({ name: r.name, rating: r.rating, reviews: r.reviews })) };
+      payload = {
+        business: target.name,
+        category: target.category,
+        city,
+        score,
+        checks,
+        rivals: rivals.map((r) => ({ name: r.name, rating: r.rating, reviews: r.reviews })),
+        matched,
+      };
       cache.set(cacheKey, { at: Date.now(), payload });
     }
 
     const failing = payload.checks.filter((c) => !c.ok);
+
+    // Surfaced regardless of tier — a low-confidence match is exactly the thing a
+    // gate should never hide, since it is the reason someone might be looking at the
+    // wrong business's problems.
+    const matchNote = payload.matched
+      ? null
+      : `We couldn't find an exact match for "${business}" — this is our closest guess ("${payload.business}"). If that's not your business, check the spelling exactly as it appears on your Google listing and try again.`;
 
     if (!wantsFull) {
       return res.status(200).json({
@@ -235,6 +294,8 @@ module.exports = async (req, res) => {
         failingCount: failing.length,
         teaser: failing.sort((a, b) => b.weight - a.weight).slice(0, 2).map((c) => ({ label: c.label, detail: c.detail })),
         rivals: payload.rivals,
+        matched: payload.matched,
+        matchNote,
         gated: true,
       });
     }
@@ -250,7 +311,7 @@ module.exports = async (req, res) => {
       }).catch(() => {});
     }
 
-    return res.status(200).json({ ...payload, gated: false });
+    return res.status(200).json({ ...payload, matchNote, gated: false });
   } catch (err) {
     console.error('gbp-audit failed:', err.message);
     return res.status(502).json({ error: 'could not reach Google right now — try again in a minute' });

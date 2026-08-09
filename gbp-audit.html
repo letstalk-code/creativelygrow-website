@@ -77,6 +77,10 @@ font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
 .rival .rn{font-family:Oswald,sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;display:block}
 .rival .rv{font-size:14px;color:var(--sage)}
 .err{color:var(--alert);font-size:14px;margin-top:12px}
+.matchwarn{background:rgba(220,70,70,.1);border:1px solid rgba(220,70,70,.4);padding:18px 24px;
+display:flex;gap:14px;align-items:flex-start}
+.matchwarn .mw-mark{font-family:Oswald,sans-serif;font-weight:700;font-size:18px;color:var(--alert);flex:none}
+.matchwarn p{margin:0;font-size:14px;color:var(--ink);line-height:1.5}
 .ftr{background:var(--ink);padding:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .ftr-l{display:flex;align-items:center;gap:14px}.ftr-l img{height:30px;display:block}
 .ftr-l span{font-family:Oswald,sans-serif;font-weight:500;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-dim)}
@@ -148,6 +152,7 @@ font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
   </section>
 
   <div id="result">
+    <div id="matchwarn" class="matchwarn" style="display:none"></div>
     <section class="band scoreband">
       <div class="scorebox">
         <div class="lbl">Your profile scores</div>
@@ -251,6 +256,12 @@ font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
         :d.score>=50?"Here's what's costing you calls."
         :"This is why they're not calling.";
       renderRivals(d.rivals);
+      if(d.matched===false && d.matchNote){
+        $('matchwarn').style.display='flex';
+        $('matchwarn').innerHTML='<span class="mw-mark">?</span><p>'+esc(d.matchNote)+'</p>';
+      } else {
+        $('matchwarn').style.display='none';
+      }
       renderChecks((d.teaser||[]).map(function(t){return{ok:false,label:t.label,detail:t.detail}}));
       var hidden=(d.failingCount||0)-(d.teaser||[]).length;
       $('checks-title').textContent=hidden>0?('The two worst. '+hidden+' more below.'):"What's missing.";
@@ -275,6 +286,12 @@ font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
     .then(function(res){
       $('unlockgo').disabled=false;$('unlockgo').textContent='Show Me Everything';
       if(!res.ok){$('unlockerr').style.display='block';$('unlockerr').textContent=res.j.error||'Something went wrong.';return}
+      if(res.j.matched===false && res.j.matchNote){
+        $('matchwarn').style.display='flex';
+        $('matchwarn').innerHTML='<span class="mw-mark">?</span><p>'+esc(res.j.matchNote)+'</p>';
+      } else {
+        $('matchwarn').style.display='none';
+      }
       renderChecks(res.j.checks);
       $('checks-title').textContent="Everything we found.";
       $('gate-band').style.display='none';
