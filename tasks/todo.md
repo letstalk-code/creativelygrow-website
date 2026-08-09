@@ -65,3 +65,60 @@ which kills the markup that makes the partnership worth anything to them.
 ## Review
 
 _(fill in after execution)_
+
+## /services — shipped 2026-08-08
+
+Fourth page, built from the design handoff's Services Editorial + Mobile
+Condensed pair, checked against reference/services-desktop.png and
+reference/services-mobile-condensed.png. Same .cg-d/.cg-m fork as the
+homepage — desktop bands vs a single separately-composed mobile block, not a
+reflow.
+
+Nav: kept the existing dropdown-trigger header look per Devon (the handoff's
+own spec wanted a flattened 3-link row instead — did not implement that, this
+was an explicit call). Services was folded into the same trigger+dropdown
+already live on the other three pages; all four pages' dropdowns and footers
+now list all four pages, each omitting itself as already established.
+
+Video Content is the only service with an image (the anchor offering) — reuses
+the CeraVe Bunny thumbnail already live elsewhere on the site, no new asset.
+Ad Management and AI Voice carry the dashed "Draft copy — pending client
+input" badge and stay type-only, no fabricated claims, per the handoff's own
+instruction — **both still need real copy from Devon**: platforms/scope/ad-spend
+terms for Ad Management, and phone-answering vs. voice-ads vs. IVR for AI Voice.
+
+Third paper-cutout figure added (call-cutout.png, closing band, "Let's Talk"),
+reusing the site's own tuned-smooth cg-flip animation rather than the
+handoff's original slower keyframes.
+
+### Bugs caught in verification (not just markup transcription)
+- The exact minmax(0,...) grid trap the spec's own README warns about would
+  have hit the Video Content band's image column if 1fr had been used bare.
+  Verified 685/685px equal halves, matched heights, on production.
+- New cutout rendered 0×0 twice over: I wrote max-width instead of the
+  prototype's width (max-width always wins over width in CSS, full stop), and
+  a homepage-only mobile rule targeting the bare .cg-cutout class with
+  !important was clobbering it too. Fixed the element and scoped that rule to
+  .cg-hero-figure .cg-cutout. Confirmed no regression on the homepage's own
+  two cutouts at both breakpoints before shipping.
+- The mobile accordion silently did nothing on first test. The JS-insertion
+  edit used an exact-string .replace() against an init() line that had already
+  changed earlier in the session, so it never matched and the function was
+  simply never added — node --check only validates syntax, it doesn't confirm
+  content landed. Re-verified this time by grepping for the function name
+  post-edit, not just re-running the syntax check.
+
+Verified end to end on production: grid math, cutout sizing at both
+breakpoints, accordion (exclusive open, tap-to-close), all 7 desktop anchor
+links resolve, real image loads (referrer-gated, confirmed 403 without a
+referer / 200 with one — a hidden-pane false negative, not a real failure),
+and a real form submission reached GHL with all four fields and the SMS chain
+fired. Test contact deleted.
+
+sitemap.xml gains /services at priority 0.9. Not noindex — permanent page.
+
+### Still open
+- [ ] Ad Management and AI Voice need real copy from Devon before the draft
+      badges come off
+- [ ] `our-work.html` orphan, Bunny Storage secret key, /epoxy + /pool-cage
+      still on the old dark styling — all still pending from before
