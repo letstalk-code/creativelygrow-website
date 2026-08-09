@@ -1,33 +1,36 @@
-import Link from "next/link";
 import "./blog.css";
+import BlogHeader from "./BlogHeader";
 
-/* Hard 3-part bar on cream with a hairline bottom rule — no glass, per
-   DESIGN-REFERENCE.md. Links point at the static marketing site, which serves
-   everything outside /blog on the same domain (zone rewrite in root vercel.json). */
+/* The real header/footer, ported to match the static marketing site exactly
+   (see BlogHeader.tsx and the header/footer rules in blog.css) — this used to
+   be a from-scratch simplified recreation with a text wordmark and no link
+   back to the homepage at all. Links to anything outside /blog are plain <a>
+   tags: they cross back to the static deployment via the root vercel.json
+   rewrite, so Next's client router must never try to own them. */
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="cg-blog">
-            <header className="cg-head">
-                <div className="cg-frame cg-head-inner">
-                    <Link href="/blog" className="cg-brand">
-                        Creatively Grow
-                    </Link>
-                    <nav className="cg-nav">
-                        <a href="/how-it-works">How It Works</a>
-                        <a href="/brand-films">Brand Films</a>
-                        <a href="mailto:letstalk@creativelygrow.com">Email Us</a>
-                    </nav>
-                </div>
-            </header>
+            <BlogHeader />
 
             <main>{children}</main>
 
             <footer className="cg-foot">
-                <div className="cg-frame">
-                    Creatively Grow — Video Content + Growth Systems · Tampa Bay, FL · Call or
-                    text{" "}
-                    <a href="tel:+17272708422">(727) 270-8422</a> ·{" "}
-                    <a href="mailto:letstalk@creativelygrow.com">letstalk@creativelygrow.com</a>
+                <div className="cg-frame cg-foot-inner">
+                    <div className="cg-foot-brand">
+                        <img src="/cg-logo.webp" alt="Creatively Grow" className="cg-foot-logo" />
+                        <span className="cg-foot-tagline">
+                            Video + growth systems · Tampa Bay, FL
+                        </span>
+                    </div>
+                    <div className="cg-foot-links">
+                        <a href="/">Home</a>
+                        <a href="/how-it-works">How It Works</a>
+                        <a href="/brand-films">Brand Films</a>
+                        <a href="/services">Services</a>
+                        <a href="tel:+17272708422" className="cg-foot-phone">
+                            (727) 270-8422
+                        </a>
+                    </div>
                 </div>
             </footer>
         </div>

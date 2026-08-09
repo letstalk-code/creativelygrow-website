@@ -54,38 +54,156 @@
     color: var(--orange);
 }
 
-/* ---- header ---- */
+/* ---- header ----
+   Ported to match the static site's real header exactly - same markup
+   shape, same values - rather than a from-scratch recreation, so the two
+   are genuinely the same component in spirit even though this one has to
+   be React. Desktop dropdown opens on hover/focus via CSS alone, same as
+   the static site; only the mobile hamburger needs JS state (BlogHeader). */
 .cg-head {
-    border-bottom: var(--hairline);
+    position: relative;
+    z-index: 60;
     background: var(--cream);
+    border-bottom: 1px solid rgba(20, 16, 12, 0.15);
 }
 .cg-head-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding-block: 20px;
+    gap: 24px;
+    padding: 20px 40px;
 }
-.cg-brand,
+.cg-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+}
+.cg-logo-img {
+    height: 34px;
+    width: auto;
+    display: block;
+}
+.cg-brand-label {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--ink);
+}
+
+.cg-nav {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+}
+.cg-nav-item {
+    position: relative;
+}
 .cg-nav a {
+    display: block;
     font-family: "Oswald", sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.16em;
     font-size: 11px;
     color: var(--ink);
-    text-decoration: none;
     white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.2s ease, border-color 0.2s ease;
 }
-.cg-brand {
-    font-size: 13px;
-}
-.cg-nav {
-    display: flex;
-    gap: 28px;
+.cg-nav-trigger {
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
 }
 .cg-nav a:hover {
     color: var(--orange);
+}
+.cg-nav-trigger:hover {
+    border-bottom-color: var(--orange);
+}
+.cg-caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 7px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid currentColor;
+    transition: transform 0.2s ease;
+}
+.cg-nav-item:hover .cg-caret,
+.cg-nav-item:focus-within .cg-caret {
+    transform: rotate(180deg);
+}
+.cg-nav-drop {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    margin-top: 10px;
+    padding: 12px 18px;
+    background: var(--cream);
+    border: 1px solid var(--ink);
+    box-shadow: 0 14px 30px rgba(20, 16, 12, 0.16);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 40;
+}
+.cg-nav-item:hover .cg-nav-drop,
+.cg-nav-item:focus-within .cg-nav-drop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+.cg-nav-drop::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -12px;
+    height: 12px;
+}
+.cg-nav-drop a {
+    display: block;
+    padding: 6px 0;
+}
+
+.cg-head-phone {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+}
+.cg-head-dash {
+    width: 22px;
+    height: 3px;
+    background: var(--orange);
+    margin-top: 6px;
+    flex: none;
+}
+
+.cg-burger {
+    display: none;
 }
 
 /* ---- index ---- */
@@ -337,21 +455,60 @@
     color: var(--ink);
 }
 
-/* ---- footer ---- */
+/* ---- footer ----
+   Same shape as the static site's: logo + tagline left, page links + phone
+   right. The static site nests this inside its closing dark band; the blog's
+   footer IS the dark band, so no extra top rule/margin is needed here. */
 .cg-foot {
     margin-top: auto;
     background: var(--ink);
     color: var(--cream-dim);
-    border-top: 1px solid var(--forest-light);
     padding: 34px 0;
-    font-size: 14px;
-    line-height: 1.6;
 }
-.cg-foot a {
+.cg-foot-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+.cg-foot-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.cg-foot-logo {
+    height: 30px;
+    width: auto;
+    display: block;
+}
+.cg-foot-tagline {
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 11px;
+    color: var(--cream-dim);
+}
+.cg-foot-links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
+}
+.cg-foot-links a {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
     color: var(--cream-dim);
     text-decoration: none;
 }
-.cg-foot a:hover {
+.cg-foot-links a:hover {
+    color: var(--orange);
+}
+.cg-foot-links a.cg-foot-phone {
     color: var(--orange);
 }
 
@@ -365,14 +522,119 @@
     .cg-frame {
         padding: 0 20px;
     }
-    .cg-nav {
-        gap: 18px;
+
+    /* Hover cannot open a dropdown on touch, so the menu becomes a panel
+       behind a hamburger - identical mechanism to the static site. */
+    .cg-head {
+        position: sticky;
+        top: 0;
+        padding: 0;
+        background: rgba(249, 248, 235, 0.94);
+        backdrop-filter: blur(12px);
     }
+    .cg-head-inner {
+        padding: 10px 20px;
+        position: relative;
+    }
+    .cg-head-phone {
+        display: none;
+    }
+
+    .cg-burger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 44px;
+        height: 44px;
+        padding: 0 8px;
+        background: none;
+        border: 0;
+        cursor: pointer;
+    }
+    .cg-burger > span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background: var(--ink);
+        transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+    .cg-burger > span:nth-child(3) {
+        background: var(--orange);
+    }
+    .cg-head.is-open .cg-burger > span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    .cg-head.is-open .cg-burger > span:nth-child(2) {
+        opacity: 0;
+    }
+    .cg-head.is-open .cg-burger > span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .cg-nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        transform: none;
+        display: block;
+        background: var(--ink);
+        border-bottom: 2px solid var(--orange);
+        padding: 0 20px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.28s ease, padding 0.28s ease;
+    }
+    .cg-head.is-open .cg-nav {
+        max-height: 60vh;
+        padding: 6px 20px 18px;
+    }
+    .cg-nav-item {
+        display: block;
+    }
+    .cg-caret {
+        display: none;
+    }
+    .cg-nav a {
+        padding: 13px 0;
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        color: var(--cream);
+        border-bottom: 1px solid var(--forest-light);
+    }
+    .cg-nav a:hover {
+        color: var(--orange);
+    }
+    .cg-nav-drop {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: 0;
+        box-shadow: none;
+    }
+    .cg-nav-drop a {
+        border-bottom: 1px solid var(--forest-light);
+    }
+    .cg-nav-drop::before {
+        display: none;
+    }
+
     .cg-row a {
         grid-template-columns: 40px 1fr;
         gap: 14px;
     }
     .cg-body h2 {
         font-size: 25px;
+    }
+    .cg-foot-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
     }
 }
