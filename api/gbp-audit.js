@@ -234,6 +234,7 @@ module.exports = async (req, res) => {
         score: payload.score,
         failingCount: failing.length,
         teaser: failing.sort((a, b) => b.weight - a.weight).slice(0, 2).map((c) => ({ label: c.label, detail: c.detail })),
+        rivals: payload.rivals,
         gated: true,
       });
     }
