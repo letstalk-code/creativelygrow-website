@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Getting Started — Creatively Grow</title>
+<title>Getting Started · Creatively Grow</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,9 +72,9 @@
     <span class="eyebrow">Creatively Grow</span>
     <h1>Let's get you set up.</h1>
     <p class="lede">A few things we need before we start building. Most of it you'll know off the top
-      of your head — the only fiddly part is account access, and we can find those together if you
+      of your head. The only fiddly part is account access, and we can find those together if you
       get stuck.</p>
-    <p class="time">About 10 minutes. Nothing here is a commitment — it's what we need to do the work.</p>
+    <p class="time">About 10 minutes. Nothing here is a commitment, it's what we need to do the work.</p>
   </header>
 
   <form class="wrap" id="intake">
@@ -93,7 +93,7 @@
         <label><span class="lab">Website <span class="hint" style="display:inline">if you have one</span></span><input type="url" name="website" placeholder="https://"></label>
       </div>
       <label><span class="lab">Can that phone number receive texts?</span>
-        <span class="hint">Missed-call text-back is one of the first things we turn on. It only works on a mobile or VoIP line — not a landline.</span>
+        <span class="hint">Missed-call text-back is one of the first things we turn on. It only works on a mobile or VoIP line, not a landline.</span>
         <span class="radios">
           <label><input type="radio" name="textable" value="yes" required><span>Yes</span></label>
           <label><input type="radio" name="textable" value="no"><span>No</span></label>
@@ -101,7 +101,7 @@
         </span>
       </label>
       <label><span class="lab">Towns you'll actually drive to</span>
-        <span class="hint">Where you really work — not where you'd like to.</span>
+        <span class="hint">Where you really work, not where you'd like to.</span>
         <textarea name="service_area" required></textarea></label>
     </fieldset>
 
@@ -109,7 +109,7 @@
       <legend>2. The work</legend>
       <p class="why">We build the campaign around the jobs you want more of, not the ones you happen
         to do most.</p>
-      <label><span class="lab">Top 3 services — most wanted first</span>
+      <label><span class="lab">Top 3 services, most wanted first</span>
         <textarea name="services" required></textarea></label>
       <div class="row">
         <label><span class="lab">Typical price range for those</span>
@@ -118,7 +118,7 @@
         <label><span class="lab">How long a typical job takes</span><input type="text" name="timeline" required></label>
       </div>
       <label><span class="lab">The job you'd rather stop taking</span>
-        <span class="hint">Genuinely useful — we can filter it out instead of attracting it.</span>
+        <span class="hint">Genuinely useful. We can filter it out instead of attracting it.</span>
         <input type="text" name="least_wanted"></label>
       <label><span class="lab">What makes you different from the guy down the road?</span>
         <span class="hint">Your words, not marketing words. This often ends up in the film.</span>
@@ -145,7 +145,7 @@
 
     <fieldset>
       <legend>4. Access we'll need</legend>
-      <p class="why">This is the part that holds projects up. If you don't know a login, say so — we'll
+      <p class="why">This is the part that holds projects up. If you don't know a login, say so. We'll
         find it together in 15 minutes rather than trading emails for a fortnight.</p>
       <label><span class="lab">Google Business Profile</span>
         <span class="hint">Add <strong>letstalk@creativelygrow.com</strong> as a Manager, or tell us you need help.</span>
@@ -156,7 +156,7 @@
         </span>
       </label>
       <label><span class="lab">Where's your domain registered?</span>
-        <span class="hint">GoDaddy, Namecheap, Wix, wherever. Or "no idea" — that's a common answer.</span>
+        <span class="hint">GoDaddy, Namecheap, Wix, wherever. Or "no idea," that's a common answer.</span>
         <input type="text" name="domain_host"></label>
       <label><span class="lab">Do you run ads today?</span>
         <span class="radios">
@@ -171,7 +171,7 @@
     <fieldset>
       <legend>5. What you already have</legend>
       <p class="why">Photos of your finished work are the most valuable thing you own for this, and
-        they're usually sitting on your phone. Send whatever you've got — we'll sort it.</p>
+        they're usually sitting on your phone. Send whatever you've got and we'll sort it.</p>
       <label><span class="lab">Photos of finished jobs</span>
         <span class="radios">
           <label><input type="radio" name="photos" value="lots"><span>Plenty</span></label>
@@ -193,7 +193,7 @@
 
     <fieldset>
       <legend>6. The film</legend>
-      <p class="why">Nobody's a natural on camera. We ask questions and cut the answers — you won't be
+      <p class="why">Nobody's a natural on camera. We ask questions and cut the answers. You won't be
         handed a script to perform.</p>
       <label><span class="lab">Who'd be on camera?</span><input type="text" name="on_camera"></label>
       <label><span class="lab">Do you want video ads, or just the brand film?</span>
@@ -223,7 +223,7 @@
 </div>
 
 <div class="wrap done" id="done">
-  <h2>Got it — thank you.</h2>
+  <h2>Got it, thank you.</h2>
   <p class="lede">We'll review everything and come back within one business day with the treatment for
     your film and what we're fixing first. If anything's missing we'll ask, rather than guess.</p>
   <p class="time">Questions before then: <a href="tel:+17272708422" style="color:var(--orange)">(727) 270-8422</a>
@@ -257,14 +257,14 @@
         status.textContent = '';
         btn.disabled = false;
         window.location.href = 'mailto:letstalk@creativelygrow.com'
-          + '?subject=' + encodeURIComponent('Intake — ' + (data.business_name || ''))
+          + '?subject=' + encodeURIComponent('Intake: ' + (data.business_name || ''))
           + '&body=' + encodeURIComponent(JSON.stringify(data, null, 2));
         return;
       }
     } else {
       // No webhook configured: fall back to email so the form is never a dead end.
       window.location.href = 'mailto:letstalk@creativelygrow.com'
-        + '?subject=' + encodeURIComponent('Intake — ' + (data.business_name || ''))
+        + '?subject=' + encodeURIComponent('Intake: ' + (data.business_name || ''))
         + '&body=' + encodeURIComponent(JSON.stringify(data, null, 2));
     }
 

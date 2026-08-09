@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Creatively Grow — Email Signature</title>
+<title>Creatively Grow · Email Signature</title>
 </head>
 <body style="margin:0; padding:40px 24px; background:#ffffff;">
 
@@ -89,7 +89,20 @@
            chip, and centred so it lands as a statement instead of a caption. -->
       <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:separate; border-spacing:0; margin-top:12px; width:100%;">
         <tr>
-          <td bgcolor="#1a2a1a" align="center" style="padding:9px 14px; background-color:#1a2a1a; border-radius:4px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:16px; font-weight:700; color:#f9f8eb; letter-spacing:1.2px; text-align:center; white-space:nowrap;">WE MAKE THE PHONE RING</td>
+          <!-- Cream, deliberately, after testing. Canary Mail (macOS and iOS)
+               renders this line black no matter what colour is declared — cream
+               and orange both came through black in live sends, which rules out
+               a lightness/contrast transform and means Canary is forcing its own
+               default foreground onto text inside this cell. No colour value can
+               win that, so there is nothing to gain by compromising the design
+               for it. Gmail renders it correctly.
+               If a MAINSTREAM client (Apple Mail, Outlook, Gmail app) ever shows
+               the same fault, the fix is not another colour — it is dropping the
+               dark fill so that a forced-black text is still readable.
+               Colour is declared three ways — inner <span> with !important, a
+               legacy <font color>, and the td as fallback — which guards a
+               separate real failure: sanitisers that strip styles. -->
+          <td bgcolor="#1a2a1a" align="center" style="padding:9px 14px; background-color:#1a2a1a; border-radius:4px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:16px; font-weight:700; color:#f9f8eb; letter-spacing:1.2px; text-align:center; white-space:nowrap;"><span style="color:#f9f8eb !important; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:16px; font-weight:700; letter-spacing:1.2px;"><font color="#f9f8eb">WE MAKE THE PHONE RING</font></span></td>
         </tr>
       </table>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Films — Creatively Grow</title>
+    <title>Your Films · Creatively Grow</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -184,7 +184,7 @@
     }
 
     function render(g) {
-        document.title = (g.clientName ? g.clientName + ' — ' : '') + 'Creatively Grow';
+        document.title = (g.clientName ? g.clientName + ' · ' : '') + 'Creatively Grow';
 
         const videos = (g.videos || []).map((v, i) => `
             <div class="cg-g-video">
@@ -319,7 +319,7 @@
                 showMessage('That took too long to load. Check your connection '
                     + 'and try again.', true);
             } else {
-                showMessage('Your gallery didn\'t load. That one is on us — '
+                showMessage('Your gallery didn\'t load. That one is on us, '
                     + 'give it another go.', true);
             }
             return;
