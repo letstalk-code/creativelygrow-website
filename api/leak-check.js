@@ -24,7 +24,12 @@ module.exports = async (req, res) => {
   const tagList = isContact ? ['website-contact'] : ['leak-check', cleanNiche];
   const sourceLabel = isContact ? 'website-contact' : `leak-check-${cleanNiche}`;
 
-  if (!cleanBusiness || cleanPhone.replace(/\D/g, '').length < 10) {
+  // A real US/Canada number is 10 digits, or 11 with a leading 1. Anything else
+  // (bots stuffing garbage into the field) gets rejected instead of silently saved.
+  const phoneDigits = cleanPhone.replace(/\D/g, '');
+  const validPhone = phoneDigits.length === 10 || (phoneDigits.length === 11 && phoneDigits.startsWith('1'));
+
+  if (!cleanBusiness || !validPhone) {
     return res.status(400).json({ error: 'business name and a valid phone are required' });
   }
 
