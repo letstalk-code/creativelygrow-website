@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Your Experience | Creatively Grow</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: #f9f8eb;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 16px 48px rgba(20,16,12,0.12);
+    max-width: 480px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .header {
+    background-color: #f9f8eb;
+    padding: 22px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(20,16,12,0.08);
+  }
+
+  .header img {
+    height: 32px;
+    width: auto;
+    border-radius: 7px;
+  }
+
+  .header span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #14100c;
+  }
+
+  .body {
+    padding: 44px 32px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    background-color: #ef7938;
+    color: #14100c;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+  }
+
+  .body h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #14100c;
+    margin-bottom: 10px;
+  }
+
+  .body p {
+    font-size: 15px;
+    color: #5a564f;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  /* Star Rating */
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .star {
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .star:hover { transform: scale(1.15); }
+  .star:active { transform: scale(0.95); }
+
+  .star svg {
+    width: 100%;
+    height: 100%;
+    fill: #e4e2d4;
+    transition: fill 0.2s ease;
+  }
+
+  .star.active svg { fill: #ef7938; }
+  .star.hover svg { fill: #f4a06b; }
+
+  /* Rating Label */
+  .rating-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a09c8f;
+    min-height: 22px;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+  }
+
+  .rating-label.selected { color: #14100c; }
+
+  /* Private Feedback Form */
+  .feedback-form {
+    display: none;
+    text-align: left;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .feedback-form.visible { display: block; }
+
+  .feedback-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #14100c;
+    margin-bottom: 8px;
+  }
+
+  .feedback-form textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 14px;
+    border: 2px solid #e8e6da;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: #14100c;
+    resize: vertical;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .feedback-form textarea:focus {
+    border-color: #ef7938;
+  }
+
+  .feedback-form textarea::placeholder {
+    color: #b5b2a5;
+  }
+
+  .feedback-form .name-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e8e6da;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: #14100c;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .feedback-form .name-input:focus {
+    border-color: #ef7938;
+  }
+
+  .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 999px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: scale(0.98); }
+
+  .btn-primary {
+    background-color: #ef7938;
+    color: #14100c;
+    box-shadow: 0 8px 24px rgba(239,121,56,0.25);
+  }
+
+  .btn-dark {
+    background-color: #14100c;
+    color: #f9f8eb;
+  }
+
+  /* Google redirect button (shown for 4-5 stars) */
+  .google-redirect {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .google-redirect.visible { display: block; }
+
+  .google-redirect p {
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #14100c;
+  }
+
+  /* Thank You State */
+  .thank-you {
+    display: none;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .thank-you.visible { display: block; }
+
+  .thank-you .checkmark {
+    width: 64px;
+    height: 64px;
+    background-color: #14100c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .thank-you .checkmark svg {
+    width: 32px;
+    height: 32px;
+    fill: none;
+    stroke: #f9f8eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .thank-you h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #14100c;
+    margin-bottom: 10px;
+  }
+
+  .thank-you p {
+    font-size: 15px;
+    color: #5a564f;
+    margin-bottom: 0;
+  }
+
+  /* Footer */
+  .footer {
+    background-color: #f9f8eb;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-top: 1px solid rgba(20,16,12,0.08);
+  }
+
+  .footer img {
+    height: 20px;
+    width: auto;
+    border-radius: 5px;
+  }
+
+  .footer p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #14100c;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Loading state for button */
+  .btn.loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <img src="assets/logo.webp" alt="">
+    <span>Creatively Grow</span>
+  </div>
+
+  <div class="body" id="mainContent">
+    <span class="eyebrow">Share Your Experience</span>
+    <h2>How'd We Do?</h2>
+    <p>Your feedback helps us improve and helps other businesses find us.</p>
+
+    <!-- Star Rating -->
+    <div class="stars" id="starContainer">
+      <div class="star" data-rating="1">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="star" data-rating="2">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="star" data-rating="3">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="star" data-rating="4">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="star" data-rating="5">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+    </div>
+
+    <div class="rating-label" id="ratingLabel">Tap a star to rate</div>
+
+    <!-- Google Redirect (4-5 stars) -->
+    <div class="google-redirect" id="googleRedirect">
+      <p>We're so glad to hear that! Would you mind sharing your experience on Google? It means the world to us.</p>
+      <a id="googleBtn" class="btn btn-primary" href="https://g.page/r/CYHtVbU7louuEBM/review" target="_blank" rel="noopener">Leave a Google Review</a>
+    </div>
+
+    <!-- Private Feedback Form (1-3 stars) -->
+    <div class="feedback-form" id="feedbackForm">
+      <p style="font-size:15px;color:#14100c;margin-bottom:20px;">We're sorry to hear that. We'd love to understand what happened so we can make it right.</p>
+      <input type="text" class="name-input" id="feedbackName" placeholder="Your name (optional)">
+      <label for="feedbackText">What could we have done better?</label>
+      <textarea id="feedbackText" placeholder="Tell us what happened -- we read every message and want to fix this for you..."></textarea>
+      <button class="btn btn-dark" id="submitFeedback" onclick="submitPrivateFeedback()">Send Feedback</button>
+    </div>
+
+    <!-- Thank You State -->
+    <div class="thank-you" id="thankYou">
+      <div class="checkmark">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Thank You For Your Feedback</h3>
+      <p>We truly appreciate you taking the time. Your feedback helps us get better every day.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <img src="assets/logo.webp" alt="">
+    <p>Creatively Grow</p>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // Optional personalization via URL params (e.g. from an SMS/email link:
+  // /review?contact_id={{contact.id}}&name={{contact.first_name}}&email={{contact.email}}&phone={{contact.phone}}
+  // ============================================================
+  const CONFIG = { contactId: '', name: '', email: '', phone: '' };
+
+  function getParams() {
+    const params = new URLSearchParams(window.location.search);
+    CONFIG.contactId = params.get('contact_id') || '';
+    CONFIG.name = params.get('name') || '';
+    CONFIG.email = params.get('email') || '';
+    CONFIG.phone = params.get('phone') || '';
+
+    if (CONFIG.name) {
+      document.getElementById('feedbackName').value = CONFIG.name;
+    }
+  }
+
+  // ============================================================
+  // STAR RATING LOGIC
+  // ============================================================
+  let selectedRating = 0;
+  const stars = document.querySelectorAll('.star');
+  const ratingLabel = document.getElementById('ratingLabel');
+  const googleRedirect = document.getElementById('googleRedirect');
+  const feedbackForm = document.getElementById('feedbackForm');
+  const thankYou = document.getElementById('thankYou');
+
+  const labels = {
+    1: 'Poor experience',
+    2: 'Below expectations',
+    3: 'It was okay',
+    4: 'Great experience!',
+    5: 'Excellent -- loved it!'
+  };
+
+  stars.forEach(star => {
+    star.addEventListener('mouseenter', () => {
+      if (selectedRating > 0) return;
+      const rating = parseInt(star.dataset.rating);
+      highlightStars(rating, 'hover');
+    });
+
+    star.addEventListener('mouseleave', () => {
+      if (selectedRating > 0) return;
+      clearStars();
+    });
+
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.dataset.rating);
+      highlightStars(selectedRating, 'active');
+      ratingLabel.textContent = labels[selectedRating];
+      ratingLabel.classList.add('selected');
+      handleRating(selectedRating);
+    });
+  });
+
+  function highlightStars(rating, className) {
+    stars.forEach(s => {
+      const r = parseInt(s.dataset.rating);
+      s.classList.remove('active', 'hover');
+      if (r <= rating) s.classList.add(className);
+    });
+    if (className === 'hover') {
+      ratingLabel.textContent = labels[rating];
+    }
+  }
+
+  function clearStars() {
+    stars.forEach(s => s.classList.remove('hover'));
+    ratingLabel.textContent = 'Tap a star to rate';
+  }
+
+  // ============================================================
+  // ROUTING LOGIC
+  // ============================================================
+  function handleRating(rating) {
+    googleRedirect.classList.remove('visible');
+    feedbackForm.classList.remove('visible');
+    thankYou.classList.remove('visible');
+
+    if (rating >= 4) {
+      googleRedirect.classList.add('visible');
+      sendFeedback(rating, 'positive', '');
+    } else {
+      feedbackForm.classList.add('visible');
+    }
+  }
+
+  // ============================================================
+  // PRIVATE FEEDBACK SUBMISSION
+  // ============================================================
+  function submitPrivateFeedback() {
+    const feedbackText = document.getElementById('feedbackText').value.trim();
+    const name = document.getElementById('feedbackName').value.trim();
+    const btn = document.getElementById('submitFeedback');
+
+    if (!feedbackText) {
+      document.getElementById('feedbackText').style.borderColor = '#ef7938';
+      document.getElementById('feedbackText').setAttribute('placeholder', 'Please share what happened so we can help...');
+      return;
+    }
+
+    btn.classList.add('loading');
+    btn.textContent = 'Sending...';
+
+    sendFeedback(selectedRating, 'negative', feedbackText, name).then(() => {
+      feedbackForm.classList.remove('visible');
+      document.querySelector('.stars').style.display = 'none';
+      ratingLabel.style.display = 'none';
+      document.querySelector('.body h2').style.display = 'none';
+      document.querySelector('.body > p').style.display = 'none';
+      document.querySelector('.eyebrow').style.display = 'none';
+      thankYou.classList.add('visible');
+    }).catch(() => {
+      btn.classList.remove('loading');
+      btn.textContent = 'Send Feedback';
+      alert('Something went wrong. Please try again.');
+    });
+  }
+
+  // ============================================================
+  // Send to our own API route, which handles the GHL side
+  // ============================================================
+  async function sendFeedback(rating, sentiment, feedback, name) {
+    const payload = {
+      contact_id: CONFIG.contactId,
+      name: name || CONFIG.name,
+      email: CONFIG.email,
+      phone: CONFIG.phone,
+      rating,
+      sentiment,
+      feedback,
+    };
+
+    try {
+      const resp = await fetch('/api/review-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) throw new Error('request failed');
+      return Promise.resolve();
+    } catch (err) {
+      console.error('review feedback error:', err);
+      return Promise.reject(err);
+    }
+  }
+
+  getParams();
+</script>
+</body>
+</html>
