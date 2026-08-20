@@ -6,7 +6,6 @@ Disallow: /pool-cage
 Disallow: /studio
 Disallow: /g
 Disallow: /client-intake-form
-Disallow: /review-funnel
 
 # Sitemaps
 Sitemap: https://creativelygrow.com/sitemap.xml
