@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Creatively Grow · Facebook Cover</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Exported at 1640x624 = 2x Facebook's 820x312 desktop cover, so it stays
+     sharp on retina. Facebook crops the SIDES on mobile, so every piece of type
+     lives inside .safe (the centre 1280px). The profile picture overlaps the
+     bottom-left on desktop, which is why nothing sits in that corner. */
+  :root {
+    --forest-dark: #0d140d;
+    --forest: #1a2a1a;
+    --cream: #f9f8eb;
+    --orange: #ef7938;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1640px; height: 624px; overflow: hidden; }
+  body {
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--forest-dark);
+  }
+
+  .cover {
+    position: relative;
+    width: 1640px;
+    height: 624px;
+    overflow: hidden;
+    background:
+      radial-gradient(1100px 700px at 78% 18%, rgba(239,121,56,0.16) 0%, rgba(239,121,56,0) 62%),
+      radial-gradient(900px 600px at 12% 92%, rgba(45,58,45,0.85) 0%, rgba(45,58,45,0) 70%),
+      linear-gradient(103deg, #0b110b 0%, #162416 48%, #22301f 100%);
+  }
+
+  /* Hairline grid — reads as texture at cover size, never as a pattern. */
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(249,248,235,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(249,248,235,0.045) 1px, transparent 1px);
+    background-size: 82px 82px;
+    mask-image: radial-gradient(1200px 620px at 50% 40%, #000 20%, transparent 78%);
+  }
+
+  /* The logo's stem-and-leaf, oversized and bleeding off the right edge. The
+     profile picture already carries the C/G mark, so the cover echoes it
+     instead of printing it twice. */
+  .motif { position: absolute; top: 44px; right: 74px; }
+
+  .safe {
+    position: absolute;
+    left: 180px; right: 180px; top: 0; bottom: 0;   /* the mobile-safe centre */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 8px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 3.4px;
+    color: rgba(249,248,235,0.62);
+    text-transform: uppercase;
+  }
+  .eyebrow .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); opacity: 0.85; }
+
+  h1 {
+    margin-top: 26px;
+    font-family: 'Oswald', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 92px;
+    line-height: 0.98;
+    letter-spacing: -0.5px;
+    color: var(--cream);
+  }
+  h1 .accent { color: var(--orange); }
+
+  .rule {
+    margin-top: 34px;
+    width: 132px; height: 3px;
+    background: linear-gradient(90deg, rgba(239,121,56,0) 0%, var(--orange) 50%, rgba(239,121,56,0) 100%);
+  }
+
+  .foot {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: rgba(249,248,235,0.78);
+  }
+  .foot .site { color: var(--orange); }
+  .foot .sep { color: rgba(249,248,235,0.28); font-weight: 400; }
+
+  /* Bottom-right only: the bottom-left belongs to the profile picture. */
+  .stamp {
+    position: absolute;
+    right: 56px; bottom: 40px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2.6px;
+    color: rgba(249,248,235,0.34);
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="grid"></div>
+
+  <!-- Oversized leaf + stem, lifted from the logo. The leaf stays fully inside
+       the frame; only the stem runs off the bottom edge. -->
+  <svg class="motif" width="470" height="640" viewBox="0 0 470 640" fill="none">
+    <path d="M158 636 L338 168" stroke="#ef7938" stroke-width="17" stroke-linecap="round" opacity="0.15"/>
+    <path d="M334 178 C 334 84, 378 26, 466 6 C 468 114, 412 168, 340 184 Z" fill="#ef7938" opacity="0.19"/>
+  </svg>
+
+  <div class="safe">
+    <div class="eyebrow">
+      <span>Websites</span><span class="dot"></span>
+      <span>Local SEO</span><span class="dot"></span>
+      <span>Follow-Up</span><span class="dot"></span>
+      <span>Video</span>
+    </div>
+
+    <h1>Get found. Get chosen.<br><span class="accent">Get more calls.</span></h1>
+
+    <div class="rule"></div>
+
+    <div class="foot">
+      <span class="site">creativelygrow.com</span>
+      <span class="sep">|</span>
+      <span>(727) 270-8422</span>
+    </div>
+  </div>
+
+  <div class="stamp">Tampa Bay</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Opening — Garage Epoxy Contractor · Tampa Bay</title>
+<meta name="description" content="We have an opening for one garage epoxy contractor in Tampa Bay. $75 per appointment set with a phone-verified homeowner. No retainers, no contracts, you own the ad account.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+ * Paid-traffic landing page for the lead-engine offer.
+ *
+ * Follows the editorial system that creativelygrow.com runs (editorial.css +
+ * index.html's inline structure): cream #f9f8eb paper, ink #14100c, orange
+ * #ef7938 as a STRUCTURAL block never decoration, Oswald 700 uppercase at tight
+ * leading, hard 2px ink rules between bands, square corners on every panel —
+ * pills (999px) only on buttons and tags. No gradients, no glass, no soft
+ * shadows. Those rules are documented in graphics/src/brand.ts.
+ *
+ * Tokens are copied verbatim rather than linking editorial.css on purpose: that
+ * sheet is mostly nav/hero-cutout/responsive-band machinery this page has none
+ * of, and a paid-traffic page should not break because the marketing site's CSS
+ * changed underneath it.
+ *
+ * Structurally this page is deliberately a dead end. No header, no logo, no
+ * phone number, no footer nav — there are zero <a> tags in the document. The
+ * only things to click are the quiz itself. That is Devon's constraint, not an
+ * oversight.
+ */
+:root {
+    --cream: #f9f8eb;
+    --ink: #14100c;
+    --forest-dark: #0d140d;
+    --forest-light: #2d3a2d;
+    --sage: #4e5a4e;
+    --cream-dim: #b8b8a8;
+    --orange: #ef7938;
+    --orange-hover: #d96a2d;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p { margin: 0; }
+
+.shell {
+    background: var(--cream);
+    max-width: 1440px;
+    margin: 0 auto;
+    border-left: 1px solid rgba(20,16,12,0.1);
+    border-right: 1px solid rgba(20,16,12,0.1);
+    overflow: hidden;
+}
+
+/* Bands are separated by the hard 2px rule, as on the marketing site. */
+.band { border-bottom: 2px solid var(--ink); }
+.pad { padding: 34px clamp(18px,2.8vw,40px) 38px; }
+
+.eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.2em; font-size: 11px;
+    color: var(--orange);
+}
+.tag-pill {
+    display: inline-block;
+    background: var(--orange); color: var(--ink);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.14em; font-size: 12px;
+    padding: 8px 16px; border-radius: 999px;
+}
+h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    font-size: clamp(34px, 6.4vw, 76px);
+    line-height: 0.88; letter-spacing: -0.005em;
+}
+h2 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    font-size: clamp(28px, 4.4vw, 46px);
+    line-height: 0.95;
+}
+.lede { font-size: 16px; line-height: 1.65; color: var(--sage); max-width: 460px; }
+
+/* ---- The quiz panel. Square, ink, orange accents. ----
+   Lifted off the page with a translucent panel over an offset orange block.
+   The block is the homepage hero's own move, so the glass has something real to
+   sit over instead of blurring flat paper — which is what keeps this reading as
+   the editorial system rather than a generic frosted card. Corners stay square. */
+.quiz-frame { position: relative; }
+.quiz-frame::before {
+    content: '';
+    position: absolute;
+    right: -14px; bottom: -14px;
+    width: 68%; height: 52%;
+    background: var(--orange);
+    z-index: 0;
+}
+.quiz {
+    position: relative;
+    z-index: 1;
+    background: rgba(20,16,12,0.90);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid rgba(249,248,235,0.16);
+    box-shadow: 0 20px 44px rgba(20,16,12,0.30);
+    padding: 26px clamp(18px,2.4vw,30px) 28px;
+}
+.quiz-step { display: none; }
+.quiz-step.is-active { display: block; }
+.quiz-progress {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.2em; font-size: 11px;
+    color: var(--orange);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+}
+.quiz-progress span { flex: 1; height: 1px; background: rgba(249,248,235,0.25); }
+.quiz-q {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.05; color: var(--cream);
+    margin-bottom: 18px;
+}
+/* Option rows read as a stacked list with hairline rules, like the site's
+   numbered system list — not as floating rounded cards. */
+.opt {
+    display: grid; grid-template-columns: 30px 1fr;
+    gap: 12px; align-items: baseline;
+    width: 100%; text-align: left; cursor: pointer;
+    background: transparent; border: 0;
+    border-top: 1px solid rgba(249,248,235,0.2);
+    padding: 15px 8px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; font-size: 17px;
+    color: var(--cream);
+    transition: background 0.18s ease, color 0.18s ease, padding-left 0.18s ease;
+}
+.opt:last-of-type { border-bottom: 1px solid rgba(249,248,235,0.2); }
+.opt em {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-style: normal; font-size: 14px; color: var(--orange);
+}
+.opt:hover, .opt:focus-visible {
+    background: rgba(239,121,56,0.14);
+    color: var(--orange);
+    padding-left: 14px;
+    outline: none;
+}
+.quiz label {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.16em; font-size: 11px;
+    color: var(--cream-dim);
+    margin: 16px 0 7px;
+}
+.quiz input {
+    width: 100%;
+    padding: 13px 14px;
+    background: var(--forest-dark);
+    border: 1px solid var(--forest-light);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif; font-size: 16px;
+    border-radius: 0;
+}
+.quiz input::placeholder { color: rgba(184,184,168,0.55); }
+.quiz input:focus { outline: 2px solid var(--orange); outline-offset: -2px; border-color: transparent; }
+.submit {
+    display: block; width: 100%;
+    margin-top: 22px; padding: 17px 30px;
+    background: var(--orange); color: var(--ink);
+    border: 0; border-radius: 999px; cursor: pointer;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; font-size: 19px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.submit:hover { background: var(--orange-hover); transform: translateY(-2px); }
+.submit:disabled { opacity: 0.55; transform: none; cursor: default; }
+.back {
+    margin-top: 14px; padding: 0;
+    background: none; border: 0; cursor: pointer;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.16em; font-size: 11px;
+    color: var(--cream-dim);
+}
+.back:hover { color: var(--orange); }
+.quiz-note { margin-top: 14px; font-size: 13px; line-height: 1.6; color: var(--cream-dim); }
+.quiz h3 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    font-size: 24px; line-height: 1.05;
+    color: var(--orange); margin-bottom: 10px;
+}
+.err { margin-top: 12px; font-size: 13px; color: #e57373; }
+
+/* ---- Guarantee strip, same construction as the site's services chips ---- */
+.chips { display: flex; flex-wrap: wrap; gap: 0; }
+.chips span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.14em; font-size: 12px;
+    color: var(--sage);
+    padding: 15px 22px;
+    border-right: 1px solid rgba(20,16,12,0.15);
+}
+.chips span:last-child { color: var(--orange); border-right: 0; }
+
+/* ---- Numbered rows ---- */
+.rows { display: flex; flex-direction: column; margin-top: 22px; }
+.row {
+    display: grid; grid-template-columns: 30px 1fr;
+    gap: 13px; align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(20,16,12,0.2);
+}
+.row:last-child { border-bottom: 0; }
+.row .n { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 15px; color: var(--orange); }
+.row .t {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    font-size: 17px; color: var(--ink);
+}
+.row .t em {
+    font-family: 'Inter', sans-serif; font-weight: 400;
+    font-style: normal; text-transform: none; letter-spacing: 0;
+    font-size: 14px; color: var(--sage);
+}
+
+/* ---- Flow diagram (ownership) ---- */
+.flow { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin: 24px 0 20px; }
+.flow-box {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    font-size: 17px; line-height: 1.15;
+    padding: 14px 18px; border: 2px solid var(--ink);
+}
+.flow-box.is-yours { background: var(--orange); }
+.flow-arrow { font-family: 'Oswald', sans-serif; font-size: 26px; color: var(--orange); }
+
+.dark { background: var(--ink); color: var(--cream); }
+.dark h2 { color: var(--cream); }
+.dark .lede { color: var(--cream-dim); }
+.orange-band { background: var(--orange); position: relative; overflow: hidden; }
+.orange-band .lede { color: rgba(20,16,12,0.86); }
+.corner {
+    position: absolute; right: 0; bottom: 0; width: 0; height: 0;
+    border-left: 70px solid transparent; border-bottom: 70px solid var(--ink);
+}
+.big-price {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: clamp(72px, 14vw, 150px); line-height: 0.82;
+    color: var(--ink); letter-spacing: -0.01em;
+}
+
+.obj { padding: 16px 0; border-bottom: 1px solid rgba(20,16,12,0.2); }
+.obj:last-child { border-bottom: 0; }
+.obj h3 {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    font-size: 17px; margin-bottom: 5px;
+}
+.obj p { font-size: 14px; line-height: 1.6; color: var(--sage); }
+
+.foot {
+    padding: 20px clamp(18px,2.8vw,40px);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.2em; font-size: 10px;
+    color: var(--sage);
+}
+
+/* Two columns once there is room; the quiz stays in the first band either way. */
+.hero { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 900px) {
+    .hero { grid-template-columns: 1.05fr 1fr; }
+    .hero-copy { border-right: 1px solid rgba(20,16,12,0.15); }
+    .hero-quiz-wrap { padding: 34px clamp(18px,2.8vw,40px) 38px; display: flex; align-items: center; }
+    .hero-quiz-wrap .quiz { width: 100%; }
+}
+@media (max-width: 899px) {
+    /* Phone is the whole audience here — the quiz comes first, before the copy. */
+    .hero-copy { order: 2; padding-top: 26px; }
+    .hero-quiz-wrap { order: 1; padding: 26px clamp(18px,2.8vw,40px) 0; }
+    .chips span { padding: 13px 16px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+    <!-- BAND 1 — the quiz. Nothing above it: no header, no logo, no phone. -->
+    <div class="band hero">
+        <div class="hero-copy pad">
+            <span class="tag-pill">Garage Epoxy · Tampa Bay</span>
+            <h1 style="margin-top:24px">One opening<br>for a garage<br>epoxy<br><span style="color:#ef7938">contractor.</span></h1>
+            <div style="display:flex; flex-direction:column; gap:18px; margin-top:26px">
+                <span class="eyebrow" style="color:#14100c; display:flex; align-items:center; gap:12px">The Offer <span style="flex:1; height:1px; background:rgba(20,16,12,0.3)"></span></span>
+                <p class="lede">$75 per appointment set. You keep the ad account — the pixel, the audiences, all of it. We phone-verify every homeowner and book them straight onto your calendar. You pay when one is on the books. Not on a click. Not on a form fill. Not on a lead that goes nowhere.</p>
+            </div>
+        </div>
+
+        <div class="hero-quiz-wrap">
+          <div class="quiz-frame">
+            <div class="quiz" id="eoQuiz">
+                <div class="quiz-step is-active" id="eoStep1">
+                    <div class="quiz-progress">Step 01 / 02 <span></span></div>
+                    <p class="quiz-q">What's the shop doing<br>in monthly revenue?</p>
+                    <button type="button" class="opt" data-rev="0-25k"><em>01</em> Under $25k / mo</button>
+                    <button type="button" class="opt" data-rev="25-50k"><em>02</em> $25k – $50k / mo</button>
+                    <button type="button" class="opt" data-rev="50k+"><em>03</em> $50k+ / mo</button>
+                    <p class="quiz-note">Thirty seconds. No card. We only take one epoxy contractor per area, so this tells us fast whether it's a fit.</p>
+
+                </div>
+
+                <div class="quiz-step" id="eoStep2">
+                    <div class="quiz-progress">Step 02 / 02 <span></span></div>
+                    <p class="quiz-q">Where do we send<br>the details?</p>
+                    <form id="eoForm">
+                        <label for="eo-business">Business name</label>
+                        <input type="text" id="eo-business" required autocomplete="organization" placeholder="Bayside Epoxy Coatings">
+                        <label for="eo-phone">Mobile number</label>
+                        <input type="tel" id="eo-phone" required autocomplete="tel" placeholder="(727) 555-0134">
+                        <button type="submit" class="submit">Check My Area &nbsp;→</button>
+                    </form>
+                    <button type="button" class="back" id="eoBack">← Back</button>
+                </div>
+
+                <div class="quiz-step" id="eoDisqualify">
+                    <h3>Not the right fit yet</h3>
+                    <p class="quiz-note" style="font-size:14px">This runs on roughly $1,500–2,000/month of ad spend, which means it works for shops already past $25k/month. Below that the test can't run long enough to prove anything, and we'd rather say so now than take your time.</p>
+                    <button type="button" class="back" id="eoBackFromDQ">← Back</button>
+                </div>
+
+                <div class="quiz-step" id="eoSuccess">
+                    <h3>Got it.<br>Watch your phone.</h3>
+                    <p class="quiz-note" style="font-size:14px">We'll text shortly to confirm Tampa Bay is still open for your trade and get a call on the books. If we're already committed to another contractor in your area, we'll tell you straight instead of stringing you along.</p>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Guarantee strip -->
+    <div class="band chips">
+        <span>No retainers</span>
+        <span>No contracts</span>
+        <span>You own the ad account</span>
+        <span>Not shared, not resold</span>
+    </div>
+
+    <!-- The price -->
+    <div class="band orange-band pad">
+        <span class="eyebrow" style="color:#14100c">The Whole Cost</span>
+        <div style="display:flex; align-items:baseline; gap:18px; flex-wrap:wrap; margin-top:10px">
+            <span class="big-price">$75</span>
+            <span style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:14px; color:#14100c">Per appointment<br>call</span>
+        </div>
+        <p class="lede" style="margin-top:18px; max-width:560px">The average epoxy job runs $3,000 to $8,000. Do the math on what one closed job is worth against what you'd pay to get the estimate in front of you.</p>
+        <div class="corner"></div>
+    </div>
+
+    <!-- Ownership / exclusivity -->
+    <div class="band pad">
+        <span class="eyebrow">Worth Checking</span>
+        <h2 style="margin-top:8px">Not shared.<br>Not resold.</h2>
+        <div class="flow">
+            <div class="flow-box">Your ad<br>account</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box is-yours">Your<br>homeowner</div>
+        </div>
+        <p class="lede" style="max-width:560px">Because the homeowner comes out of your own ad account, there is no pool and no queue for them to come from, and no second contractor getting the same person an hour later. Every other lead company can only <strong style="color:#14100c">promise</strong> exclusivity. Here there is nowhere for it to go.</p>
+    </div>
+
+    <!-- How it works -->
+    <div class="band pad">
+        <span class="eyebrow">How It Works</span>
+        <h2 style="margin-top:8px">Pay per result.</h2>
+        <div class="rows">
+            <div class="row">
+                <span class="n">01</span>
+                <span class="t">Check your area: <em>two questions, thirty seconds, no card.</em></span>
+            </div>
+            <div class="row">
+                <span class="n">02</span>
+                <span class="t">Book a call: <em>we show you how many homeowners we can get on your phone this month.</em></span>
+            </div>
+            <div class="row">
+                <span class="n">03</span>
+                <span class="t">Pay per appointment set: <em>we phone-verify every homeowner, then book them onto your calendar. $75 when it's on the books. Dead leads, wrong numbers and tire-kickers cost you nothing.</em></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Money control -->
+    <div class="band dark pad">
+        <span class="eyebrow">Your Money</span>
+        <h2 style="margin-top:8px">It never touches<br><span style="color:#ef7938">our hands.</span></h2>
+        <p class="lede" style="margin-top:18px; max-width:560px">The budget stays on your card, in an account with your name on it. If you ever walk away you keep the account, the pixel, the audiences, and every lead in it. That isn't a policy we'd bend — it's how the thing is built.</p>
+    </div>
+
+    <!-- Objections -->
+    <div class="band pad">
+        <span class="eyebrow">Straight Answers</span>
+        <h2 style="margin-top:8px; margin-bottom:14px">The fair questions.</h2>
+        <div class="obj">
+            <h3>"Every lead company says exclusive."</h3>
+            <p>They do. The difference is whether they can prove it or only promise it. When the homeowner comes out of your own ad account, there's no shared pool for them to come from.</p>
+        </div>
+        <div class="obj">
+            <h3>"What counts as a appointment set?"</h3>
+            <p>You and a phone-verified homeowner, on the line together, for at least two minutes. It's logged with a timestamp and a recording you can pull up any time — so neither of us is taking the other's word for it. Voicemails, wrong numbers and no-answers are free.</p>
+        </div>
+        <div class="obj">
+            <h3>"How do I know I won't get buried in calls?"</h3>
+            <p>You can pause us any day, for any reason, with no contract to get out of. And you'll see every appointment set as it happens rather than at the end of the month, so nothing on the invoice is a surprise.</p>
+        </div>
+        <div class="obj">
+            <h3>"I don't have $2–3k a month for ads."</h3>
+            <p>Then this isn't the right fit yet, and we'll tell you that instead of taking your time. This works for shops already doing enough volume to fund the account.</p>
+        </div>
+    </div>
+
+    <div class="foot">© 2026 Creatively Grow · Tampa Bay, FL</div>
+</div>
+
+<script>
+(function() {
+    var steps = {
+        step1: document.getElementById('eoStep1'),
+        step2: document.getElementById('eoStep2'),
+        disqualify: document.getElementById('eoDisqualify'),
+        success: document.getElementById('eoSuccess')
+    };
+    var selectedRevenue = null;
+
+    function show(id) {
+        Object.keys(steps).forEach(function(k) { steps[k].classList.remove('is-active'); });
+        steps[id].classList.add('is-active');
+    }
+
+    document.querySelectorAll('.opt').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            selectedRevenue = btn.getAttribute('data-rev');
+            show(selectedRevenue === '0-25k' ? 'disqualify' : 'step2');
+        });
+    });
+
+    document.getElementById('eoBack').addEventListener('click', function() { show('step1'); });
+    document.getElementById('eoBackFromDQ').addEventListener('click', function() { show('step1'); });
+
+    document.getElementById('eoForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = this.querySelector('button[type="submit"]');
+        var old = this.querySelector('.err');
+        if (old) old.remove();
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        try {
+            var resp = await fetch('/api/lead-engine-qualify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    business: document.getElementById('eo-business').value,
+                    phone: document.getElementById('eo-phone').value,
+                    revenue: selectedRevenue,
+                    trade: 'epoxy',
+                    metro: 'tampa-bay'
+                })
+            });
+            if (!resp.ok) throw new Error('bad response');
+            show('success');
+        } catch (err) {
+            btn.disabled = false;
+            btn.innerHTML = 'Check My Area &nbsp;→';
+            var p = document.createElement('p');
+            p.className = 'err';
+            p.textContent = 'Something hiccuped — try that again in a moment.';
+            btn.insertAdjacentElement('afterend', p);
+        }
+    });
+})();
+</script>
+
+</body>
+</html>

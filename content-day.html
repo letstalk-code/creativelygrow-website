@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Content Day · Creatively Grow</title>
+<meta name="description" content="One day on site. A month of content. 20–30 vertical clips and 10 stills, edited and captioned, delivered in five business days. $1,500, Tampa Bay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f9f8eb;
+  --ink:#14100c;
+  --forest-dark:#0d140d;
+  --forest-light:#2d3a2d;
+  --sage:#4e5a4e;
+  --cream-dim:#b8b8a8;
+  --orange:#ef7938;
+  --orange-hover:#d96a2d;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--cream);color:var(--ink);
+  font-family:Inter,system-ui,sans-serif;font-weight:400;line-height:1.7;
+}
+a{color:var(--orange);text-decoration:none}
+a:hover{color:var(--orange-hover)}
+.wrap{
+  max-width:1440px;margin:0 auto;overflow:hidden;
+  border-left:1px solid rgba(20,16,12,0.1);
+  border-right:1px solid rgba(20,16,12,0.1);
+}
+.band{border-bottom:2px solid var(--ink)}
+.disp{font-family:Oswald,sans-serif;font-weight:700;text-transform:uppercase;margin:0}
+.eyebrow{
+  font-family:Oswald,sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--orange);margin:0 0 14px;
+}
+.rule-label{display:flex;align-items:center;gap:16px;margin:0 0 20px}
+.rule-label span{
+  font-family:Oswald,sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--ink);
+}
+.rule-label i{flex:1;height:1px;background:rgba(20,16,12,0.2)}
+p{margin:0 0 16px}
+.lede{font-size:17px;color:var(--sage);max-width:440px}
+.body{font-size:15px;color:var(--sage)}
+
+/* buttons */
+.btn{
+  display:inline-block;background:var(--orange);color:var(--ink);
+  font-family:Oswald,sans-serif;font-weight:700;font-size:20px;text-transform:uppercase;
+  letter-spacing:0.06em;padding:18px 34px;border-radius:999px;border:0;cursor:pointer;
+  box-shadow:0 8px 24px rgba(239,121,56,0.25);transition:all .25s ease;
+}
+.btn:hover{background:var(--orange-hover);color:var(--ink);transform:translateY(-2px);box-shadow:0 16px 32px rgba(239,121,56,0.4)}
+.btn:active{opacity:.9;transform:scale(1.02)}
+.btn-ghost{
+  display:inline-block;border:2px solid var(--ink);background:transparent;color:var(--ink);
+  font-family:Oswald,sans-serif;font-weight:700;font-size:16px;text-transform:uppercase;
+  letter-spacing:0.06em;padding:14px 26px;border-radius:999px;cursor:pointer;transition:all .25s ease;
+}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn-ghost:active{opacity:.9;transform:scale(1.02)}
+
+/* header */
+.hdr{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:20px 40px;border-bottom:1px solid rgba(20,16,12,0.15);
+}
+.hdr-l{display:flex;align-items:center;gap:14px}
+.hdr-l img{height:34px;display:block}
+.micro{
+  font-family:Oswald,sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--ink);line-height:1.5;
+}
+.micro-mid{font-weight:500;color:var(--sage);text-align:center}
+.hdr-r{display:flex;align-items:center;gap:12px}
+.bar22{width:22px;height:3px;background:var(--orange);flex:none}
+.hdr-r .micro{letter-spacing:0.18em}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 1fr}
+.hero-l{padding:56px 40px 40px;border-right:1px solid rgba(20,16,12,0.15)}
+.hero-l h1{font-size:112px;line-height:0.86;letter-spacing:-0.005em;margin:0 0 28px}
+.hero-l h1 .accent{color:var(--orange)}
+.hero-r{position:relative;min-height:700px;overflow:hidden}
+.orange-block{position:absolute;top:0;right:0;width:64%;height:58%;background:var(--orange)}
+.nameplate{position:absolute;left:40px;top:24px;z-index:2;background:var(--ink);padding:18px 24px}
+.nameplate .n1{font-family:Oswald,sans-serif;font-weight:700;font-size:15px;letter-spacing:0.16em;text-transform:uppercase;color:var(--cream);line-height:1.4}
+.nameplate .n2{font-family:Oswald,sans-serif;font-weight:500;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange)}
+.price-stage{position:absolute;right:0;top:0;width:64%;height:58%;display:flex;flex-direction:column;justify-content:center;padding:0 32px;z-index:2}
+.price-stage .lbl{font-family:Oswald,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
+.price-stage .num{font-family:Oswald,sans-serif;font-weight:700;font-size:104px;line-height:0.9;color:var(--ink)}
+.price-stage .sub{font-family:Oswald,sans-serif;font-weight:500;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);margin-top:8px}
+.tri{position:absolute;right:0;bottom:0;width:0;height:0;border-left:120px solid transparent;border-bottom:120px solid var(--ink)}
+.cutout{
+  position:absolute;left:6%;bottom:0;height:66%;width:auto;aspect-ratio:408/576;
+  background-image:url('assets/owner-cutout2.png');
+  background-size:1000% 100%;background-repeat:no-repeat;
+  filter:drop-shadow(0 12px 20px rgba(20,16,12,0.3));
+  animation:cg-flip 7s infinite;
+}
+@keyframes cg-flip{
+  0%{background-position-x:0%;animation-timing-function:steps(1)}
+  30%{background-position-x:11.1111%;animation-timing-function:steps(1)}
+  34%{background-position-x:22.2222%;animation-timing-function:steps(1)}
+  38%{background-position-x:33.3333%;animation-timing-function:steps(1)}
+  42%{background-position-x:44.4444%;animation-timing-function:steps(1)}
+  46%{background-position-x:55.5555%;animation-timing-function:steps(1)}
+  50%{background-position-x:66.6666%;animation-timing-function:steps(1)}
+  54%{background-position-x:77.7777%;animation-timing-function:steps(1)}
+  58%{background-position-x:88.8888%;animation-timing-function:steps(1)}
+  63%{background-position-x:100%;animation-timing-function:steps(1)}
+  100%{background-position-x:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .cutout{animation:none;background-position-x:100%}
+}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap}
+.chip{
+  padding:16px 24px;border-right:1px solid rgba(20,16,12,0.15);
+  font-family:Oswald,sans-serif;font-weight:700;font-size:12px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--sage);
+}
+.chip.accent{color:var(--orange)}
+
+/* numbered rows */
+.gets{padding:56px 40px}
+.gets-head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end;margin-bottom:36px}
+.gets-head h2{font-size:56px;line-height:0.95}
+.row{
+  display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;
+  border-bottom:1px solid rgba(20,16,12,0.15);
+}
+.row .n{font-family:Oswald,sans-serif;font-weight:700;font-size:17px;letter-spacing:0.12em;color:var(--orange)}
+.row h3{font-family:Oswald,sans-serif;font-weight:700;font-size:19px;text-transform:uppercase;letter-spacing:0.02em;margin:0 0 4px;color:var(--ink)}
+.row p{font-size:15px;color:var(--sage);margin:0}
+.row.mark{background:rgba(239,121,56,0.12);padding:18px 14px;margin:0 -14px}
+
+/* dark band + spine */
+.dark{background:var(--ink);display:flex}
+.spine{
+  background:var(--orange);padding:0 14px;display:flex;align-items:center;flex:none;
+}
+.spine span{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-family:Oswald,sans-serif;font-weight:700;font-size:15px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--ink);
+}
+.dark-body{padding:44px 40px;flex:1}
+.dark-body h2{font-size:56px;line-height:0.95;color:var(--cream);margin:0 0 14px}
+.dark-body .lede{color:var(--cream-dim);max-width:620px}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--forest-light);margin-top:32px}
+.phase{padding:28px 24px 4px;border-right:1px solid var(--forest-light)}
+.phase:last-child{border-right:0}
+.phase .n{font-family:Oswald,sans-serif;font-weight:700;font-size:15px;letter-spacing:0.12em;color:var(--orange);display:block;margin-bottom:10px}
+.phase h3{font-family:Oswald,sans-serif;font-weight:700;font-size:26px;text-transform:uppercase;color:var(--cream);margin:0 0 8px;line-height:1.05}
+.phase p{font-size:15px;color:var(--cream-dim)}
+
+/* package */
+.pkg{padding:56px 40px}
+.pkg-head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end;margin-bottom:32px}
+.pkg-head h2{font-size:56px;line-height:0.95}
+.pkg-grid{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink)}
+.cell{padding:32px 28px}
+.cell.feat{background:rgba(239,121,56,0.08);border-right:2px solid var(--ink)}
+.tag{
+  display:inline-block;font-family:Oswald,sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:0.14em;text-transform:uppercase;padding:7px 16px;border-radius:999px;margin-bottom:18px;
+}
+.tag.solid{background:var(--orange);color:var(--ink)}
+.tag.out{border:1px solid var(--ink);color:var(--ink)}
+.cell .price{font-family:Oswald,sans-serif;font-weight:700;font-size:52px;line-height:1;margin:0 0 6px;color:var(--ink)}
+.cell .per{font-family:Oswald,sans-serif;font-weight:500;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--sage);margin-bottom:20px}
+.item{display:flex;gap:12px;align-items:flex-start;padding:9px 0;font-size:15px;color:var(--sage)}
+.item .ck{color:var(--orange);font-weight:600;flex:none}
+.note{font-style:italic;font-size:15px;color:var(--sage);margin-top:24px}
+
+/* objections */
+.obj{display:grid;grid-template-columns:280px 1fr;padding:56px 40px;gap:32px}
+.qa{display:grid;grid-template-columns:1fr 1.35fr;gap:32px;border-top:1px solid rgba(20,16,12,0.15);padding-top:34px;margin-top:34px}
+.qa:first-child{border-top:0;padding-top:0;margin-top:0}
+.qa h3{font-family:Oswald,sans-serif;font-weight:700;font-size:28px;text-transform:uppercase;line-height:1.05;margin:0;color:var(--ink)}
+.qa p{font-size:16px;color:var(--sage);margin:0}
+
+/* contact */
+.contact{background:var(--ink);padding:64px 40px 40px;display:grid;grid-template-columns:1fr 420px;gap:48px}
+.contact h2{font-size:82px;line-height:0.88;color:var(--orange);margin:0 0 20px}
+.contact .lede{color:var(--cream-dim);max-width:520px}
+.contact .callline{font-size:15px;color:var(--cream-dim);margin-top:24px}
+.field{margin-bottom:16px}
+.field label{display:block;font-family:Oswald,sans-serif;font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:7px}
+.field input,.field textarea{
+  width:100%;min-width:0;box-sizing:border-box;height:44px;padding:0 14px;
+  border:1px solid var(--forest-light);border-radius:8px;background:var(--forest-dark);
+  color:var(--cream);font-family:Inter,sans-serif;font-size:15px;
+}
+.field textarea{height:80px;padding:12px 14px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:2px solid var(--orange);border-color:transparent}
+.btn-full{width:100%;text-align:center;padding:16px;font-size:18px}
+.checks{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap}
+.checks span{font-size:13px;color:var(--cream-dim)}
+.checks .ck{color:var(--orange)}
+
+/* footer */
+.ftr{background:var(--ink);padding:40px;border-top:1px solid var(--forest-light);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ftr-l{display:flex;align-items:center;gap:14px}
+.ftr-l img{height:30px;display:block}
+.ftr-l span{font-family:Oswald,sans-serif;font-weight:500;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream-dim)}
+.ftr-r{display:flex;gap:28px;flex-wrap:wrap}
+.ftr-r a{font-family:Oswald,sans-serif;font-weight:700;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--cream-dim)}
+.ftr-r a.tel{color:var(--orange)}
+
+/* mobile-only chrome */
+.m-hdr,.m-bar{display:none}
+
+@media (max-width:900px){
+  body{padding-bottom:76px}
+  .hdr{display:none}
+  .m-hdr{
+    display:flex;align-items:center;justify-content:space-between;
+    position:sticky;top:0;z-index:20;padding:12px 20px;
+    background:rgba(249,248,235,0.94);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(20,16,12,0.15);
+  }
+  .m-hdr img{height:30px;display:block}
+  .m-hdr .micro{font-size:9px;letter-spacing:0.18em}
+  .m-hdr .tel{
+    font-family:Oswald,sans-serif;font-weight:700;font-size:11px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--ink);min-height:44px;display:flex;align-items:center;
+  }
+  .m-bar{
+    display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ink);
+    position:fixed;bottom:0;left:0;right:0;z-index:30;border-top:2px solid var(--ink);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .m-bar a{
+    min-height:56px;display:flex;align-items:center;justify-content:center;
+    font-family:Oswald,sans-serif;font-weight:700;font-size:14px;letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .m-bar .call{background:var(--ink);color:var(--cream)}
+  .m-bar .cta{background:var(--orange);color:var(--ink)}
+
+  .hero{grid-template-columns:1fr}
+  .hero-l{padding:32px 20px 24px;border-right:0}
+  .hero-l h1{font-size:56px;margin-bottom:22px}
+  .hero-r{min-height:0;height:340px;border-top:1px solid rgba(20,16,12,0.15)}
+  .orange-block{width:70%;height:56%}
+  .nameplate{left:20px;top:14px;padding:12px 16px}
+  .price-stage{width:70%;height:56%;padding:0 20px}
+  .price-stage .num{font-size:60px}
+  .price-stage .lbl{font-size:11px}
+  .price-stage .sub{font-size:11px}
+  .cutout{height:60%;left:4%}
+  .tri{border-left-width:70px;border-bottom-width:70px}
+  .btn{width:100%;text-align:center;padding:16px;font-size:18px}
+  .btn-ghost{width:100%;text-align:center}
+  .lede{max-width:none;font-size:16px}
+
+  .chip{padding:11px 14px;font-size:10px;border-bottom:1px solid rgba(20,16,12,0.15)}
+
+  .gets{padding:32px 20px}
+  .gets-head{grid-template-columns:1fr;gap:16px;margin-bottom:24px}
+  .gets-head h2{font-size:36px}
+
+  .dark{flex-direction:column}
+  .spine{padding:10px 20px;width:100%}
+  .spine span{writing-mode:horizontal-tb;transform:none;font-size:12px}
+  .dark-body{padding:32px 20px}
+  .dark-body h2{font-size:36px}
+  .phases{grid-template-columns:1fr}
+  .phase{border-right:0;border-bottom:1px solid var(--forest-light);padding:22px 0 18px}
+  .phase:last-child{border-bottom:0}
+  .phase h3{font-size:24px}
+
+  .pkg{padding:32px 20px}
+  .pkg-head{grid-template-columns:1fr;gap:16px;margin-bottom:24px}
+  .pkg-head h2{font-size:36px}
+  .pkg-grid{grid-template-columns:1fr}
+  .cell{padding:24px 20px}
+  .cell.feat{border-right:0;border-bottom:2px solid var(--ink)}
+  .cell .price{font-size:42px}
+
+  .obj{grid-template-columns:1fr;padding:32px 20px;gap:0}
+  .qa{grid-template-columns:1fr;gap:12px}
+  .qa h3{font-size:24px}
+
+  .contact{grid-template-columns:1fr;padding:36px 20px 32px;gap:28px}
+  .contact h2{font-size:46px}
+  .field input{height:48px}
+  .checks{flex-direction:column;gap:8px}
+
+  .ftr{padding:28px 20px;flex-direction:column;align-items:flex-start;gap:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- desktop header -->
+  <header class="hdr">
+    <div class="hdr-l">
+      <img src="assets/logo.webp" alt="Creatively Grow">
+      <div class="micro">Video Content<br>+ Growth Systems</div>
+    </div>
+    <div class="micro micro-mid">Based in<br>Tampa Bay, FL</div>
+    <div class="hdr-r">
+      <div class="bar22"></div>
+      <a href="tel:+17272708422" class="micro">Call now<br>(727) 270-8422</a>
+    </div>
+  </header>
+
+  <!-- mobile header -->
+  <header class="m-hdr">
+    <div class="hdr-l">
+      <img src="assets/logo.webp" alt="Creatively Grow">
+      <div class="micro">Video Content<br>+ Growth Systems</div>
+    </div>
+    <a href="tel:+17272708422" class="tel">(727) 270-8422</a>
+  </header>
+
+  <!-- 1. hero -->
+  <section class="band hero">
+    <div class="hero-l">
+      <p class="eyebrow">The Content Day</p>
+      <h1 class="disp">One day.<br>A month of<br><span class="accent">content.</span></h1>
+      <div class="rule-label"><span>What It Is</span><i></i></div>
+      <p class="lede">We show up for half a day, shoot your business, and hand back a month of posts. No retainer, no strategy deck, no three-week onboarding.</p>
+      <p class="lede">You book a date. We do the rest.</p>
+      <a class="btn" href="#book">Book My Content Day&nbsp;&nbsp;→</a>
+    </div>
+    <div class="hero-r">
+      <div class="orange-block"></div>
+      <div class="price-stage">
+        <div class="lbl">Flat rate</div>
+        <div class="num">$1,500</div>
+        <div class="sub">Half day · On site</div>
+      </div>
+      <div class="nameplate">
+        <div class="n1">Creatively<br>Grow</div>
+        <div class="n2">Tampa Bay, FL</div>
+      </div>
+      <div class="cutout"></div>
+      <div class="tri"></div>
+    </div>
+  </section>
+
+  <!-- 2. chips -->
+  <section class="band chips">
+    <div class="chip">20–30 vertical clips</div>
+    <div class="chip">10 stills</div>
+    <div class="chip">Edited &amp; captioned</div>
+    <div class="chip">Shot on location</div>
+    <div class="chip">Tampa Bay &amp; surrounding</div>
+    <div class="chip">You own the files</div>
+    <div class="chip accent">Delivered in 5 business days</div>
+  </section>
+
+  <!-- 3. what you get -->
+  <section class="band gets">
+    <div class="gets-head">
+      <div>
+        <p class="eyebrow">What You Get</p>
+        <h2 class="disp">Everything you need to post for a month.</h2>
+      </div>
+      <p class="body">Most businesses do not have a content problem. They have a footage problem. One day on site solves it for the next thirty.</p>
+    </div>
+
+    <div class="row">
+      <div class="n">01</div>
+      <div>
+        <h3>Twenty to thirty vertical clips.</h3>
+        <p>Shot 9:16 for Reels, TikTok, and Shorts. Enough to post every weekday for a month without repeating yourself.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="n">02</div>
+      <div>
+        <h3>Ten stills.</h3>
+        <p>Real photos of your team, your work, and your place. Retire the stock photography on your website.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="n">03</div>
+      <div>
+        <h3>Cut, captioned, and ready to post.</h3>
+        <p>Burned-in captions, hooks on the front, sized for every platform. You do not get raw footage and a problem.</p>
+      </div>
+    </div>
+    <div class="row mark">
+      <div class="n">04</div>
+      <div>
+        <h3>Back in five business days.</h3>
+        <p>Not six weeks. You shoot on a Tuesday and you are posting the following Tuesday. This is the part other people cannot do.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="n">05</div>
+      <div>
+        <h3>The files are yours.</h3>
+        <p>No licensing, no usage window, no asking us before you run an ad with it. You paid for it, you own it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. how a day runs -->
+  <section class="band dark">
+    <div class="spine"><span>How A Day Runs</span></div>
+    <div class="dark-body">
+      <p class="eyebrow">The Shoot</p>
+      <h2 class="disp">Three parts. One afternoon.</h2>
+      <p class="lede">You do not need a script, a studio, or a plan. You need to be there and be working.</p>
+      <div class="phases">
+        <div class="phase">
+          <span class="n">01</span>
+          <h3>We plan it in fifteen minutes.</h3>
+          <p>A short call before the date. What you sell, who buys it, what we should film. That is the whole prep.</p>
+        </div>
+        <div class="phase">
+          <span class="n">02</span>
+          <h3>We shoot for four hours.</h3>
+          <p>Your work, your team, your space, and a handful of you talking. We direct it. You keep working.</p>
+        </div>
+        <div class="phase">
+          <span class="n">03</span>
+          <h3>You get a folder.</h3>
+          <p>Everything edited, captioned, named, and organized. Download it and start posting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. package -->
+  <section class="band pkg">
+    <div class="pkg-head">
+      <div>
+        <p class="eyebrow">What It Costs</p>
+        <h2 class="disp">One price. Nothing hidden.</h2>
+      </div>
+      <p class="body">The day is the day. If you want us to keep it running after that, there is a monthly. If you do not, you still keep everything.</p>
+    </div>
+
+    <div class="pkg-grid">
+      <div class="cell feat">
+        <span class="tag solid">The Content Day</span>
+        <div class="price">$1,500</div>
+        <div class="per">Per shoot day · Flat</div>
+        <div class="item"><span class="ck">✓</span><span>Half day on site, Tampa Bay and surrounding</span></div>
+        <div class="item"><span class="ck">✓</span><span>20–30 vertical clips, edited and captioned</span></div>
+        <div class="item"><span class="ck">✓</span><span>10 stills, colour corrected</span></div>
+        <div class="item"><span class="ck">✓</span><span>Delivered in 5 business days</span></div>
+        <div class="item"><span class="ck">✓</span><span>Full ownership, no licensing terms</span></div>
+      </div>
+      <div class="cell">
+        <span class="tag out">Keep It Running</span>
+        <div class="price">$800<span style="font-size:24px">/mo</span></div>
+        <div class="per">Optional · Cancel anytime</div>
+        <div class="item"><span class="ck">✓</span><span>We schedule and post everything for you</span></div>
+        <div class="item"><span class="ck">✓</span><span>AI-built content between shoot days, so the feed never goes quiet</span></div>
+        <div class="item"><span class="ck">✓</span><span>Monthly report on what people watched</span></div>
+        <div class="item"><span class="ck">✓</span><span>Discounted rate on your next shoot day</span></div>
+        <div class="item"><span class="ck">✓</span><span>Start it later. It is not a condition of the day</span></div>
+      </div>
+    </div>
+    <p class="note">Need more than half a day, or a location outside Tampa Bay? Tell us on the call and we will quote it before you commit.</p>
+  </section>
+
+  <!-- 6. objections -->
+  <section class="band obj">
+    <div><p class="eyebrow">Things You Might<br>Be Thinking</p></div>
+    <div>
+      <div class="qa">
+        <h3>We are not good on camera.</h3>
+        <p>Almost nobody is, and most of what we shoot is not you talking. It is your hands, your crew, the work getting done. The talking pieces are short and we feed you the lines. Nobody has to perform.</p>
+      </div>
+      <div class="qa">
+        <h3>We already tried video and nothing happened.</h3>
+        <p>Usually because it was one polished film that went on a homepage and was never seen again. Thirty short clips posted over thirty days is a different thing entirely. Volume is what moves, not production value.</p>
+      </div>
+      <div class="qa">
+        <h3>What if we do not like it?</h3>
+        <p>You see selects before the full edit. If the direction is wrong we fix it then, not after. And if the finished folder is not what we agreed to, we reshoot the day at our cost.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. contact -->
+  <section class="contact" id="book">
+    <div>
+      <p class="eyebrow">Book It</p>
+      <h2 class="disp">Let's put a date on the calendar.</h2>
+      <p class="lede">Tell us what you do and where you are. We will come back with two dates and a confirmation of the price. No discovery call, no proposal, no follow-up sequence.</p>
+      <p class="callline">Rather just call? <a href="tel:+17272708422">(727) 270-8422</a></p>
+    </div>
+    <div>
+      <form>
+        <div class="field">
+          <label for="biz">Business name</label>
+          <input id="biz" name="business" type="text" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="nm">Your name</label>
+          <input id="nm" name="name" type="text" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="ph">Phone</label>
+          <input id="ph" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="msg">What do you do, and where?</label>
+          <textarea id="msg" name="message"></textarea>
+        </div>
+        <button class="btn btn-full" type="submit">Book My Content Day</button>
+      </form>
+      <div class="checks">
+        <span><span class="ck">✓</span> We reply the same day</span>
+        <span><span class="ck">✓</span> No contract to book a date</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="ftr">
+    <div class="ftr-l">
+      <img src="assets/logo.webp" alt="Creatively Grow">
+      <span>Video + growth systems · Tampa Bay, FL</span>
+    </div>
+    <div class="ftr-r">
+      <a href="/how-it-works">How It Works</a>
+      <a href="/brand-films">Brand Films</a>
+      <a class="tel" href="tel:+17272708422">(727) 270-8422</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- mobile bottom bar -->
+<nav class="m-bar">
+  <a class="call" href="tel:+17272708422">Call now</a>
+  <a class="cta" href="#book">Book A Day →</a>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Your Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: #f5f5f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    max-width: 480px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .header {
+    background-color: #4e5a4e;
+    padding: 28px 32px;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    color: #f9f8eb;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+
+  .body {
+    padding: 40px 32px;
+    text-align: center;
+  }
+
+  .body h2 {
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .body p {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  /* Star Rating */
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .star {
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .star:hover { transform: scale(1.15); }
+  .star:active { transform: scale(0.95); }
+
+  .star svg {
+    width: 100%;
+    height: 100%;
+    fill: #ddd;
+    transition: fill 0.2s ease;
+  }
+
+  .star.active svg { fill: #ef7938; }
+  .star.hover svg { fill: #f4a06b; }
+
+  /* Rating Label */
+  .rating-label {
+    font-size: 14px;
+    color: #999;
+    min-height: 22px;
+    margin-bottom: 24px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .rating-label.selected { color: #4e5a4e; }
+
+  /* Private Feedback Form */
+  .feedback-form {
+    display: none;
+    text-align: left;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .feedback-form.visible { display: block; }
+
+  .feedback-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+
+  .feedback-form textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: #333;
+    resize: vertical;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .feedback-form textarea:focus {
+    border-color: #4e5a4e;
+  }
+
+  .feedback-form textarea::placeholder {
+    color: #bbb;
+  }
+
+  .feedback-form .name-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .feedback-form .name-input:focus {
+    border-color: #4e5a4e;
+  }
+
+  .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .btn:hover { opacity: 0.9; }
+  .btn:active { transform: scale(0.98); }
+
+  .btn-primary {
+    background-color: #ef7938;
+    color: #ffffff;
+  }
+
+  .btn-sage {
+    background-color: #4e5a4e;
+    color: #ffffff;
+  }
+
+  /* Google redirect button (shown for 4-5 stars) */
+  .google-redirect {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .google-redirect.visible { display: block; }
+
+  .google-redirect p {
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #333;
+  }
+
+  /* Thank You State */
+  .thank-you {
+    display: none;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .thank-you.visible { display: block; }
+
+  .thank-you .checkmark {
+    width: 64px;
+    height: 64px;
+    background-color: #4e5a4e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .thank-you .checkmark svg {
+    width: 32px;
+    height: 32px;
+    fill: none;
+    stroke: #f9f8eb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .thank-you h3 {
+    font-size: 20px;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+
+  .thank-you p {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 0;
+  }
+
+  /* Footer */
+  .footer {
+    background-color: #f9f8eb;
+    padding: 18px 32px;
+    text-align: center;
+  }
+
+  .footer p {
+    font-size: 12px;
+    color: #4e5a4e;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Loading state for button */
+  .btn.loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <!-- CUSTOMIZE: Replace with client business name -->
+    <h1 id="businessName">Your Business Name</h1>
+  </div>
+
+  <div class="body" id="mainContent">
+    <h2>How was your experience?</h2>
+    <p>Your feedback helps us improve and helps others find great service.</p>
+
+    <!-- Star Rating -->
+    <div class="stars" id="starContainer">
+      <div class="star" data-rating="1">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="star" data-rating="2">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="star" data-rating="3">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="star" data-rating="4">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="star" data-rating="5">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+    </div>
+
+    <div class="rating-label" id="ratingLabel">Tap a star to rate</div>
+
+    <!-- Google Redirect (4-5 stars) -->
+    <div class="google-redirect" id="googleRedirect">
+      <p>We're so glad to hear that! Would you mind sharing your experience on Google? It means the world to us.</p>
+      <a id="googleBtn" class="btn btn-primary" href="#" target="_blank" rel="noopener">Leave a Google Review</a>
+    </div>
+
+    <!-- Private Feedback Form (1-3 stars) -->
+    <div class="feedback-form" id="feedbackForm">
+      <p style="font-size:15px;color:#333;margin-bottom:20px;">We're sorry to hear that. We'd love to understand what happened so we can make it right.</p>
+      <input type="text" class="name-input" id="feedbackName" placeholder="Your name (optional)">
+      <label for="feedbackText">What could we have done better?</label>
+      <textarea id="feedbackText" placeholder="Tell us what happened -- we read every message and want to fix this for you..."></textarea>
+      <button class="btn btn-sage" id="submitFeedback" onclick="submitPrivateFeedback()">Send Private Feedback</button>
+    </div>
+
+    <!-- Thank You State -->
+    <div class="thank-you" id="thankYou">
+      <div class="checkmark">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Thank you for your feedback!</h3>
+      <p>We truly appreciate you taking the time. Your feedback helps us get better every day.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Powered by <strong>Creatively Grow</strong></p>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // CONFIGURATION - These get set per client via URL params or GHL custom values
+  // ============================================================
+  const CONFIG = {
+    businessName: '',
+    googleReviewLink: '',
+    webhookUrl: '',
+    contactId: '',
+    contactName: '',
+    contactEmail: '',
+    contactPhone: ''
+  };
+
+  // Parse URL parameters
+  // Example URL: review-funnel.html?business=Joe's+Plumbing&google=https://g.page/r/xxx/review&webhook=https://...&contact_id=xxx&name=John
+  function getParams() {
+    const params = new URLSearchParams(window.location.search);
+    CONFIG.businessName = params.get('business') || 'Your Business Name';
+    CONFIG.googleReviewLink = params.get('google') || '#';
+    CONFIG.webhookUrl = params.get('webhook') || '';
+    CONFIG.contactId = params.get('contact_id') || '';
+    CONFIG.contactName = params.get('name') || '';
+    CONFIG.contactEmail = params.get('email') || '';
+    CONFIG.contactPhone = params.get('phone') || '';
+
+    // Set business name
+    document.getElementById('businessName').textContent = CONFIG.businessName;
+
+    // Set Google review link
+    document.getElementById('googleBtn').href = CONFIG.googleReviewLink;
+
+    // Pre-fill name if available
+    if (CONFIG.contactName) {
+      document.getElementById('feedbackName').value = CONFIG.contactName;
+    }
+  }
+
+  // ============================================================
+  // STAR RATING LOGIC
+  // ============================================================
+  let selectedRating = 0;
+  const stars = document.querySelectorAll('.star');
+  const ratingLabel = document.getElementById('ratingLabel');
+  const googleRedirect = document.getElementById('googleRedirect');
+  const feedbackForm = document.getElementById('feedbackForm');
+  const thankYou = document.getElementById('thankYou');
+
+  const labels = {
+    1: 'Poor experience',
+    2: 'Below expectations',
+    3: 'It was okay',
+    4: 'Great experience!',
+    5: 'Excellent -- loved it!'
+  };
+
+  // Hover effect
+  stars.forEach(star => {
+    star.addEventListener('mouseenter', () => {
+      if (selectedRating > 0) return;
+      const rating = parseInt(star.dataset.rating);
+      highlightStars(rating, 'hover');
+    });
+
+    star.addEventListener('mouseleave', () => {
+      if (selectedRating > 0) return;
+      clearStars();
+    });
+
+    // Click to select
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.dataset.rating);
+      highlightStars(selectedRating, 'active');
+      ratingLabel.textContent = labels[selectedRating];
+      ratingLabel.classList.add('selected');
+      handleRating(selectedRating);
+    });
+  });
+
+  function highlightStars(rating, className) {
+    stars.forEach(s => {
+      const r = parseInt(s.dataset.rating);
+      s.classList.remove('active', 'hover');
+      if (r <= rating) s.classList.add(className);
+    });
+    if (className === 'hover') {
+      ratingLabel.textContent = labels[rating];
+    }
+  }
+
+  function clearStars() {
+    stars.forEach(s => s.classList.remove('hover'));
+    ratingLabel.textContent = 'Tap a star to rate';
+  }
+
+  // ============================================================
+  // ROUTING LOGIC
+  // ============================================================
+  function handleRating(rating) {
+    // Hide both panels first
+    googleRedirect.classList.remove('visible');
+    feedbackForm.classList.remove('visible');
+    thankYou.classList.remove('visible');
+
+    if (rating >= 4) {
+      // Happy path -> Google review
+      googleRedirect.classList.add('visible');
+      sendToWebhook(rating, 'positive', '');
+    } else {
+      // Unhappy path -> Private feedback form
+      feedbackForm.classList.add('visible');
+    }
+  }
+
+  // ============================================================
+  // PRIVATE FEEDBACK SUBMISSION
+  // ============================================================
+  function submitPrivateFeedback() {
+    const feedbackText = document.getElementById('feedbackText').value.trim();
+    const name = document.getElementById('feedbackName').value.trim();
+    const btn = document.getElementById('submitFeedback');
+
+    if (!feedbackText) {
+      document.getElementById('feedbackText').style.borderColor = '#ef7938';
+      document.getElementById('feedbackText').setAttribute('placeholder', 'Please share what happened so we can help...');
+      return;
+    }
+
+    btn.classList.add('loading');
+    btn.textContent = 'Sending...';
+
+    sendToWebhook(selectedRating, 'negative', feedbackText, name).then(() => {
+      // Show thank you
+      feedbackForm.classList.remove('visible');
+      document.querySelector('.stars').style.display = 'none';
+      ratingLabel.style.display = 'none';
+      document.querySelector('.body h2').style.display = 'none';
+      document.querySelector('.body > p').style.display = 'none';
+      thankYou.classList.add('visible');
+    }).catch(() => {
+      btn.classList.remove('loading');
+      btn.textContent = 'Send Private Feedback';
+      alert('Something went wrong. Please try again.');
+    });
+  }
+
+  // ============================================================
+  // WEBHOOK - Sends data to GHL
+  // ============================================================
+  async function sendToWebhook(rating, sentiment, feedback, name) {
+    if (!CONFIG.webhookUrl) {
+      console.log('No webhook URL configured. Data:', { rating, sentiment, feedback });
+      return Promise.resolve();
+    }
+
+    const payload = {
+      contact_id: CONFIG.contactId,
+      contact_name: name || CONFIG.contactName,
+      contact_email: CONFIG.contactEmail,
+      contact_phone: CONFIG.contactPhone,
+      rating: rating,
+      sentiment: sentiment,
+      feedback: feedback,
+      source: 'review_funnel',
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      await fetch(CONFIG.webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'no-cors'
+      });
+      return Promise.resolve();
+    } catch (err) {
+      console.error('Webhook error:', err);
+      return Promise.reject(err);
+    }
+  }
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  getParams();
+</script>
+</body>
+</html>
