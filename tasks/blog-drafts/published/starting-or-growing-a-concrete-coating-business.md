@@ -5,6 +5,8 @@ target_keyword: concrete coating business
 meta_description: "Starting or growing a concrete coating business means building a simple path from local search and proof to a fast estimate follow-up and booked jobs."
 date: "2026-08-24"
 author: Creatively Grow
+hero_image: /blog/concrete-coating-hero.webp
+hero_alt: "A walk-behind concrete grinder and its coiled dust extraction hose resting on a partially prepped garage floor, with unmarked buckets and blue painter's tape along the wall and palms and a pastel stucco house visible through the open Florida garage door"
 status: published
 tags:
   - concrete coating business
@@ -52,6 +54,10 @@ Keep this language honest. Do not promise that one finish fixes every slab or th
 
 This is where many contractor sites fall apart. They list products, drop a few adjectives, and add a form. The prospect is still left wondering: “What will happen at my house?” Answer that question and you make the next step feel normal.
 
+![A neutral gray cordless drill with a paddle mixer attachment resting across an empty unmarked pail on a bare concrete patio slab inside a screened Florida lanai, with used sanding pads and a stiff scrub brush on the slab nearby](/blog/concrete-coating-lanai-prep.webp)
+
+*Preparation is most of the job, and most of the proof. Photograph it while it is happening, not just when it is finished.*
+
 ## Build proof before you try to scale traffic
 
 A concrete coating business lives on visible work. Photos matter, but a pile of disconnected before-and-afters is not a sales system. Organize each job so a prospect can understand it quickly: the starting condition, the customer’s concern, the scope, and the finished result.
@@ -71,6 +77,10 @@ Use your business name, phone number, service area, categories, and hours consis
 This does not mean chasing every local-search trick. It means making basic information easy to verify. The broader framework in [Contractor SEO: The Parts That Actually Move the Phone](/blog/contractor-seo) applies here: make your services understandable, make your local presence credible, and make the contact path frictionless.
 
 Your website also needs to work for people who were referred by a neighbor. Referrals still check you out. They read reviews, look at photos, and compare how clearly you explain the work. A clean referral can go cold if the site makes the business look inactive or confusing.
+
+![An unmarked white work van parked on a Florida paver driveway at golden hour with its rear doors open, a coiled orange extension cord and folded drop cloth on the bumper, and a closed spiral notepad and tape measure beside them](/blog/concrete-coating-van.webp)
+
+*The gap between an inquiry and a booked job is usually operational, not creative — someone has to own the next move.*
 
 ## Turn every estimate request into a managed handoff
 
