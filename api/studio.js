@@ -303,13 +303,19 @@ module.exports = async (req, res) => {
     }
 
     if (action === 'attach' && req.method === 'POST') {
-      const { galleryId, guid, title, sortOrder } = req.body || {};
+      const { galleryId, guid, title } = req.body || {};
       if (!galleryId || !guid) return res.status(400).json({ error: 'galleryId and guid required' });
+      // Land at the end of the current order. Positions are rewritten as
+      // 0..n-1 whenever the studio reorders, so the next slot is max + 1.
+      const lastRes = await sb(`gallery_videos?gallery_id=eq.${encodeURIComponent(galleryId)}`
+        + '&order=sort_order.desc&limit=1&select=sort_order');
+      const last = await lastRes.json();
+      const sortOrder = (Array.isArray(last) && last.length) ? (last[0].sort_order || 0) + 1 : 0;
       const r = await sb('gallery_videos', {
         method: 'POST',
         body: JSON.stringify({
           gallery_id: galleryId, bunny_guid: guid,
-          title: title || null, sort_order: sortOrder || 0,
+          title: title || null, sort_order: sortOrder,
         }),
       });
       if (!r.ok) return res.status(502).json({ error: await r.text() });
@@ -330,13 +336,61 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: true });
     }
 
+    // Rewrite sort_order to match the order the studio just laid out. The list
+    // is the whole gallery, so positions are simply the array indexes.
+    if (action === 'reorder-videos' && req.method === 'POST') {
+      const { ids } = req.body || {};
+      if (!Array.isArray(ids) || !ids.length) return res.status(400).json({ error: 'ids required' });
+      const writes = await Promise.all(ids.map((id, i) =>
+        sb(`gallery_videos?id=eq.${encodeURIComponent(id)}`, {
+          method: 'PATCH',
+          prefer: 'return=minimal',
+          body: JSON.stringify({ sort_order: i }),
+        })));
+      if (writes.some((r) => !r.ok)) return res.status(502).json({ error: 'reorder failed' });
+      return res.status(200).json({ ok: true });
+    }
+
+    if (action === 'rename-video' && req.method === 'POST') {
+      const { id, title } = req.body || {};
+      if (!id) return res.status(400).json({ error: 'id required' });
+      const clean = String(title || '').trim().slice(0, 200);
+      const r = await sb(`gallery_videos?id=eq.${encodeURIComponent(id)}`, {
+        method: 'PATCH',
+        prefer: 'return=minimal',
+        body: JSON.stringify({ title: clean || null }),
+      });
+      if (!r.ok) return res.status(502).json({ error: await r.text() });
+      return res.status(200).json({ ok: true, title: clean });
+    }
+
+    // Point Bunny at a poster image the browser has already uploaded to storage.
+    // Bunny fetches the URL itself, so it must be publicly reachable - both photo
+    // backends serve over a public CDN, which is why the same upload flow is reused.
+    if (action === 'set-thumbnail' && req.method === 'POST') {
+      const { guid, path } = req.body || {};
+      if (!guid || !path) return res.status(400).json({ error: 'guid and path required' });
+      const url = photoBase() + path;
+      const r = await fetch(
+        `https://video.bunnycdn.com/library/${BUNNY_LIB}/videos/${encodeURIComponent(guid)}`
+          + `/thumbnail?thumbnailUrl=${encodeURIComponent(url)}`,
+        { method: 'POST', headers: { AccessKey: BUNNY_KEY } });
+      if (!r.ok) return res.status(502).json({ error: 'bunny rejected that thumbnail' });
+      return res.status(200).json({ ok: true, url });
+    }
+
     // Short-lived credential scoped to one object, so the browser uploads
     // the image straight to storage and the secrets stay on the server.
     if (action === 'photo-upload-init' && req.method === 'POST') {
-      const { filename, galleryId } = req.body || {};
+      const { filename, galleryId, kind } = req.body || {};
       if (!galleryId) return res.status(400).json({ error: 'galleryId required' });
       const ext = String(filename || '').split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
-      const path = `${galleryId}/${crypto.randomUUID()}.${ext}`;
+      // Thumbnails live outside the gallery's photo folder so they are never
+      // mistaken for client photos. The random name also busts the CDN cache
+      // when a poster is replaced.
+      const path = kind === 'thumb'
+        ? `thumbs/${crypto.randomUUID()}.${ext}`
+        : `${galleryId}/${crypto.randomUUID()}.${ext}`;
 
       if (photoBackend() === 'bunny') {
         return res.status(200).json({ path, uploadUrl: presignBunnyPut(path) });

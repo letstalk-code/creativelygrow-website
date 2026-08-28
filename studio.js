@@ -123,30 +123,141 @@ $('createBtn').addEventListener('click', async () => {
 });
 
 // ---------- videos ----------
+// The rendered order is the saved order, so the arrows only ever swap two
+// neighbours and then write the whole list back as 0..n-1.
+let VIDEOS = [];
+
 async function loadVideos() {
   if (!CURRENT) return;
   const { videos, libraryId } = await api('videos', { query: `&galleryId=${CURRENT.id}` });
+  VIDEOS = videos || [];
+  renderVideos(libraryId);
+}
+
+function renderVideos(libraryId) {
   const wrap = $('videoList');
   wrap.innerHTML = '';
-  (videos || []).forEach((v) => {
+  VIDEOS.forEach((v, i) => {
     const card = document.createElement('div');
     card.className = 'st-video';
+    // The poster is cache-busted on upload, so the iframe is left alone and
+    // simply picks up whatever thumbnail Bunny is serving for this video.
     card.innerHTML = `
       <div class="st-video-frame">
         <iframe src="https://iframe.mediadelivery.net/embed/${libraryId}/${v.bunny_guid}?autoplay=false&preload=false"
           loading="lazy" allow="encrypted-media;picture-in-picture;fullscreen" allowfullscreen></iframe>
       </div>
       <div class="st-video-meta">
-        <span>${escapeHtml(v.title || 'Untitled')}</span>
-        <button data-id="${v.id}" class="st-remove">Remove</button>
-      </div>`;
-    card.querySelector('.st-remove').addEventListener('click', async (e) => {
+        <div class="st-move">
+          <button class="st-move-btn" data-dir="-1" ${i === 0 ? 'disabled' : ''} title="Move up">&uarr;</button>
+          <button class="st-move-btn" data-dir="1" ${i === VIDEOS.length - 1 ? 'disabled' : ''} title="Move down">&darr;</button>
+        </div>
+        <input class="st-title-input" type="text" value="${escapeHtml(v.title || '')}"
+          placeholder="Untitled" maxlength="200">
+        <label class="st-thumb-btn">Thumbnail<input type="file" accept="image/*" hidden></label>
+        <button class="st-remove">Remove</button>
+      </div>
+      <p class="st-video-note"></p>`;
+
+    const note = card.querySelector('.st-video-note');
+    const say = (msg, bad) => {
+      note.textContent = msg || '';
+      note.classList.toggle('is-bad', Boolean(bad));
+    };
+
+    card.querySelectorAll('.st-move-btn').forEach((b) => {
+      b.addEventListener('click', () => moveVideo(i, Number(b.dataset.dir), libraryId));
+    });
+
+    // Save on blur or Enter. Escape puts the old title back.
+    const input = card.querySelector('.st-title-input');
+    let saved = v.title || '';
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') input.blur();
+      if (e.key === 'Escape') { input.value = saved; input.blur(); }
+    });
+    input.addEventListener('blur', async () => {
+      const title = input.value.trim();
+      if (title === saved) return;
+      try {
+        const r = await api('rename-video', { method: 'POST', body: { id: v.id, title } });
+        if (r.error) throw new Error(r.error);
+        saved = title;
+        v.title = title;
+        say('Saved');
+        setTimeout(() => say(''), 1500);
+      } catch (err) {
+        console.error(err);
+        input.value = saved;
+        say('Could not rename that video.', true);
+      }
+    });
+
+    card.querySelector('.st-thumb-btn input').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (file) setThumbnail(v, file, say);
+    });
+
+    card.querySelector('.st-remove').addEventListener('click', async () => {
       if (!confirm('Remove this video from the gallery?')) return;
-      await api('remove-video', { method: 'POST', body: { id: e.target.dataset.id } });
+      await api('remove-video', { method: 'POST', body: { id: v.id } });
       loadVideos();
     });
+
     wrap.appendChild(card);
   });
+}
+
+async function moveVideo(index, dir, libraryId) {
+  const to = index + dir;
+  if (to < 0 || to >= VIDEOS.length) return;
+  const before = VIDEOS.slice();
+  [VIDEOS[index], VIDEOS[to]] = [VIDEOS[to], VIDEOS[index]];
+  renderVideos(libraryId);
+  try {
+    const r = await api('reorder-videos', { method: 'POST', body: { ids: VIDEOS.map((v) => v.id) } });
+    if (r.error) throw new Error(r.error);
+  } catch (err) {
+    // The client gallery reads the saved order, so a failed write must not
+    // leave the studio showing an order that was never stored.
+    console.error(err);
+    VIDEOS = before;
+    renderVideos(libraryId);
+    alert('That order could not be saved. Try again.');
+  }
+}
+
+// Upload the poster to the same storage the photos use, then hand Bunny the
+// public URL. Bunny fetches it and serves it as the player thumbnail, so the
+// client gallery needs no change.
+async function setThumbnail(video, file, say) {
+  say('Uploading thumbnail…');
+  try {
+    const init = await api('photo-upload-init', { method: 'POST', body: {
+      filename: file.name, galleryId: CURRENT.id, kind: 'thumb',
+    }});
+    if (!init || !init.uploadUrl) throw new Error('init failed');
+
+    await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', init.uploadUrl);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.onload = () => (xhr.status >= 200 && xhr.status < 300) ? resolve() : reject(new Error('upload ' + xhr.status));
+      xhr.onerror = () => reject(new Error('network'));
+      xhr.send(file);
+    });
+
+    const r = await api('set-thumbnail', { method: 'POST', body: {
+      guid: video.bunny_guid, path: init.path,
+    }});
+    if (r.error) throw new Error(r.error);
+    say('Thumbnail updated. It can take a minute to show everywhere.');
+    setTimeout(() => say(''), 6000);
+  } catch (err) {
+    console.error(err);
+    say('That thumbnail did not save.', true);
+  }
 }
 
 // ---------- upload ----------
@@ -273,7 +384,6 @@ async function uploadOne(file) {
 
     await api('attach', { method: 'POST', body: {
       galleryId: CURRENT.id, guid: auth.guid, title,
-      sortOrder: Date.now() % 100000,
     }});
     pct.textContent = 'Done';
     row.classList.add('is-done');

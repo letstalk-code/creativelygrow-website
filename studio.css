@@ -197,14 +197,59 @@ body.st {
 }
 .st-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 .st-video-meta {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1rem; margin-top: 0.5rem; font-size: 0.9rem; color: var(--cream-dim);
+    display: flex; align-items: center;
+    gap: 0.6rem; margin-top: 0.5rem; font-size: 0.9rem; color: var(--cream-dim);
+    flex-wrap: wrap;
 }
 .st-remove {
     background: none; border: none; color: var(--cream-dim);
     cursor: pointer; font-family: inherit; font-size: 0.85rem; text-decoration: underline;
 }
 .st-remove:hover { color: #e57373; }
+
+/* Reorder arrows */
+.st-move { display: flex; gap: 0.25rem; flex: none; }
+.st-move-btn {
+    background: none; border: 1px solid var(--forest-light);
+    color: var(--cream); font-family: inherit; font-size: 0.8rem;
+    line-height: 1; width: 1.85rem; height: 1.85rem; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+.st-move-btn:hover:not(:disabled) { border-color: var(--orange); color: var(--orange); }
+.st-move-btn:disabled { opacity: 0.3; cursor: default; }
+
+/* Editable title. Reads as plain text until it is hovered or focused, so the
+   row still looks like a caption rather than a form. */
+.st-title-input {
+    flex: 1 1 8rem; min-width: 0;
+    background: none; border: 1px solid transparent;
+    color: var(--cream); font-family: inherit; font-size: 0.9rem;
+    padding: 0.35rem 0.5rem;
+}
+.st-title-input:hover { border-color: var(--forest-light); }
+.st-title-input:focus { outline: none; border-color: var(--orange); }
+
+.st-thumb-btn {
+    flex: none; cursor: pointer;
+    border: 1px solid var(--forest-light); color: var(--cream-dim);
+    font-size: 0.8rem; padding: 0.35rem 0.7rem; white-space: nowrap;
+    transition: border-color 0.2s, color 0.2s;
+}
+.st-thumb-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+.st-video-note {
+    margin: 0.35rem 0 0; font-size: 0.8rem; color: var(--cream-dim);
+    min-height: 1.1em;
+}
+.st-video-note.is-bad { color: #e57373; }
+
+/* On a phone the four controls cannot share one line. Give the title its own
+   row so the buttons stay together instead of Remove wrapping off alone. */
+@media (max-width: 560px) {
+    .st-title-input { order: -1; flex: 1 1 100%; }
+    .st-video-meta { gap: 0.5rem 0.75rem; }
+    .st-remove { margin-left: auto; }
+}
 
 /* Photos */
 .st-photos {
