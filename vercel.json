@@ -10,9 +10,22 @@
       "source": "/our-work",
       "destination": "/brand-films",
       "permanent": true
+    },
+    {
+      "source": "/g",
+      "destination": "/s",
+      "permanent": false
     }
   ],
   "rewrites": [
+    {
+      "source": "/s",
+      "destination": "/api/share"
+    },
+    {
+      "source": "/v",
+      "destination": "/api/share"
+    },
     {
       "source": "/blog",
       "destination": "https://creativelygrow-next.vercel.app/blog"

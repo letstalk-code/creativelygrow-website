@@ -73,7 +73,7 @@ function openGallery(g) {
   $('listView').hidden = true;
   $('detailView').hidden = false;
   $('detailName').textContent = g.client_name;
-  $('shareLink').value = `${location.origin}/g?c=${g.slug}`;
+  $('shareLink').value = `${location.origin}/s?c=${g.slug}`;
   $('uploads').innerHTML = '';
   loadVideos();
   loadPhotos();
@@ -95,7 +95,7 @@ $('copyBtn').addEventListener('click', () => {
 
 // Open the client link exactly as the client sees it.
 $('previewBtn').addEventListener('click', () => {
-  if (CURRENT) window.open(`/g?c=${encodeURIComponent(CURRENT.slug)}`, '_blank', 'noopener');
+  if (CURRENT) window.open(`/s?c=${encodeURIComponent(CURRENT.slug)}`, '_blank', 'noopener');
 });
 
 // ---------- new gallery ----------
@@ -154,6 +154,7 @@ function renderVideos(libraryId) {
         </div>
         <input class="st-title-input" type="text" value="${escapeHtml(v.title || '')}"
           placeholder="Untitled" maxlength="200">
+        <button class="st-share-btn" type="button">Copy link</button>
         <label class="st-thumb-btn">Thumbnail<input type="file" accept="image/*" hidden></label>
         <button class="st-remove">Remove</button>
       </div>
@@ -191,6 +192,23 @@ function renderVideos(libraryId) {
         input.value = saved;
         say('Could not rename that video.', true);
       }
+    });
+
+    // One video's own share link. Same page as the gallery, scoped to this film.
+    const share = card.querySelector('.st-share-btn');
+    share.addEventListener('click', async () => {
+      const link = `${location.origin}/v?c=${encodeURIComponent(CURRENT.slug)}`
+        + `&g=${encodeURIComponent(v.bunny_guid)}`;
+      try {
+        await navigator.clipboard.writeText(link);
+        share.textContent = 'Copied';
+      } catch (err) {
+        // Clipboard access can be refused; showing the link still lets it be copied.
+        console.error(err);
+        share.textContent = 'Copied';
+        prompt('Copy this link:', link);
+      }
+      setTimeout(() => (share.textContent = 'Copy link'), 1600);
     });
 
     card.querySelector('.st-thumb-btn input').addEventListener('change', (e) => {

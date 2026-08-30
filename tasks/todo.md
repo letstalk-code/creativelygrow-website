@@ -1,98 +1,125 @@
-# Studio galleries: reorder, rename, custom thumbnails
+# Studio: share a single video + real link previews
 
-## Goal
-On /studio, inside a client gallery, let Devon:
-1. Move videos up/down to set the order the client sees
-2. Rename a video's title
-3. Upload a custom thumbnail for each video
+## The two asks
+1. Share one video from a gallery, not just the whole gallery.
+2. When that link is texted, the preview card shows what is actually being sent.
 
-## Approach (minimal, no new dependencies)
+## The constraint behind #2
+Link previews (iMessage, WhatsApp, Slack, Facebook) are built by a crawler that
+fetches the URL and reads `<meta property="og:...">` tags **out of the HTML**.
+Crawlers do not run JavaScript.
 
-### 1. Reorder
-- Each video card gets ▲ / ▼ buttons.
-- Client-side swaps the two rows, then POSTs the full ordered id list.
-- New API action `reorder-videos`: writes `sort_order = 0..n-1` for the given ids
-  (PATCH per row; already how the rest of the file talks to Supabase).
-- `/g` already reads `order=sort_order.asc`, so the client view follows for free.
-- No schema change — `sort_order` already exists.
+`/g` today is a static shell that fetches everything client-side and has no OG
+tags at all, so a texted gallery link previews as a bare URL. No amount of
+client-side work can fix that — the tags have to be in the HTML the server sends.
+So the share pages have to be server-rendered.
 
-### 2. Rename
-- Title in the card becomes an inline text input; blur/Enter saves.
-- New API action `rename-video`: PATCH `gallery_videos.title`.
-- No schema change.
+## Approach
 
-### 3. Thumbnail
-- "Thumbnail" button on each card opens a file picker (image only).
-- Reuse the existing presigned-PUT flow (`photo-upload-init`) with a new
-  `kind: 'thumb'` so the path is `thumbs/<guid>-<rand>.<ext>` instead of
-  landing in the gallery's photo folder. Random suffix busts CDN cache.
-- New API action `set-thumbnail`: after the browser PUTs the image, the server
-  calls Bunny `POST /library/{lib}/videos/{guid}/thumbnail?thumbnailUrl=<public url>`.
-- Bunny then serves that as the player poster, so **g.html needs no change** —
-  the client gallery picks it up automatically.
-- No schema change.
+### The share page becomes a function
+- New `api/share.js` renders both share pages server-side. It looks the gallery
+  (or single video) up in Supabase and emits a small HTML document: a real
+  `<head>` with the correct title/OG tags, plus the data preloaded into the page
+  as JSON so the browser does not re-fetch it.
+- The page body and all rendering logic move out of `g.html`'s inline script into
+  a normal static `share.js`. That keeps the markup out of JS template strings
+  and leaves one copy of the render code. The function only emits a `<head>`
+  and one empty `<div>`.
 
-## Files touched
-- `api/studio.js` — 3 new actions + `kind` param on photo-upload-init
-- `studio.js` — card UI: arrows, editable title, thumbnail button
-- `studio.css` — styles for the new controls
-- `studio.html` — cache-bust `?v=` on js/css
+### Routes (no collisions with static files)
+- `/s?c=<slug>` — whole gallery
+- `/v?c=<slug>&g=<guid>` — one video
+- `/g` redirects to `/s`, preserving the query, so links already texted to
+  clients keep working *and* start previewing properly.
+
+Both new routes are rewrites to the function. Neither has a static file at that
+path, which matters: Vercel checks the filesystem before applying rewrites, so a
+rewrite for `/g` would never fire while `g.html` exists.
+
+### What the preview will actually show
+- **Single video** — title: the video's title (the one set in the studio).
+  Image: `https://<bunny-cdn>/<guid>/thumbnail.jpg`, which is the *same* poster
+  the thumbnail upload sets. So the preview image is literally the thumbnail
+  chosen for that video.
+- **Whole gallery** — title: the gallery title or client name. Description: the
+  note to the client. Image: the first video's thumbnail.
+
+### Studio
+- Each video card gets a "Copy link" button that copies its `/v` URL.
+- The gallery's existing share box switches to the `/s` URL.
+
+## Files
+- `api/share.js` — new, server-rendered share pages
+- `api/studio.js` — new public `video` action (one video by slug + guid)
+- `share.js` — new, render logic moved out of `g.html`
+- `g.html` — reduced to a redirect for anyone hitting the old file directly
+- `vercel.json` — `/s` and `/v` rewrites, `/g` redirect
+- `studio.js` / `studio.css` — per-video Copy link button
+
+## Judgment calls (say if you disagree)
+- **Single video share is by Bunny guid**, matching how the download endpoint
+  already scopes a video to its gallery. Same privacy model: the guid only works
+  for the gallery it belongs to.
+- **Videos stay unlisted, not secret.** A `/v` link is shareable by anyone who
+  has it, exactly like the gallery link is today. Both stay `noindex`.
+- **Old `/g` links keep working** via redirect rather than being broken.
 
 ## Todo
-- [x] api: `reorder-videos`
-- [x] api: `rename-video`
-- [x] api: `set-thumbnail` + `kind:'thumb'` path in photo-upload-init
-- [x] studio.js: rebuild video card (arrows, title input, thumbnail upload)
-- [x] studio.css: styles
-- [x] studio.html: bump asset versions
-- [x] Verify locally, then report
+- [x] api/studio.js: public `video` action
+- [x] share.js: move render logic out of g.html, handle single-video mode
+- [x] api/share.js: server-rendered head + OG tags for both modes
+- [x] vercel.json: routes
+- [x] g.html: redirect to /s
+- [x] studio: per-video Copy link, gallery link -> /s
+- [x] Verify: preview tags, both pages, old links, then report
 
 ## Review
 
-All three features built and verified. No schema change, no new dependency.
+### New files
+- **`api/share.js`** — renders both share pages server-side. Looks the gallery up,
+  builds a real `<head>` with OG/Twitter tags, and preloads the data into the page
+  as JSON so the browser does not re-fetch what the server already read.
+- **`share.js`** — the render logic, moved out of `g.html`'s inline script. Handles
+  gallery mode and single-video mode. Falls back to fetching if the server could
+  not preload; shows the "not found" message directly when the server already
+  resolved the link and found nothing.
 
-### api/studio.js
-- `reorder-videos` — takes the full ordered id list, writes `sort_order = 0..n-1`.
-- `rename-video` — PATCHes `title` (trimmed, capped at 200 chars, empty becomes null).
-- `set-thumbnail` — takes a guid plus the storage path the browser just uploaded,
-  and hands Bunny the public URL via its thumbnail endpoint.
-- `photo-upload-init` now takes `kind: 'thumb'`, which writes to `thumbs/<uuid>.<ext>`
-  instead of the gallery's photo folder, so posters are never mistaken for client photos.
-- **Bug fixed along the way:** `attach` used to take the sort order from the browser as
-  `Date.now() % 100000`. Once positions are normalised to 0..n-1 by a reorder, that value
-  is almost always huge (fine), but it rolls over roughly every 100 seconds, so a newly
-  uploaded video could land at the top of an ordered gallery. The server now reads the
-  current maximum and appends at max + 1.
+### Changed
+- **`api/studio.js`** — public `video` action: one video by slug + guid, scoped so
+  a guid from another gallery returns 404.
+- **`studio.css`** — absorbed `g.html`'s inline styles, plus the Copy link button.
+- **`vercel.json`** — `/s` and `/v` rewrite to the function; `/g` redirects to `/s`.
+- **`g.html`** — now just a redirect to `/s`, preserving the query.
+- **`studio.js`** — per-video Copy link button; gallery link and Preview use `/s`.
 
-### studio.js
-- Video cards render from a `VIDEOS` array that mirrors the saved order.
-- ▲/▼ swap two neighbours, re-render, then persist. A failed write rolls the UI back
-  and says so, so the studio can never show an order that was never saved.
-- The title is an inline input: saves on blur or Enter, Escape restores the old value,
-  a failed save restores the old value and shows an error on the card.
-- "Thumbnail" uploads the image straight to storage (presigned PUT, same as photos)
-  and then asks the server to point Bunny at it.
+### Why /g became a redirect rather than a rewrite
+Vercel checks the filesystem *before* applying `rewrites`, so a rewrite on `/g`
+would never fire while `g.html` exists. Redirects run *before* the filesystem, so
+`/g` -> `/s` fires reliably and old client links keep working.
 
-### studio.css
-- Arrow buttons, inline title input, thumbnail button, per-card status line.
-- Under 560px the title takes its own row so the buttons stay on one line
-  instead of Remove wrapping off by itself.
+### What a texted link now previews as
+- **One video** — title is the video's title; image is
+  `https://<bunny-cdn>/<guid>/thumbnail.jpg`, which is the same URL the Thumbnail
+  button writes to. The poster set in the studio *is* the preview image.
+- **Whole gallery** — title is the gallery title, description is the note to the
+  client, image is the first video's thumbnail.
 
-### Not changed
-- `g.html` — the client gallery already sorts by `sort_order` and already renders the
-  title, and Bunny serves the custom poster inside its own player. Only the stylesheet
-  cache-buster moved.
-- Photos keep their existing behaviour (no reorder/rename), as scoped.
+### Layout change
+The video card's title now takes its own row at every width, not just on mobile.
+With five controls, cards sitting two-up on a desktop could not fit them on one
+line either. Arrows / Copy link / Thumbnail sit left, Remove sits right.
 
 ### Verification
-Ran the real `studio.html`/`studio.js`/`studio.css` against a local stub of `/api/studio`
-in the browser and confirmed:
-- reorder swaps in the UI *and* persists as 0..n-1, and survives a reload
-- a forced reorder failure rolls the UI back and alerts
-- rename persists; thumbnail flow sends `kind:'thumb'` then `set-thumbnail` with the
-  correct guid for the card
-- up arrow disabled on the first card, down arrow disabled on the last
-- desktop and mobile layouts both read cleanly
+- Ran `api/share.js` directly against a fake Supabase and read the emitted HTML:
+  correct title, description, og:image, og:url and og:type for gallery mode,
+  single-video mode, and a guid belonging to another gallery (404, nothing leaked).
+- Served the real function plus the real static files in a browser: single-video
+  page shows one film with its own title and a link back to the gallery; gallery
+  page renders exactly as before; an invalid guid shows the not-found message
+  without re-fetching; `g.html?c=...` lands on `/s?c=...` and renders.
+- Re-ran the reorder, rename and thumbnail flows after the refactor — all still
+  work, and the Copy link button produces `/v?c=<slug>&g=<guid>`.
+- Checked desktop two-column and mobile layouts.
 
-Not exercised against live Bunny/Supabase — that needs the production env vars.
-The Bunny thumbnail call is the one piece worth eyeballing on the first real upload.
+Not exercised against live Supabase/Bunny. The first real check worth doing is
+texting yourself a `/v` link and confirming the card shows the film's thumbnail.

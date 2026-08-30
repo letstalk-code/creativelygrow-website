@@ -198,6 +198,37 @@ module.exports = async (req, res) => {
       });
     }
 
+    // ---- Public: one video from a gallery, for a single-video share link ----
+    // Scoped the same way as `download`: the guid must belong to the gallery in
+    // the link, so a share link cannot be edited to reach another client's film.
+    if (action === 'video') {
+      const slug = String((req.query && req.query.slug) || '').slice(0, 64);
+      const guid = String((req.query && req.query.guid) || '').slice(0, 64);
+      if (!slug || !guid) return res.status(400).json({ error: 'slug and guid required' });
+
+      const gRes = await sb(`galleries?slug=eq.${encodeURIComponent(slug)}&published=eq.true&select=id,client_name,title,note`);
+      const rows = await gRes.json();
+      if (!Array.isArray(rows) || !rows.length) return res.status(404).json({ error: 'not found' });
+      const g = rows[0];
+
+      const vRes = await sb(`gallery_videos?gallery_id=eq.${g.id}`
+        + `&bunny_guid=eq.${encodeURIComponent(guid)}&select=bunny_guid,title`);
+      const videos = await vRes.json();
+      if (!vRes.ok || !Array.isArray(videos)) throw new Error(`video lookup failed for ${slug}`);
+      if (!videos.length) return res.status(404).json({ error: 'not found' });
+
+      return res.status(200).json({
+        clientName: g.client_name,
+        title: g.title,
+        note: g.note,
+        libraryId: BUNNY_LIB,
+        cdn: BUNNY_CDN,
+        photoBase: photoBase(),
+        videos,
+        photos: [],
+      });
+    }
+
     // ---- Public: resolve the best downloadable MP4 for one of a gallery's videos ----
     // Resolutions are only known once Bunny finishes encoding, so this is looked up
     // on demand rather than stored at upload time. The guid is checked against the
