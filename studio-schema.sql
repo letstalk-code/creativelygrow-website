@@ -19,9 +19,17 @@ create table if not exists gallery_videos (
   gallery_id  uuid not null references galleries(id) on delete cascade,
   bunny_guid  text not null,
   title       text,
+  -- Storage path of a custom poster, remembered so it can be re-applied when the
+  -- video file is replaced. Replacing means a new Bunny video (Bunny refuses to
+  -- overwrite one), and the poster lives on the Bunny video, so without this the
+  -- thumbnail would silently reset on every replace.
+  thumb_path  text,
   sort_order  int not null default 0,
   created_at  timestamptz not null default now()
 );
+
+-- For databases created before thumb_path existed.
+alter table gallery_videos add column if not exists thumb_path text;
 
 create index if not exists gallery_videos_gallery_idx on gallery_videos(gallery_id, sort_order);
 create index if not exists galleries_slug_idx on galleries(slug);

@@ -172,3 +172,48 @@ Exercised against a real MP4 in the browser:
 Cross-origin capture itself could only be proven by header inspection locally
 (the test file is same-origin). The CDN sends `access-control-allow-origin: *`,
 so it should work — worth one confirmation on a real video.
+
+
+---
+
+# Follow-up: replace a video's file
+
+## Finding
+Bunny will not overwrite an existing video — its upload endpoint answers
+"The requested video was already uploaded". So replacing always means a NEW
+Bunny video with a new guid.
+
+That mattered because /v share links carried the Bunny guid, so a replace would
+have silently broken every single-video link already sent.
+
+## What was built
+- **Share links are now keyed to the gallery_videos row id**, which survives a
+  replacement. Links sent with a guid still resolve (the lookup accepts either),
+  so nothing already sent stopped working.
+- **`replace-video` action** — swaps bunny_guid on the existing row, so title,
+  position and share links are all untouched; re-applies the remembered
+  thumbnail; deletes the old Bunny video so it is not stored and billed. The
+  thumbnail and delete steps are best-effort: the swap has already succeeded by
+  then and must not report failure.
+- **`thumb_path` column** on gallery_videos remembers a custom poster.
+  set-thumbnail records it. Migration in migrations/2026-08-31-thumb-path.sql —
+  MUST BE RUN in the Supabase SQL editor. Until it is, thumbnails still work;
+  they just do not carry across a replace (the write is best-effort).
+- **Replace button** on each card, with a confirm naming the file and stating
+  what is preserved.
+
+## Verification
+- Proved the link claim directly: a row-id link resolves before AND after the
+  guid changes, and points at the new video afterwards.
+- Full studio flow: set a thumbnail (recorded as thumb_path), copy the share
+  link (row id, not guid), replace the file — row keeps its id, title and
+  sort_order, bunny_guid swaps, thumb_path survives, card reports the thumbnail
+  was kept.
+- Failed replace leaves the original guid untouched and says so in red.
+- Six controls fit one row on desktop two-up and on mobile.
+
+## Known limitation
+A /v link sent between 2026-08-29 and today carries a Bunny guid. Those keep
+working normally, but if that particular video is later replaced, that old link
+will 404 — the guid genuinely no longer exists. New links are immune. Fixable by
+remembering superseded guids on the row if it ever matters.

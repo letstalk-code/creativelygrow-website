@@ -238,6 +238,7 @@ body.st {
     transition: border-color 0.2s, color 0.2s;
 }
 .st-thumb-btn:hover { border-color: var(--orange); color: var(--orange); }
+.st-replace-btn { display: inline-block; }
 
 .st-share-btn {
     flex: none; cursor: pointer; background: none;

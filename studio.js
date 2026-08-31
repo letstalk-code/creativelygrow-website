@@ -156,6 +156,7 @@ function renderVideos(libraryId) {
           placeholder="Untitled" maxlength="200">
         <button class="st-share-btn" type="button">Copy link</button>
         <button class="st-thumb-btn" type="button">Thumbnail</button>
+        <label class="st-thumb-btn st-replace-btn">Replace<input type="file" accept="video/*" hidden></label>
         <button class="st-remove">Remove</button>
       </div>
       <p class="st-video-note"></p>`;
@@ -197,8 +198,10 @@ function renderVideos(libraryId) {
     // One video's own share link. Same page as the gallery, scoped to this film.
     const share = card.querySelector('.st-share-btn');
     share.addEventListener('click', async () => {
+      // Keyed to the row, not the Bunny guid: the row survives the video file
+      // being replaced, so a link already sent keeps working.
       const link = `${location.origin}/v?c=${encodeURIComponent(CURRENT.slug)}`
-        + `&g=${encodeURIComponent(v.bunny_guid)}`;
+        + `&g=${encodeURIComponent(v.id)}`;
       try {
         await navigator.clipboard.writeText(link);
         share.textContent = 'Copied';
@@ -212,6 +215,15 @@ function renderVideos(libraryId) {
     });
 
     card.querySelector('.st-thumb-btn').addEventListener('click', () => openThumb(v, say));
+
+    card.querySelector('.st-replace-btn input').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      if (!confirm(`Replace this video with "${file.name}"? The title, its place in `
+        + 'the gallery, and any link you have already sent all stay the same.')) return;
+      replaceVideo(v, file, say);
+    });
 
     card.querySelector('.st-remove').addEventListener('click', async () => {
       if (!confirm('Remove this video from the gallery?')) return;
@@ -239,6 +251,46 @@ async function moveVideo(index, dir, libraryId) {
     VIDEOS = before;
     renderVideos(libraryId);
     alert('That order could not be saved. Try again.');
+  }
+}
+
+// Swap the file behind an existing video. A new Bunny video is uploaded (Bunny
+// will not overwrite one) and its guid takes over this row, so the title, the
+// position and every share link already sent are all unaffected.
+async function replaceVideo(video, file, say) {
+  say('Uploading replacement… 0%');
+  try {
+    const title = video.title || file.name.replace(/\.[^.]+$/, '');
+    const auth = await api('upload-init', { method: 'POST', body: { title } });
+    if (!auth || !auth.guid) throw new Error('init failed');
+
+    await new Promise((resolve, reject) => {
+      const upload = new tus.Upload(file, {
+        endpoint: auth.endpoint,
+        retryDelays: [0, 3000, 6000, 12000, 24000],
+        headers: {
+          AuthorizationSignature: auth.signature,
+          AuthorizationExpire: String(auth.expiration),
+          VideoId: auth.guid,
+          LibraryId: String(auth.libraryId),
+        },
+        metadata: { filetype: file.type, title },
+        onError: reject,
+        onProgress: (sent, total) => say(`Uploading replacement… ${Math.round((sent / total) * 100)}%`),
+        onSuccess: resolve,
+      });
+      upload.start();
+    });
+
+    const r = await api('replace-video', { method: 'POST', body: { id: video.id, guid: auth.guid } });
+    if (r.error) throw new Error(r.error);
+    say(r.thumbnailCarried
+      ? 'Replaced. Your thumbnail was kept; it may take a few minutes to encode.'
+      : 'Replaced. It may take a few minutes to encode.');
+    setTimeout(() => loadVideos(), 2500);
+  } catch (err) {
+    console.error(err);
+    say('That replacement did not go through. The original is untouched.', true);
   }
 }
 
@@ -341,7 +393,7 @@ async function setThumbnail(video, file, say) {
     });
 
     const r = await api('set-thumbnail', { method: 'POST', body: {
-      guid: video.bunny_guid, path: init.path,
+      guid: video.bunny_guid, path: init.path, id: video.id,
     }});
     if (r.error) throw new Error(r.error);
     say('Thumbnail updated. It can take a minute to show everywhere.');

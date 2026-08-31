@@ -131,6 +131,16 @@ async function bunnyDelete(key) {
   });
 }
 
+/** Point Bunny at a poster image already sitting in storage. */
+async function applyThumbnail(guid, path) {
+  const url = photoBase() + path;
+  const r = await fetch(
+    `https://video.bunnycdn.com/library/${BUNNY_LIB}/videos/${encodeURIComponent(guid)}`
+      + `/thumbnail?thumbnailUrl=${encodeURIComponent(url)}`,
+    { method: 'POST', headers: { AccessKey: BUNNY_KEY } });
+  return r.ok;
+}
+
 function sb(path, opts = {}) {
   return fetch(`${SB_URL}/rest/v1/${path}`, {
     ...opts,
@@ -150,6 +160,16 @@ function slugify(s) {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .slice(0, 48) || 'client';
+}
+
+// A share link carries either the gallery_videos row id (current) or a Bunny
+// guid (links sent before the switch). The row id survives the video file being
+// replaced, which is why links are keyed to it now.
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function videoRefFilter(ref) {
+  return UUID_RE.test(ref)
+    ? `id=eq.${encodeURIComponent(ref)}`
+    : `bunny_guid=eq.${encodeURIComponent(ref)}`;
 }
 
 function authed(req) {
@@ -212,7 +232,7 @@ module.exports = async (req, res) => {
       const g = rows[0];
 
       const vRes = await sb(`gallery_videos?gallery_id=eq.${g.id}`
-        + `&bunny_guid=eq.${encodeURIComponent(guid)}&select=bunny_guid,title`);
+        + `&${videoRefFilter(guid)}&select=bunny_guid,title`);
       const videos = await vRes.json();
       if (!vRes.ok || !Array.isArray(videos)) throw new Error(`video lookup failed for ${slug}`);
       if (!videos.length) return res.status(404).json({ error: 'not found' });
@@ -399,15 +419,51 @@ module.exports = async (req, res) => {
     // Bunny fetches the URL itself, so it must be publicly reachable - both photo
     // backends serve over a public CDN, which is why the same upload flow is reused.
     if (action === 'set-thumbnail' && req.method === 'POST') {
-      const { guid, path } = req.body || {};
+      const { guid, path, id } = req.body || {};
       if (!guid || !path) return res.status(400).json({ error: 'guid and path required' });
-      const url = photoBase() + path;
-      const r = await fetch(
-        `https://video.bunnycdn.com/library/${BUNNY_LIB}/videos/${encodeURIComponent(guid)}`
-          + `/thumbnail?thumbnailUrl=${encodeURIComponent(url)}`,
-        { method: 'POST', headers: { AccessKey: BUNNY_KEY } });
-      if (!r.ok) return res.status(502).json({ error: 'bunny rejected that thumbnail' });
-      return res.status(200).json({ ok: true, url });
+      const ok = await applyThumbnail(guid, path);
+      if (!ok) return res.status(502).json({ error: 'bunny rejected that thumbnail' });
+      // Remember it so a later replace can put the same poster on the new video.
+      // Best-effort: the thumbnail is already live, so a failure here (an older
+      // database without the column) must not read as a failed thumbnail.
+      if (id) {
+        await sb(`gallery_videos?id=eq.${encodeURIComponent(id)}`, {
+          method: 'PATCH', prefer: 'return=minimal',
+          body: JSON.stringify({ thumb_path: path }),
+        }).catch(() => {});
+      }
+      return res.status(200).json({ ok: true, url: photoBase() + path });
+    }
+
+    // Swap a video's file. Bunny refuses to overwrite an existing video ("already
+    // uploaded"), so the browser uploads a new one and its guid replaces the old
+    // on this row. Keeping the row is the point: title, position and every share
+    // link already sent all survive, because links are keyed to the row id.
+    if (action === 'replace-video' && req.method === 'POST') {
+      const { id, guid } = req.body || {};
+      if (!id || !guid) return res.status(400).json({ error: 'id and guid required' });
+
+      const cur = await sb(`gallery_videos?id=eq.${encodeURIComponent(id)}&select=bunny_guid,thumb_path`);
+      const rows = await cur.json();
+      if (!Array.isArray(rows) || !rows.length) return res.status(404).json({ error: 'not found' });
+      const oldGuid = rows[0].bunny_guid;
+      const thumb = rows[0].thumb_path;
+
+      const upd = await sb(`gallery_videos?id=eq.${encodeURIComponent(id)}`, {
+        method: 'PATCH', prefer: 'return=minimal',
+        body: JSON.stringify({ bunny_guid: guid }),
+      });
+      if (!upd.ok) return res.status(502).json({ error: 'could not swap that video' });
+
+      // Past this point the swap is done and the studio should see success. The
+      // rest is tidy-up: neither failure should surface as a failed replace.
+      if (thumb) await applyThumbnail(guid, thumb).catch(() => {});
+      if (oldGuid && oldGuid !== guid) {
+        await fetch(`https://video.bunnycdn.com/library/${BUNNY_LIB}/videos/${encodeURIComponent(oldGuid)}`, {
+          method: 'DELETE', headers: { AccessKey: BUNNY_KEY },
+        }).catch(() => {});
+      }
+      return res.status(200).json({ ok: true, thumbnailCarried: Boolean(thumb) });
     }
 
     // An MP4 the studio can scrub to pick a poster frame. A mid-size rendition is

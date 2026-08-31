@@ -26,6 +26,15 @@ function sb(path) {
   });
 }
 
+// A share link carries either the gallery_videos row id (current) or a Bunny guid
+// (links sent before the switch). The row id survives the file being replaced.
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function videoRefFilter(ref) {
+  return UUID_RE.test(ref)
+    ? `id=eq.${encodeURIComponent(ref)}`
+    : `bunny_guid=eq.${encodeURIComponent(ref)}`;
+}
+
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -67,7 +76,7 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : ''}
 <link rel="icon" href="/favicon.ico?v=5" sizes="48x48">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/studio.css?v=8">
+<link rel="stylesheet" href="/studio.css?v=9">
 </head>
 <body class="st">
 <div id="gallery"><p class="cg-g-msg">Loading…</p></div>
@@ -110,7 +119,7 @@ module.exports = async (req, res) => {
     const g = rows[0];
 
     const vQuery = single
-      ? `gallery_videos?gallery_id=eq.${g.id}&bunny_guid=eq.${encodeURIComponent(guid)}&select=bunny_guid,title`
+      ? `gallery_videos?gallery_id=eq.${g.id}&${videoRefFilter(guid)}&select=bunny_guid,title`
       : `gallery_videos?gallery_id=eq.${g.id}&order=sort_order.asc&select=bunny_guid,title`;
     const vRes = await sb(vQuery);
     const videos = await vRes.json();
