@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="studio.css?v=7">
+    <link rel="stylesheet" href="studio.css?v=8">
     <script src="https://cdn.jsdelivr.net/npm/tus-js-client@4.1.0/dist/tus.min.js"></script>
 </head>
 <body class="st">
@@ -102,6 +102,28 @@
     </div>
 </div>
 
-<script src="studio.js?v=5"></script>
+<!-- THUMBNAIL MODAL -->
+<div class="st-modal" id="thumbModal">
+    <div class="st-modal-box st-thumb-box">
+        <button class="st-modal-close" id="thumbClose">&times;</button>
+        <h3>Set thumbnail</h3>
+        <p class="st-thumb-hint">Scrub to the moment you want, then use that frame.</p>
+        <div class="st-thumb-stage">
+            <!-- crossorigin is required: without it the browser refuses to let the
+                 canvas read the frame back out. Bunny's CDN sends the header. -->
+            <video id="thumbVideo" crossorigin="anonymous" preload="metadata" playsinline controls></video>
+        </div>
+        <p class="st-thumb-msg" id="thumbMsg"></p>
+        <div class="st-thumb-actions">
+            <button class="st-btn" id="useFrameBtn">Use this frame</button>
+            <label class="st-btn st-btn-ghost st-file-btn">Upload an image
+                <input type="file" accept="image/*" id="thumbFile" hidden>
+            </label>
+        </div>
+        <p class="st-error" id="thumbError"></p>
+    </div>
+</div>
+
+<script src="studio.js?v=6"></script>
 </body>
 </html>

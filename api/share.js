@@ -67,7 +67,7 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : ''}
 <link rel="icon" href="/favicon.ico?v=5" sizes="48x48">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/studio.css?v=7">
+<link rel="stylesheet" href="/studio.css?v=8">
 </head>
 <body class="st">
 <div id="gallery"><p class="cg-g-msg">Loading…</p></div>

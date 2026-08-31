@@ -232,7 +232,7 @@ body.st {
 .st-title-input:focus { outline: none; border-color: var(--orange); }
 
 .st-thumb-btn {
-    flex: none; cursor: pointer;
+    flex: none; cursor: pointer; background: none; font-family: inherit;
     border: 1px solid var(--forest-light); color: var(--cream-dim);
     font-size: 0.8rem; padding: 0.35rem 0.7rem; white-space: nowrap;
     transition: border-color 0.2s, color 0.2s;
@@ -246,6 +246,23 @@ body.st {
     white-space: nowrap; transition: border-color 0.2s, color 0.2s;
 }
 .st-share-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+/* Thumbnail picker */
+.st-thumb-box { max-width: 720px; width: 100%; }
+.st-thumb-hint { color: var(--cream-dim); font-size: 0.85rem; margin: 0 0 0.9rem; }
+.st-thumb-stage {
+    background: var(--ink); border: 1px solid var(--forest-light);
+    aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+}
+.st-thumb-stage video { width: 100%; height: 100%; display: block; object-fit: contain; }
+.st-thumb-msg {
+    color: var(--cream-dim); font-size: 0.85rem; margin: 0.6rem 0 0; min-height: 1.1em;
+}
+.st-thumb-actions {
+    display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap;
+}
+.st-thumb-actions .st-btn { flex: 1 1 auto; }
+.st-file-btn { text-align: center; cursor: pointer; }
 
 .st-video-note {
     margin: 0.35rem 0 0; font-size: 0.8rem; color: var(--cream-dim);

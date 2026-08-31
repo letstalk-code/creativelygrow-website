@@ -155,7 +155,7 @@ function renderVideos(libraryId) {
         <input class="st-title-input" type="text" value="${escapeHtml(v.title || '')}"
           placeholder="Untitled" maxlength="200">
         <button class="st-share-btn" type="button">Copy link</button>
-        <label class="st-thumb-btn">Thumbnail<input type="file" accept="image/*" hidden></label>
+        <button class="st-thumb-btn" type="button">Thumbnail</button>
         <button class="st-remove">Remove</button>
       </div>
       <p class="st-video-note"></p>`;
@@ -211,11 +211,7 @@ function renderVideos(libraryId) {
       setTimeout(() => (share.textContent = 'Copy link'), 1600);
     });
 
-    card.querySelector('.st-thumb-btn input').addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      e.target.value = '';
-      if (file) setThumbnail(v, file, say);
-    });
+    card.querySelector('.st-thumb-btn').addEventListener('click', () => openThumb(v, say));
 
     card.querySelector('.st-remove').addEventListener('click', async () => {
       if (!confirm('Remove this video from the gallery?')) return;
@@ -245,6 +241,84 @@ async function moveVideo(index, dir, libraryId) {
     alert('That order could not be saved. Try again.');
   }
 }
+
+// ---------- thumbnail picker ----------
+// Bunny has no "set the thumbnail to this timestamp" API, so the frame is
+// captured here: the MP4 is scrubbed in a <video>, the current frame is drawn
+// to a canvas, and the result is uploaded exactly like a chosen image would be.
+let THUMB = null; // { video, say }
+
+function closeThumb() {
+  const el = $('thumbVideo');
+  el.pause();
+  el.removeAttribute('src');
+  el.load();
+  $('thumbModal').classList.remove('is-open');
+  THUMB = null;
+}
+
+$('thumbClose').addEventListener('click', closeThumb);
+$('thumbModal').addEventListener('click', (e) => { if (e.target === $('thumbModal')) closeThumb(); });
+
+async function openThumb(video, say) {
+  THUMB = { video, say };
+  const el = $('thumbVideo');
+  const msg = $('thumbMsg');
+  $('thumbError').textContent = '';
+  msg.textContent = 'Loading video…';
+  $('useFrameBtn').disabled = true;
+  $('thumbModal').classList.add('is-open');
+
+  try {
+    const r = await api('video-src', { query: `&guid=${encodeURIComponent(video.bunny_guid)}` });
+    if (!r || !r.url) throw new Error(r && r.error ? r.error : 'no source');
+    el.src = r.url;
+    el.onloadeddata = () => {
+      msg.textContent = '';
+      $('useFrameBtn').disabled = false;
+    };
+    el.onerror = () => { msg.textContent = 'That video would not load. You can still upload an image.'; };
+  } catch (err) {
+    console.error(err);
+    // Uploading an image still works, so the picker stays open and says so.
+    msg.textContent = String(err.message) === 'still encoding'
+      ? 'This video is still processing. You can upload an image instead.'
+      : 'Could not load the video. You can upload an image instead.';
+  }
+}
+
+$('useFrameBtn').addEventListener('click', () => {
+  if (!THUMB) return;
+  const el = $('thumbVideo');
+  if (!el.videoWidth) { $('thumbError').textContent = 'No frame to capture yet.'; return; }
+
+  // Cap the long edge so a 4K frame does not become a huge poster upload.
+  const scale = Math.min(1, 1280 / el.videoWidth);
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(el.videoWidth * scale);
+  canvas.height = Math.round(el.videoHeight * scale);
+  canvas.getContext('2d').drawImage(el, 0, 0, canvas.width, canvas.height);
+
+  canvas.toBlob((blob) => {
+    if (!blob) {
+      // Almost always the cross-origin rule: the canvas is tainted and unreadable.
+      $('thumbError').textContent = 'That frame could not be captured. Try uploading an image.';
+      return;
+    }
+    const { video, say } = THUMB;
+    closeThumb();
+    setThumbnail(video, new File([blob], 'frame.jpg', { type: 'image/jpeg' }), say);
+  }, 'image/jpeg', 0.9);
+});
+
+$('thumbFile').addEventListener('change', (e) => {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (!file || !THUMB) return;
+  const { video, say } = THUMB;
+  closeThumb();
+  setThumbnail(video, file, say);
+});
 
 // Upload the poster to the same storage the photos use, then hand Bunny the
 // public URL. Bunny fetches it and serves it as the player thumbnail, so the

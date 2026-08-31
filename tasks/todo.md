@@ -123,3 +123,52 @@ line either. Arrows / Copy link / Thumbnail sit left, Remove sits right.
 
 Not exercised against live Supabase/Bunny. The first real check worth doing is
 texting yourself a `/v` link and confirming the card shows the film's thumbnail.
+
+
+---
+
+# Follow-up: pick a thumbnail frame from the video
+
+## Question
+Can a frame from the video be chosen as the thumbnail, or only an uploaded photo?
+
+## Finding
+Bunny has no "set the thumbnail to this timestamp" API. Their Update Video
+endpoint accepts only title, collectionId, chapters, moments and metaTags
+(checked against bunny.net/docs/reference/video_updatevideo). The single
+thumbnail API is the one already in use, which fetches an image from a URL.
+
+So the frame has to be captured on our side and uploaded like any other image.
+Verified this is possible before building: the video CDN
+(vz-d5a66073-132.b-cdn.net) returns `access-control-allow-origin: *` and allows
+Range requests, so a <video crossorigin="anonymous"> can be drawn to a canvas
+and read back without the browser tainting it.
+
+## What was built
+- **`video-src` action** (studio API) — returns a mid-size MP4 for one video,
+  preferring 720p: sharp enough for a poster, small enough to scrub. Returns
+  409 "still encoding" when Bunny has no rendition yet.
+- **Thumbnail picker modal** — the card's Thumbnail button now opens a picker
+  instead of going straight to a file dialog. Scrub the video, press
+  "Use this frame", and the frame is drawn to a canvas, encoded as JPEG (long
+  edge capped at 1280 so a 4K frame is not uploaded whole) and pushed through
+  the existing thumbnail pipeline. "Upload an image" is in the same modal, so
+  nothing is lost.
+- If the video cannot load, or is still encoding, the modal says so and leaves
+  upload available rather than failing outright.
+
+## Verification
+Exercised against a real MP4 in the browser:
+- modal loads the video, native scrubber, correct dimensions read back
+- seeking then capturing produced a genuine 1200x656 frame (checked it is not a
+  blank/black frame, and eyeballed the captured image)
+- capture uploads as `frame.jpg`, `image/jpeg`, ~92KB, through
+  photo-upload-init (kind: thumb) then set-thumbnail with the right guid
+- upload-an-image inside the modal still works
+- a "still encoding" video shows the right message, disables "Use this frame",
+  and keeps upload available
+- desktop and mobile layouts both check out
+
+Cross-origin capture itself could only be proven by header inspection locally
+(the test file is same-origin). The CDN sends `access-control-allow-origin: *`,
+so it should work — worth one confirmation on a real video.

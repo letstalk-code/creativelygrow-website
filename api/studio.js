@@ -410,6 +410,28 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: true, url });
     }
 
+    // An MP4 the studio can scrub to pick a poster frame. A mid-size rendition is
+    // deliberate: big enough for a sharp thumbnail, small enough to seek quickly.
+    // Bunny has no "thumbnail from timestamp" API, so the frame is grabbed in the
+    // browser and uploaded like any other image.
+    if (action === 'video-src') {
+      const guid = String((req.query && req.query.guid) || '').slice(0, 64);
+      if (!guid) return res.status(400).json({ error: 'guid required' });
+      const metaRes = await fetch(`https://video.bunnycdn.com/library/${BUNNY_LIB}/videos/${encodeURIComponent(guid)}`, {
+        headers: { AccessKey: BUNNY_KEY },
+      });
+      if (!metaRes.ok) return res.status(502).json({ error: 'could not read video' });
+      const meta = await metaRes.json();
+      const have = String(meta.availableResolutions || '').split(',').map((r) => r.trim()).filter(Boolean);
+      const preferred = ['720p', '480p', '1080p', '360p', '240p', '1440p', '2160p'];
+      const pick = preferred.find((r) => have.includes(r));
+      if (!pick) return res.status(409).json({ error: 'still encoding' });
+      return res.status(200).json({
+        url: `https://${BUNNY_CDN}/${encodeURIComponent(guid)}/play_${pick}.mp4`,
+        resolution: pick,
+      });
+    }
+
     // Short-lived credential scoped to one object, so the browser uploads
     // the image straight to storage and the secrets stay on the server.
     if (action === 'photo-upload-init' && req.method === 'POST') {
