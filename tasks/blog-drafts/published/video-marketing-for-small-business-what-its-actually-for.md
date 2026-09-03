@@ -5,6 +5,8 @@ target_keyword: video marketing for small business
 meta_description: "Video marketing for small business works when it answers buyer questions, proves the work, and supports a follow-up system—not when it chases views."
 date: "2026-08-27"
 author: Creatively Grow
+hero_image: /blog/video-marketing-hero.webp
+hero_alt: "A smartphone clamped to a small black tabletop tripod on the floor of an open Florida garage, aimed at a patched and partially ground concrete slab, with a coiled orange extension cord and a plain plastic pail beside it and a barrel tile roof, palms and pastel stucco house visible through the open door"
 status: published
 tags:
   - contractor marketing
@@ -56,6 +58,10 @@ Common jobs for a small-business video include:
 
 One video can serve more than one place — a project walkthrough could live on a service page, be clipped for a social post, and be sent to an interested homeowner. But it still starts with one primary job, which prevents the familiar trap of saying everything in one glossy montage.
 
+![An open spiral notepad of handwritten notes on a worn wooden kitchen table beside a tape measure, a carpenter's pencil, a blank paper printout, a mug of coffee and a face-down smartphone, with morning light from a window showing palm fronds and a pastel stucco Florida house outside](/blog/video-marketing-kitchen-table.webp)
+
+*The topics worth filming are already written down somewhere — in the estimator's notes, the office's inbox, the questions asked at the kitchen table.*
+
 ## Start with buyer questions, not camera ideas
 
 Owners often begin with equipment, drone shots, music, or a competitor’s reel. Those are production choices. They are not content strategy.
@@ -76,6 +82,10 @@ Those questions are close to money because they appear when a person is deciding
 This is also where video can make written pages more useful. A service page should still explain the service in text. Search engines and readers need that clarity. The video adds the human explanation and visual proof that text cannot always carry. Pair it with the right page instead of uploading it to social media and hoping a local customer happens to find it.
 
 For the search side of that work, [Contractor SEO: The Parts That Actually Move the Phone](/blog/contractor-seo) lays out why service pages, local signals, and clear intent still matter.
+
+![A smartphone on a compact tripod standing on a paver driveway at dusk beside the open rear doors of an unmarked white work van, with a folded canvas drop cloth, coiled orange extension cord and closed toolbox on the bumper, and a single-story Florida house with a barrel tile roof and tall palms behind](/blog/video-marketing-van-dusk.webp)
+
+*A video only earns its keep where a decision is actually being made — on the service page, in the follow-up, at the tailgate before an estimate.*
 
 ## Put the video where the decision happens
 
