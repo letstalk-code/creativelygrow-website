@@ -165,11 +165,15 @@ function slugify(s) {
 // A share link carries either the gallery_videos row id (current) or a Bunny
 // guid (links sent before the switch). The row id survives the video file being
 // replaced, which is why links are keyed to it now.
+//
+// Both are UUIDs, so the shape of the value cannot tell them apart — an earlier
+// version guessed by format and sent every legacy guid down the id branch, where
+// it matched nothing and the client got a 404. Match either column instead.
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function videoRefFilter(ref) {
-  return UUID_RE.test(ref)
-    ? `id=eq.${encodeURIComponent(ref)}`
-    : `bunny_guid=eq.${encodeURIComponent(ref)}`;
+  const v = encodeURIComponent(ref);
+  // id is a uuid column, so it can only be compared against a uuid-shaped value.
+  return UUID_RE.test(ref) ? `or=(id.eq.${v},bunny_guid.eq.${v})` : `bunny_guid=eq.${v}`;
 }
 
 function authed(req) {
