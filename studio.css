@@ -239,6 +239,10 @@ body.st {
 }
 .st-thumb-btn:hover { border-color: var(--orange); color: var(--orange); }
 .st-replace-btn { display: inline-block; }
+/* Locked while its upload runs, so a second attempt cannot start. */
+.st-replace-btn.is-busy {
+    opacity: 0.5; pointer-events: none; border-color: var(--forest-light);
+}
 
 .st-share-btn {
     flex: none; cursor: pointer; background: none;

@@ -229,7 +229,11 @@ function renderVideos(libraryId) {
         replaceInput.value = '';
         return;
       }
-      replaceVideo(v, file, say).finally(() => { replaceInput.value = ''; });
+      // A second replace on the same card while one is in flight just creates
+      // another empty video in Bunny, so the control locks until it finishes.
+      const label = replaceInput.closest('.st-replace-btn');
+      if (label.classList.contains('is-busy')) return;
+      replaceVideo(v, file, say, label).finally(() => { replaceInput.value = ''; });
     });
 
     card.querySelector('.st-remove').addEventListener('click', async () => {
@@ -264,8 +268,31 @@ async function moveVideo(index, dir, libraryId) {
 // Swap the file behind an existing video. A new Bunny video is uploaded (Bunny
 // will not overwrite one) and its guid takes over this row, so the title, the
 // position and every share link already sent are all unaffected.
-async function replaceVideo(video, file, say) {
-  say('Uploading replacement… 0%');
+// The same prominent progress row a normal upload gets. A replace used to
+// report only into the small note under the card, so a large file looked like
+// nothing was happening — and a reload part-way through aborts the upload and
+// leaves Bunny holding a created video with no bytes in it.
+function progressRow(name) {
+  const row = document.createElement('div');
+  row.className = 'st-upload';
+  row.innerHTML = `<span class="st-upload-name">${escapeHtml(name)}</span>
+    <div class="st-bar"><div class="st-bar-fill"></div></div>
+    <span class="st-upload-pct">0%</span>`;
+  $('uploads').appendChild(row);
+  row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  const fill = row.querySelector('.st-bar-fill');
+  const pct = row.querySelector('.st-upload-pct');
+  return {
+    set(p) { fill.style.width = p + '%'; pct.textContent = p + '%'; },
+    done(text) { pct.textContent = text; row.classList.add('is-done'); setTimeout(() => row.remove(), 2500); },
+    fail(text) { pct.textContent = text; row.classList.add('is-failed'); },
+  };
+}
+
+async function replaceVideo(video, file, say, button) {
+  const bar = progressRow(`Replacing "${video.title || 'video'}" with ${file.name}`);
+  if (button) button.classList.add('is-busy');
+  say('Uploading replacement…');
   try {
     const title = video.title || file.name.replace(/\.[^.]+$/, '');
     const auth = await api('upload-init', { method: 'POST', body: { title } });
@@ -283,14 +310,16 @@ async function replaceVideo(video, file, say) {
         },
         metadata: { filetype: file.type, title },
         onError: reject,
-        onProgress: (sent, total) => say(`Uploading replacement… ${Math.round((sent / total) * 100)}%`),
+        onProgress: (sent, total) => bar.set(Math.round((sent / total) * 100)),
         onSuccess: resolve,
       });
       upload.start();
     });
 
+    bar.set(100);
     const r = await api('replace-video', { method: 'POST', body: { id: video.id, guid: auth.guid } });
     if (r.error) throw new Error(r.error);
+    bar.done('Replaced');
     say(r.thumbnailCarried
       ? 'Replaced. Your thumbnail was kept; it may take a few minutes to encode.'
       : 'Replaced. It may take a few minutes to encode.');
@@ -300,7 +329,10 @@ async function replaceVideo(video, file, say) {
     // Say what actually failed. A bare "did not go through" left no way to tell
     // a rejected upload from a rejected swap without digging in the console.
     const detail = String((err && (err.message || err)) || '').slice(0, 140);
+    bar.fail('Failed');
     say(`Replacement failed: ${detail || 'unknown error'}. The original is untouched.`, true);
+  } finally {
+    if (button) button.classList.remove('is-busy');
   }
 }
 
