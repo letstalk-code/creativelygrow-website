@@ -216,13 +216,20 @@ function renderVideos(libraryId) {
 
     card.querySelector('.st-thumb-btn').addEventListener('click', () => openThumb(v, say));
 
-    card.querySelector('.st-replace-btn input').addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      e.target.value = '';
+    // The input is reset only once the upload is done. Clearing it up front —
+    // as this used to — drops the browser's handle on the file, and the uploader
+    // reads a large video in chunks over minutes, so it was left reading a file
+    // it no longer had access to. Bunny received the created video and no bytes.
+    const replaceInput = card.querySelector('.st-replace-btn input');
+    replaceInput.addEventListener('change', () => {
+      const file = replaceInput.files && replaceInput.files[0];
       if (!file) return;
       if (!confirm(`Replace this video with "${file.name}"? The title, its place in `
-        + 'the gallery, and any link you have already sent all stay the same.')) return;
-      replaceVideo(v, file, say);
+        + 'the gallery, and any link you have already sent all stay the same.')) {
+        replaceInput.value = '';
+        return;
+      }
+      replaceVideo(v, file, say).finally(() => { replaceInput.value = ''; });
     });
 
     card.querySelector('.st-remove').addEventListener('click', async () => {
@@ -290,7 +297,10 @@ async function replaceVideo(video, file, say) {
     setTimeout(() => loadVideos(), 2500);
   } catch (err) {
     console.error(err);
-    say('That replacement did not go through. The original is untouched.', true);
+    // Say what actually failed. A bare "did not go through" left no way to tell
+    // a rejected upload from a rejected swap without digging in the console.
+    const detail = String((err && (err.message || err)) || '').slice(0, 140);
+    say(`Replacement failed: ${detail || 'unknown error'}. The original is untouched.`, true);
   }
 }
 
@@ -365,11 +375,11 @@ $('useFrameBtn').addEventListener('click', () => {
 
 $('thumbFile').addEventListener('change', (e) => {
   const file = e.target.files && e.target.files[0];
-  e.target.value = '';
   if (!file || !THUMB) return;
   const { video, say } = THUMB;
   closeThumb();
-  setThumbnail(video, file, say);
+  // Reset only after the upload, for the same reason as the replace input above.
+  setThumbnail(video, file, say).finally(() => { e.target.value = ''; });
 });
 
 // Upload the poster to the same storage the photos use, then hand Bunny the
