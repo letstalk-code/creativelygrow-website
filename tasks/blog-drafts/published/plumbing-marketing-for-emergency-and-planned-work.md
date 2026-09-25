@@ -5,6 +5,8 @@ target_keyword: plumbing marketing
 meta_description: "Plumbing marketing works when urgent callers get a clear response and planned projects get useful proof, a practical scope, and dependable follow-up."
 date: "2026-09-21"
 author: Creatively Grow
+hero_image: /blog/plumbing-marketing-hero.webp
+hero_alt: "A plumber's canvas tool bag, pipe wrench and flashlight on a Florida garage floor beside a tank water heater with its access panel open"
 status: published
 published_date: "2026-09-24"
 tags:
@@ -62,6 +64,9 @@ Look for gaps that are not search problems: an unmonitored number, an outdated s
 
 The durable mechanics are covered in [contractor SEO](/blog/contractor-seo). Useful service pages, accurate local information, and evidence that fits the customer’s question are more valuable than trying to manufacture a shortcut in search results.
 
+![Gloved hands loosening a white PVC P-trap under a kitchen sink with a grey bucket and towel below](/blog/plumbing-marketing-sink-repair.webp)
+*The urgent call: the customer needs a response they can count on before anyone touches a wrench.*
+
 ## Emergency plumbing marketing has to be honest about urgency
 
 When a caller is worried about active damage or lost service, vague language feels like a dodge. They need an obvious way to contact you, a person who can capture the essentials, and a realistic expectation of the next communication.
@@ -73,6 +78,9 @@ A missed-call text-back is one practical bridge when the crew is in the field. I
 Your intake should carry the right details forward: the contact information, address, the reported issue, timing concern, access constraints, and any facts that help the technician prepare. The office should not make the customer repeat the whole story when the technician arrives. The technician should not have to guess what was promised.
 
 That handoff is part of the product. The ad, listing, or referral got attention; the response decides whether your company feels dependable. Electricians face the same split between the quick repair and the bigger job, covered in [electrician marketing that fills the schedule](/blog/electrician-marketing-that-fills-the-schedule).
+
+![A bathroom opened to the studs showing copper and PEX supply lines, with a clipboard floor sketch and tape measure on a sawhorse](/blog/plumbing-marketing-bath-rough-in.webp)
+*The planned project: more time to decide, and more questions that deserve straight answers.*
 
 ## Planned plumbing work needs proof, not pressure
 
