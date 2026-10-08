@@ -6,6 +6,8 @@ meta_description: "Landscaping marketing works when you build a clear path from 
 date: "2026-09-24"
 author: Creatively Grow
 status: published
+hero_image: /blog/landscaping-marketing-hero.webp
+hero_alt: "A wheelbarrow of mulch, a shovel and a rake beside a half-planted bed of ixora shrubs and a potted palm against a peach stucco wall in a Florida backyard"
 published_date: "2026-10-08"
 tags:
   - landscaping marketing
@@ -54,6 +56,9 @@ The same principle applies to pool cages and screen enclosures. A landscape comp
 
 A narrow, honest offer converts better than a broad promise nobody can picture.
 
+![A shallow drainage trench dug along a yellow stucco Florida house, with coiled black drain pipe, gravel, a shovel and muddy boots beside a rain puddle](/blog/landscaping-marketing-drainage-trench.webp)
+*A drainage job is a specific problem with a specific page behind it, not a line in a services list.*
+
 ## Your site has to answer the homeowner’s first questions
 
 Most landscape websites make the owner work too hard. They lead with a logo, a vague claim about quality, and a gallery with no context. That can look polished while doing very little to help a person choose.
@@ -100,6 +105,9 @@ A short brand-story film can help a homeowner understand the people and process 
 Epoxy floors and pool cages have the same gap. A glossy floor or a clean enclosure gets attention, but the buyer still needs to know whether it fits their surface, site, and schedule. Landscaping is no different. Finish photos get attention; concrete explanations help people act.
 
 For how to build proof before you scale traffic, see [starting or growing a concrete coating business](/blog/starting-or-growing-a-concrete-coating-business).
+
+![A clipboard with a hand-drawn backyard planting layout, a tape measure and a pencil on a travertine pool deck inside a screened Florida pool enclosure](/blog/landscaping-marketing-planting-sketch.webp)
+*The next phase is often sitting in last year’s job notes.*
 
 ## Follow up while the project is still relevant
 
