@@ -6,6 +6,8 @@ meta_description: "HVAC SEO works when your site, Google Business Profile, revie
 date: "2026-09-28"
 author: Creatively Grow
 status: published
+hero_image: /blog/hvac-seo-hero.webp
+hero_alt: "A residential air conditioning condenser on a concrete pad against a peach stucco wall in Florida, its service panel leaning beside it, with copper line set, gauge hoses and a canvas tool bag on the ground"
 published_date: "2026-10-28"
 tags:
   - hvac seo
@@ -80,6 +82,9 @@ The same rule applies to project proof. An epoxy floor company might use a real 
 
 Creatively Grow’s epoxy and pool-cage pages are demo builds, not client case studies. They are useful examples of how a trade page can organize an offer and proof; they are not proof that a job was delivered.
 
+![A coil of silver flexible duct, a roll of foil tape, a utility knife and a yellow flashlight on plywood decking in a Florida attic, with light coming through a roof vent](/blog/hvac-seo-attic-duct.webp)
+*Most of what a homeowner is buying happens out of sight, so the proof you show has to explain it.*
+
 ## Local proof should answer “why this company?”
 
 SEO gets described as a traffic problem because traffic is easy to count. Your harder problem is that local service searches often put several plausible companies in front of the homeowner at once. The site has to help them see why your company is a fit.
@@ -87,6 +92,9 @@ SEO gets described as a traffic problem because traffic is easy to count. Your h
 Useful proof can include clear descriptions of your process, approved photos of actual work, service-specific explanations, team information, and reviews that reflect real interactions. A short brand-story film can help a homeowner understand who is entering their house, but it is only one piece of the system. It cannot replace accurate service information, local presence, or fast follow-up.
 
 Be careful with claims. Do not write “best,” “most trusted,” or “fastest” unless you can support exactly what that means. Do not make every page sound like an emergency page if you also want planned replacement work. The homeowner searching for a system replacement is making a different decision from the one standing in a hot house with a failed unit. Give each person a relevant path.
+
+![A homeowner's hand held beneath a white ceiling vent in a sunlit Florida kitchen, with a glass of ice water on the counter and palm trees outside the window](/blog/hvac-seo-airflow.webp)
+*The search ends when the house is comfortable, so the follow-up has to be part of the same path.*
 
 ## The call handling is part of SEO, whether you like it or not
 
