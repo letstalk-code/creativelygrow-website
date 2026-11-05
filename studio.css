@@ -424,3 +424,24 @@ body.st {
     border-bottom: 1px solid var(--forest-light); padding-bottom: 0.15rem;
 }
 .cg-g-more a:hover { color: var(--orange); border-color: var(--orange); }
+
+/* Client logo tile: gallery list rows, the detail header, and the client page */
+.st-row-main { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.st-tile {
+    flex: none; width: 52px; height: 52px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--forest-dark); border: 1px solid var(--forest-light);
+    overflow: hidden;
+}
+.st-tile img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.st-tile b { font-family: var(--head); font-size: 1.3rem; color: var(--cream-dim); font-weight: 600; }
+.st-tile-lg { width: 84px; height: 84px; }
+.st-tile-lg b { font-size: 2rem; }
+.st-logo-edit { display: flex; align-items: center; gap: 1rem; margin: 0 0 1.25rem; }
+.st-logo-edit .st-btn { margin-right: 0.4rem; }
+.st-logo-msg { margin: 0.5rem 0 0; font-size: 0.85rem; color: var(--cream-dim); }
+.st-logo-msg.is-bad { color: #e57373; }
+.cg-g-hero .cg-g-clientlogo {
+    display: block; height: auto; max-height: 96px; max-width: 240px;
+    border-radius: 0; margin: 0 auto 1.25rem; object-fit: contain;
+}

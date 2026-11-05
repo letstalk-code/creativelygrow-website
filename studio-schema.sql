@@ -31,6 +31,10 @@ create table if not exists gallery_videos (
 -- For databases created before thumb_path existed.
 alter table gallery_videos add column if not exists thumb_path text;
 
+-- Client logo or picture, shown on the studio list and the client page. Stored
+-- like a poster: an object path under thumbs/ in photo storage.
+alter table galleries add column if not exists logo_path text;
+
 create index if not exists gallery_videos_gallery_idx on gallery_videos(gallery_id, sort_order);
 create index if not exists galleries_slug_idx on galleries(slug);
 

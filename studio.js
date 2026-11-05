@@ -4,6 +4,7 @@
 const API = '/api/studio';
 let KEY = sessionStorage.getItem('cg_studio_key') || '';
 let CURRENT = null;
+let PHOTO_BASE = '';
 
 const $ = (id) => document.getElementById(id);
 
@@ -50,7 +51,8 @@ function showApp() {
 
 // ---------- galleries ----------
 async function loadGalleries() {
-  const { galleries } = await api('list');
+  const { galleries, photoBase } = await api('list');
+  PHOTO_BASE = photoBase || '';
   const list = $('galleryList');
   list.innerHTML = '';
   $('emptyMsg').hidden = galleries && galleries.length;
@@ -58,9 +60,12 @@ async function loadGalleries() {
     const row = document.createElement('button');
     row.className = 'st-row';
     row.innerHTML = `
-      <div>
-        <strong>${escapeHtml(g.client_name)}</strong>
-        <span>${g.title ? escapeHtml(g.title) + ' · ' : ''}${countLabel(g)}</span>
+      <div class="st-row-main">
+        <div class="st-tile">${logoHtml(g)}</div>
+        <div>
+          <strong>${escapeHtml(g.client_name)}</strong>
+          <span>${g.title ? escapeHtml(g.title) + ' · ' : ''}${countLabel(g)}</span>
+        </div>
       </div>
       <span class="st-row-go">&rarr;</span>`;
     row.addEventListener('click', () => openGallery(g));
@@ -68,11 +73,74 @@ async function loadGalleries() {
   });
 }
 
+// The client's logo, or their initial when none is set.
+function logoHtml(g) {
+  return g.logo_path
+    ? `<img src="${PHOTO_BASE}${escapeHtml(g.logo_path)}" alt="">`
+    : `<b>${escapeHtml((g.client_name || '?').trim().charAt(0).toUpperCase())}</b>`;
+}
+
+function renderLogoEdit() {
+  $('logoTile').innerHTML = logoHtml(CURRENT);
+  $('logoAddText').textContent = CURRENT.logo_path ? 'Change logo' : 'Add logo';
+  $('logoRemove').hidden = !CURRENT.logo_path;
+}
+
+function logoSay(msg, bad) {
+  $('logoMsg').textContent = msg || '';
+  $('logoMsg').classList.toggle('is-bad', Boolean(bad));
+}
+
+// Same route a video poster takes: straight to storage under thumbs/, then the
+// path is saved on the gallery. Sending null clears it.
+async function saveLogo(path) {
+  const r = await api('set-logo', { method: 'POST', body: { galleryId: CURRENT.id, path } });
+  if (r.error) throw new Error(r.error);
+  CURRENT.logo_path = path;
+  renderLogoEdit();
+}
+
+$('logoFile').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file || !CURRENT) return;
+  logoSay('Uploading logo…');
+  try {
+    const init = await api('photo-upload-init', { method: 'POST', body: {
+      filename: file.name, galleryId: CURRENT.id, kind: 'thumb',
+    }});
+    if (!init || !init.uploadUrl) throw new Error('init failed');
+    await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', init.uploadUrl);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.onload = () => (xhr.status >= 200 && xhr.status < 300) ? resolve() : reject(new Error('upload ' + xhr.status));
+      xhr.onerror = () => reject(new Error('network'));
+      xhr.send(file);
+    });
+    await saveLogo(init.path);
+    logoSay('');
+  } catch (err) {
+    console.error(err);
+    logoSay('That logo did not save.', true);
+  } finally {
+    e.target.value = '';
+  }
+});
+
+$('logoRemove').addEventListener('click', async () => {
+  if (!CURRENT) return;
+  logoSay('');
+  try { await saveLogo(null); }
+  catch (err) { console.error(err); logoSay('Could not remove the logo.', true); }
+});
+
 function openGallery(g) {
   CURRENT = g;
   $('listView').hidden = true;
   $('detailView').hidden = false;
   $('detailName').textContent = g.client_name;
+  logoSay('');
+  renderLogoEdit();
   $('shareLink').value = `${location.origin}/s?c=${g.slug}`;
   $('uploads').innerHTML = '';
   loadVideos();

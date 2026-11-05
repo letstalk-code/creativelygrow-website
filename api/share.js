@@ -81,12 +81,12 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : ''}
 <link rel="icon" href="/favicon.ico?v=5" sizes="48x48">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/studio.css?v=10">
+<link rel="stylesheet" href="/studio.css?v=11">
 </head>
 <body class="st">
 <div id="gallery"><p class="cg-g-msg">Loading…</p></div>
 <script id="cg-data" type="application/json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>
-<script src="/share.js?v=1"></script>
+<script src="/share.js?v=2"></script>
 </body>
 </html>`;
 }
@@ -141,10 +141,19 @@ module.exports = async (req, res) => {
       photos = got;
     }
 
+    // Read on its own so a database without the logo column still serves the page.
+    let logoPath = null;
+    try {
+      const lRes = await sb(`galleries?id=eq.${g.id}&select=logo_path`);
+      const lRows = await lRes.json();
+      if (lRes.ok && Array.isArray(lRows) && lRows[0]) logoPath = lRows[0].logo_path || null;
+    } catch { /* logo is optional */ }
+
     const gallery = {
       clientName: g.client_name,
       title: g.title,
       note: g.note,
+      logoPath,
       libraryId: BUNNY_LIB,
       cdn: BUNNY_CDN,
       photoBase: null, // filled below only when photos are in play

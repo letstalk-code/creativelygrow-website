@@ -154,6 +154,20 @@ function sb(path, opts = {}) {
   });
 }
 
+// logo_path is read on its own, not added to the galleries select, so a database
+// that has not had the column added yet still serves every gallery. The logo
+// just stays blank until it exists.
+async function logoPaths(filter = '') {
+  try {
+    const r = await sb(`galleries?select=id,logo_path${filter}`);
+    const rows = await r.json();
+    if (!r.ok || !Array.isArray(rows)) return {};
+    return Object.fromEntries(rows.map((x) => [x.id, x.logo_path]));
+  } catch {
+    return {};
+  }
+}
+
 function slugify(s) {
   return String(s).toLowerCase().trim()
     .replace(/[^a-z0-9\s-]/g, '')
@@ -210,10 +224,12 @@ module.exports = async (req, res) => {
       // films should get a retry, not silence.
       if (!vRes.ok || !Array.isArray(videos)) throw new Error(`videos lookup failed for ${slug}`);
       if (!pRes.ok || !Array.isArray(photos)) throw new Error(`photos lookup failed for ${slug}`);
+      const logos = await logoPaths(`&id=eq.${g.id}`);
       return res.status(200).json({
         clientName: g.client_name,
         title: g.title,
         note: g.note,
+        logoPath: logos[g.id] || null,
         libraryId: BUNNY_LIB,
         cdn: BUNNY_CDN,
         photoBase: photoBase(),
@@ -299,6 +315,7 @@ module.exports = async (req, res) => {
     if (action === 'list') {
       const r = await sb('galleries?select=id,slug,client_name,title,created_at&order=created_at.desc');
       const galleries = await r.json();
+      const logos = await logoPaths();
       const withCounts = await Promise.all((galleries || []).map(async (g) => {
         const [c, p] = await Promise.all([
           sb(`gallery_videos?gallery_id=eq.${g.id}&select=id`),
@@ -308,11 +325,12 @@ module.exports = async (req, res) => {
         const pics = await p.json();
         return {
           ...g,
+          logo_path: logos[g.id] || null,
           videoCount: Array.isArray(vids) ? vids.length : 0,
           photoCount: Array.isArray(pics) ? pics.length : 0,
         };
       }));
-      return res.status(200).json({ galleries: withCounts });
+      return res.status(200).json({ galleries: withCounts, photoBase: photoBase() });
     }
 
     if (action === 'create' && req.method === 'POST') {
@@ -559,6 +577,20 @@ module.exports = async (req, res) => {
         await gone.catch(() => {});
       }
       return res.status(200).json({ ok: true });
+    }
+
+    // A gallery's logo. The browser has already uploaded the image (kind 'thumb');
+    // this records its path. A null path clears it. Unlike set-thumbnail this does
+    // not swallow errors: the path is the whole result, so a missing column must show.
+    if (action === 'set-logo' && req.method === 'POST') {
+      const { galleryId, path } = req.body || {};
+      if (!galleryId) return res.status(400).json({ error: 'galleryId required' });
+      const r = await sb(`galleries?id=eq.${encodeURIComponent(galleryId)}`, {
+        method: 'PATCH', prefer: 'return=minimal',
+        body: JSON.stringify({ logo_path: path || null }),
+      });
+      if (!r.ok) return res.status(502).json({ error: await r.text() });
+      return res.status(200).json({ ok: true, url: path ? photoBase() + path : null });
     }
 
     return res.status(400).json({ error: 'unknown action' });

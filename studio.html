@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico?v=5" sizes="48x48">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="studio.css?v=10">
+    <link rel="stylesheet" href="studio.css?v=11">
     <script src="https://cdn.jsdelivr.net/npm/tus-js-client@4.1.0/dist/tus.min.js"></script>
 </head>
 <body class="st">
@@ -53,6 +53,16 @@
         <section id="detailView" hidden>
             <button class="st-back" id="backBtn">&larr; All galleries</button>
             <h2 id="detailName"></h2>
+            <div class="st-logo-edit">
+                <div class="st-tile st-tile-lg" id="logoTile"></div>
+                <div>
+                    <label class="st-btn st-btn-sm st-btn-ghost st-file-btn"><span id="logoAddText">Add logo</span>
+                        <input type="file" accept="image/*" id="logoFile" hidden>
+                    </label>
+                    <button class="st-btn st-btn-sm st-btn-ghost" id="logoRemove" type="button" hidden>Remove</button>
+                    <p class="st-logo-msg" id="logoMsg"></p>
+                </div>
+            </div>
             <div class="st-share">
                 <label>Client link</label>
                 <div class="st-share-row">
@@ -124,6 +134,6 @@
     </div>
 </div>
 
-<script src="studio.js?v=9"></script>
+<script src="studio.js?v=10"></script>
 </body>
 </html>

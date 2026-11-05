@@ -131,6 +131,7 @@
         root.innerHTML = `
             <div class="cg-g-hero">
                 <img src="/assets/logo.png?v=5" alt="Creatively Grow">
+                ${g.logoPath ? `<img class="cg-g-clientlogo" src="${g.photoBase}${esc(g.logoPath)}" alt="${esc(g.clientName)}">` : ''}
                 <h1>${esc(heading)}</h1>
                 ${(g.note && !single) ? `<p>${esc(g.note)}</p>` : ''}
                 ${hasAny && count > 1 ? `<button class="cg-dl-all" id="dlAll">Download everything</button>` : ''}
