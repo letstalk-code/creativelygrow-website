@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact · Creatively Grow</title>
+<meta name="description" content="Tell us what you're making and we'll text you back. Brand films, training video, short-form content and lead systems for Tampa Bay businesses.">
+<link rel="canonical" href="https://creativelygrow.com/contact">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://creativelygrow.com/contact">
+<meta property="og:title" content="Contact · Creatively Grow">
+<meta property="og:description" content="Tell us what you're making and we'll text you back.">
+<meta property="og:image" content="https://creativelygrow.com/assets/og-image.jpg">
+<link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="editorial.css?v=17">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact · Creatively Grow",
+  "url": "https://creativelygrow.com/contact",
+  "mainEntity": {
+    "@type": "LocalBusiness",
+    "name": "Creatively Grow",
+    "url": "https://creativelygrow.com",
+    "telephone": "+17272708422",
+    "areaServed": "Tampa Bay, FL"
+  }
+}
+</script>
+<style>
+  /* Contact page: the call sheet. Colours come from editorial.css tokens. */
+  .ct-eyebrow { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.22em; font-size:12px; color:var(--orange); }
+  .ct-main { display:grid; grid-template-columns:1.25fr 1fr; border-bottom:2px solid var(--ink); }
+  .ct-left { padding:64px clamp(18px,2.8vw,40px) 56px; border-right:1px solid rgba(20,16,12,0.15); display:flex; flex-direction:column; gap:28px; }
+  .ct-h1 { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(56px,9vw,128px); line-height:0.84; letter-spacing:-0.01em; color:var(--ink); }
+  .ct-h1 span { color:var(--orange); }
+  .ct-sub { max-width:520px; font-size:18px; line-height:1.6; color:var(--sage); }
+
+  .ct-form { border-top:2px solid var(--ink); padding-top:26px; display:flex; flex-direction:column; gap:20px; max-width:620px; }
+  .ct-progress { display:flex; align-items:center; gap:14px; font-family:'Oswald',sans-serif; font-weight:700; letter-spacing:0.16em; font-size:12px; color:var(--ink); }
+  .ct-bars { display:flex; gap:6px; flex:1; }
+  .ct-bars i { height:4px; flex:1; background:rgba(20,16,12,0.15); transition:background 0.3s ease; }
+  .ct-bars i.on { background:var(--orange); }
+  .ct-step[hidden] { display:none !important; }
+  .ct-step { display:flex; flex-direction:column; gap:18px; animation:ctIn 0.35s ease both; }
+  @keyframes ctIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+  .ct-q { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(30px,4.2vw,52px); line-height:0.95; color:var(--ink); outline:none; }
+  .ct-chips { display:flex; flex-wrap:wrap; gap:10px; }
+  .ct-chip { cursor:pointer; background:transparent; color:var(--ink); border:2px solid var(--ink); border-radius:999px; padding:13px 22px; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:16px; transition:background 0.18s ease, color 0.18s ease, transform 0.18s ease; }
+  .ct-chip:hover { background:var(--orange); border-color:var(--orange); transform:translateY(-2px); }
+  .ct-chip[aria-pressed="true"] { background:var(--ink); color:var(--cream); }
+  .ct-label { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:11px; color:var(--sage); }
+  .ct-field { display:flex; flex-direction:column; gap:6px; }
+  .ct-input { width:100%; font:inherit; font-size:18px; color:var(--ink); background:transparent; border:0; border-bottom:2px solid var(--ink); border-radius:0; padding:10px 0; outline:none; transition:border-color 0.2s ease; }
+  .ct-input:focus { border-bottom-color:var(--orange); }
+  .ct-input::placeholder { color:rgba(78,90,78,0.6); }
+  .ct-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .ct-actions { display:flex; align-items:center; gap:22px; }
+  .ct-next { cursor:pointer; border:0; background:var(--orange); color:var(--ink); font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:18px; padding:15px 32px; border-radius:999px; box-shadow:0 8px 24px rgba(239,121,56,0.25); transition:background 0.2s ease, transform 0.2s ease; }
+  .ct-next:hover { background:var(--orange-hover); transform:translateY(-2px); }
+  .ct-next[disabled] { opacity:0.6; cursor:progress; transform:none; }
+  .ct-back { cursor:pointer; background:none; border:0; padding:0; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:12px; color:var(--ink); border-bottom:2px solid var(--ink); }
+  .ct-err { min-height:20px; font-size:14px; color:#b3401a; }
+  .ct-hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+
+  /* Right: orange panel holding the call sheet. */
+  .ct-right { position:relative; background:var(--orange); padding:56px clamp(18px,2.8vw,40px); display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+  .ct-sheet { position:relative; background:#fffdf4; border:2px solid var(--ink); box-shadow:10px 10px 0 var(--ink); transform:rotate(-1.4deg); padding:22px 26px 26px; display:flex; flex-direction:column; gap:14px; max-width:480px; width:100%; margin:0 auto; }
+  .ct-sheet-top { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid var(--ink); padding-bottom:12px; }
+  .ct-sheet-title { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; font-size:26px; line-height:1; color:var(--ink); }
+  .ct-sheet-meta { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; font-size:11px; line-height:1.5; text-align:right; color:var(--sage); }
+  .ct-line { display:grid; grid-template-columns:96px 1fr; gap:10px; align-items:baseline; border-bottom:1px dashed rgba(20,16,12,0.35); padding-bottom:8px; }
+  .ct-line b { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:11px; color:var(--sage); }
+  .ct-line span { font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:15px; line-height:1.4; color:var(--ink); min-height:21px; word-break:break-word; }
+  .ct-line span.empty { color:rgba(20,16,12,0.3); }
+  .ct-line span.live::after { content:''; display:inline-block; width:8px; height:15px; margin-left:2px; background:var(--orange); vertical-align:-2px; animation:ctBlink 0.8s steps(1) infinite; }
+  @keyframes ctBlink { 50% { opacity:0; } }
+  .ct-stamp { position:absolute; right:18px; bottom:18px; border:3px solid var(--orange); color:var(--orange); font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:26px; padding:4px 14px; transform:rotate(-10deg) scale(1.6); opacity:0; pointer-events:none; }
+  .ct-sheet.stamped .ct-stamp { animation:ctStamp 0.35s cubic-bezier(.2,1.4,.4,1) 0.5s forwards; }
+  @keyframes ctStamp { to { opacity:1; transform:rotate(-10deg) scale(1); } }
+
+  /* Success: clapperboard snaps shut. */
+  .ct-done { display:flex; flex-direction:column; gap:22px; max-width:620px; border-top:2px solid var(--ink); padding-top:26px; }
+  .ct-clap { width:min(340px,100%); }
+  .ct-clap-bar { height:34px; background:repeating-linear-gradient(-55deg,var(--ink) 0 22px,var(--cream) 22px 44px); border:2px solid var(--ink); transform-origin:0 100%; transform:rotate(-24deg) translateY(-6px); transition:transform 0.22s cubic-bezier(.5,0,1,.6); }
+  .ct-clap.shut .ct-clap-bar { transform:none; }
+  .ct-clap-body { background:var(--ink); color:var(--cream); padding:16px 18px; border:2px solid var(--ink); font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:13px; line-height:1.9; display:grid; grid-template-columns:1fr 1fr; }
+  .ct-clap-body em { font-style:normal; color:var(--orange); }
+
+  /* Direct lines band. */
+  .ct-direct { display:grid; grid-template-columns:300px 1fr; border-bottom:2px solid var(--ink); }
+  .ct-direct-label { background:var(--orange); padding:52px 32px; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; font-size:13px; line-height:1.8; color:var(--ink); }
+  .ct-tiles { display:grid; grid-template-columns:repeat(3,1fr); }
+  .ct-tile { display:flex; flex-direction:column; gap:10px; padding:44px clamp(18px,2.8vw,40px); border-right:1px solid rgba(20,16,12,0.15); color:var(--ink) !important; transition:background 0.2s ease; }
+  .ct-tile:last-child { border-right:0; }
+  .ct-tile:hover { background:rgba(239,121,56,0.12); }
+  .ct-tile b { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:clamp(22px,2.4vw,32px); line-height:1; }
+  .ct-tile small { font-size:14px; line-height:1.5; color:var(--sage); }
+  .ct-tile i { font-style:normal; font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; font-size:12px; color:var(--orange); }
+
+  @media (max-width:900px) {
+    .ct-main, .ct-direct { grid-template-columns:1fr; }
+    .ct-left { border-right:0; padding-top:44px; }
+    .ct-right { padding:44px 18px 60px; }
+    .ct-sheet { transform:none; box-shadow:6px 6px 0 var(--ink); }
+    .ct-tiles { grid-template-columns:1fr; }
+    .ct-tile { border-right:0; border-bottom:1px solid rgba(20,16,12,0.15); padding:30px 18px; }
+    .ct-direct-label { padding:26px 18px; }
+    .ct-row { grid-template-columns:1fr; gap:18px; }
+    .ct-chip { font-size:15px; padding:12px 18px; }
+    body.cg-ed { padding-bottom:64px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ct-step, .ct-sheet.stamped .ct-stamp { animation:none; }
+    .ct-sheet.stamped .ct-stamp { opacity:1; transform:rotate(-10deg); }
+    .ct-clap-bar { transition:none; }
+    .ct-line span.live::after { animation:none; }
+  }
+</style>
+</head>
+<body class="cg-ed">
+<div style="background:#f9f8eb; max-width:1440px; margin:0 auto; border-left:1px solid rgba(20,16,12,0.1); border-right:1px solid rgba(20,16,12,0.1); overflow:hidden">
+
+  <div class="cg-head" style="display:flex; align-items:center; justify-content:space-between; gap:24px; padding:20px clamp(18px,2.8vw,40px); border-bottom:1px solid rgba(20,16,12,0.15)">
+    <div style="display:flex; align-items:center; gap:14px">
+      <a href="/" aria-label="Creatively Grow home"><img src="assets/logo.webp" alt="Creatively Grow" style="height:34px; width:auto"></a>
+      <span style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.22em; font-size:11px; line-height:1.5; color:#14100c">Video Content<br>+ Growth Systems</span>
+    </div>
+    <button class="cg-burger" id="cgBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="cgMenu"><span></span><span></span><span></span></button><nav class="cg-nav" id="cgMenu" aria-label="Pages"><div class="cg-nav-item"><a class="cg-nav-trigger" href="/">Home<span class="cg-caret" aria-hidden="true"></span></a><div class="cg-nav-drop"><a href="/how-it-works">How It Works</a><a href="/services">Services</a><a href="/brand-films">Brand Films</a><a href="/training-videos">Training Videos</a><a href="/blog">Blog</a><a href="/contact" aria-current="page">Contact</a></div></div></nav>
+    <div style="display:flex; align-items:flex-start; gap:12px">
+      <span style="width:22px; height:3px; background:#ef7938; margin-top:6px"></span>
+      <a href="sms:+17272708422" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; font-size:11px; line-height:1.5; color:#14100c">Shoot us a text<br>(727) 270-8422</a>
+    </div>
+  </div>
+
+  <div class="ct-main">
+    <div class="ct-left">
+      <span class="ct-eyebrow">Contact</span>
+      <h1 class="ct-h1">Let&#x27;s <span>talk</span></h1>
+      <p class="ct-sub">Four quick questions. Your answers fill in the call sheet, and we text you back.</p>
+
+      <form class="ct-form" id="ctForm" novalidate>
+        <div class="ct-progress" aria-hidden="true"><span id="ctCount">01 / 04</span><div class="ct-bars"><i class="on"></i><i></i><i></i><i></i></div></div>
+
+        <fieldset class="ct-step" data-step="0" style="border:0; padding:0; margin:0; min-width:0">
+          <legend class="ct-q" tabindex="-1" style="padding:0">What are we making?</legend>
+          <div class="ct-chips" data-key="project">
+            <button type="button" class="ct-chip" aria-pressed="false">Brand film</button>
+            <button type="button" class="ct-chip" aria-pressed="false">Training video</button>
+            <button type="button" class="ct-chip" aria-pressed="false">Reels &amp; content</button>
+            <button type="button" class="ct-chip" aria-pressed="false">Lead system</button>
+            <button type="button" class="ct-chip" aria-pressed="false">Not sure yet</button>
+          </div>
+        </fieldset>
+
+        <div class="ct-step" data-step="1" hidden>
+          <label class="ct-q" for="ctBusiness" tabindex="-1">Who&#x27;s it for?</label>
+          <div class="ct-field"><span class="ct-label">Business name</span><input class="ct-input" id="ctBusiness" type="text" autocomplete="organization" placeholder="Your business name" maxlength="120"></div>
+          <div class="ct-actions"><button type="submit" class="ct-next">Next &nbsp;&rarr;</button><button type="button" class="ct-back">Back</button></div>
+        </div>
+
+        <fieldset class="ct-step" data-step="2" hidden style="border:0; padding:0; margin:0; min-width:0">
+          <legend class="ct-q" tabindex="-1" style="padding:0">When do you need it?</legend>
+          <div class="ct-chips" data-key="timing">
+            <button type="button" class="ct-chip" aria-pressed="false">This month</button>
+            <button type="button" class="ct-chip" aria-pressed="false">Next 1&ndash;2 months</button>
+            <button type="button" class="ct-chip" aria-pressed="false">Just exploring</button>
+          </div>
+          <div class="ct-field"><label class="ct-label" for="ctNote">Anything else? (optional)</label><input class="ct-input" id="ctNote" type="text" autocomplete="off" placeholder="One line is plenty" maxlength="90"></div>
+          <div class="ct-actions"><button type="submit" class="ct-next">Next &nbsp;&rarr;</button><button type="button" class="ct-back">Back</button></div>
+        </fieldset>
+
+        <div class="ct-step" data-step="3" hidden>
+          <h2 class="ct-q" tabindex="-1">Where do we reach you?</h2>
+          <div class="ct-row">
+            <div class="ct-field"><label class="ct-label" for="ctName">First name</label><input class="ct-input" id="ctName" type="text" autocomplete="given-name" placeholder="First name" maxlength="60"></div>
+            <div class="ct-field"><label class="ct-label" for="ctPhone">Mobile number</label><input class="ct-input" id="ctPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(727) 555-0134" maxlength="17"></div>
+          </div>
+          <div class="ct-hp" aria-hidden="true"><label>Website<input type="text" id="ctHp" tabindex="-1" autocomplete="off"></label></div>
+          <div class="ct-actions"><button type="submit" class="ct-next" id="ctSend">Roll camera</button><button type="button" class="ct-back">Back</button></div>
+          <p style="font-size:12px; color:var(--sage)">No spam, no endless follow-up. A real reply from a real person.</p>
+        </div>
+
+        <p class="ct-err" id="ctErr" role="alert" aria-live="polite"></p>
+      </form>
+
+      <div class="ct-done" id="ctDone" hidden>
+        <div class="ct-clap" id="ctClap" aria-hidden="true">
+          <div class="ct-clap-bar"></div>
+          <div class="ct-clap-body"><span>Scene <em>01</em></span><span>Take <em>01</em></span><span style="grid-column:1/-1" id="ctDoneBiz">&nbsp;</span></div>
+        </div>
+        <h2 class="ct-q" id="ctDoneTitle" tabindex="-1">Got it. Watch your texts.</h2>
+        <p class="ct-sub">Devon will reach out personally. You can reply right in the text thread.</p>
+      </div>
+    </div>
+
+    <div class="ct-right">
+      <div class="ct-sheet" id="ctSheet" aria-hidden="true">
+        <div class="ct-sheet-top">
+          <span class="ct-sheet-title">Call Sheet</span>
+          <span class="ct-sheet-meta">Creatively Grow<br>Scene 01 &middot; Take 01</span>
+        </div>
+        <div class="ct-line"><b>Project</b><span class="empty" data-sheet="project">&mdash;</span></div>
+        <div class="ct-line"><b>Client</b><span class="empty" data-sheet="business">&mdash;</span></div>
+        <div class="ct-line"><b>Timing</b><span class="empty" data-sheet="timing">&mdash;</span></div>
+        <div class="ct-line"><b>Notes</b><span class="empty" data-sheet="note">&mdash;</span></div>
+        <div class="ct-line"><b>Contact</b><span class="empty" data-sheet="firstName">&mdash;</span></div>
+        <div class="ct-line"><b>Mobile</b><span class="empty" data-sheet="phone">&mdash;</span></div>
+        <div class="ct-line" style="border-bottom:0"><b>Director</b><span>Devon</span></div>
+        <div class="ct-stamp">Got it</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ct-direct">
+    <div class="ct-direct-label">Rather skip<br>the form?</div>
+    <div class="ct-tiles">
+      <a class="ct-tile" href="sms:+17272708422"><i>Fastest</i><b>Text us</b><small>(727) 270-8422. Say what you need and we&#x27;ll take it from there.</small></a>
+      <a class="ct-tile" href="tel:+17272708422"><i>Talk it through</i><b>Call us</b><small>(727) 270-8422. If we miss you, we call back.</small></a>
+      <a class="ct-tile" href="/book"><i>Free, 30 minutes</i><b>Book a strategy call</b><small>Pick a time that works and we&#x27;ll map out your next move.</small></a>
+    </div>
+  </div>
+
+  <div style="background:#14100c; padding:40px">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap">
+      <div style="display:flex; align-items:center; gap:14px">
+        <img src="assets/logo.webp" alt="Creatively Grow" style="height:30px; width:auto">
+        <span style="font-family:'Oswald',sans-serif; font-weight:500; text-transform:uppercase; letter-spacing:0.2em; font-size:11px; color:#b8b8a8">We make the phone ring · Tampa Bay, FL</span>
+      </div>
+      <div style="display:flex; gap:26px; flex-wrap:wrap">
+        <a href="/how-it-works" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; font-size:11px; color:#b8b8a8">How It Works</a>
+        <a href="/services" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; font-size:11px; color:#b8b8a8">Services</a>
+        <a href="/brand-films" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; font-size:11px; color:#b8b8a8">Brand Films</a>
+        <a href="/training-videos" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; font-size:11px; color:#b8b8a8">Training Videos</a>
+        <a href="tel:+17272708422" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; font-size:11px; color:#ef7938">(727) 270-8422</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="cg-bar"><a class="cg-bar-call" href="tel:+17272708422">Call Now</a><a class="cg-bar-cta" href="sms:+17272708422">Text Us &nbsp;&rarr;</a></div>
+
+<script src="editorial.js?v=8"></script>
+<script>
+(function () {
+  var form = document.getElementById('ctForm');
+  var steps = [].slice.call(form.querySelectorAll('.ct-step'));
+  var bars = [].slice.call(form.querySelectorAll('.ct-bars i'));
+  var count = document.getElementById('ctCount');
+  var errEl = document.getElementById('ctErr');
+  var sheet = document.getElementById('ctSheet');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var data = { project: '', business: '', timing: '', note: '', firstName: '', phone: '' };
+  var cur = 0;
+  var timers = {};
+
+  // Types a value into its call-sheet line. Reduced motion gets the text at once.
+  function setSheet(key, text) {
+    var el = sheet.querySelector('[data-sheet="' + key + '"]');
+    if (!el) return;
+    clearInterval(timers[key]);
+    el.classList.remove('live');
+    if (!text) { el.textContent = '—'; el.classList.add('empty'); return; }
+    el.classList.remove('empty');
+    if (reduce) { el.textContent = text; return; }
+    var i = 0;
+    el.classList.add('live');
+    el.textContent = '';
+    timers[key] = setInterval(function () {
+      i += 1;
+      el.textContent = text.slice(0, i);
+      if (i >= text.length) { clearInterval(timers[key]); el.classList.remove('live'); }
+    }, 22);
+  }
+
+  function show(i, focus) {
+    cur = i;
+    steps.forEach(function (s, n) { s.hidden = n !== i; });
+    bars.forEach(function (b, n) { b.classList.toggle('on', n <= i); });
+    count.textContent = '0' + (i + 1) + ' / 04';
+    errEl.textContent = '';
+    if (focus) {
+      var target = steps[i].querySelector('.ct-input, .ct-chip[aria-pressed="true"], .ct-chip');
+      (target || steps[i].querySelector('.ct-q')).focus({ preventScroll: true });
+    }
+  }
+
+  // Chip steps. Single select; picking the project moves on by itself.
+  [].forEach.call(form.querySelectorAll('.ct-chips'), function (group) {
+    var key = group.getAttribute('data-key');
+    group.addEventListener('click', function (e) {
+      var chip = e.target.closest('.ct-chip');
+      if (!chip) return;
+      [].forEach.call(group.children, function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+      data[key] = chip.textContent.trim();
+      setSheet(key, data[key]);
+      errEl.textContent = '';
+      if (key === 'project') setTimeout(function () { show(1, true); }, reduce ? 0 : 280);
+    });
+  });
+
+  function bindInput(id, key, fmt) {
+    var el = document.getElementById(id);
+    el.addEventListener('input', function () {
+      if (fmt) el.value = fmt(el.value);
+      data[key] = el.value.trim();
+      setSheet(key, data[key]);
+    });
+  }
+  function formatPhone(v) {
+    var d = v.replace(/\D/g, '');
+    if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+    d = d.slice(0, 10);
+    if (d.length > 6) return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
+    if (d.length > 3) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
+    return d;
+  }
+  bindInput('ctBusiness', 'business');
+  bindInput('ctNote', 'note');
+  bindInput('ctName', 'firstName');
+  bindInput('ctPhone', 'phone', formatPhone);
+
+  function validate(i) {
+    if (i === 0 && !data.project) return 'Pick one to get started.';
+    if (i === 1 && !data.business) return 'What should we call the business?';
+    if (i === 2 && !data.timing) return 'Pick a timeframe, even a rough one.';
+    if (i === 3) {
+      if (!data.firstName) return 'What first name should we use?';
+      var d = data.phone.replace(/\D/g, '');
+      if (!(d.length === 10 || (d.length === 11 && d.charAt(0) === '1'))) return 'Enter a 10-digit mobile number so we can text you.';
+    }
+    return '';
+  }
+
+  [].forEach.call(form.querySelectorAll('.ct-back'), function (b) {
+    b.addEventListener('click', function () { if (cur > 0) show(cur - 1, true); });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var msg = validate(cur);
+    if (msg) { errEl.textContent = msg; return; }
+    if (cur < 3) { show(cur + 1, true); return; }
+    send();
+  });
+
+  function finish() {
+    form.hidden = true;
+    var done = document.getElementById('ctDone');
+    done.hidden = false;
+    document.getElementById('ctDoneBiz').textContent = data.business;
+    sheet.classList.add('stamped');
+    var clap = document.getElementById('ctClap');
+    setTimeout(function () { clap.classList.add('shut'); }, reduce ? 0 : 350);
+    document.getElementById('ctDoneTitle').focus({ preventScroll: true });
+  }
+
+  function send() {
+    // Honeypot: a bot fills the hidden field. Pretend it worked, send nothing.
+    if (document.getElementById('ctHp').value) { finish(); return; }
+    var btn = document.getElementById('ctSend');
+    btn.disabled = true;
+    btn.textContent = 'Rolling…';
+    // The API keeps one "what they need" line, so the chips and note ride in it.
+    var trade = [data.project, data.timing, data.note].filter(Boolean).join(' · ');
+    fetch('/api/leak-check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ business: data.business, firstName: data.firstName, phone: data.phone, trade: trade, niche: 'contact' })
+    }).then(function (r) {
+      if (!r.ok) throw new Error('bad status ' + r.status);
+      finish();
+    }).catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'Roll camera';
+      errEl.textContent = 'That didn’t go through. Text us at (727) 270-8422 and we’ll pick it up from there.';
+    });
+  }
+
+  show(0, false);
+})();
+</script>
+</body>
+</html>
