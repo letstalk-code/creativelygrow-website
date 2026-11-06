@@ -1,0 +1,51 @@
+# Internal docs, client agreements, and scratch files that must never be
+# publicly downloadable at creativelygrow.com/<filename>. vercel CLI uploads
+# the working directory as-is (minus this file + .gitignore), so anything
+# not meant to be a public asset needs to be listed here explicitly.
+
+# Confidential client docs / proposals
+Coca-Cola-BDL-Production-Proposal.pdf
+Coca-Cola-BDL-Production-Proposal 2.pdf
+MB-subscription-license-agreement.pdf
+GMB_Onboarding_Kit.html
+Google_Reputation_System_Workflow_Guide.md
+HOMEPAGE_REWRITE_IMPLEMENTATION.md
+COLOR_FIX_GUIDE.md
+implementation_plan_analyzer.md
+video-01-script.pdf
+video-01-script.md
+video-01-script.html
+
+# Internal planning / notes
+tasks/
+client-onboarding-templates/
+gbp-audit-skill/
+excalidraw.log
+
+# Personal screenshots, exports, and misc scratch images
+AI Images from Text & Photo (31).png
+CleanShot 2026-02-16 at 17.31.31.png
+Coca Cola Group pic.png
+PNG image 2.png
+PNG image.png
+WebP Image.webp
+image-1785711717544.png
+logo_backup.png
+assets/CleanShot 2026-04-11 at 20.29.29.png
+assets/PNG image 2.png
+assets/PNG image.png
+assets/Stripe_Onboarding_Kit.html
+assets/backdrop-studio.svg
+assets/facebook-banner.png
+assets/old_logo.png
+
+# Audio scratch files
+summer-nights-instrumental-binks-musicbed.wav
+summer-nights-instrumental-binks-musicbed (1).wav
+
+# Huge local-only Remotion video project (1.3GB, has its own node_modules) —
+# not a web asset, would blow up the deploy.
+graphics/
+
+# Local tool config, not needed server-side
+.claude/
