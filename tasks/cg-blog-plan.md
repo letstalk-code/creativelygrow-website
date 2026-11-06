@@ -186,6 +186,47 @@ Sorted by (volume × commercial value) ÷ difficulty. Tracks:
 | 12 | B | Local SEO Services: What You're Actually Paying For | local seo services | **8,100** | 34 | $38.45 | **Defer** — needs authority |
 | 13 | B | Google Business Profile Optimization: The Real Checklist | google business profile optimization | **6,600** | 41 | $24.44 | **Defer** — needs authority |
 
+### 4b. Home-service extension — items 14–21 (ALL DONE)
+14 hvac marketing · 15 pest control marketing · 16 electrician marketing · 17 plumbing marketing ·
+18 landscaping marketing · 19 hvac seo · 20 home service marketing · 21 roofing marketing.
+14–19 are published; 20 and 21 were drafted Oct 1/5 and go through the publisher.
+
+### 4c. Run-on-calls widening — items 22+ (added 2026-11-06, Devon's call)
+Any local business where a call or booking is the sale. Data: DataForSEO, US, pulled 2026-11-06.
+**Med spa is excluded (Frontdesk brand).** Worked example = the mechanism (film, landing page, GBP,
+reviews, missed-call text-back) told in the reader's industry. Healthcare and legal posts follow
+the regulated-industry rules in the Hermes skill (HIPAA mention, bar advertising rules, no advice).
+
+| # | Working title | Target keyword | Vol/mo | KD | CPC |
+|---|---|---|---|---|---|
+| 22 | Marketing for Dentists: Fill the Chair Without Discounting | marketing for dentists | 1,300 | **0** | $47.30 |
+| 23 | Chiropractic Marketing That Brings Back Patients, Not Just New Ones | chiropractic marketing | 390 | **0** | $43.44 |
+| 24 | Marketing for Lawyers: What Actually Makes the Intake Line Ring | marketing for lawyers | 720 | 11 | $134.66 |
+| 25 | Auto Repair Marketing: Turning a Breakdown Into a Regular | auto repair marketing | 720 | 21 | $89.50 |
+| 26 | Medical Practice Marketing Without the Hospital Budget | medical practice marketing | 320 | 14 | $87.76 |
+| 27 | Restaurant Marketing That Isn't Just Posting Food Photos | restaurant marketing | 720 | 12 | $28.67 |
+| 28 | Dental SEO: What Gets a Practice Into the Map Pack | dental seo | 1,000 | 16 | $44.79 |
+| 29 | Physical Therapy Marketing: Referrals, Reviews, and the Return Visit | physical therapy marketing | 170 | **5** | $36.54 |
+| 30 | Personal Injury Marketing That Stays Inside the Bar Rules | personal injury marketing | 170 | **5** | $105.57 |
+| 31 | Veterinary Marketing: Earning the Second Visit | veterinary marketing | 260 | 20 | $43.44 |
+| 32 | How to Get More Patients Without Buying Ads First | how to get more patients | — | **0** | — |
+| 33 | Moving Company Marketing for the Busy Season and the Slow One | moving company marketing | — | **6** | — |
+| 34 | Cleaning Business Marketing: From One-Off Jobs to Recurring | cleaning business marketing | 140 | 16 | $35.00 |
+| 35 | Gym Marketing That Survives February | gym marketing | 110 | **0** | $30.87 |
+| 36 | Optometry Marketing: Getting Found Before the Chain Store | optometry marketing | — | **0** | — |
+| 37 | Local Business Marketing: The One Path That Works for Everyone | local business marketing | — | 11 | — |
+| 38 | Salon Marketing Beyond the Instagram Feed | salon marketing | — | 15 | — |
+| 39 | Law Firm Marketing: The System Behind the Billboard | law firm marketing | 1,300 | 22 | $75.68 |
+| 40 | Insurance Agency Marketing for Local Agents | insurance agency marketing | 110 | 29 | $14.55 |
+| 41 | Healthcare Marketing for Independent Practices | healthcare marketing | 1,600 | 25 | $25.48 | 
+
+**Refill rule (the publisher does this, no human needed):** when 4 or fewer eligible rows remain,
+the publisher pulls new candidates from DataForSEO (`kw_data_google_ads_search_volume` +
+`dataforseo_labs_bulk_keyword_difficulty`, US) and appends up to 10 rows, numbered on. Keep a row
+only if KD ≤ 25 and (volume ≥ 100 or KD ≤ 5), it is a "<industry> marketing / seo / how to get more
+customers" style query for a local business that runs on calls, and it breaks none of Section 3's
+rules (no agency+city, not video-led, no med spa).
+
 **#12 and #13 are the biggest prizes and are deliberately last.** At KD 34/41 on a domain with 3
 pages and no backlinks, publishing them now wastes the topic. Revisit after ~8 posts rank.
 
