@@ -170,7 +170,7 @@
             <button type="button" class="ct-chip" aria-pressed="false">Next 1&ndash;2 months</button>
             <button type="button" class="ct-chip" aria-pressed="false">Just exploring</button>
           </div>
-          <div class="ct-field"><label class="ct-label" for="ctNote">Anything else? (optional)</label><input class="ct-input" id="ctNote" type="text" autocomplete="off" placeholder="One line is plenty" maxlength="90"></div>
+          <div class="ct-field"><label class="ct-label" for="ctNote">Anything else? (optional)</label><input class="ct-input" id="ctNote" type="text" autocomplete="off" placeholder="One line is plenty" maxlength="500"></div>
           <div class="ct-actions"><button type="submit" class="ct-next">Next &nbsp;&rarr;</button><button type="button" class="ct-back">Back</button></div>
         </fieldset>
 
@@ -180,6 +180,7 @@
             <div class="ct-field"><label class="ct-label" for="ctName">First name</label><input class="ct-input" id="ctName" type="text" autocomplete="given-name" placeholder="First name" maxlength="60"></div>
             <div class="ct-field"><label class="ct-label" for="ctPhone">Mobile number</label><input class="ct-input" id="ctPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(727) 555-0134" maxlength="17"></div>
           </div>
+          <div class="ct-field"><label class="ct-label" for="ctEmail">Email</label><input class="ct-input" id="ctEmail" type="email" inputmode="email" autocomplete="email" placeholder="you@yourbusiness.com" maxlength="254"></div>
           <div class="ct-hp" aria-hidden="true"><label>Website<input type="text" id="ctHp" tabindex="-1" autocomplete="off"></label></div>
           <div class="ct-actions"><button type="submit" class="ct-next" id="ctSend">Roll camera</button><button type="button" class="ct-back">Back</button></div>
           <p style="font-size:12px; color:var(--sage)">No spam, no endless follow-up. A real reply from a real person.</p>
@@ -210,6 +211,7 @@
         <div class="ct-line"><b>Notes</b><span class="empty" data-sheet="note">&mdash;</span></div>
         <div class="ct-line"><b>Contact</b><span class="empty" data-sheet="firstName">&mdash;</span></div>
         <div class="ct-line"><b>Mobile</b><span class="empty" data-sheet="phone">&mdash;</span></div>
+        <div class="ct-line"><b>Email</b><span class="empty" data-sheet="email">&mdash;</span></div>
         <div class="ct-line" style="border-bottom:0"><b>Director</b><span>Creatively Grow</span></div>
         <div class="ct-stamp">Got it</div>
       </div>
@@ -243,7 +245,7 @@
 </div>
 <div class="cg-bar"><a class="cg-bar-call" href="tel:+17272708422">Call Now</a><a class="cg-bar-cta" href="sms:+17272708422">Text Us &nbsp;&rarr;</a></div>
 
-<script src="editorial.js?v=8"></script>
+<script src="editorial.js?v=9"></script>
 <script>
 (function () {
   var form = document.getElementById('ctForm');
@@ -253,7 +255,7 @@
   var errEl = document.getElementById('ctErr');
   var sheet = document.getElementById('ctSheet');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var data = { project: '', business: '', timing: '', note: '', firstName: '', phone: '' };
+  var data = { project: '', business: '', timing: '', note: '', firstName: '', phone: '', email: '' };
   var cur = 0;
   var timers = {};
 
@@ -322,6 +324,7 @@
   bindInput('ctNote', 'note');
   bindInput('ctName', 'firstName');
   bindInput('ctPhone', 'phone', formatPhone);
+  bindInput('ctEmail', 'email');
 
   function validate(i) {
     if (i === 0 && !data.project) return 'Pick one to get started.';
@@ -331,6 +334,7 @@
       if (!data.firstName) return 'What first name should we use?';
       var d = data.phone.replace(/\D/g, '');
       if (!(d.length === 10 || (d.length === 11 && d.charAt(0) === '1'))) return 'Enter a 10-digit mobile number so we can text you.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return 'Enter your email so we can send details.';
     }
     return '';
   }
@@ -369,7 +373,7 @@
     fetch('/api/leak-check', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ business: data.business, firstName: data.firstName, phone: data.phone, trade: trade, niche: 'contact' })
+      body: JSON.stringify({ business: data.business, firstName: data.firstName, phone: data.phone, email: data.email, trade: trade, niche: 'contact' })
     }).then(function (r) {
       if (!r.ok) throw new Error('bad status ' + r.status);
       finish();

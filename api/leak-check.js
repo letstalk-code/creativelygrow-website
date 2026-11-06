@@ -13,11 +13,12 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
-  const { business, phone, niche, firstName, trade } = req.body || {};
+  const { business, phone, email, niche, firstName, trade } = req.body || {};
   const cleanBusiness = String(business || '').trim().slice(0, 120);
   const cleanPhone = String(phone || '').replace(/[^\d+() -]/g, '').trim().slice(0, 25);
+  const cleanEmail = String(email || '').trim().toLowerCase().slice(0, 254);
   const cleanFirst = String(firstName || '').trim().slice(0, 60);
-  const cleanTrade = String(trade || '').trim().slice(0, 160);
+  const cleanTrade = String(trade || '').trim().slice(0, 1000);
   const allowedNiches = ['epoxy', 'pool-cage', 'general', 'contact'];
   const cleanNiche = allowedNiches.includes(niche) ? niche : 'general';
   const isContact = cleanNiche === 'contact';
@@ -29,8 +30,11 @@ module.exports = async (req, res) => {
   const phoneDigits = cleanPhone.replace(/\D/g, '');
   const validPhone = phoneDigits.length === 10 || (phoneDigits.length === 11 && phoneDigits.startsWith('1'));
 
-  if (!cleanBusiness || !validPhone) {
-    return res.status(400).json({ error: 'business name and a valid phone are required' });
+  // Without an email there is no way to answer a lead in writing, so it is required.
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail);
+
+  if (!cleanBusiness || !validPhone || !validEmail) {
+    return res.status(400).json({ error: 'business name, a valid phone and a valid email are required' });
   }
 
   const ghlHeaders = {
@@ -67,6 +71,7 @@ module.exports = async (req, res) => {
     if (!existing || !existing.firstName) payload.firstName = cleanFirst || cleanBusiness;
     if (cleanFirst && (!existing || !existing.lastName)) payload.lastName = `(${cleanBusiness})`;
     if (!existing || !existing.companyName) payload.companyName = cleanBusiness;
+    if (!existing || !existing.email) payload.email = cleanEmail;
     // Never restate where a known contact came from. That history is not ours to rewrite.
     if (!existing || !existing.source) payload.source = sourceLabel;
 
@@ -91,6 +96,7 @@ module.exports = async (req, res) => {
         const heading = isContact ? 'Website contact' : `Leak check request (${cleanNiche})`;
         const lines = [`${heading}: ${cleanBusiness}`];
         if (cleanFirst) lines.push(`Name given: ${cleanFirst}`);
+        lines.push(`Email given: ${cleanEmail}`);
         if (cleanTrade) lines.push(`What they do and need: ${cleanTrade}`);
         await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
           method: 'POST',
@@ -128,6 +134,7 @@ module.exports = async (req, res) => {
           cleanBusiness,
           cleanFirst,
           cleanPhone,
+          cleanEmail,
           cleanTrade && `"${cleanTrade}"`,
         ].filter(Boolean).join(' — ');
         const alerts = [

@@ -259,6 +259,8 @@
                     <input type="text" id="lf-business" name="business" required autocomplete="organization" placeholder="e.g. Gulf Coast Rescreening">
                     <label for="lf-phone">Mobile number (we text the video here)</label>
                     <input type="tel" id="lf-phone" name="phone" required autocomplete="tel" placeholder="(727) 555-0134">
+                    <label for="lf-email">Email</label>
+                    <input type="email" id="lf-email" name="email" required autocomplete="email" inputmode="email" placeholder="you@yourbusiness.com">
                     <button type="submit" class="lp-btn">Send Me The Plan</button>
                 </form>
                 <div class="lp-form-success" id="leakSuccess">
@@ -294,6 +296,7 @@
                 body: JSON.stringify({
                     business: document.getElementById('lf-business').value,
                     phone: document.getElementById('lf-phone').value,
+                    email: document.getElementById('lf-email').value,
                     niche: 'pool-cage'
                 })
             });
@@ -349,6 +352,8 @@
                     <input type="text" id="m-name" required autocomplete="given-name" placeholder="First name">
                     <label for="m-phone">Mobile number</label>
                     <input type="tel" id="m-phone" required autocomplete="tel" placeholder="(727) 555-0134">
+                    <label for="m-email">Email</label>
+                    <input type="email" id="m-email" required autocomplete="email" inputmode="email" placeholder="you@yourbusiness.com">
                     <button type="submit" class="lp-btn">Send Me The Plan</button>
                 </form>
                 <p class="lp-modal-fine">Free. No card, no obligation, no call required. If we don't think we can bring you work, we'll tell you straight.</p>
@@ -384,6 +389,7 @@
                         firstName: document.getElementById('m-name').value,
                         trade: 'pool-cage',
                         phone: document.getElementById('m-phone').value,
+                        email: document.getElementById('m-email').value,
                         niche: 'pool-cage'
                     })
                 });

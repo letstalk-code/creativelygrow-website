@@ -176,15 +176,23 @@
         firstName: document.getElementById(prefix + 'name').value.trim(),
         trade: document.getElementById(prefix + 'trade').value.trim(),
         phone: document.getElementById(prefix + 'phone').value.trim(),
+        email: document.getElementById(prefix + 'email').value.trim(),
         niche: 'contact'
       };
 
       // novalidate is set so the browser cannot bury a message behind the
       // dark band; check it here and say so plainly instead.
-      if (!payload.business || !payload.firstName || !payload.trade || !payload.phone) {
+      if (!payload.business || !payload.firstName || !payload.trade || !payload.phone || !payload.email) {
         var missing = form.querySelector('input:placeholder-shown') || form.querySelector('input');
         if (missing) missing.focus();
         btn.textContent = 'Fill in every field';
+        setTimeout(function () { btn.textContent = label; }, 1800);
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+        document.getElementById(prefix + 'email').focus();
+        btn.textContent = 'Check your email address';
         setTimeout(function () { btn.textContent = label; }, 1800);
         return;
       }
