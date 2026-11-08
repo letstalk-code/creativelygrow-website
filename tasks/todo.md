@@ -402,3 +402,20 @@ Built 2026-11-06.
 - Spam: `api/leak-check.js` drops leads with no/short `fillMs` (<3 s on page), a filled `company_site` trap, or a Gmail local part with 3+ dots. All 6 form senders (modal/band via `editorial.js`, `/contact`, epoxy x2, pool-cage x2) send `fillMs`; editorial forms and `/contact` carry the trap. `editorial.js` cache-buster bumped to v=10. Tested: real lead passes, every spam case dropped with no GHL calls.
 - Dot rule catches 4 of the 5 Nov spam emails (`adufu.j.aq41@gmail.com` has 2 dots); timing/trap cover the rest. If spam continues, add Cloudflare Turnstile.
 - Deleted the 5 spam contacts in GHL (xwdd).
+
+
+---
+
+# Spread out the Coca-Cola video (2026-11-07)
+
+Coke Brand Story (`afcdbe14…`) is embedded on: home (x2, mobile + desktop copies of
+one section), proof-to-pipeline, training-videos (featured player), brand-films (gallery).
+Other films are barely used: Vaya Space, CeraVe, Heal Precisely, SSHC Live, Short-Form
+Social only appear on brand-films.
+
+## Plan (swap the embed GUID + its caption only, no layout changes)
+- [ ] Home: keep Coke (it is the headline brand) + Cornerstone + Publix×Charmin.
+- [ ] Brand Films: keep (it is the full gallery).
+- [x] Proof-to-Pipeline: Coke → **Vaya Space Brand Story** (`faa8242f…`), a brand story film like the copy describes.
+- [x] Training Videos: Coke → two BD&L training videos Devon picked (Video 4 Warehouse Expectations `96851b3d…`, Video 6 Production Proper Handling `4baf481a…`), side by side, captions do not name the client.
+- [ ] Verify in preview, commit, push.
