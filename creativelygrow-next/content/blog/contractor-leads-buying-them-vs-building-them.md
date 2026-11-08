@@ -3,7 +3,7 @@ title: "Contractor leads: buying them vs. building them"
 slug: contractor-leads-buying-them-vs-building-them
 target_keyword: contractor leads
 meta_description: "Contractor leads are not all equal. Learn when lead platforms make sense, what owned lead systems require, and how to stop renting your pipeline."
-date: "2026-08-13"
+date: "2026-08-15"
 author: Creatively Grow
 hero_image: /blog/contractor-leads-hero.webp
 hero_alt: "A contractor's pickup tailgate used as a desk in a Florida driveway, with a clipboard, phone, tape measure and coiled extension cord, a barrel tile roof and palms behind"

@@ -3,7 +3,7 @@ title: "Plumbing marketing for emergency and planned work"
 slug: plumbing-marketing-for-emergency-and-planned-work
 target_keyword: plumbing marketing
 meta_description: "Plumbing marketing works when urgent callers get a clear response and planned projects get useful proof, a practical scope, and dependable follow-up."
-date: "2026-09-21"
+date: "2026-09-24"
 author: Creatively Grow
 hero_image: /blog/plumbing-marketing-hero.webp
 hero_alt: "A plumber's canvas tool bag, pipe wrench and flashlight on a Florida garage floor beside a tank water heater with its access panel open"

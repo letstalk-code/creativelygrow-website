@@ -3,7 +3,7 @@ title: "HVAC marketing when you're competing with the big guys"
 slug: hvac-marketing-when-youre-competing-with-the-big-guys
 target_keyword: hvac marketing
 meta_description: "HVAC marketing works when you build an owned customer path, show how you work, and follow up fast instead of renting every lead from a reseller."
-date: "2026-09-10"
+date: "2026-09-11"
 author: Creatively Grow
 hero_image: /blog/hvac-marketing-condenser-service.webp
 hero_alt: "An HVAC technician in a long-sleeve shirt and work gloves connecting a refrigerant manifold gauge set to an outdoor condenser unit beside a pink stucco Florida home, with a barrel tile roof and palm fronds behind and a canvas tool bag on the concrete pad."

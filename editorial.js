@@ -157,11 +157,21 @@
     });
   }
 
+  // When the page loaded. The API drops anything sent within 3 seconds of it.
+  var loadedAt = Date.now();
+
   function wireForm(formId, successId, prefix) {
     var form = document.getElementById(formId);
     if (!form) return;
     var success = document.getElementById(successId);
     var sending = false;
+
+    // Hidden field only bots fill; the API drops any lead that has it.
+    var trap = document.createElement('input');
+    trap.type = 'text'; trap.name = 'company_site'; trap.tabIndex = -1;
+    trap.autocomplete = 'off'; trap.setAttribute('aria-hidden', 'true');
+    trap.style.cssText = 'position:absolute; left:-9999px; width:1px; height:1px; opacity:0';
+    form.appendChild(trap);
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -177,7 +187,9 @@
         trade: document.getElementById(prefix + 'trade').value.trim(),
         phone: document.getElementById(prefix + 'phone').value.trim(),
         email: document.getElementById(prefix + 'email').value.trim(),
-        niche: 'contact'
+        niche: 'contact',
+        fillMs: Date.now() - loadedAt,
+        company_site: trap.value
       };
 
       // novalidate is set so the browser cannot bury a message behind the

@@ -284,6 +284,8 @@
     <a href="tel:+17272708422" class="lp-callbar">📞 Call (727) 270-8422</a>
 
     <script>
+    // When the page loaded. The lead API drops anything sent within 3 seconds of it.
+    var cgLoadedAt = Date.now();
     document.getElementById('leakForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var btn = this.querySelector('button');
@@ -297,7 +299,8 @@
                     business: document.getElementById('lf-business').value,
                     phone: document.getElementById('lf-phone').value,
                     email: document.getElementById('lf-email').value,
-                    niche: 'pool-cage'
+                    niche: 'pool-cage',
+                    fillMs: Date.now() - cgLoadedAt
                 })
             });
             if (!resp.ok) throw new Error('bad response');
@@ -390,7 +393,8 @@
                         trade: 'pool-cage',
                         phone: document.getElementById('m-phone').value,
                         email: document.getElementById('m-email').value,
-                        niche: 'pool-cage'
+                        niche: 'pool-cage',
+                    fillMs: Date.now() - cgLoadedAt
                     })
                 });
                 if (!resp.ok) throw new Error('bad');

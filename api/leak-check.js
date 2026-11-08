@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
-  const { business, phone, email, niche, firstName, trade } = req.body || {};
+  const { business, phone, email, niche, firstName, trade, fillMs, company_site: honeypot } = req.body || {};
   const cleanBusiness = String(business || '').trim().slice(0, 120);
   const cleanPhone = String(phone || '').replace(/[^\d+() -]/g, '').trim().slice(0, 25);
   const cleanEmail = String(email || '').trim().toLowerCase().slice(0, 254);
@@ -35,6 +35,21 @@ module.exports = async (req, res) => {
 
   if (!cleanBusiness || !validPhone || !validEmail) {
     return res.status(400).json({ error: 'business name, a valid phone and a valid email are required' });
+  }
+
+  // Bot filter. Every site form sends how long the visitor was on the page
+  // (measured on their own clock, so skew cannot matter) and a hidden field only
+  // bots fill. The Nov 2026 spam run also used Gmail addresses with dots sprinkled
+  // through the name (tubu.ni.w.u01.6@gmail.com). A dropped request still gets a
+  // 200 so the bot learns nothing, and nothing is saved, texted or alerted.
+  const tooFast = !(Number(fillMs) >= 3000);
+  const trapFilled = String(honeypot || '').trim() !== '';
+  const [emailLocal, emailDomain] = cleanEmail.split('@');
+  const dottedGmail = ['gmail.com', 'googlemail.com'].includes(emailDomain)
+    && (emailLocal.match(/\./g) || []).length >= 3;
+  if (tooFast || trapFilled || dottedGmail) {
+    console.warn('leak-check dropped as spam', { tooFast, trapFilled, dottedGmail, business: cleanBusiness, email: cleanEmail });
+    return res.status(200).json({ ok: true });
   }
 
   const ghlHeaders = {

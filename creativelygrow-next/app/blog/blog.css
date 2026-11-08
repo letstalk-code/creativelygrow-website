@@ -179,6 +179,9 @@
     display: block;
     padding: 6px 0;
 }
+.cg-nav-drop a[aria-current="page"] {
+    color: var(--orange, #ef7938);
+}
 
 .cg-head-phone {
     display: flex;

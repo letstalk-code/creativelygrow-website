@@ -3,7 +3,7 @@ title: "Landscaping marketing past the spring rush"
 slug: landscaping-marketing-past-the-spring-rush
 target_keyword: landscaping marketing
 meta_description: "Landscaping marketing works when you build a clear path from seasonal demand to bigger outdoor-living projects and repeatable follow-up."
-date: "2026-09-24"
+date: "2026-10-08"
 author: Creatively Grow
 status: published
 hero_image: /blog/landscaping-marketing-hero.webp

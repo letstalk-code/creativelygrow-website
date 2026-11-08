@@ -42,6 +42,9 @@ export default function BlogHeader() {
                             Home<span className="cg-caret" aria-hidden="true" />
                         </a>
                         <div className="cg-nav-drop">
+                            <a href="/proof-to-pipeline" onClick={() => setOpen(false)}>
+                                The Method
+                            </a>
                             <a href="/how-it-works" onClick={() => setOpen(false)}>
                                 How It Works
                             </a>
@@ -50,6 +53,15 @@ export default function BlogHeader() {
                             </a>
                             <a href="/brand-films" onClick={() => setOpen(false)}>
                                 Brand Films
+                            </a>
+                            <a href="/training-videos" onClick={() => setOpen(false)}>
+                                Training Videos
+                            </a>
+                            <a href="/blog" aria-current="page" onClick={() => setOpen(false)}>
+                                Blog
+                            </a>
+                            <a href="/contact" onClick={() => setOpen(false)}>
+                                Contact
                             </a>
                         </div>
                     </div>

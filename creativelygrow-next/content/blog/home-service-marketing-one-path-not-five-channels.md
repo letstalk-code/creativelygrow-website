@@ -3,7 +3,7 @@ title: "Home service marketing works when every channel leads to the same next s
 slug: home-service-marketing-one-path-not-five-channels
 target_keyword: home service marketing
 meta_description: "Home service marketing works when your website, local search, reviews, and follow-up lead to one clear next step instead of competing campaigns."
-date: "2026-10-01"
+date: "2026-11-06"
 author: Creatively Grow
 hero_image: /blog/home-service-marketing-one-path-not-five-channels-1.webp
 hero_alt: "A white work pickup parked in the driveway of a peach stucco Florida home with a barrel tile roof, tailgate down with a toolbox, orange extension cord and a clipboard"

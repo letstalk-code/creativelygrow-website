@@ -130,7 +130,7 @@
       <a href="/" aria-label="Creatively Grow home"><img src="assets/logo.webp" alt="Creatively Grow" style="height:34px; width:auto"></a>
       <span style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.22em; font-size:11px; line-height:1.5; color:#14100c">Creative Direction<br>+ Team</span>
     </div>
-    <button class="cg-burger" id="cgBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="cgMenu"><span></span><span></span><span></span></button><nav class="cg-nav" id="cgMenu" aria-label="Pages"><div class="cg-nav-item"><a class="cg-nav-trigger" href="/">Home<span class="cg-caret" aria-hidden="true"></span></a><div class="cg-nav-drop"><a href="/proof-to-pipeline">The Method</a><a href="/how-it-works">How It Works</a><a href="/services">Services</a><a href="/brand-films">Brand Films</a><a href="/blog">Blog</a><a href="/contact" aria-current="page">Contact</a></div></div></nav>
+    <button class="cg-burger" id="cgBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="cgMenu"><span></span><span></span><span></span></button><nav class="cg-nav" id="cgMenu" aria-label="Pages"><div class="cg-nav-item"><a class="cg-nav-trigger" href="/">Home<span class="cg-caret" aria-hidden="true"></span></a><div class="cg-nav-drop"><a href="/proof-to-pipeline">The Method</a><a href="/how-it-works">How It Works</a><a href="/services">Services</a><a href="/brand-films">Brand Films</a><a href="/training-videos">Training Videos</a><a href="/blog">Blog</a><a href="/contact" aria-current="page">Contact</a></div></div></nav>
     <div style="display:flex; align-items:flex-start; gap:12px">
       <span style="width:22px; height:3px; background:#ef7938; margin-top:6px"></span>
       <a href="sms:+17272708422" style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; font-size:11px; line-height:1.5; color:#14100c">Shoot us a text<br>(727) 270-8422</a>
@@ -245,7 +245,7 @@
 </div>
 <div class="cg-bar"><a class="cg-bar-call" href="tel:+17272708422">Call Now</a><a class="cg-bar-cta" href="sms:+17272708422">Text Us &nbsp;&rarr;</a></div>
 
-<script src="editorial.js?v=9"></script>
+<script src="editorial.js?v=10"></script>
 <script>
 (function () {
   var form = document.getElementById('ctForm');
@@ -255,6 +255,7 @@
   var errEl = document.getElementById('ctErr');
   var sheet = document.getElementById('ctSheet');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var loadedAt = Date.now(); // the API drops anything sent within 3 seconds of this
   var data = { project: '', business: '', timing: '', note: '', firstName: '', phone: '', email: '' };
   var cur = 0;
   var timers = {};
@@ -373,7 +374,7 @@
     fetch('/api/leak-check', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ business: data.business, firstName: data.firstName, phone: data.phone, email: data.email, trade: trade, niche: 'contact' })
+      body: JSON.stringify({ business: data.business, firstName: data.firstName, phone: data.phone, email: data.email, trade: trade, niche: 'contact', fillMs: Date.now() - loadedAt, company_site: document.getElementById('ctHp').value })
     }).then(function (r) {
       if (!r.ok) throw new Error('bad status ' + r.status);
       finish();

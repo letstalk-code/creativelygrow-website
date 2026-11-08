@@ -352,3 +352,53 @@ Built 2026-11-06.
 - Verified in preview with fetch mocked: step flow, phone formatting, payload, success state, mobile 375px (no horizontal scroll). No real submission sent.
 - Deviations: call sheet sits BELOW the question on mobile (keeps the question above the fold); no email shown (not published anywhere on the site today).
 - Not done: local python server has no cleanUrls, so test at `/contact.html`; `/contact` resolves on Vercel via `cleanUrls`. Nothing committed or deployed.
+
+
+---
+
+# Site fixes — blog menu, blog dates, contact spam (2026-11-07)
+
+## Findings
+1. **Blog menu** — the blog is a separate Next app (`creativelygrow-next`). Its header
+   (`app/blog/BlogHeader.tsx`) hard-codes only How It Works / Services / Brand Films.
+   The static pages list The Method, How It Works, Services, Brand Films, Training
+   Videos, Blog, Contact. `contact.html` is also missing Training Videos (I removed it
+   when that page was not yet committed; it is live now).
+2. **"Last post Oct 1"** — the date shown is the date Hermes stamps on the *draft*, not
+   the day it went live. The Oct 1 post actually published Nov 6; the HVAC SEO post is
+   dated Sep 28 but went live Oct 28. The publisher never updates `date` on publish.
+   One more draft is waiting: roofing (dated Oct 5, status draft).
+3. **Contact spam** — 5 bot leads since Nov 6, all the same bot: gibberish
+   "Xxxxx LLC" business, gibberish first name, Gmail with dots sprinkled through
+   (`tubu.ni.w.u01.6@gmail.com`), random phone. Every one fired the auto-reply SMS
+   to a stranger's number (Twilio 30005/30006 errors on 3) and alerted Devon.
+   Root cause: all checks are client-side. The honeypot only exists on `/contact`;
+   the modal on every other page has none, and `/api/leak-check` accepts any POST.
+
+## Plan
+- [ ] 1. `BlogHeader.tsx`: nav drop = The Method, How It Works, Services, Brand Films,
+      Training Videos, Blog (current), Contact. `contact.html`: put Training Videos back.
+- [ ] 2. Blog dates: when the publisher publishes, set `date` to the publish day. Fix the
+      18 live posts' `date` to their real go-live date from git history? **(ask)** —
+      changes visible dates + sitemap lastmod. Update the publisher routine prompt rule.
+- [ ] 3. Spam, server-side in `api/leak-check.js` (forms unchanged except a hidden field):
+      a. Honeypot field `company_site` on every form (modal + /contact); API drops the
+         lead silently if it is filled.
+      b. Form-open timestamp sent with the post; API drops anything submitted < 3 s
+         after the form opened or with no timestamp (direct API hits).
+      c. Drop Gmail addresses with 3+ dots in the local part (catches 5/5 of these).
+      Dropped requests still get `200 ok` so the bot learns nothing; logged to Vercel.
+      No SMS, no alert, no GHL contact for dropped leads.
+- [ ] 4. If spam continues after a week: add Cloudflare Turnstile (free, invisible).
+      Needs a Cloudflare site key + secret from Devon, so not doing it now.
+- [ ] 5. Delete the 5 spam contacts in GHL **(ask — permanent delete)**.
+- [ ] 6. Verify: build the Next app, preview both navs, POST test bodies to the API locally
+      (honeypot / too-fast / dotted gmail rejected, normal lead passes, mocked GHL).
+      Commit, push, deploy `creativelygrow-next` (`vercel --prod`).
+
+## Review (2026-11-07)
+- Blog header now lists The Method, How It Works, Services, Brand Films, Training Videos, Blog (current), Contact. `/contact` nav has Training Videos back.
+- 8 post dates corrected to their go-live commit date; newest post now shows Nov 6. Publisher routine (`~/.claude/scheduled-tasks/creativelygrow-blog-review-publish/SKILL.md`) now sets `date` to the publish day.
+- Spam: `api/leak-check.js` drops leads with no/short `fillMs` (<3 s on page), a filled `company_site` trap, or a Gmail local part with 3+ dots. All 6 form senders (modal/band via `editorial.js`, `/contact`, epoxy x2, pool-cage x2) send `fillMs`; editorial forms and `/contact` carry the trap. `editorial.js` cache-buster bumped to v=10. Tested: real lead passes, every spam case dropped with no GHL calls.
+- Dot rule catches 4 of the 5 Nov spam emails (`adufu.j.aq41@gmail.com` has 2 dots); timing/trap cover the rest. If spam continues, add Cloudflare Turnstile.
+- Deleted the 5 spam contacts in GHL (xwdd).

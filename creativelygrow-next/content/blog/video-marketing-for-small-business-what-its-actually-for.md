@@ -3,7 +3,7 @@ title: "Video marketing for small business: what it’s actually for"
 slug: video-marketing-for-small-business-what-its-actually-for
 target_keyword: video marketing for small business
 meta_description: "Video marketing for small business works when it answers buyer questions, proves the work, and supports a follow-up system—not when it chases views."
-date: "2026-08-27"
+date: "2026-08-31"
 author: Creatively Grow
 hero_image: /blog/video-marketing-hero.webp
 hero_alt: "A smartphone clamped to a small black tabletop tripod on the floor of an open Florida garage, aimed at a patched and partially ground concrete slab, with a coiled orange extension cord and a plain plastic pail beside it and a barrel tile roof, palms and pastel stucco house visible through the open door"

@@ -3,7 +3,7 @@ title: "HVAC SEO: what ranks and what is a waste of money"
 slug: hvac-seo-what-ranks-and-whats-a-waste-of-money
 target_keyword: hvac seo
 meta_description: "HVAC SEO works when your site, Google Business Profile, reviews, and follow-up answer a local homeowner's need without vague pages or rented leads."
-date: "2026-09-28"
+date: "2026-10-28"
 author: Creatively Grow
 status: published
 hero_image: /blog/hvac-seo-hero.webp
