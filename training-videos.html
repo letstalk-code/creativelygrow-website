@@ -52,13 +52,19 @@
       <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px">
         <div style="display:flex; flex-direction:column; gap:14px; min-width:0">
           <div style="aspect-ratio:16/9; position:relative; overflow:hidden; border:1px solid #2d3a2d; background:#0d140d">
-            <iframe src="https://iframe.mediadelivery.net/embed/715384/96851b3d-f149-4f19-801b-d3ec10615900?autoplay=false&amp;preload=false" title="Warehouse Expectations" loading="lazy" allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture" allowfullscreen="true" style="position:absolute; inset:0; width:100%; height:100%; border:0; display:block"></iframe>
+            <button type="button" class="cg-tv-poster" data-tv-guid="96851b3d-f149-4f19-801b-d3ec10615900" aria-label="Play Warehouse Expectations" style="position:absolute; inset:0; width:100%; height:100%; padding:0; border:0; cursor:pointer; background:#0d140d">
+              <img src="assets/training-warehouse.webp" alt="Warehouse associate in a hi-vis shirt holding up a freshly repacked case" width="1280" height="720" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block">
+              <span aria-hidden="true" style="position:absolute; left:50%; top:50%; width:68px; height:68px; margin:-34px 0 0 -34px; border-radius:50%; background:#ef7938; box-shadow:0 8px 24px rgba(0,0,0,0.35)"><span style="position:absolute; left:27px; top:21px; border-style:solid; border-width:13px 0 13px 21px; border-color:transparent transparent transparent #14100c"></span></span>
+            </button>
           </div>
           <span style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; font-size:clamp(18px,1.6vw,22px); line-height:1.15; color:#f9f8eb">Warehouse Expectations</span>
         </div>
         <div style="display:flex; flex-direction:column; gap:14px; min-width:0">
           <div style="aspect-ratio:16/9; position:relative; overflow:hidden; border:1px solid #2d3a2d; background:#0d140d">
-            <iframe src="https://iframe.mediadelivery.net/embed/715384/4baf481a-8c0f-4a65-902d-6ede575113cc?autoplay=false&amp;preload=false" title="Production: Proper Handling" loading="lazy" allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture" allowfullscreen="true" style="position:absolute; inset:0; width:100%; height:100%; border:0; display:block"></iframe>
+            <button type="button" class="cg-tv-poster" data-tv-guid="4baf481a-8c0f-4a65-902d-6ede575113cc" aria-label="Play Production: Proper Handling" style="position:absolute; inset:0; width:100%; height:100%; padding:0; border:0; cursor:pointer; background:#0d140d">
+              <img src="assets/training-handling.webp" alt="Warehouse lead demonstrating how to lift a case correctly, with the host beside him" width="1280" height="720" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block">
+              <span aria-hidden="true" style="position:absolute; left:50%; top:50%; width:68px; height:68px; margin:-34px 0 0 -34px; border-radius:50%; background:#ef7938; box-shadow:0 8px 24px rgba(0,0,0,0.35)"><span style="position:absolute; left:27px; top:21px; border-style:solid; border-width:13px 0 13px 21px; border-color:transparent transparent transparent #14100c"></span></span>
+            </button>
           </div>
           <span style="font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; font-size:clamp(18px,1.6vw,22px); line-height:1.15; color:#f9f8eb">Production: Proper Handling</span>
         </div>
@@ -256,5 +262,20 @@
 </div>
 <script src="editorial.js?v=10"></script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script>
+  // Training samples: show a still of people at work until someone presses play,
+  // then swap in the player. Keeps the client's own video thumbnails untouched.
+  document.querySelectorAll('[data-tv-guid]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = 'https://iframe.mediadelivery.net/embed/715384/' + btn.getAttribute('data-tv-guid') + '?autoplay=true&preload=true';
+      f.title = btn.getAttribute('aria-label').replace(/^Play /, '');
+      f.allow = 'accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture';
+      f.setAttribute('allowfullscreen', 'true');
+      f.style.cssText = 'position:absolute; inset:0; width:100%; height:100%; border:0; display:block';
+      btn.replaceWith(f);
+    });
+  });
+</script>
 </body>
 </html>
