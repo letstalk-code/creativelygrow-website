@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Started · Never Miss a Customer · Creatively Grow</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f9f8eb; --ink:#14100c; --sage:#4e5a4e; --orange:#ef7938;
+    --orange-hover:#d96a2d; --hair:rgba(20,16,12,.18);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);
+       font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  header.wrap{border-bottom:2px solid var(--ink);padding:40px 24px 32px}
+  .eyebrow{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+           letter-spacing:.22em;font-size:12px;color:var(--orange);display:block}
+  h1{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+     font-size:clamp(32px,6vw,54px);line-height:1.05;margin:14px 0 0}
+  h1 span{color:var(--orange)}
+  .lede{color:var(--sage);margin:18px 0 0;max-width:56ch}
+  .time{margin:18px 0 0;font-size:14px;color:var(--sage)}
+
+  .steps{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:620px){.steps{grid-template-columns:1fr}}
+  .steps li{background:var(--ink);color:var(--cream);padding:14px 16px}
+  .steps b{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:16px}
+  .steps b em{font-style:normal;color:var(--orange);margin-right:6px}
+  .steps span{font-size:13.5px;color:#cfcdbf}
+
+  fieldset{border:0;border-top:1px solid var(--hair);margin:0;padding:36px 0 8px}
+  legend{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+         letter-spacing:.1em;font-size:15px;padding:0}
+  .why{color:var(--sage);font-size:14px;margin:8px 0 22px;max-width:58ch}
+
+  label{display:block;margin:0 0 20px}
+  .lab{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+  .hint{display:block;font-weight:400;color:var(--sage);font-size:13px;margin-bottom:8px}
+  input[type=text],input[type=email],input[type=tel],input[type=url],textarea{
+    width:100%;padding:11px 13px;border:1px solid var(--ink);border-radius:0;
+    background:#fff;font-family:inherit;font-size:15px;color:var(--ink)}
+  textarea{min-height:90px;resize:vertical}
+  input:focus,textarea:focus{outline:2px solid var(--orange);outline-offset:0;border-color:transparent}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+  @media(max-width:620px){.row{grid-template-columns:1fr}}
+
+  .radios{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+  .radios label{margin:0}
+  .radios input{position:absolute;opacity:0;pointer-events:none}
+  .radios span{display:inline-block;padding:9px 18px;border:2px solid var(--ink);
+    border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;user-select:none}
+  .radios input:checked + span{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+  .radios input:focus-visible + span{outline:2px solid var(--orange);outline-offset:2px}
+
+  .trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+  .note{background:var(--ink);color:#b8b8a8;padding:22px;margin:26px 0 0;font-size:14.5px}
+  .note strong{color:var(--cream)}
+  .note ul{margin:8px 0 0;padding-left:18px}
+
+  .actions{border-top:2px solid var(--ink);margin-top:34px;padding:28px 0 70px}
+  button{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;font-size:14px;padding:15px 34px;border:2px solid var(--orange);
+    background:var(--orange);color:var(--ink);cursor:pointer;
+    box-shadow:0 8px 24px rgba(239,121,56,.25)}
+  button:hover{background:var(--orange-hover);border-color:var(--orange-hover)}
+  button[disabled]{opacity:.5;cursor:default;box-shadow:none}
+  .status{margin-top:14px;font-size:14px;color:var(--sage)}
+  .status.err{color:#b3261e}
+  .done{display:none;padding:60px 0 80px}
+  .done h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:30px;margin:0 0 12px}
+</style>
+</head>
+<body>
+<div id="form-view">
+  <header class="wrap">
+    <span class="eyebrow">Never Miss a Customer · Getting started</span>
+    <h1>Six steps from <span>free check</span> to first texts.</h1>
+    <p class="lede">Fill this out once and we take it from here. If you don't know an answer, skip it.
+      We'll sort it out together on a quick call.</p>
+    <p class="time">About 15 minutes. Nothing here charges you anything.</p>
+    <ol class="steps">
+      <li><b><em>1</em>Free comeback check</b><span>We look at your customer list and Google profile and show you what it's worth.</span></li>
+      <li><b><em>2</em>Your shop</b><span>So every text sounds like you and reaches the right people.</span></li>
+      <li><b><em>3</em>Your phone number</b><span>You keep your number and your landline. We register it for texting.</span></li>
+      <li><b><em>4</em>Your Google profile</b><span>So every customer gets asked for a review, straight to your page.</span></li>
+      <li><b><em>5</em>Your website</b><span>New or updated, free with your plan.</span></li>
+      <li><b><em>6</em>Sign and start</b><span>We send your agreement and a payment link. $97/month, locked in.</span></li>
+    </ol>
+  </header>
+
+  <form class="wrap" id="onboard" novalidate>
+    <fieldset>
+      <legend>Your shop</legend>
+      <p class="why">The basics, so we can reach you and so your texts go out under the right name.</p>
+      <label><span class="lab">Business name</span><input type="text" name="business_name" required maxlength="120"></label>
+      <div class="row">
+        <label><span class="lab">Your name</span><input type="text" name="contact_name" required maxlength="80"></label>
+        <label><span class="lab">Best email</span><input type="email" name="email" required maxlength="254"></label>
+      </div>
+      <div class="row">
+        <label><span class="lab">Best phone for you</span><input type="tel" name="phone" required maxlength="25"></label>
+        <label><span class="lab">Hours you're open</span><input type="text" name="hours" maxlength="200" placeholder="Mon–Fri 8–5"></label>
+      </div>
+      <label><span class="lab">What you do</span>
+        <span class="hint">Your main services, the ones you want more of first.</span>
+        <textarea name="services" required maxlength="1000"></textarea></label>
+      <label><span class="lab">Towns you cover</span><input type="text" name="service_area" required maxlength="300"></label>
+      <label><span class="lab">Who should get a text when a customer replies?</span>
+        <span class="hint">Name and cell number. Can be you.</span>
+        <input type="text" name="notify_who" maxlength="200"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your customer list</legend>
+      <p class="why">This is the money. After you submit, we'll text you how to send it over. Messy is fine.</p>
+      <label><span class="lab">Where do you keep it?</span>
+        <span class="radios">
+          <label><input type="radio" name="list_format" value="spreadsheet"><span>Spreadsheet</span></label>
+          <label><input type="radio" name="list_format" value="software"><span>Shop software</span></label>
+          <label><input type="radio" name="list_format" value="invoices"><span>Invoices</span></label>
+          <label><input type="radio" name="list_format" value="phone_contacts"><span>Phone contacts</span></label>
+          <label><input type="radio" name="list_format" value="not_sure"><span>Not sure</span></label>
+        </span>
+      </label>
+      <label><span class="lab">If it's in software, which one?</span><input type="text" name="list_software" maxlength="120"></label>
+      <label><span class="lab">Roughly how many past customers?</span>
+        <span class="radios">
+          <label><input type="radio" name="list_size" value="under_100"><span>Under 100</span></label>
+          <label><input type="radio" name="list_size" value="100_500"><span>100–500</span></label>
+          <label><input type="radio" name="list_size" value="500_plus"><span>500+</span></label>
+          <label><input type="radio" name="list_size" value="not_sure"><span>No idea</span></label>
+        </span>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your phone number</legend>
+      <p class="why">You keep your number. Carriers require every business that texts to be registered,
+        so we need your business details exactly as they appear on your paperwork.</p>
+      <div class="row">
+        <label><span class="lab">Main shop number</span><input type="tel" name="shop_number" maxlength="25"></label>
+        <label><span class="lab">Phone company</span><input type="text" name="carrier" maxlength="80" placeholder="AT&T, Verizon, Comcast..."></label>
+      </div>
+      <label><span class="lab">What kind of line is it?</span>
+        <span class="radios">
+          <label><input type="radio" name="line_type" value="mobile"><span>Cell</span></label>
+          <label><input type="radio" name="line_type" value="landline"><span>Landline</span></label>
+          <label><input type="radio" name="line_type" value="voip"><span>Internet phone</span></label>
+          <label><input type="radio" name="line_type" value="not_sure"><span>Not sure</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Legal business name</span>
+        <span class="hint">Only if it's different from the name above, for example an LLC.</span>
+        <input type="text" name="legal_name" maxlength="160"></label>
+      <label><span class="lab">Business address</span><input type="text" name="business_address" maxlength="300"></label>
+      <label><span class="lab">Tax ID (EIN)</span>
+        <span class="hint">Optional. You can give it to us on the call instead.</span>
+        <input type="text" name="tax_id" maxlength="20"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your Google profile</legend>
+      <p class="why">So we can ask every customer for a review and send them straight to your page.</p>
+      <label><span class="lab">Google Business Profile</span>
+        <span class="hint">Add <strong>letstalk@creativelygrow.com</strong> as a Manager, or tell us you need help.</span>
+        <span class="radios">
+          <label><input type="radio" name="gbp_access" value="added" required><span>Added</span></label>
+          <label><input type="radio" name="gbp_access" value="need_help"><span>Need help</span></label>
+          <label><input type="radio" name="gbp_access" value="no_profile"><span>Don't have one</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Your Google review link</span>
+        <span class="hint">If you have it handy. If not, we'll find it.</span>
+        <input type="url" name="review_link" maxlength="500" placeholder="https://"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your website</legend>
+      <p class="why">Free with your plan. We build a new one or update yours.</p>
+      <div class="row">
+        <label><span class="lab">Current website</span><input type="url" name="website_url" maxlength="300" placeholder="https://  (leave blank if none)"></label>
+        <label><span class="lab">Where's your domain registered?</span><input type="text" name="domain_host" maxlength="120" placeholder="GoDaddy, Wix, no idea..."></label>
+      </div>
+      <label><span class="lab">Logo</span>
+        <span class="radios">
+          <label><input type="radio" name="logo" value="yes"><span>Have it</span></label>
+          <label><input type="radio" name="logo" value="somewhere"><span>Somewhere</span></label>
+          <label><input type="radio" name="logo" value="no"><span>Don't have one</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Photos of your work</span>
+        <span class="radios">
+          <label><input type="radio" name="photos" value="lots"><span>Plenty</span></label>
+          <label><input type="radio" name="photos" value="some"><span>A few</span></label>
+          <label><input type="radio" name="photos" value="none"><span>None</span></label>
+        </span>
+      </label>
+      <label><span class="lab">Anything else we should know?</span>
+        <textarea name="anything_else" maxlength="1500"></textarea></label>
+    </fieldset>
+
+    <div class="trap" aria-hidden="true"><label>Company site<input type="text" name="company_site" tabindex="-1" autocomplete="off"></label></div>
+
+    <div class="note">
+      <strong>What happens after you send this</strong>
+      <ul>
+        <li>We text you to collect your customer list, logo and photos.</li>
+        <li>We send your agreement to sign and a payment link. Month to month, cancel any time.</li>
+        <li>We register your number for texting and tell you the date the first texts go out.</li>
+        <li>We only text people who have done business with you, and every text includes a way to opt out.</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button type="submit" id="submitBtn">Send it over</button>
+      <div class="status" id="status"></div>
+    </div>
+  </form>
+</div>
+
+<div class="wrap done" id="done">
+  <h2>Got it, thank you.</h2>
+  <p class="lede">We'll text you shortly about sending your customer list. Then your free comeback check
+    comes back with what your past customers are worth.</p>
+  <p class="time">Questions before then: <a href="tel:+17272708422" style="color:var(--orange)">(727) 270-8422</a>
+    or <a href="mailto:letstalk@creativelygrow.com" style="color:var(--orange)">letstalk@creativelygrow.com</a></p>
+</div>
+
+<script>
+var loadedAt = Date.now();
+document.getElementById('onboard').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = document.getElementById('submitBtn');
+  var status = document.getElementById('status');
+  status.className = 'status';
+
+  if (!form.checkValidity()) {
+    var bad = form.querySelector(':invalid');
+    status.className = 'status err';
+    status.textContent = 'Please fill in the highlighted field.';
+    if (bad) { bad.focus(); bad.reportValidity(); }
+    return;
+  }
+
+  var data = Object.fromEntries(new FormData(form).entries());
+  data.fillMs = Date.now() - loadedAt;
+  btn.disabled = true;
+  status.textContent = 'Sending…';
+
+  try {
+    var resp = await fetch('/api/get-started', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!resp.ok) throw new Error('status ' + resp.status);
+  } catch (err) {
+    // Never strand someone ready to sign: hand the answers to their email app instead.
+    console.error(err);
+    btn.disabled = false;
+    status.className = 'status err';
+    status.innerHTML = 'That didn’t go through. <a href="#" id="mailFallback" style="color:var(--orange)">Email it to us instead</a> or call (727) 270-8422.';
+    document.getElementById('mailFallback').addEventListener('click', function (ev) {
+      ev.preventDefault();
+      delete data.fillMs; delete data.company_site; delete data.tax_id;
+      window.location.href = 'mailto:letstalk@creativelygrow.com'
+        + '?subject=' + encodeURIComponent('Getting started: ' + (data.business_name || ''))
+        + '&body=' + encodeURIComponent(JSON.stringify(data, null, 2));
+    });
+    return;
+  }
+
+  document.getElementById('form-view').style.display = 'none';
+  document.getElementById('done').style.display = 'block';
+  window.scrollTo(0, 0);
+});
+</script>
+</body>
+</html>
