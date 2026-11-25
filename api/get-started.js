@@ -95,7 +95,7 @@ module.exports = async (req, res) => {
       console.error('duplicate lookup error', dupErr);
     }
 
-    const payload = { locationId: process.env.GHL_LOCATION_ID, phone: clean.phone, tags: ['nmac-onboarding'] };
+    const payload = { locationId: process.env.GHL_LOCATION_ID, phone: clean.phone };
     if (!existing || !existing.firstName) payload.firstName = firstName;
     const lastName = clean.contact_name.split(/\s+/).slice(1).join(' ');
     if (lastName && (!existing || !existing.lastName)) payload.lastName = lastName;
@@ -115,6 +115,16 @@ module.exports = async (req, res) => {
     const data = await resp.json();
     const contactId = data && data.contact && data.contact.id;
     if (!contactId) return res.status(502).json({ error: 'could not save' });
+
+    // Tags go on separately: the upsert replaces a known contact's whole tag list.
+    try {
+      const tagResp = await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/tags`, {
+        method: 'POST', headers: ghlHeaders, body: JSON.stringify({ tags: ['nmac-onboarding'] }),
+      });
+      if (!tagResp.ok) console.error('tag add failed', tagResp.status, await tagResp.text());
+    } catch (tagErr) {
+      console.error('tag add error (contact still saved)', tagErr);
+    }
 
     // Every answer, in one note, so the whole onboarding is on the contact.
     try {

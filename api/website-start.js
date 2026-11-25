@@ -101,7 +101,6 @@ module.exports = async (req, res) => {
     const payload = {
       locationId: process.env.GHL_LOCATION_ID,
       phone: clean.phone,
-      tags: [step === 'pick' ? 'website-picked' : 'website-intake'],
     };
     if (!existing || !existing.firstName) payload.firstName = firstName;
     const lastName = clean.contact_name.split(/\s+/).slice(1).join(' ');
@@ -117,6 +116,15 @@ module.exports = async (req, res) => {
     }
     const contactId = (((await resp.json()) || {}).contact || {}).id;
     if (!contactId) return res.status(502).json({ error: 'could not save' });
+
+    // Tags go on separately: the upsert replaces a known contact's whole tag list,
+    // which would wipe tags like website-lead that the GHL workflow relies on.
+    try {
+      const tagResp = await ghl(`/contacts/${contactId}/tags`, { tags: [step === 'pick' ? 'website-picked' : 'website-intake'] });
+      if (!tagResp.ok) console.error('tag add failed', tagResp.status, await tagResp.text());
+    } catch (tagErr) {
+      console.error('tag add error (contact still saved)', tagErr);
+    }
 
     const lines = [step === 'pick'
       ? `$150 website: picked a look, sent to Square checkout`
