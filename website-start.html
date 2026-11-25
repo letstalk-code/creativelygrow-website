@@ -24,6 +24,7 @@
   h2{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:18px;margin:36px 0 6px}
   .why{color:var(--sage);font-size:14px;margin:0 0 18px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .group{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:15px;margin:26px 0 10px;color:var(--sage)}
   .card{position:relative;border:2px solid var(--hair);background:#fff;cursor:pointer;display:flex;flex-direction:column}
   .card input{position:absolute;opacity:0;pointer-events:none}
   .card img{width:100%;aspect-ratio:3/5;object-fit:cover;object-position:top;display:block;border-bottom:1px solid var(--hair)}
@@ -61,15 +62,29 @@
 
 <form class="wrap" id="pick" novalidate>
   <h2>1. Choose a style</h2>
-  <p class="why">These are samples with made-up businesses. Yours gets your business, your colors and your photos.</p>
+  <p class="why">These are samples with made-up businesses. Yours gets your business, your colors and your photos. <b>Don't see your trade?</b> Pick the look that's closest to what you do. We'll make it fit your business.</p>
+  <h3 class="group">Home services &amp; trades</h3>
   <div class="grid">
-    <label class="card"><input type="radio" name="template" value="gulfline" required><img src="assets/samples/gulfline.jpg" alt="Gulfline sample" loading="lazy"><span class="meta"><b>Bold &amp; Premium</b><small>Rentals, auto, luxury services</small><a href="https://cg-sample-gulfline.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
-    <label class="card"><input type="radio" name="template" value="lumiere"><img src="assets/samples/lumiere.jpg" alt="Lumière sample" loading="lazy"><span class="meta"><b>Soft &amp; Calm</b><small>Medspa, salon, beauty</small><a href="https://cg-sample-lumiere.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
-    <label class="card"><input type="radio" name="template" value="happytails"><img src="assets/samples/happytails.jpg" alt="Happy Tails sample" loading="lazy"><span class="meta"><b>Bright &amp; Friendly</b><small>Pets, family services, cleaning</small><a href="https://cg-sample-happytails.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
-    <label class="card"><input type="radio" name="template" value="voltway"><img src="assets/samples/voltway.jpg" alt="Voltway sample" loading="lazy"><span class="meta"><b>Strong &amp; Direct</b><small>Electricians, plumbers, contractors</small><a href="https://cg-sample-voltway.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
-    <label class="card"><input type="radio" name="template" value="northgate"><img src="assets/samples/northgate.jpg" alt="Northgate sample" loading="lazy"><span class="meta"><b>Clean &amp; Elegant</b><small>Offices, clinics, professional services</small><a href="https://cg-sample-northgate.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
-    <label class="card"><input type="radio" name="template" value="rooted"><img src="assets/samples/rooted.jpg" alt="Rooted Wellness sample" loading="lazy"><span class="meta"><b>Warm &amp; Personal</b><small>Fitness, coaching, wellness</small><a href="https://cg-sample-rooted.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
-    <label class="card"><input type="radio" name="template" value="brightpath"><img src="assets/samples/brightpath.jpg" alt="Bright Path sample" loading="lazy"><span class="meta"><b>Big &amp; Heartfelt</b><small>Nonprofits, churches, community</small><a href="https://cg-sample-brightpath.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="gulfair"><img src="assets/samples/gulfair.jpg" alt="Cool &amp; Urgent sample" loading="lazy"><span class="meta"><b>Cool &amp; Urgent</b><small>HVAC, plumbing, repair</small><a href="https://cg-sample-gulfair.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="greenline"><img src="assets/samples/greenline.jpg" alt="Fresh &amp; Bold sample" loading="lazy"><span class="meta"><b>Fresh &amp; Bold</b><small>Lawn care, landscaping, cleaning</small><a href="https://cg-sample-greenline.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="voltway"><img src="assets/samples/voltway.jpg" alt="Strong &amp; Direct sample" loading="lazy"><span class="meta"><b>Strong &amp; Direct</b><small>Electricians, plumbers, contractors</small><a href="https://cg-sample-voltway.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="ironcoast"><img src="assets/samples/ironcoast.jpg" alt="Dark &amp; Industrial sample" loading="lazy"><span class="meta"><b>Dark &amp; Industrial</b><small>Trucking, freight, hauling</small><a href="https://cg-sample-ironcoast.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="gulfline"><img src="assets/samples/gulfline.jpg" alt="Bold &amp; Premium sample" loading="lazy"><span class="meta"><b>Bold &amp; Premium</b><small>Rentals, auto, luxury services</small><a href="https://cg-sample-gulfline.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+  </div>
+  <h3 class="group">Offices, health &amp; professionals</h3>
+  <div class="grid">
+    <label class="card"><input type="radio" name="template" value="harborpoint"><img src="assets/samples/harborpoint.jpg" alt="Classic &amp; Trusted sample" loading="lazy"><span class="meta"><b>Classic &amp; Trusted</b><small>Lawyers, accountants, advisors</small><a href="https://cg-sample-harborpoint.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="bayside"><img src="assets/samples/bayside.jpg" alt="Editorial &amp; Elegant sample" loading="lazy"><span class="meta"><b>Editorial &amp; Elegant</b><small>Real estate, interiors, builders</small><a href="https://cg-sample-bayside.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="azalea"><img src="assets/samples/azalea.jpg" alt="Soft &amp; Friendly sample" loading="lazy"><span class="meta"><b>Soft &amp; Friendly</b><small>Dentists, doctors, family clinics</small><a href="https://cg-sample-azalea.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="northgate"><img src="assets/samples/northgate.jpg" alt="Clean &amp; Elegant sample" loading="lazy"><span class="meta"><b>Clean &amp; Elegant</b><small>Offices, clinics, testing</small><a href="https://cg-sample-northgate.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="lumiere"><img src="assets/samples/lumiere.jpg" alt="Soft &amp; Calm sample" loading="lazy"><span class="meta"><b>Soft &amp; Calm</b><small>Medspa, salon, beauty</small><a href="https://cg-sample-lumiere.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+  </div>
+  <h3 class="group">Pets, people &amp; community</h3>
+  <div class="grid">
+    <label class="card"><input type="radio" name="template" value="sudsscruff"><img src="assets/samples/sudsscruff.jpg" alt="Playful &amp; Pastel sample" loading="lazy"><span class="meta"><b>Playful &amp; Pastel</b><small>Dog grooming, pet shops</small><a href="https://cg-sample-sudsscruff.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="happytails"><img src="assets/samples/happytails.jpg" alt="Bright &amp; Friendly sample" loading="lazy"><span class="meta"><b>Bright &amp; Friendly</b><small>Pet sitting, family services</small><a href="https://cg-sample-happytails.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="rooted"><img src="assets/samples/rooted.jpg" alt="Warm &amp; Personal sample" loading="lazy"><span class="meta"><b>Warm &amp; Personal</b><small>Fitness, coaching, wellness</small><a href="https://cg-sample-rooted.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="brightpath"><img src="assets/samples/brightpath.jpg" alt="Big &amp; Heartfelt sample" loading="lazy"><span class="meta"><b>Big &amp; Heartfelt</b><small>Nonprofits, churches, community</small><a href="https://cg-sample-brightpath.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
   </div>
 
   <h2>2. Who's this for?</h2>

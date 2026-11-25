@@ -15,6 +15,13 @@ const TEMPLATES = {
   northgate: 'Clean & Elegant (Northgate)',
   rooted: 'Warm & Personal (Rooted)',
   brightpath: 'Big & Heartfelt (Bright Path)',
+  harborpoint: 'Classic & Trusted (Harbor Point Law)',
+  bayside: 'Editorial & Elegant (Bayside Home Group)',
+  sudsscruff: 'Playful & Pastel (Suds & Scruff)',
+  greenline: 'Fresh & Bold (Greenline Lawn)',
+  gulfair: 'Cool & Urgent (Gulf Air HVAC)',
+  ironcoast: 'Dark & Industrial (Iron Coast Freight)',
+  azalea: 'Soft & Friendly (Azalea Dental)',
 };
 
 // Every answer the pages can send, in note order. Anything else is ignored.
