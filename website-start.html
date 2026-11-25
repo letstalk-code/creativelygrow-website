@@ -50,6 +50,17 @@
   .status{margin-top:14px;font-size:14px;color:var(--sage)}
   .status.err{color:#b3261e}
   .note{font-size:13px;color:var(--sage);margin-top:10px}
+  .hidden{display:none}
+  .get{border:2px solid var(--ink);background:#fff;padding:22px;margin-top:20px}
+  .get-h{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:16px;margin-bottom:6px}
+  .get ul{margin:6px 0 14px;padding-left:20px}
+  .get li{margin:4px 0}
+  .guar{margin:0;padding:12px 14px;background:var(--cream);border-left:4px solid var(--orange)}
+  .custom-sec{border-top:2px solid var(--ink);margin-top:40px;padding-bottom:70px}
+  textarea{width:100%;min-height:100px;padding:11px 13px;border:1px solid var(--ink);border-radius:0;background:#fff;font-family:inherit;font-size:15px;resize:vertical}
+  textarea:focus{outline:2px solid var(--orange);outline-offset:0;border-color:transparent}
+  #custom-open{margin-top:6px}
+  #custom{margin-top:24px}
 </style>
 </head>
 <body>
@@ -97,12 +108,42 @@
 
   <div class="deal"><b>$150, one time. The site is yours.</b> After you pay, we ask a few quick questions and start building. Want us to host it and make 2 small edits a month? That's $15/month, optional, no contract. You decide later.</div>
 
+  <div class="get">
+    <b class="get-h">What you get</b>
+    <ul>
+      <li>Your chosen look, with your name, colors, photos and info. One page, like the sample.</li>
+      <li>A private preview link before anything goes live.</li>
+      <li>2 rounds of changes. Want a different look after you see it? You can switch once, early.</li>
+    </ul>
+    <p class="guar"><b>Love it or your money back.</b> If you're not happy after the 2 rounds, we refund your $150 and the site doesn't launch. Once you approve it and it goes live, it's yours and the sale is final.</p>
+    <p class="note">Extra pages, booking systems or a whole new design are quoted separately.</p>
+  </div>
+
   <div class="actions">
     <button type="submit" id="go">Lock in my site: $150</button>
     <div class="status" id="status"></div>
     <p class="note">Secure checkout through Square. Questions? Text or call (727) 270-8422.</p>
   </div>
 </form>
+
+<section class="wrap custom-sec">
+  <h2>Want something built just for you?</h2>
+  <p class="why">Custom website from $699. Designed from scratch around your brand: up to 5 pages, help with your words and photos, 3 rounds of changes, and the same "love it or your money back" before launch.</p>
+  <p class="lede">Tell us about your business and Devon will call to talk it through. Nothing to pay until you two have talked and it's a fit.</p>
+  <button type="button" id="custom-open">Talk to Devon about a custom site</button>
+  <form id="custom" class="hidden" novalidate>
+    <div class="row">
+      <label class="f"><span class="lab">Your name</span><input type="text" name="contact_name" required maxlength="80"></label>
+      <label class="f"><span class="lab">Phone</span><input type="tel" name="phone" required maxlength="25"></label>
+      <label class="f"><span class="lab">Email</span><input type="email" name="email" required maxlength="254"></label>
+    </div>
+    <label class="f"><span class="lab">Business name</span><input type="text" name="business_name" required maxlength="120"></label>
+    <label class="f"><span class="lab">What do you need?</span><textarea name="custom_request" maxlength="1500" placeholder="Your business, what the site should do, and any sites you like"></textarea></label>
+    <div class="trap" aria-hidden="true"><label>Company site<input type="text" name="company_site" tabindex="-1" autocomplete="off"></label></div>
+    <button type="submit" id="custom-go">Send to Devon</button>
+    <div class="status" id="custom-status"></div>
+  </form>
+</section>
 
 <script>
 // Square payment link for $150. Its "after checkout" redirect is creativelygrow.com/website-details.
@@ -140,6 +181,32 @@ form.addEventListener('submit', async function (e) {
   }
   if (!SQUARE_URL) { status.textContent = 'Got your pick! Devon will text you the payment link shortly.'; return; }
   window.location.href = SQUARE_URL;
+});
+
+// Custom build: no checkout. Devon gets the request and calls to talk it through.
+var customForm = document.getElementById('custom');
+document.getElementById('custom-open').addEventListener('click', function () {
+  customForm.classList.remove('hidden');
+  customForm.contact_name.focus();
+});
+customForm.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var status = document.getElementById('custom-status'), btn = document.getElementById('custom-go');
+  status.className = 'status';
+  if (!customForm.checkValidity()) { var bad = customForm.querySelector(':invalid'); status.className = 'status err'; status.textContent = 'Please fill in your name, phone, email and business name.'; if (bad) { bad.focus(); bad.reportValidity(); } return; }
+  var data = Object.fromEntries(new FormData(customForm).entries());
+  data.step = 'custom'; data.fillMs = Date.now() - loadedAt;
+  btn.disabled = true; status.textContent = 'Sending…';
+  try {
+    var resp = await fetch('/api/website-start', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)});
+    if (!resp.ok) throw new Error('status ' + resp.status);
+  } catch (err) {
+    console.error(err);
+    btn.disabled = false; status.className = 'status err';
+    status.textContent = 'That didn’t go through. Please try again, or text (727) 270-8422.';
+    return;
+  }
+  customForm.innerHTML = '<p class="lede">Thanks! Devon will text you shortly to set up a time to talk.</p>';
 });
 </script>
 </body>

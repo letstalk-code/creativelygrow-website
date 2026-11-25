@@ -37,6 +37,7 @@ const FIELDS = [
   ['site_phone', 'Phone on site', 25],
   ['site_email', 'Email on site', 254],
   ['differentiator', 'What makes them different', 1000],
+  ['custom_request', 'Custom site request', 1500],
   ['logo', 'Logo', 40],
   ['photos', 'Photos', 40],
   ['website_url', 'Current website', 300],
@@ -54,7 +55,7 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
   const body = req.body || {};
-  const step = body.step === 'details' ? 'details' : 'pick';
+  const step = ['details', 'custom'].includes(body.step) ? body.step : 'pick';
   const clean = {};
   for (const [key, , max] of FIELDS) {
     const value = String(body[key] || '').trim().slice(0, max);
@@ -127,15 +128,18 @@ module.exports = async (req, res) => {
     // Tags go on separately: the upsert replaces a known contact's whole tag list,
     // which would wipe tags like website-lead that the GHL workflow relies on.
     try {
-      const tagResp = await ghl(`/contacts/${contactId}/tags`, { tags: [step === 'pick' ? 'website-picked' : 'website-intake'] });
+      const tagResp = await ghl(`/contacts/${contactId}/tags`, { tags: [step === 'pick' ? 'website-picked' : step === 'custom' ? 'website-custom' : 'website-intake'] });
       if (!tagResp.ok) console.error('tag add failed', tagResp.status, await tagResp.text());
     } catch (tagErr) {
       console.error('tag add error (contact still saved)', tagErr);
     }
 
-    const lines = [step === 'pick'
-      ? `$150 website: picked a look, sent to Square checkout`
-      : `$150 website: details after payment (check Square for the $150)`];
+    const headline = {
+      pick: '$150 website: picked a look, sent to Square checkout',
+      details: '$150 website: details after payment (check Square for the $150)',
+      custom: 'Custom website request ($699 and up): Devon to call',
+    };
+    const lines = [headline[step]];
     for (const [key, label] of FIELDS) {
       if (!clean[key]) continue;
       lines.push(`${label}: ${key === 'template' ? look : clean[key]}`);
@@ -153,7 +157,7 @@ module.exports = async (req, res) => {
         const smsResp = await ghl('/conversations/messages', {
           type: 'SMS',
           contactId,
-          message: `Hi ${firstName}, Devon here from Creatively Grow. Got your details for ${clean.business_name}. Reply here with your logo and a few photos of your work, and we'll get your site started.`,
+          message: `Hi ${firstName}, Devon here from Creatively Grow. Got your details for ${clean.business_name}. Reply here with your logo and a few photos of your work. Your site gets 2 rounds of changes, and if you're not happy after those, your $150 is refunded. Want us to host it? $15/mo with 2 small edits a month, just reply HOST.`,
         });
         if (!smsResp.ok) console.error('confirmation SMS failed', smsResp.status, await smsResp.text());
       } catch (smsErr) {
@@ -168,14 +172,18 @@ module.exports = async (req, res) => {
       const alerts = [{
         type: 'SMS',
         contactId: notifyId,
-        message: step === 'pick' ? `$150 site: picked ${look}, sent to checkout. ${who}` : `$150 site DETAILS in (check Square): ${who}`,
+        message: step === 'pick'
+          ? `$150 site: picked ${look}, sent to checkout. ${who}`
+          : step === 'custom'
+            ? `CUSTOM site request ($699 and up): ${who}`
+            : `$150 site DETAILS in (check Square): ${who}`,
       }];
-      if (step === 'details') {
+      if (step !== 'pick') {
         alerts.push({
           type: 'Email',
           contactId: notifyId,
           emailFrom: 'Creatively Grow <letstalk@creativelygrow.com>',
-          subject: `$150 website details: ${clean.business_name}`,
+          subject: step === 'custom' ? `Custom site request: ${clean.business_name}` : `$150 website details: ${clean.business_name}`,
           html: lines.map((l) => `<p>${escapeHtml(l)}</p>`).join(''),
         });
       }

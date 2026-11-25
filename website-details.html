@@ -48,6 +48,16 @@
   .status.err{color:#b3261e}
   .done{display:none;padding:60px 0 80px}
   .done h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:30px;margin:0 0 12px}
+  .guar{margin:18px 0 0;padding:12px 14px;background:#fff;border-left:4px solid var(--orange);font-size:15px}
+  .host-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:620px){.host-grid{grid-template-columns:1fr}}
+  .opt{position:relative;display:block;margin:0;cursor:pointer}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt-box{display:block;height:100%;border:2px solid var(--ink);background:#fff;padding:16px 18px;font-size:14px;line-height:1.5}
+  .opt-box b{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:16px;margin-bottom:6px}
+  .opt-box ul{margin:0;padding-left:18px}
+  .opt input:checked + .opt-box{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange)}
+  .opt input:focus-visible + .opt-box{outline:2px solid var(--orange);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -57,6 +67,7 @@
   <h1>Thanks! Now tell us <span>about you.</span></h1>
   <p class="lede">A few quick questions so we can build your site. Skip anything you're not sure about. We'll text you if we need more.</p>
   <div class="steps-mini"><span class="done">1. Pick a look</span><span class="done">2. Pay $150</span><span class="on">3. Send your details</span></div>
+  <p class="guar"><b>Love it or your money back:</b> 2 rounds of changes, and if you're not happy after those, your $150 is refunded.</p>
 </header>
 
 <form class="wrap" id="details" novalidate>
@@ -104,9 +115,15 @@
       <label class="f"><span class="lab">Current website, if any</span><input type="url" name="website_url" maxlength="300" placeholder="https://"></label>
       <label class="f"><span class="lab">Where's your domain registered?</span><input type="text" name="domain_host" maxlength="120" placeholder="GoDaddy, Wix, no idea..."></label>
     </div>
-    <label class="f"><span class="lab">Want us to host it for $15/month with 2 small edits a month?</span><span class="hint">Optional, no contract. Or we hand you the files.</span><span class="radios">
-      <label><input type="radio" name="hosting" value="yes"><span>Yes, host it</span></label>
-      <label><input type="radio" name="hosting" value="no"><span>No, send me the files</span></label>
+    <span class="lab">Where should your site live?</span>
+    <p class="hint">Hosting means we handle the tech side. Doing it yourself means it's on you.</p>
+    <div class="host-grid">
+      <label class="opt"><input type="radio" name="hosting" value="yes" checked><span class="opt-box"><b>We host it · $15/mo</b>
+        <ul><li>Stays online and secure</li><li>We connect your domain</li><li>Contact form set up for you</li><li>2 small changes a month: hours, prices, photos, text</li><li>We fix it if anything breaks</li><li>Cancel any time, no contract</li></ul></span></label>
+      <label class="opt"><input type="radio" name="hosting" value="no"><span class="opt-box"><b>Do it yourself · free</b>
+        <ul><li>You get the site files</li><li>You pick a host and set up the account</li><li>You connect your domain (DNS settings)</li><li>You set up the contact form so messages reach you</li><li>You make every change, and fix it if it breaks</li></ul></span></label>
+    </div>
+    <label class="f" style="margin-top:12px"><span class="radios">
       <label><input type="radio" name="hosting" value="not_sure"><span>Not sure yet</span></label></span></label>
     <label class="f"><span class="lab">Anything else?</span><textarea name="anything_else" maxlength="1500"></textarea></label>
   </fieldset>
