@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick Your Look · $150 Website · Creatively Grow</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#f9f8eb;--ink:#14100c;--sage:#4e5a4e;--orange:#ef7938;--orange-hover:#d96a2d;--hair:rgba(20,16,12,.18)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  header.wrap{border-bottom:2px solid var(--ink);padding:40px 24px 28px}
+  .eyebrow{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--orange);display:block}
+  h1{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(32px,6vw,54px);line-height:1.05;margin:14px 0 0}
+  h1 span{color:var(--orange)}
+  .lede{color:var(--sage);margin:16px 0 0;max-width:60ch}
+  .steps-mini{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;font-size:13px;font-weight:600}
+  .steps-mini span{border:2px solid var(--ink);border-radius:999px;padding:5px 12px}
+  .steps-mini span.on{background:var(--orange);border-color:var(--orange)}
+  h2{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:18px;margin:36px 0 6px}
+  .why{color:var(--sage);font-size:14px;margin:0 0 18px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .card{position:relative;border:2px solid var(--hair);background:#fff;cursor:pointer;display:flex;flex-direction:column}
+  .card input{position:absolute;opacity:0;pointer-events:none}
+  .card img{width:100%;aspect-ratio:3/5;object-fit:cover;object-position:top;display:block;border-bottom:1px solid var(--hair)}
+  .card .meta{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px}
+  .card b{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:16px}
+  .card small{color:var(--sage);font-size:13px}
+  .card a{font-size:13px;font-weight:600;color:var(--orange);margin-top:6px}
+  .card:has(input:checked){border-color:var(--orange);box-shadow:0 0 0 3px var(--orange)}
+  .card:has(input:checked)::after{content:"Picked";position:absolute;top:10px;right:10px;background:var(--orange);color:var(--ink);font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.08em;padding:4px 10px;border-radius:999px}
+  label.f{display:block;margin:0 0 16px}
+  .lab{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+  input[type=text],input[type=email],input[type=tel]{width:100%;padding:11px 13px;border:1px solid var(--ink);border-radius:0;background:#fff;font-family:inherit;font-size:15px}
+  input:focus{outline:2px solid var(--orange);outline-offset:0;border-color:transparent}
+  .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 18px}
+  @media(max-width:700px){.row{grid-template-columns:1fr}}
+  .trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .deal{background:var(--ink);color:var(--cream);padding:20px 22px;margin-top:28px;font-size:15px}
+  .deal b{color:var(--orange)}
+  .actions{border-top:2px solid var(--ink);margin-top:28px;padding:24px 0 70px}
+  button{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:16px;padding:16px 36px;border:2px solid var(--orange);background:var(--orange);color:var(--ink);cursor:pointer;box-shadow:0 8px 24px rgba(239,121,56,.25)}
+  button:hover{background:var(--orange-hover);border-color:var(--orange-hover)}
+  button[disabled]{opacity:.5;cursor:default;box-shadow:none}
+  .status{margin-top:14px;font-size:14px;color:var(--sage)}
+  .status.err{color:#b3261e}
+  .note{font-size:13px;color:var(--sage);margin-top:10px}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <span class="eyebrow">Your $150 website · Creatively Grow</span>
+  <h1>Pick your <span>look.</span></h1>
+  <p class="lede">Choose the style you like best. We swap in your name, your photos and your info, and the site is yours. You can tap any sample to see it live first.</p>
+  <div class="steps-mini"><span class="on">1. Pick a look</span><span>2. Pay $150</span><span>3. Send your details</span></div>
+</header>
+
+<form class="wrap" id="pick" novalidate>
+  <h2>1. Choose a style</h2>
+  <p class="why">These are samples with made-up businesses. Yours gets your business, your colors and your photos.</p>
+  <div class="grid">
+    <label class="card"><input type="radio" name="template" value="gulfline" required><img src="assets/samples/gulfline.jpg" alt="Gulfline sample" loading="lazy"><span class="meta"><b>Bold &amp; Premium</b><small>Rentals, auto, luxury services</small><a href="https://cg-sample-gulfline.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="lumiere"><img src="assets/samples/lumiere.jpg" alt="Lumière sample" loading="lazy"><span class="meta"><b>Soft &amp; Calm</b><small>Medspa, salon, beauty</small><a href="https://cg-sample-lumiere.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="happytails"><img src="assets/samples/happytails.jpg" alt="Happy Tails sample" loading="lazy"><span class="meta"><b>Bright &amp; Friendly</b><small>Pets, family services, cleaning</small><a href="https://cg-sample-happytails.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="voltway"><img src="assets/samples/voltway.jpg" alt="Voltway sample" loading="lazy"><span class="meta"><b>Strong &amp; Direct</b><small>Electricians, plumbers, contractors</small><a href="https://cg-sample-voltway.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="northgate"><img src="assets/samples/northgate.jpg" alt="Northgate sample" loading="lazy"><span class="meta"><b>Clean &amp; Elegant</b><small>Offices, clinics, professional services</small><a href="https://cg-sample-northgate.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="rooted"><img src="assets/samples/rooted.jpg" alt="Rooted Wellness sample" loading="lazy"><span class="meta"><b>Warm &amp; Personal</b><small>Fitness, coaching, wellness</small><a href="https://cg-sample-rooted.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    <label class="card"><input type="radio" name="template" value="brightpath"><img src="assets/samples/brightpath.jpg" alt="Bright Path sample" loading="lazy"><span class="meta"><b>Big &amp; Heartfelt</b><small>Nonprofits, churches, community</small><a href="https://cg-sample-brightpath.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+  </div>
+
+  <h2>2. Who's this for?</h2>
+  <div class="row">
+    <label class="f"><span class="lab">Your name</span><input type="text" name="contact_name" required maxlength="80"></label>
+    <label class="f"><span class="lab">Phone</span><input type="tel" name="phone" required maxlength="25"></label>
+    <label class="f"><span class="lab">Email</span><input type="email" name="email" required maxlength="254"></label>
+  </div>
+  <div class="trap" aria-hidden="true"><label>Company site<input type="text" name="company_site" tabindex="-1" autocomplete="off"></label></div>
+
+  <div class="deal"><b>$150, one time. The site is yours.</b> After you pay, we ask a few quick questions and start building. Want us to host it and make 2 small edits a month? That's $15/month, optional, no contract. You decide later.</div>
+
+  <div class="actions">
+    <button type="submit" id="go">Lock in my site: $150</button>
+    <div class="status" id="status"></div>
+    <p class="note">Secure checkout through Square. Questions? Text or call (727) 270-8422.</p>
+  </div>
+</form>
+
+<script>
+// Square payment link for $150. Its "after checkout" redirect is creativelygrow.com/website-details.
+var SQUARE_URL = '';
+var loadedAt = Date.now();
+var form = document.getElementById('pick');
+
+// GHL's text link can prefill these: ?n={{contact.name}}&p={{contact.phone}}&e={{contact.email}}&c={{contact.id}}
+var q = new URLSearchParams(location.search);
+if (q.get('n')) form.contact_name.value = q.get('n');
+if (q.get('p')) form.phone.value = q.get('p');
+if (q.get('e')) form.email.value = q.get('e');
+
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var status = document.getElementById('status'), btn = document.getElementById('go');
+  status.className = 'status';
+  if (!form.template.value) { status.className = 'status err'; status.textContent = 'Pick a style first.'; window.scrollTo({top: 0, behavior: 'smooth'}); return; }
+  if (!form.checkValidity()) { var bad = form.querySelector('input:invalid'); status.className = 'status err'; status.textContent = 'Please fill in your name, phone and email.'; if (bad) { bad.focus(); bad.reportValidity(); } return; }
+
+  var data = Object.fromEntries(new FormData(form).entries());
+  data.step = 'pick'; data.contact_id = q.get('c') || ''; data.fillMs = Date.now() - loadedAt;
+  // The details page reads this back, since Square can't carry it through checkout.
+  try { localStorage.setItem('cgWebsite', JSON.stringify({template: data.template, contact_name: data.contact_name, phone: data.phone, email: data.email, contact_id: data.contact_id})); } catch (err) {}
+
+  btn.disabled = true; status.textContent = 'Saving your pick…';
+  try {
+    var resp = await fetch('/api/website-start', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)});
+    if (!resp.ok) throw new Error('status ' + resp.status);
+  } catch (err) {
+    console.error(err);
+    btn.disabled = false; status.className = 'status err';
+    status.textContent = 'That didn’t go through. Please try again, or text (727) 270-8422.';
+    return;
+  }
+  if (!SQUARE_URL) { status.textContent = 'Got your pick! Devon will text you the payment link shortly.'; return; }
+  window.location.href = SQUARE_URL;
+});
+</script>
+</body>
+</html>

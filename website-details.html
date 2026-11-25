@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Website Details · Creatively Grow</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico?v=5" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#f9f8eb;--ink:#14100c;--sage:#4e5a4e;--orange:#ef7938;--orange-hover:#d96a2d;--hair:rgba(20,16,12,.18)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  header.wrap{border-bottom:2px solid var(--ink);padding:40px 24px 28px}
+  .eyebrow{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--orange);display:block}
+  h1{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(32px,6vw,50px);line-height:1.05;margin:14px 0 0}
+  h1 span{color:var(--orange)}
+  .lede{color:var(--sage);margin:16px 0 0;max-width:56ch}
+  .steps-mini{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;font-size:13px;font-weight:600}
+  .steps-mini span{border:2px solid var(--ink);border-radius:999px;padding:5px 12px}
+  .steps-mini span.done{opacity:.5;text-decoration:line-through}
+  .steps-mini span.on{background:var(--orange);border-color:var(--orange)}
+  fieldset{border:0;border-top:1px solid var(--hair);margin:0;padding:32px 0 6px}
+  legend{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:15px;padding:0}
+  .why{color:var(--sage);font-size:14px;margin:8px 0 20px}
+  label.f{display:block;margin:0 0 20px}
+  .lab{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+  .hint{display:block;font-weight:400;color:var(--sage);font-size:13px;margin-bottom:8px}
+  input[type=text],input[type=email],input[type=tel],input[type=url],textarea{width:100%;padding:11px 13px;border:1px solid var(--ink);border-radius:0;background:#fff;font-family:inherit;font-size:15px}
+  textarea{min-height:90px;resize:vertical}
+  input:focus,textarea:focus{outline:2px solid var(--orange);outline-offset:0;border-color:transparent}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+  @media(max-width:620px){.row{grid-template-columns:1fr}}
+  .radios{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+  .radios label{margin:0}
+  .radios input{position:absolute;opacity:0;pointer-events:none}
+  .radios span{display:inline-block;padding:9px 18px;border:2px solid var(--ink);border-radius:999px;font-size:14px;font-weight:600;cursor:pointer}
+  .radios input:checked + span{background:var(--orange);border-color:var(--orange)}
+  .radios input:focus-visible + span{outline:2px solid var(--orange);outline-offset:2px}
+  .trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .actions{border-top:2px solid var(--ink);margin-top:30px;padding:26px 0 70px}
+  button{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:15px;padding:15px 34px;border:2px solid var(--orange);background:var(--orange);color:var(--ink);cursor:pointer;box-shadow:0 8px 24px rgba(239,121,56,.25)}
+  button:hover{background:var(--orange-hover);border-color:var(--orange-hover)}
+  button[disabled]{opacity:.5;cursor:default;box-shadow:none}
+  .status{margin-top:14px;font-size:14px;color:var(--sage)}
+  .status.err{color:#b3261e}
+  .done{display:none;padding:60px 0 80px}
+  .done h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:30px;margin:0 0 12px}
+</style>
+</head>
+<body>
+<div id="form-view">
+<header class="wrap">
+  <span class="eyebrow">Your $150 website · Creatively Grow</span>
+  <h1>Thanks! Now tell us <span>about you.</span></h1>
+  <p class="lede">A few quick questions so we can build your site. Skip anything you're not sure about. We'll text you if we need more.</p>
+  <div class="steps-mini"><span class="done">1. Pick a look</span><span class="done">2. Pay $150</span><span class="on">3. Send your details</span></div>
+</header>
+
+<form class="wrap" id="details" novalidate>
+  <fieldset>
+    <legend>You</legend>
+    <div class="row">
+      <label class="f"><span class="lab">Your name</span><input type="text" name="contact_name" required maxlength="80"></label>
+      <label class="f"><span class="lab">Your phone</span><input type="tel" name="phone" required maxlength="25"></label>
+    </div>
+    <label class="f"><span class="lab">Your email</span><input type="email" name="email" required maxlength="254"></label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Your business</legend>
+    <p class="why">This is what goes on the site.</p>
+    <label class="f"><span class="lab">Business name</span><input type="text" name="business_name" required maxlength="120"></label>
+    <label class="f"><span class="lab">What you do</span><span class="hint">Your main services, the ones you want more of first.</span><textarea name="services" required maxlength="1000"></textarea></label>
+    <div class="row">
+      <label class="f"><span class="lab">Towns you serve</span><input type="text" name="service_area" maxlength="300"></label>
+      <label class="f"><span class="lab">Hours</span><input type="text" name="hours" maxlength="200" placeholder="Mon–Fri 8–5"></label>
+    </div>
+    <div class="row">
+      <label class="f"><span class="lab">Phone to show on the site</span><input type="tel" name="site_phone" maxlength="25"></label>
+      <label class="f"><span class="lab">Email to show on the site</span><input type="email" name="site_email" maxlength="254"></label>
+    </div>
+    <label class="f"><span class="lab">What makes you different?</span><span class="hint">Your words. A line or two is plenty.</span><textarea name="differentiator" maxlength="1000"></textarea></label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Your logo and photos</legend>
+    <p class="why">After you send this, we'll text you the easiest way to send them over.</p>
+    <label class="f"><span class="lab">Logo</span><span class="radios">
+      <label><input type="radio" name="logo" value="yes"><span>Have it</span></label>
+      <label><input type="radio" name="logo" value="somewhere"><span>Somewhere</span></label>
+      <label><input type="radio" name="logo" value="no"><span>Don't have one</span></label></span></label>
+    <label class="f"><span class="lab">Photos of your work</span><span class="radios">
+      <label><input type="radio" name="photos" value="lots"><span>Plenty</span></label>
+      <label><input type="radio" name="photos" value="some"><span>A few</span></label>
+      <label><input type="radio" name="photos" value="none"><span>None</span></label></span></label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Your web address</legend>
+    <div class="row">
+      <label class="f"><span class="lab">Current website, if any</span><input type="url" name="website_url" maxlength="300" placeholder="https://"></label>
+      <label class="f"><span class="lab">Where's your domain registered?</span><input type="text" name="domain_host" maxlength="120" placeholder="GoDaddy, Wix, no idea..."></label>
+    </div>
+    <label class="f"><span class="lab">Want us to host it for $15/month with 2 small edits a month?</span><span class="hint">Optional, no contract. Or we hand you the files.</span><span class="radios">
+      <label><input type="radio" name="hosting" value="yes"><span>Yes, host it</span></label>
+      <label><input type="radio" name="hosting" value="no"><span>No, send me the files</span></label>
+      <label><input type="radio" name="hosting" value="not_sure"><span>Not sure yet</span></label></span></label>
+    <label class="f"><span class="lab">Anything else?</span><textarea name="anything_else" maxlength="1500"></textarea></label>
+  </fieldset>
+  <input type="hidden" name="template"><input type="hidden" name="contact_id">
+  <div class="trap" aria-hidden="true"><label>Company site<input type="text" name="company_site" tabindex="-1" autocomplete="off"></label></div>
+
+  <div class="actions">
+    <button type="submit" id="go">Send my details</button>
+    <div class="status" id="status"></div>
+  </div>
+</form>
+</div>
+
+<div class="wrap done" id="done">
+  <h2>You're all set.</h2>
+  <p class="lede">Devon will text you shortly to collect your logo and photos. Then we build your site and send it to you to approve.</p>
+  <p class="lede">Questions: text or call <a href="tel:+17272708422" style="color:var(--orange)">(727) 270-8422</a>.</p>
+</div>
+
+<script>
+var loadedAt = Date.now();
+var form = document.getElementById('details');
+// Filled in on the pick page before checkout.
+try {
+  var saved = JSON.parse(localStorage.getItem('cgWebsite') || '{}');
+  ['contact_name', 'phone', 'email', 'template', 'contact_id'].forEach(function (k) { if (saved[k]) form[k].value = saved[k]; });
+} catch (err) {}
+
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var status = document.getElementById('status'), btn = document.getElementById('go');
+  status.className = 'status';
+  if (!form.checkValidity()) { var bad = form.querySelector(':invalid'); status.className = 'status err'; status.textContent = 'Please fill in the highlighted field.'; if (bad) { bad.focus(); bad.reportValidity(); } return; }
+  var data = Object.fromEntries(new FormData(form).entries());
+  data.step = 'details'; data.fillMs = Date.now() - loadedAt;
+  btn.disabled = true; status.textContent = 'Sending…';
+  try {
+    var resp = await fetch('/api/website-start', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)});
+    if (!resp.ok) throw new Error('status ' + resp.status);
+  } catch (err) {
+    console.error(err);
+    btn.disabled = false; status.className = 'status err';
+    status.textContent = 'That didn’t go through. Please try again, or text (727) 270-8422.';
+    return;
+  }
+  try { localStorage.removeItem('cgWebsite'); } catch (err) {}
+  document.getElementById('form-view').style.display = 'none';
+  document.getElementById('done').style.display = 'block';
+  window.scrollTo(0, 0);
+});
+</script>
+</body>
+</html>
