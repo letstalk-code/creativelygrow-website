@@ -76,11 +76,11 @@ module.exports = async (req, res) => {
       console.error('duplicate lookup error', dupErr);
     }
 
-    // Tags are additive in GHL, so the submission is still recorded on a known contact.
+    // Tags are NOT sent here: the upsert replaces a known contact's whole tag list.
+    // They are added separately below, which keeps the tags the contact already has.
     const payload = {
       locationId: process.env.GHL_LOCATION_ID,
       phone: cleanPhone,
-      tags: tagList,
     };
     // On a known contact, only fill what is blank. On a new one, everything is blank.
     if (!existing || !existing.firstName) payload.firstName = cleanFirst || cleanBusiness;
@@ -104,6 +104,17 @@ module.exports = async (req, res) => {
     const contactId = data && data.contact && data.contact.id;
 
     if (contactId) {
+      try {
+        const tagResp = await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/tags`, {
+          method: 'POST',
+          headers: ghlHeaders,
+          body: JSON.stringify({ tags: tagList }),
+        });
+        if (!tagResp.ok) console.error('tag add failed', tagResp.status, await tagResp.text());
+      } catch (tagErr) {
+        console.error('tag add error (lead still saved)', tagErr);
+      }
+
       // Attach what they told us so Devon has context before he replies. This is also
       // where the business name survives on a known contact, whose own company name we
       // leave alone — the note keeps the submission whole even when the record wins.
