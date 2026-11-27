@@ -20,7 +20,7 @@
   .lede{color:var(--sage);margin:16px 0 0;max-width:56ch}
   .steps-mini{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;font-size:13px;font-weight:600}
   .steps-mini span{border:2px solid var(--ink);border-radius:999px;padding:5px 12px}
-  .steps-mini span.done{opacity:.5;text-decoration:line-through}
+  .steps-mini span.past{opacity:.5;text-decoration:line-through}
   .steps-mini span.on{background:var(--orange);border-color:var(--orange)}
   fieldset{border:0;border-top:1px solid var(--hair);margin:0;padding:32px 0 6px}
   legend{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:15px;padding:0}
@@ -58,19 +58,43 @@
   .opt-box ul{margin:0;padding-left:18px}
   .opt input:checked + .opt-box{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange)}
   .opt input:focus-visible + .opt-box{outline:2px solid var(--orange);outline-offset:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .card{position:relative;border:2px solid var(--hair);background:#fff;cursor:pointer;display:flex;flex-direction:column}
+  .card input{position:absolute;opacity:0;pointer-events:none}
+  .card img{width:100%;aspect-ratio:3/5;object-fit:cover;object-position:top;display:block;border-bottom:1px solid var(--hair)}
+  .card .meta{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px}
+  .card b{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:16px}
+  .card small{color:var(--sage);font-size:13px}
+  .card a{font-size:13px;font-weight:600;color:var(--orange);margin-top:6px}
+  .card:has(input:checked){border-color:var(--orange);box-shadow:0 0 0 3px var(--orange)}
+  .card:has(input:checked)::after{content:"Picked";position:absolute;top:10px;right:10px;background:var(--orange);color:var(--ink);font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.08em;padding:4px 10px;border-radius:999px}
 </style>
 </head>
 <body>
 <div id="form-view">
 <header class="wrap">
   <span class="eyebrow">Open Door Sites · $150 website · by Creatively Grow</span>
-  <h1>Thanks! Now tell us <span>about you.</span></h1>
-  <p class="lede">A few quick questions so we can build your site. Skip anything you're not sure about. We'll text you if we need more.</p>
-  <div class="steps-mini"><span class="done">1. Pick a look</span><span class="done">2. Pay $150</span><span class="on">3. Send your details</span></div>
+  <h1>Thanks! Now pick <span>your look.</span></h1>
+  <p class="lede">Choose one of the 7 looks, then a few quick questions so we can build your site. Skip anything you're not sure about. We'll text you if we need more.</p>
+  <div class="steps-mini"><span class="past">1. Pay $150</span><span class="on">2. Pick your look</span><span class="on">3. Send your details</span></div>
   <p class="guar"><b>Love it or your money back:</b> 2 rounds of changes, and if you're not happy after those, your $150 is refunded.</p>
 </header>
 
 <form class="wrap" id="details" novalidate>
+  <fieldset>
+    <legend>Your look</legend>
+    <p class="why">Tap one. Any look works for any business: we put in your name, colors, photos and info. You can switch once, early, after you see it.</p>
+    <div class="grid">
+      <label class="card"><input type="radio" name="template" value="voltway" required><img src="assets/samples/voltway.jpg" alt="Strong &amp; Direct sample" loading="lazy"><span class="meta"><b>Strong &amp; Direct</b><small>Electricians, plumbers, contractors</small><a href="https://cg-sample-voltway.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+      <label class="card"><input type="radio" name="template" value="gulfair" required><img src="assets/samples/gulfair.jpg" alt="Cool &amp; Urgent sample" loading="lazy"><span class="meta"><b>Cool &amp; Urgent</b><small>HVAC, plumbing, repair</small><a href="https://cg-sample-gulfair.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+      <label class="card"><input type="radio" name="template" value="greenline" required><img src="assets/samples/greenline.jpg" alt="Fresh &amp; Bold sample" loading="lazy"><span class="meta"><b>Fresh &amp; Bold</b><small>Lawn care, landscaping, cleaning</small><a href="https://cg-sample-greenline.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+      <label class="card"><input type="radio" name="template" value="ironcoast" required><img src="assets/samples/ironcoast.jpg" alt="Dark &amp; Industrial sample" loading="lazy"><span class="meta"><b>Dark &amp; Industrial</b><small>Trucking, hauling, roofing, auto</small><a href="https://cg-sample-ironcoast.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+      <label class="card"><input type="radio" name="template" value="harborpoint" required><img src="assets/samples/harborpoint.jpg" alt="Classic &amp; Trusted sample" loading="lazy"><span class="meta"><b>Classic &amp; Trusted</b><small>Lawyers, accountants, advisors</small><a href="https://cg-sample-harborpoint.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+      <label class="card"><input type="radio" name="template" value="azalea" required><img src="assets/samples/azalea.jpg" alt="Soft &amp; Friendly sample" loading="lazy"><span class="meta"><b>Soft &amp; Friendly</b><small>Dentists, clinics, medspa, salon</small><a href="https://cg-sample-azalea.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+      <label class="card"><input type="radio" name="template" value="happytails" required><img src="assets/samples/happytails.jpg" alt="Bright &amp; Friendly sample" loading="lazy"><span class="meta"><b>Bright &amp; Friendly</b><small>Pets, family services, fitness</small><a href="https://cg-sample-happytails.vercel.app" target="_blank" rel="noopener">View sample →</a></span></label>
+    </div>
+  </fieldset>
+
   <fieldset>
     <legend>You</legend>
     <div class="row">
@@ -86,13 +110,19 @@
     <label class="f"><span class="lab">Business name</span><input type="text" name="business_name" required maxlength="120"></label>
     <label class="f"><span class="lab">What you do</span><span class="hint">Your main services, the ones you want more of first.</span><textarea name="services" required maxlength="1000"></textarea></label>
     <div class="row">
-      <label class="f"><span class="lab">Towns you serve</span><input type="text" name="service_area" maxlength="300"></label>
+      <label class="f"><span class="lab">Towns you serve</span><span class="hint">Main town first, then up to 7 more. Each gets its own page.</span><input type="text" name="service_area" maxlength="300" placeholder="Mobile, Daphne, Fairhope"></label>
       <label class="f"><span class="lab">Hours</span><input type="text" name="hours" maxlength="200" placeholder="Mon–Fri 8–5"></label>
     </div>
     <div class="row">
       <label class="f"><span class="lab">Phone to show on the site</span><input type="tel" name="site_phone" maxlength="25"></label>
       <label class="f"><span class="lab">Email to show on the site</span><input type="email" name="site_email" maxlength="254"></label>
     </div>
+    <div class="row">
+      <label class="f"><span class="lab">Years in business</span><input type="text" name="years" maxlength="20"></label>
+      <label class="f"><span class="lab">License or insurance</span><input type="text" name="license" maxlength="200" placeholder="Licensed &amp; insured, License #..."></label>
+    </div>
+    <label class="f"><span class="lab">Your Google reviews link</span><span class="hint">We show your real reviews, word for word. Paste your Google Business link if you have one.</span><input type="text" name="review_link" maxlength="300" placeholder="https://g.page/..."></label>
+    <label class="f"><span class="lab">3 to 5 reviews you're proud of (optional)</span><span class="hint">Copy and paste them with the customer's first name. Skip this and we'll pull them from your Google page.</span><textarea name="reviews" maxlength="2500"></textarea></label>
     <label class="f"><span class="lab">What makes you different?</span><span class="hint">Your words. A line or two is plenty.</span><textarea name="differentiator" maxlength="1000"></textarea></label>
   </fieldset>
 
@@ -127,7 +157,7 @@
       <label><input type="radio" name="hosting" value="not_sure"><span>Not sure yet</span></label></span></label>
     <label class="f"><span class="lab">Anything else?</span><textarea name="anything_else" maxlength="1500"></textarea></label>
   </fieldset>
-  <input type="hidden" name="template"><input type="hidden" name="contact_id">
+  <input type="hidden" name="contact_id">
   <div class="trap" aria-hidden="true"><label>Company site<input type="text" name="company_site" tabindex="-1" autocomplete="off"></label></div>
 
   <div class="actions">
@@ -146,16 +176,22 @@
 <script>
 var loadedAt = Date.now();
 var form = document.getElementById('details');
-// Filled in on the pick page before checkout.
+// Filled in on the start page before checkout. GHL's text link can also prefill: ?n=&p=&e=&c=
+var q = new URLSearchParams(location.search);
+if (q.get('n')) form.contact_name.value = q.get('n');
+if (q.get('p')) form.phone.value = q.get('p');
+if (q.get('e')) form.email.value = q.get('e');
+if (q.get('c')) form.contact_id.value = q.get('c');
 try {
   var saved = JSON.parse(localStorage.getItem('cgWebsite') || '{}');
-  ['contact_name', 'phone', 'email', 'template', 'contact_id'].forEach(function (k) { if (saved[k]) form[k].value = saved[k]; });
+  ['contact_name', 'phone', 'email', 'contact_id'].forEach(function (k) { if (saved[k]) form[k].value = saved[k]; });
 } catch (err) {}
 
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
   var status = document.getElementById('status'), btn = document.getElementById('go');
   status.className = 'status';
+  if (!form.template.value) { status.className = 'status err'; status.textContent = 'Pick a look first.'; window.scrollTo({top: 0, behavior: 'smooth'}); return; }
   if (!form.checkValidity()) { var bad = form.querySelector(':invalid'); status.className = 'status err'; status.textContent = 'Please fill in the highlighted field.'; if (bad) { bad.focus(); bad.reportValidity(); } return; }
   var data = Object.fromEntries(new FormData(form).entries());
   data.step = 'details'; data.fillMs = Date.now() - loadedAt;
