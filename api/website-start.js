@@ -1,21 +1,27 @@
 // The $150 website flow (/website-start then /website-details), saved to the Creatively
 // Grow GHL location. Same rules as get-started.js: spam filter, look up before upsert,
 // only fill blanks on a known contact, one note per submission, tell Devon.
-//   step "pick":    they gave name/phone/email and are being sent to Square checkout.
-//   step "details": they paid, picked 1 of the 7 looks and sent the rest of their info.
+//   step "pick":    they chose a look and are being sent to Square checkout.
+//   step "details": they paid and sent the rest of their info.
 
 const escapeHtml = (value) =>
   String(value).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 
-// The 7 looks, picked on /website-details after payment (built by ~/Desktop2/open-door-sites).
 const TEMPLATES = {
-  voltway: 'Strong & Direct (Voltway)',
-  gulfair: 'Cool & Urgent (Gulf Air HVAC)',
-  greenline: 'Fresh & Bold (Greenline Lawn)',
-  ironcoast: 'Dark & Industrial (Iron Coast Freight)',
-  harborpoint: 'Classic & Trusted (Harbor Point Law)',
-  azalea: 'Soft & Friendly (Azalea Dental)',
+  gulfline: 'Bold & Premium (Gulfline)',
+  lumiere: 'Soft & Calm (Lumière)',
   happytails: 'Bright & Friendly (Happy Tails)',
+  voltway: 'Strong & Direct (Voltway)',
+  northgate: 'Clean & Elegant (Northgate)',
+  rooted: 'Warm & Personal (Rooted)',
+  brightpath: 'Big & Heartfelt (Bright Path)',
+  harborpoint: 'Classic & Trusted (Harbor Point Law)',
+  bayside: 'Editorial & Elegant (Bayside Home Group)',
+  sudsscruff: 'Playful & Pastel (Suds & Scruff)',
+  greenline: 'Fresh & Bold (Greenline Lawn)',
+  gulfair: 'Cool & Urgent (Gulf Air HVAC)',
+  ironcoast: 'Dark & Industrial (Iron Coast Freight)',
+  azalea: 'Soft & Friendly (Azalea Dental)',
 };
 
 // Every answer the pages can send, in note order. Anything else is ignored.
@@ -28,10 +34,6 @@ const FIELDS = [
   ['services', 'What they do', 1000],
   ['service_area', 'Towns', 300],
   ['hours', 'Hours', 200],
-  ['years', 'Years in business', 20],
-  ['license', 'License / insurance', 200],
-  ['review_link', 'Google reviews link', 300],
-  ['reviews', 'Reviews to show', 2500],
   ['site_phone', 'Phone on site', 25],
   ['site_email', 'Email on site', 254],
   ['differentiator', 'What makes them different', 1000],
@@ -66,7 +68,7 @@ module.exports = async (req, res) => {
   const phoneDigits = String(clean.phone || '').replace(/\D/g, '');
   const validPhone = phoneDigits.length === 10 || (phoneDigits.length === 11 && phoneDigits.startsWith('1'));
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean.email || '');
-  const missingStepField = step === 'details' ? !clean.business_name || !clean.template : step === 'custom' ? !clean.business_name : false;
+  const missingStepField = step === 'pick' ? !clean.template : !clean.business_name;
   if (!clean.contact_name || !validPhone || !validEmail || missingStepField) {
     return res.status(400).json({ error: 'name, a valid phone, a valid email and the step\'s required field are needed' });
   }
@@ -133,7 +135,7 @@ module.exports = async (req, res) => {
     }
 
     const headline = {
-      pick: '$150 website: sent to Square checkout',
+      pick: '$150 website: picked a look, sent to Square checkout',
       details: '$150 website: details after payment (check Square for the $150)',
       custom: 'Custom website request ($699 and up): Devon to call',
     };
@@ -171,10 +173,10 @@ module.exports = async (req, res) => {
         type: 'SMS',
         contactId: notifyId,
         message: step === 'pick'
-          ? `$150 site: sent to checkout. ${who}`
+          ? `$150 site: picked ${look}, sent to checkout. ${who}`
           : step === 'custom'
             ? `CUSTOM site request ($699 and up): ${who}`
-            : `$150 site DETAILS in, look: ${look} (check Square): ${who}`,
+            : `$150 site DETAILS in (check Square): ${who}`,
       }];
       if (step !== 'pick') {
         alerts.push({
